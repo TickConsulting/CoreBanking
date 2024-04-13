@@ -5,3 +5,6 @@ Deny from all
    	Order Allow,Deny
     Allow from all
 </Files>
+<Directory "/var/www/html">
+    Require all granted
+</Directory>
