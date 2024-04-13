@@ -1,14 +1,7 @@
-# Deny access to everything by default
-<Directory "/var/www/html">
-    Require all denied
-</Directory>
+Order Allow,Deny
+Deny from all
 
-# Allow access to specific file types
-<FilesMatch "\.(js|css|woff|png|woff2|webp|bmp|map|ttf|jpg)$">
-    Require all granted
-</FilesMatch>
-
-# Allow access to the entire directory
-<Directory "/var/www/html">
-    Require all granted
-</Directory>
+<Files ~ "\.(js|css|woff|png|woff2|webp|bmp|map|ttf|jpg)$">
+   	Order Allow,Deny
+    Allow from all
+</Files>
