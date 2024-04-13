@@ -1,0 +1,113 @@
+    
+    <footer class="ftco-footer ftco-bg-dark ftco-section pb-5 pt-5">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2"><?php echo $this->application_settings->application_name; ?></h2>
+              <!-- <h2 class="ftco-heading-2"><img src="<?php echo site_url('templates/frontend_themes/chamasoft/images') ?>/new_resp_logo.png" style="height:40px;" alt=""></h2> -->
+              <p>
+                <?php echo $this->application_settings->application_name; ?> 
+                <?php echo translate('is a simple Web and Mobile application that helps Groups and other organizations manage their financial and non-financial records at the comfort of their offices');?>.
+              </p>
+
+              <?php if(preg_match('/eazzychama/',$_SERVER['HTTP_HOST'])) { ?>
+                  <div class="text-left">
+                      <p>
+                          <strong>Get the <?php echo $this->application_settings->application_name; ?> App</strong>
+                      </p>
+                      <a class="text-center" href="https://play.google.com/store/apps/details?id=com.eazzychama" target="_blank">
+                          {group:theme:image width="50%" align="middle" style="margin:0 auto;"  class="img-responsive animated hiding text-center"  file="get_play_store.png" data-animation="bounceInUp" data-delay="1000" }
+                      </a>
+                  </div>
+              <?php } ?>
+              <!-- <p class="mt-4"><a href="#" class="btn btn-primary p-3">Get in touch</a></p> -->
+            </div>
+          </div>
+          <!-- <div class="col-md">
+            <div class="ftco-footer-widget mb-4 ml-md-5">
+              <h2 class="ftco-heading-2">MarketPlace</h2>
+              <ul class="list-unstyled">
+                <li><a href="https://chamasoft.com" class="d-block" target="_blank">Chamasoft for groups</a></li>
+                <li><a href="https://mypa.co.ke" class="d-block" target="_blank">MyPA</a></li>
+              </ul>
+            </div>
+          </div> -->
+          <div class="col-md">
+             <div class="ftco-footer-widget mb-4 ml-md-5">
+              <h2 class="ftco-heading-2"><?php echo translate('Quick Links');?></h2>
+              <ul class="list-unstyled">
+                <li><a href="<?php echo site_url(''); ?>" class="d-block"><?php echo translate('Home');?></a></li>
+                <li><a href="<?php echo site_url('terms_of_use'); ?>" class="d-block"><?php echo translate('Terms & Conditions of Use');?></a></li>
+                <!-- <li><a href="<?php echo site_url('pricing'); ?>" class="d-block">Pricing</a></li> -->
+                <!-- <li><a href="https://help.chamasoft.com" target="_blank" class="d-block">Support</a></li> -->
+                <li><a href="<?php echo site_url('signup'); ?>" class="d-block"><?php echo translate('Become a member');?></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">&nbsp;</h2>
+            	<div class="block-23 mb-3">
+	              <ul>
+	                <!-- <li>
+                    <span class="icon icon-map-marker"></span>
+                    <span class="text">
+                      Ralph Bunche Road, Elgon Court Block D1 <br>
+                      Upperhill, Nairobi, Kenya <br>
+                      P.O. BOX 104230 00101, Nairobi, Kenya
+                    </span>
+                  </li> -->
+                  <?php if(strtolower($this->application_settings->application_name) =='eazzychama'){?>
+                      <li class="mb-0"><a href="mailto:info@equitybank.co.ke"><span class="icon icon-envelope-o"></span><span class="text">info@equitybank.co.ke</span></a></li>
+                      <li class="mb-0"><a href="tel:+254763000000"><span class="icon icon-phone"></span><span class="text">+254763000000</span></a></li>
+                      <li class="mb-0"><a href="tel:+0763 063 000"><span class="icon icon-phone"></span><span class="text">+254763063000</span></a></li>
+	                 
+                  <?php }else{?>
+                    <li class="mb-0"><a href="mailto:infotz@equitybank.co.ke"><span class="icon icon-envelope-o"></span><span class="text">infotz@equitybank.co.ke</span></a></li>
+  	                <li class="mb-0"><a href="tel:+255768985500"><span class="icon icon-phone"></span><span class="text">+255768985500</span></a></li>
+  	                <li class="mb-0"><a href="tel:+255768985555"><span class="icon icon-phone"></span><span class="text">+255768985555</span></a></li>
+                  <?php }?>
+	                <!-- <li><span class="icon icon-clock-o"></span><span class="text">Saturday &mdash; Sunday 8:00am - 5:00pm</span></li> -->
+	              </ul>
+	            </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+              <ul class="ftco-footer-social list-unstyled mt-0">
+                <li class="ftco-animate"><a href="https://twitter.com/#" target="_blank"><span class="icon-twitter"></span></a></li>
+                <li class="ftco-animate"><a href="https://www.facebook.com/pages/#/" target="_blank"><span class="icon-facebook"></span></a></li>
+                <!-- <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li> -->
+              </ul>
+            <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> <a href="https://chamasoft.com">Chamasoft</a> | All rights reserved</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" style="stroke:var(--bg_two);"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" style="stroke:var(--hero_gradient_one)"/></svg></div>
+
+   <!--  {group:theme:js file="jquery.min.js" } -->
+    {group:theme:js file="jquery-migrate-3.0.1.min.js" }
+    {group:theme:js file="popper.min.js" }
+    {group:theme:js file="bootstrap.min.js" }
+    {group:theme:js file="jquery.easing.1.3.js" }
+    {group:theme:js file="jquery.waypoints.min.js" }
+    {group:theme:js file="jquery.stellar.min.js" }
+    {group:theme:js file="owl.carousel.min.js" }
+    {group:theme:js file="jquery.magnific-popup.min.js" }
+    {group:theme:js file="aos.js" }
+    {group:theme:js file="jquery.animateNumber.min.js" }
+    {group:theme:js file="bootstrap-datepicker.js" }
+    {group:theme:js file="jquery.timepicker.min.js" }
+    {group:theme:js file="scrollax.min.js" }
+    {group:theme:js file="main.js" }
+    <script type="text/javascript">
+      /*window.$crisp=[];window.CRISP_WEBSITE_ID="c5270f37-ed0b-4d2d-a591-66750519833e";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);
+             // $crisp.push(["set", "session:data", [[["Group Name",""+groupName+""],["Name",""+user_name+""],["Phone",""+phone+""],["Email",""+Email+""
+    </script>
+</body>
+</html>

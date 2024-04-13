@@ -1,0 +1,44 @@
+{group:theme:partial name="groups_header"}
+{group:theme:partial name="groups_top"}                    
+{group:theme:partial name="groups_side_bar"} 
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+    <div class="m-content m-cont__no-padding-top">
+
+        <div class="m-portlet m-portlet--rounded m-portlet--tabs m-portlet--metal m-portlet--head-solid-bg m-cont__portlet">
+            <div class="m-portlet__head m-cont__header-title">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">{group:template:title}<!-- <small>sub title</small> --></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__head m-cont__header-nav m--hidden-tablet m--hidden-mobile">
+                <div class="m-portlet__head-tools">
+                    <ul class="nav nav-tabs m-tabs-line m-tabs-line--primary" role="tablist">
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_tabs_12_1" role="tab">
+                                <i class="mdi mdi-bell"></i> Notifications
+                            </a>
+                        </li>
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_12_2" role="tab">
+                                <i class="mdi mdi-account-box-multiple"></i> Members
+                            </a>
+                        </li>
+                        <li class="nav-item m-tabs__item">
+                            <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_12_3" role="tab">
+                                <i class="mdi mdi-file-document-box-multiple"></i> Reports
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="m-portlet__body">
+                {group:template:body}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{group:theme:partial name="groups_footer"}

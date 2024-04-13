@@ -1,0 +1,25 @@
+:root {
+    --danger: #b00;
+    --default_color: #92310e;
+    --default_border: #ebedf2;
+    --default_label_form_text_color: #da720d;
+    --default_label_form_text_color_secondary: #e99644;
+    --default_sidebar_search: #e997449f;
+    --default_sidebar_menu_color: #e99744c0;
+    --default_sidebar_menu_color_hover: #e99644;
+    --default_body_bg: #fff;
+    --default_bg: #fffbf1;
+    --bg_one: #ffdc7c;
+    --bg_two: #ffe9ad;
+    --bg_three: #ffefc2;
+    --table_bg_row: #ffefc248;
+    --default_btn: #00abf2;
+    --default_btn_hover: #92310e;
+    --default_checkin_accordion_hover: #d8501f1c;
+    --default_checkin_admin_hover: rgba(0, 0, 0, 0.07);
+    --default_checkin_status_badge: #92310e63;
+    --primary_text: #6e2309;
+    --text_checkin_admin_default: #444444;
+    --text_checkin_admin_active: #333333;
+    --main_color: #012f6b; /* Main color */
+}

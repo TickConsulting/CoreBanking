@@ -1,0 +1,58 @@
+<!DOCTYPE html >
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+<meta charset="utf-8"/>
+<title>Chamasoft - Premium Investment Group Financial Management Software</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
+
+<link href="<?php echo $this->application_settings?site_url('uploads/logos/'.$this->application_settings->favicon):site_url('templates/img/favicon/favicon.png');?>" rel="shortcut icon" type="image/x-icon" />
+
+
+{group:theme:css file="global/plugins/font-awesome/css/font-awesome.min.css" }
+{group:theme:css file="global/plugins/simple-line-icons/simple-line-icons.min.css" }
+{group:theme:css file="global/plugins/bootstrap/css/bootstrap.min.css" }
+{group:theme:css file="global/plugins/uniform/css/uniform.default.css" }
+{group:theme:css file="global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" }
+        <!-- END GLOBAL MANDATORY STYLES -->
+        <!-- BEGIN PAGE LEVEL PLUGINS -->
+{group:theme:css file="global/plugins/select2/css/select2.min.css" rel="stylesheet"}
+{group:theme:css file="global/plugins/select2/css/select2-bootstrap.min.css"}
+        <!-- END PAGE LEVEL PLUGINS -->
+        <!-- BEGIN THEME GLOBAL STYLES -->
+{group:theme:css file="global/css/components-md.min.css"}
+{group:theme:css file="global/css/plugins-md.min.css"}
+        <!-- END THEME GLOBAL STYLES -->
+        <!-- BEGIN PAGE LEVEL STYLES -->
+{group:theme:css file="pages/css/login-4.min.css"}
+
+{group:theme:css file="custom.css"}
+        <!-- END PAGE LEVEL STYLES -->
+        <!-- BEGIN THEME LAYOUT STYLES -->
+        <!-- END THEME LAYOUT -->
+
+<!-- END THEME STYLES -->
+</head>
+<!-- END HEAD -->
+
+
+<body class=" login">
+        <!-- BEGIN LOGO -->
+    <div class="logo">
+        <a href="<?php echo site_url('admin');?>">
+            <img src="<?php echo $this->application_settings?site_url('uploads/logos/'.$this->application_settings->admin_login_logo):'';?>" alt="Admin Login Logo"/>
+        </a>
+    </div>
+    <!-- END LOGO -->
+    <!-- BEGIN LOGIN -->
+    <div class="content">

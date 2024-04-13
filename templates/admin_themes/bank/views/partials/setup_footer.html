@@ -1,0 +1,82 @@
+         <footer class="m-grid__item m-footer">
+            <div class="m-container m-container--fluid m-container--full-height m-page__container">
+               <div class="m-stack m-stack--flex-tablet-and-mobile m-stack--ver m-stack--desktop">
+                  <div class="m-stack__item m-stack__item--left m-stack__item--middle m-stack__item--last text-center">
+                    <span class="m-footer__copyright">
+                     <?php echo date('Y');?> &copy; <?php echo $this->application_settings->application_name;?> <a href="chamasoft.com" class="m-link">Chamasoft</a>
+                     </span>
+                  </div>
+               </div>
+            </div>
+         </footer>
+      </div>
+      <div id="m_scroll_top" class="m-scroll-top">
+         <i class="la la-arrow-up"></i>
+      </div>   
+      {group:theme:js file="vendors/base/vendors.bundle.js"}
+      {group:theme:js file="demo/default/base/scripts.bundle.js"}
+      {group:theme:js file="vendors/custom/fullcalendar/fullcalendar.bundle.js"}
+      {group:theme:js file="app/js/dashboard.js"} 
+      {group:theme:js file="vendors/custom/datatables/datatables.bundle.js"}
+      {group:theme:js file="intl-tel-input/js/intlTelInput.min.js"}
+      {group:theme:js file="custom/bootbox.min.js"}
+      {group:theme:js file="custom/custom.js"}
+      <script type="text/javascript">
+         $(document).ready(function () {
+            Select2.init();
+            $('.datatable').DataTable({});
+            $('.scrollable-datatable').DataTable({
+               scrollY: "50vh",
+               scrollX: !0,
+               scrollCollapse: !0,
+            });
+
+            $(document).on('click','.btn-setup-next,.btn-setup-previous',function(e){
+               ManageSetupWizard.init();
+               e.preventDefault();
+            });
+            Inputmask.init()
+            Datepicker.init();
+            EmailPhoneValidation.init();
+         });
+
+         var PhoneInputCountry = function(selector = ''){
+             return {
+                 init: function(selector=''){
+                     $("#multiple-entries .cust_login_phone").each(function(){
+                         if(this.hasAttribute("data-intl-tel-input-id")){
+
+                         }else{
+                             window.intlTelInput(this, {
+                                 allowDropdown: true,
+                                 // autoHideDialCode: false,
+                                 // autoPlaceholder: "off",
+                                 // dropdownContainer: document.body,
+                                 // excludeCountries: ["us"],
+                                 formatOnDisplay: true,
+                                 // hiddenInput: "full_number",
+                                 initialCountry: default_country_code,
+                                 // localizedCountries: { 'de': 'Deutschland' },
+                                 // nationalMode: false,
+                                 // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+                                 // placeholderNumberType: "MOBILE",
+                                 preferredCountries: ['ke', 'tz', 'ug'],
+                                 separateDialCode: true,
+                                 utilsScript: "<?php echo site_url('templates/admin_themes/admin/intl-tel-input/js/utils.js');?>",
+                             });
+                         }
+                     });
+                     EmailPhoneValidation.init();
+                 }
+             }
+         }();
+        var user_name = '<?php echo $this->user->first_name." ".$this->user->last_name;?>';
+        var phone = '<?php echo $this->user->phone;?>';
+        var Email = '<?php echo $this->user->email;?>';
+        window.$crisp=[];window.CRISP_WEBSITE_ID="c5270f37-ed0b-4d2d-a591-66750519833e";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);
+             $crisp.push(["set", "session:data", [[["Name",""+user_name+""],["Phone",""+phone+""],["Email",""+Email+""] ]]]);
+        })();
+      </script>
+   </body>
+   <!-- end::Body -->
+</html>

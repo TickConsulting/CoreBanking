@@ -1,0 +1,94 @@
+
+
+<!-- END LOGIN -->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="../../assets/global/plugins/respond.min.js"></script>
+<script src="../../assets/global/plugins/excanvas.min.js"></script> 
+<![endif]-->
+{group:theme:js file="global/plugins/jquery.min.js"}
+{group:theme:js file="global/plugins/bootstrap/js/bootstrap.min.js"}
+{group:theme:js file="global/plugins/js.cookie.min.js"}
+{group:theme:js file="global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"}
+{group:theme:js file="global/plugins/jquery-slimscroll/jquery.slimscroll.min.js"}
+{group:theme:js file="global/plugins/jquery.blockui.min.js"}
+{group:theme:js file="global/plugins/uniform/jquery.uniform.min.js"}
+{group:theme:js file="global/plugins/bootstrap-switch/js/bootstrap-switch.min.js"}
+{group:theme:js file="global/plugins/jquery-validation/js/jquery.validate.min.js"}
+{group:theme:js file="global/plugins/jquery-validation/js/additional-methods.min.js"}
+{group:theme:js file="global/plugins/select2/js/select2.full.min.js"}
+{group:theme:js file="global/scripts/app.min.js"}
+{group:theme:js file="pages/scripts/login.min.js"}
+
+<!-- END JAVASCRIPTS -->
+
+
+</body>
+<!-- END BODY -->
+</html>
+
+
+
+
+
+
+	</div>
+        <!-- END LOGIN -->
+        <!-- BEGIN COPYRIGHT -->
+        <div class="copyright"> <?php echo date('Y',time());?> &copy; RiskTick Limited. All Rights Reserved. </div>
+        <!-- END COPYRIGHT -->
+        <!--[if lt IE 9]>
+<script src="../assets/global/plugins/respond.min.js"></script>
+<script src="../assets/global/plugins/excanvas.min.js"></script> 
+<![endif]-->
+        <!-- BEGIN CORE PLUGINS -->
+{group:theme:js file="global/plugins/jquery.min.js"}
+{group:theme:js file="global/plugins/bootstrap/js/bootstrap.min.js"}
+{group:theme:js file="global/plugins/js.cookie.min.js"}
+{group:theme:js file="global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"}
+{group:theme:js file="global/plugins/jquery-slimscroll/jquery.slimscroll.min.js"}
+{group:theme:js file="global/plugins/jquery.blockui.min.js"}
+{group:theme:js file="global/plugins/uniform/jquery.uniform.min.js"}
+{group:theme:js file="global/plugins/bootstrap-switch/js/bootstrap-switch.min.js"}
+        <!-- END CORE PLUGINS -->
+        <!-- BEGIN PAGE LEVEL PLUGINS -->
+{group:theme:js file="global/plugins/jquery-validation/js/jquery.validate.min.js"}
+{group:theme:js file="global/plugins/jquery-validation/js/additional-methods.min.js"}
+{group:theme:js file="global/plugins/select2/js/select2.full.min.js"}
+{group:theme:js file="global/plugins/backstretch/jquery.backstretch.min.js"}
+        <!-- END PAGE LEVEL PLUGINS -->
+        <!-- BEGIN THEME GLOBAL SCRIPTS -->
+{group:theme:js file="global/scripts/app.min.js"}
+        <!-- END THEME GLOBAL SCRIPTS -->
+        <!-- BEGIN PAGE LEVEL SCRIPTS -->
+{group:theme:js file="pages/scripts/login-4.min.js"}
+        <!-- END PAGE LEVEL SCRIPTS -->
+        <!-- BEGIN THEME LAYOUT SCRIPTS -->
+        <!-- END THEME LAYOUT SCRIPTS -->
+    
+    <script type="text/javascript">
+
+    $(document).ready(function(){
+        $('.form_submit').submit(function(e)
+        {
+            if($('#password-error').is(':visible'))
+            {
+                $('.processing_form_button').hide();
+                $('.submit_form_button').show();
+            }
+            else
+            {
+                $('.submit_form_button').hide();
+                $('.processing_form_button').show();
+
+            }
+            return true;
+        });//this code is written by a very very hungryy man!!! 
+
+        
+    });
+    </script>
+    </body>
+
+</html>

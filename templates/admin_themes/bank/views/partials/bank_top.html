@@ -1,0 +1,425 @@
+<div class="m-grid m-grid--hor m-grid--root m-page">
+   <!-- BEGIN: Header -->
+   <header id="m_header" class="m-grid__item m-header" m-minimize-offset="200" m-minimize-mobile-offset="200">
+      <div class="m-container m-container--fluid m-container--full-height">
+         <div class="m-stack m-stack--ver m-stack--desktop">
+            <!-- BEGIN: Brand -->
+            <div class="m-stack__item m-brand  m-brand--skin-light ">
+               <div class="m-stack m-stack--ver m-stack--general m-stack--fluid">
+                  <div class="m-stack__item m-stack__item--middle m-brand__logo">
+                     <a href="<?php echo site_url();?>" class="m-brand__logo-wrapper">
+                     <img alt="" src="<?php echo $this->application_settings?site_url('uploads/logos/'.$this->application_settings->logo):site_url('templates/frontend_themes/chamasoft/images/logo.png');?>" height="60px"/>
+                     </a>  
+                  </div>
+                  <!-- <div class="m-stack__item m-stack__item--middle m-brand__tools">
+                     <button class="btn btn-outline-info m-btn m-btn--pill btn-sm m-btn--outline-2x ml-md-5">Group Billing</button>
+                  </div> -->
+                  <!-- <div class="m-stack__item m-stack__item--middle m-brand__tools">
+                     <button class="btn btn-success m-btn m-btn--pill btn-sm m-btn--outline-2x ml-md-2">Make Contribution</button>
+                  </div> -->
+                  <div class="m-stack__item m-stack__item--middle m-brand__tools">
+                     <!-- <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-left m-dropdown--align-push" m-dropdown-toggle="click" aria-expanded="true">
+                        <a href="#" class="dropdown-toggle m-dropdown__toggle btn btn-outline-metal m-btn  m-btn--icon m-btn--pill">
+                        <span>Dashboard</span>
+                        </a>
+                        <div class="m-dropdown__wrapper">
+                           <span class="m-dropdown__arrow m-dropdown__arrow--left m-dropdown__arrow--adjust"></span>
+                           <div class="m-dropdown__inner">
+                              <div class="m-dropdown__body">
+                                 <div class="m-dropdown__content">
+                                    <ul class="m-nav">
+                                       <li class="m-nav__section m-nav__section--first m--hide">
+                                          <span class="m-nav__section-text">Quick Menu</span>
+                                       </li>
+                                       <li class="m-nav__item">
+                                          <a href="" class="m-nav__link">
+                                          <i class="m-nav__link-icon flaticon-share"></i>
+                                          <span class="m-nav__link-text">Human Resources</span>
+                                          </a>
+                                       </li>
+                                       <li class="m-nav__item">
+                                          <a href="" class="m-nav__link">
+                                          <i class="m-nav__link-icon flaticon-chat-1"></i>
+                                          <span class="m-nav__link-text">Customer Relationship</span>
+                                          </a>
+                                       </li>
+                                       <li class="m-nav__item">
+                                          <a href="" class="m-nav__link">
+                                          <i class="m-nav__link-icon flaticon-info"></i>
+                                          <span class="m-nav__link-text">Order Processing</span>
+                                          </a>
+                                       </li>
+                                       <li class="m-nav__item">
+                                          <a href="" class="m-nav__link">
+                                          <i class="m-nav__link-icon flaticon-lifebuoy"></i>
+                                          <span class="m-nav__link-text">Accounting</span>
+                                          </a>
+                                       </li>
+                                       <li class="m-nav__separator m-nav__separator--fit">
+                                       </li>
+                                       <li class="m-nav__item">
+                                          <a href="" class="m-nav__link">
+                                          <i class="m-nav__link-icon flaticon-chat-1"></i>
+                                          <span class="m-nav__link-text">Customer Relationship</span>
+                                          </a>
+                                       </li>
+                                       <li class="m-nav__item">
+                                          <a href="" class="m-nav__link">
+                                          <i class="m-nav__link-icon flaticon-info"></i>
+                                          <span class="m-nav__link-text">Order Processing</span>
+                                          </a>
+                                       </li>
+                                    </ul>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div> -->
+                     <!-- BEGIN: Responsive Aside Left Menu Toggler -->
+                     <a href="javascript:;" id="m_aside_left_offcanvas_toggle" class="m-brand__icon m-brand__toggler m-brand__toggler--left m--visible-tablet-and-mobile-inline-block">
+                     <span></span>
+                     </a>
+                     <!-- END -->
+                     <!-- BEGIN: Topbar Toggler -->
+                     <a id="m_aside_header_topbar_mobile_toggle" href="javascript:;" class="m-brand__icon m--visible-tablet-and-mobile-inline-block">
+                     <i class="flaticon-more"></i>
+                     </a>
+                     <!-- BEGIN: Topbar Toggler -->
+                  </div>
+                  <div class="m-stack__item m-stack__item--middle m-brand__tools">
+                     <div class="ml-md-5 group_header_name">
+                       Risk Tick Credit Staff Panel
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- END: Brand -->        
+            <div class="m-stack__item m-stack__item--fluid m-header-head" id="m_header_nav">
+               <!-- BEGIN: Topbar -->
+               <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
+                  <div class="m-stack__item m-topbar__nav-wrapper">
+                     <ul class="m-topbar__nav m-nav m-nav--inline">
+                        <!-- Search widget: Hidden -->
+                        <li class="m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-center m-dropdown--mobile-full-width m-dropdown--skin-light   m-list-search m-list-search--skin-light  d-none" 
+                           m-dropdown-toggle="click" id="m_quicksearch" m-quicksearch-mode="dropdown" m-dropdown-persistent="1">
+                           <a href="#" class="m-nav__link m-dropdown__toggle">
+                           <span class="m-nav__link-icon"><span class="m-nav__link-icon-wrapper"><i class="flaticon-search-1"></i></span></span>
+                           </a>
+                           <div class="m-dropdown__wrapper">
+                              <span class="m-dropdown__arrow m-dropdown__arrow--center"></span>
+                              <div class="m-dropdown__inner ">
+                                 <div class="m-dropdown__header">
+                                    <form  class="m-list-search__form">
+                                       <div class="m-list-search__form-wrapper">
+                                          <span class="m-list-search__form-input-wrapper">
+                                          <input id="m_quicksearch_input" autocomplete="off" type="text" name="q" class="m-list-search__form-input" value="" placeholder="Search...">
+                                          </span>
+                                          <span class="m-list-search__form-icon-close" id="m_quicksearch_close">
+                                          <i class="la la-remove"></i>
+                                          </span>
+                                       </div>
+                                    </form>
+                                 </div>
+                                 <div class="m-dropdown__body">
+                                    <div class="m-dropdown__scrollable m-scrollable" data-scrollable="true" data-height="300" data-mobile-height="200">
+                                       <div class="m-dropdown__content">
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </li>
+
+                        <!-- Notifications widget: Hidden -->
+                        <li class="m-nav__item m-topbar__notifications m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-center  m-dropdown--mobile-full-width d-none" m-dropdown-toggle="click" m-dropdown-persistent="1">
+                           <a href="#" class="m-nav__link m-dropdown__toggle" id="m_topbar_notification_icon">
+                           <span class="m-nav__link-icon">
+                           <span class="m-nav__link-icon-wrapper"><i class="flaticon-music-2"></i></span>
+                           <?php if($this->unread_notifications_count){ ?>
+                              <span class="m-nav__link-badge m-badge m-badge--success" style="font-weight: 600;">
+                                 <?php echo $this->unread_notifications_count<10?$this->unread_notifications_count:'9+'; ?>
+                              </span>
+                           <?php } ?>
+                           </span>
+                           </a>
+                           <div class="m-dropdown__wrapper">
+                              <span class="m-dropdown__arrow m-dropdown__arrow--center"></span>
+                              <div class="m-dropdown__inner">
+                                <!--  <div class="m-dropdown__header m--align-center">
+                                    <span class="m-dropdown__header-title">9 New</span>
+                                    <span class="m-dropdown__header-subtitle">User Notifications</span>
+                                 </div> -->
+                                 <div class="m-dropdown__body">
+                                    <div class="m-dropdown__content">
+                                       <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand" role="tablist">
+                                          <li class="nav-item m-tabs__item">
+                                             <a class="nav-link m-tabs__link active" data-toggle="tab" href="#topbar_notifications_notifications" role="tab">
+                                             Notifications
+                                             </a>
+                                          </li>
+                                          <li class="nav-item m-tabs__item">
+                                             <a class="nav-link m-tabs__link" data-toggle="tab" href="#topbar_notifications_events" role="tab">Mail</a>
+                                          </li>
+                                       </ul>
+                                       <div class="tab-content">
+                                          <div class="tab-pane active" id="topbar_notifications_notifications" role="tabpanel">
+                                             <?php if($this->unread_notifications_count){ ?>
+                                                <div class="m-scrollable" data-scrollable="true" data-height="250" data-mobile-height="200">
+                                                   <div class="m-list-timeline m-list-timeline--skin-light">
+                                                      <div class="m-list-timeline__items">
+                                                         <?php foreach($this->unread_notifications as $notification): ?>
+                                                            <a href="<?php echo site_url('group/notifications'); ?>" class="m-list-timeline__item notification-item">
+                                                               <span class="m-list-timeline__badge -m-list-timeline__badge--state-success"></span>
+                                                               <span class="m-list-timeline__text"><?php echo $notification->subject; ?></span>
+                                                               <span class="m-list-timeline__time"><?php echo timestamp_to_time_elapsed($notification->created_on); ?></span>
+                                                            </a>
+                                                         <?php endforeach; ?>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             <?php }else{ ?>
+                                                <div class="m-stack m-stack--ver m-stack--general" style="min-height: 180px;">
+                                                   <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                                      <span class="">All caught up!<br>No new notifications.</span>
+                                                   </div>
+                                                </div>
+                                             <?php } ?>
+                                          </div>
+                                          <div class="tab-pane" id="topbar_notifications_events" role="tabpanel">
+                                            <?php if($this->unread_emails_count){ ?>
+                                                <div class="m-scrollable" data-scrollable="true" data-height="250" data-mobile-height="200">
+                                                   <div class="m-list-timeline m-list-timeline--skin-light">
+                                                      <div class="m-list-timeline__items">
+                                                         <?php foreach($this->unread_emails as $email): ?>
+                                                            <a href="<?php echo site_url('group/emails'); ?>" class="m-list-timeline__item notification-item">
+                                                               <span class="m-list-timeline__badge -m-list-timeline__badge--state-success"></span>
+                                                               <span class="m-list-timeline__text"><?php echo $email->subject; ?></span>
+                                                               <span class="m-list-timeline__time"><?php echo timestamp_to_time_elapsed($email->created_on); ?></span>
+                                                            </a>
+                                                         <?php endforeach; ?>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             <?php }else{ ?>
+                                                <div class="m-stack m-stack--ver m-stack--general" style="min-height: 180px;">
+                                                   <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                                      <span class="">All caught up!<br>No new mail.</span>
+                                                   </div>
+                                                </div>
+                                             <?php } ?>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </li>
+
+                        <!-- Quick Actions widget: Hidden -->
+                        <li class="m-nav__item m-topbar__quick-actions m-dropdown m-dropdown--skin-light m-dropdown--large m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push m-dropdown--mobile-full-width m-dropdown--skin-light d-none"  m-dropdown-toggle="click">
+                           <a href="#" class="m-nav__link m-dropdown__toggle">
+                           <span class="m-nav__link-icon">
+                           <span class="m-nav__link-icon-wrapper"><i class="flaticon-share"></i></span>
+                           <!-- <span class="m-nav__link-badge m-badge m-badge--brand">5</span> -->
+                           </span>  
+                           </a>
+                           <div class="m-dropdown__wrapper">
+                              <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                              <div class="m-dropdown__inner">
+                                 <div class="m-dropdown__header m--align-center">
+                                    <span class="m-dropdown__header-title">Quick Actions</span>
+                                    <span class="m-dropdown__header-subtitle">Shortcuts</span>
+                                 </div>
+                                 <div class="m-dropdown__body m-dropdown__body--paddingless">
+                                    <div class="m-dropdown__content">
+                                       <div class="m-scrollable" data-scrollable="false" data-height="380" data-mobile-height="200">
+                                          <div class="m-nav-grid m-nav-grid--skin-light">
+                                             <div class="m-nav-grid__row">
+                                                <a href="#" class="m-nav-grid__item">
+                                                <i class="m-nav-grid__icon flaticon-file"></i>
+                                                <span class="m-nav-grid__text">Generate Report</span>
+                                                </a>
+                                                <a href="#" class="m-nav-grid__item">
+                                                <i class="m-nav-grid__icon flaticon-time"></i>
+                                                <span class="m-nav-grid__text">Add New Event</span>
+                                                </a>
+                                             </div>
+                                             <div class="m-nav-grid__row">
+                                                <a href="#" class="m-nav-grid__item">
+                                                <i class="m-nav-grid__icon flaticon-folder"></i>
+                                                <span class="m-nav-grid__text">Create New Task</span>
+                                                </a>
+                                                <a href="#" class="m-nav-grid__item">
+                                                <i class="m-nav-grid__icon flaticon-clipboard"></i>
+                                                <span class="m-nav-grid__text">Completed Tasks</span>
+                                                </a>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </li>
+                        <?php if($this->languages){ ?>
+                        <li class="m-nav__item m-topbar__languages m-dropdown m-dropdown--small m-dropdown--arrow m-dropdown--align-right m-dropdown--mobile-full-width"  m-dropdown-toggle="click">
+                           <a href="#" class="m-nav__link m-dropdown__toggle">
+                              <span class="m-nav__link-text">
+                                 <?php $user_language = $this->user->language_id;
+                                    $selected_language_id = '1';
+                                    foreach($this->languages as $language){
+                                       if($language->id == $user_language){
+                                          $selected_language_id = $language->country_id;
+                                       }
+                                    }
+                                 ?>
+                              <img class="m-topbar__language-selected-img" src="<?php echo base_url();?>templates/admin_themes/admin/img/flags/<?php echo strtolower($this->country_code_options[$selected_language_id]); ?>.png">  
+                              <?php echo $this->selected_language_name; ?>
+                              </span>
+                           </a>
+                           <div class="m-dropdown__wrapper">
+                              <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                              <div class="m-dropdown__inner">
+                                 <div class="m-dropdown__header m--align-center">
+                                    <!-- <span class="m-dropdown__header-title">9 New</span> -->
+                                    <span class="m-dropdown__header-subtitle">Select your language</span>
+                                 </div>
+                                 <div class="m-dropdown__body">
+                                    <div class="m-dropdown__content">
+                                       <ul class="m-nav m-nav--skin-light">
+                                          <?php foreach($this->languages as $language):?>
+                                             <li class="m-nav__item m-nav__item--active">
+                                                <a href="<?php echo site_url('authentication/change_language/'.$language->id); ?>" class="m-nav__link m-nav__link--active">
+                                                <span class="m-nav__link-icon">
+                                                   <img class="m-topbar__language-img"  src="<?php echo base_url();?>templates/admin_themes/admin/img/flags/<?php echo strtolower($this->country_code_options[$language->country_id]); ?>.png" alt="flags/<?php echo strtolower($this->country_code_options[$language->country_id]); ?>"/>
+                                                </span>
+                                                <span class="m-nav__link-title m-topbar__language-text m-nav__link-text overflow_text"><?php echo $language->name;?> (<?php echo $this->country_options[$language->country_id]; ?>)
+                                                   </span>
+                                                </a>
+                                             </li>
+                                          <?php
+                                             endforeach;
+                                          ?>
+                                       </ul>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </li>
+                        <?php }?>
+                        <li class="m-nav__item m-topbar__user-profile  m-dropdown m-dropdown--medium m-dropdown--arrow  m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
+                           <a href="#" class="m-nav__link m-dropdown__toggle">
+                              <span class="m-topbar__username m--hidden-tablet m--hidden-mobile m--padding-right-15 m--hide">
+                                 <span class="m-link"><?php echo $this->user->last_name; ?></span>
+                              </span>
+                              <span class="m-topbar__userpic">
+                                 <?php if(preg_match('/eazzy/i', $this->application_settings->application_name)){ ?>
+                                 <img src="https://ui-avatars.com/api/?name=<?php echo $this->user->first_name; ?>+<?php echo $this->user->last_name; ?>&background=da720d&color=fff&size=56&bold=true" class="m--img-rounded m--marginless m--img-centered" alt=""/>
+                                 <?php } 
+                                 if(preg_match('/websacco/i', $this->application_settings->application_name)){ ?>
+                                 <img src="https://ui-avatars.com/api/?name=<?php echo $this->user->first_name; ?>+<?php echo $this->user->last_name; ?>&background=00abf2&color=fff&size=56&" class="m--img-rounded m--marginless m--img-centered" alt=""/>
+                                 <?php }
+                                 
+                                 if(preg_match('/riskTick/i', $this->application_settings->application_name)){ ?>
+                                    <img src="https://ui-avatars.com/api/?name=<?php echo $this->user->first_name; ?>+<?php echo $this->user->last_name; ?>&background=00abf2&color=fff&size=56&" class="m--img-rounded m--marginless m--img-centered" alt=""/>
+                                    <?php }
+                                 ?>
+                                 
+                              </span>
+                           </a>
+                           <div class="m-dropdown__wrapper">
+                              <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                              <div class="m-dropdown__inner">
+                                 <div class="m-dropdown__header m--align-center">
+                                    <div class="m-card-user m-card-user--skin-light">
+                                       <div class="m-card-user__pic">
+                                          <?php if(preg_match('/eazzy/i', $this->application_settings->application_name)){ ?>
+                                          <img src="https://ui-avatars.com/api/?name=<?php echo $this->user->first_name; ?>+<?php echo $this->user->last_name; ?>&background=da720d&color=fff&size=56&bold=true" class="m--img-rounded m--marginless m--img-centered" alt=""/>
+                                          <?php }else{ 
+                                             //if(preg_match('/chamasoft/i', $this->application_settings->application_name)){ 
+                                          ?>
+                                          <img src="https://ui-avatars.com/api/?name=<?php echo $this->user->first_name; ?>+<?php echo $this->user->last_name; ?>&background=00abf2&color=fff&size=56&bold=true" class="m--img-rounded m--marginless m--img-centered" alt=""/>
+                                          <?php } ?>
+                                       </div>
+                                       <div class="m-card-user__details">
+                                          <span class="m-card-user__name m--font-weight-500"><?php echo $this->user->first_name.' '.$this->user->last_name;?></span>
+                                          <a href="" class="m-card-user__email m--font-weight-300 m-link"><?php echo $this->user->email;?></a>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="m-dropdown__body">
+                                    <div class="m-dropdown__content">
+                                       <ul class="m-nav m-nav--skin-light">
+                                          <li class="m-nav__section m--hide">
+                                             <span class="m-nav__section-text">Section</span>
+                                          </li>
+                                          <!-- <li class="m-nav__item">
+                                             <a href="<?php echo site_url('admin/users/edit/'.$this->user->id); ?>
+                                             " class="m-nav__link">
+                                             <i class="m-nav__link-icon mdi mdi-account-edit cht_icn"></i>
+                                             <span class="m-nav__link-title">  
+                                             <span class="m-nav__link-wrap">      
+                                             <span class="m-nav__link-text">Edit Profile</span>      
+                                             <span class="m-nav__link-badge"></span>  
+                                             </span>
+                                             </span>
+                                             </a>
+                                          </li> -->
+                                          <?php 
+                                             if($this->user_groups){?>
+                                                <li class="m-nav__item">
+                                                   <a href="
+                                                      <?php echo $this->application_settings->protocol.$this->application_settings->url.'/checkin';?>
+                                                   " class="m-nav__link">
+                                                   <i class="m-nav__link-icon mdi mdi-account-convert"></i>
+                                                   <span class="m-nav__link-title">  
+                                                   <span class="m-nav__link-wrap">      
+                                                   <span class="m-nav__link-text">Switch Group</span>      
+                                                   <span class="m-nav__link-badge"><span class="m-badge m-badge--success">
+                                                      <?php echo $this->user_groups;?>
+                                                   </span></span>  
+                                                   </span>
+                                                   </span>
+                                                   </a>
+                                                </li>
+                                          <?php }
+                                             if($this->ion_auth->is_admin()){?>
+                                                <li class="m-nav__item">
+                                                   <a href="
+                                                      <?php echo $this->application_settings->protocol.$this->application_settings->url.'/admin';?>
+                                                   " class="m-nav__link">
+                                                   <i class="m-nav__link-icon mdi mdi-account-star cht_icn"></i>
+                                                   <span class="m-nav__link-title">  
+                                                   <span class="m-nav__link-wrap">      
+                                                   <span class="m-nav__link-text">Switch to Admin</span>      
+                                                   <span class="m-nav__link-badge"></span>  
+                                                   </span>
+                                                   </span>
+                                                   </a>
+                                                </li>
+                                          <?php }?>
+                                          <li class="m-nav__separator m-nav__separator--fit">
+                                          </li>
+                                          <li class="m-nav__item">
+                                             <a href="<?php echo site_url('logout');?>" class="btn m-btn--pill btn-danger m-btn btn-sm m-btn--custom m-btn--label-brand m-btn--bolder px-4"><i class="mdi mdi-power-standby mr-2"></i> Logout</a>
+                                          </li>
+                                       </ul>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </li>
+                        <li id="m_quick_sidebar_toggle" class="m-nav__item m-topbar__quick-sidebar d-none">
+                           <a href="#" class="m-nav__link m-dropdown__toggle">
+                           <span class="m-nav__link-icon"><i class="flaticon-grid-menu"></i></span>
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <!-- END: Topbar -->       
+            </div>
+         </div>
+      </div>
+   </header>
+   <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">

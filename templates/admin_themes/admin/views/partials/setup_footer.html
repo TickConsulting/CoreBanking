@@ -1,0 +1,162 @@
+</div>
+<!-- END CONTAINER -->
+<!-- BEGIN FOOTER -->
+<div class="page-footer">
+	<div class="page-footer-inner">
+		 <?php echo date('Y'); ?> &copy; Powered by Chamasoft |
+		 <a href="http://chamasoft.com" title= target="_blank">Go to our Website</a>
+	</div>
+	<div class="scroll-to-top">
+		<i class="icon-arrow-up"></i>
+	</div>
+</div>
+<!-- END FOOTER -->
+</div>
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="../../assets/global/plugins/respond.min.js"></script>
+<script src="../../assets/global/plugins/excanvas.min.js"></script> 
+<![endif]-->
+
+<div class="modal fade bs-modal-sm" id="small" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title"></h4>
+            </div>
+        <?php echo form_open(current_url(),'class="modal-form" role="form" id="submit_form"')?>
+            <input type="text" style="display:none" value="" name="process_title">
+            <div class="modal-body">
+            
+            </div>
+            <div class="clearfix"></div>
+            
+            <div class="modal-footer">
+                <input type="submit" class="btn blue pull submit" value="Save Changes">
+                <button type="button" class="btn blue pull processing">Processing <i class="fa  fa-circle-o-notch"></i></button>
+                <button type="button" class="btn default" data-dismiss="modal">Cancel</button>
+            </div>
+            <?php echo form_close();?>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+		{group:theme:js file="global/plugins/bootstrap/js/bootstrap.min.js" }
+        {group:theme:js file="global/plugins/js.cookie.min.js" }
+        {group:theme:js file="global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" }
+        {group:theme:js file="global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" }
+        {group:theme:js file="global/plugins/jquery.blockui.min.js" }
+        {group:theme:js file="global/plugins/uniform/jquery.uniform.min.js" }
+        {group:theme:js file="global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" }
+        <!-- END CORE PLUGINS -->
+        <!-- BEGIN PAGE LEVEL PLUGINS -->
+        {group:theme:js file="global/plugins/select2/js/select2.full.min.js" }
+        {group:theme:js file="global/plugins/jquery-validation/js/jquery.validate.min.js" }
+        {group:theme:js file="global/plugins/jquery-validation/js/additional-methods.min.js" }
+        {group:theme:js file="global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js" }
+        <!-- END PAGE LEVEL PLUGINS -->
+        <!-- BEGIN THEME GLOBAL SCRIPTS -->
+        {group:theme:js file="global/scripts/app.min.js" }
+        <!-- END THEME GLOBAL SCRIPTS -->
+        <!-- BEGIN PAGE LEVEL SCRIPTS -->
+        {group:theme:js file="pages/scripts/form-wizard.min.js" }
+        <!-- END PAGE LEVEL SCRIPTS -->
+        <!-- BEGIN THEME LAYOUT SCRIPTS -->
+        {group:theme:js file="layouts/layout4/scripts/layout.min.js" }
+        {group:theme:js file="layouts/layout4/scripts/demo.min.js" }
+        {group:theme:js file="layouts/global/scripts/quick-sidebar.min.js" }
+<!--ckeditor plugin-->
+
+<script>
+    jQuery(document).ready(function(){
+            $('input[name=title]').keyup(function(){
+            txt = $(this).val();
+            var re = /\W/gi; 
+            var rew = /\s/gi; 
+        
+            txt2=txt.replace(rew,'-');
+            txt2=txt2.replace(re,'-');
+            $('input[name=slug]').val(txt2.toLowerCase());
+        });
+    $('input[name=title]').blur(function(){
+            txt = $(this).val();
+            var re = /\W/gi; 
+            var rew = /\s/gi; 
+        
+            txt2=txt.replace(rew,'-');
+            txt2=txt2.replace(re,'-');
+            $('input[name=slug]').val(txt2.toLowerCase());
+        });
+		
+		$('.confirmation_link').click(function(){
+            var element = $(this);
+            bootbox.confirm("Are you sure, this action is irreversible?", function(result) {
+               if(result==true){
+                    var href = element.attr('href');
+                    window.location = href;
+               }else{
+                    //close the dialog
+                    return true;
+               }
+            });
+            return false; 
+        });
+
+      
+        $('.confirmation_bulk_action').click(function(e){
+                var element = $(this);
+                $('<input />').attr('type', 'hidden').attr('id',"extra_post").attr('name',"btnAction").attr('value',$(this).val()).appendTo($(this));
+                bootbox.confirm("Are you sure, this action is irreversible?", function(result) {
+                   if(result==true){
+                        //submit the form
+                        form = element.closest('form');
+                        form.submit();
+                   }else{
+                        //close the dialog
+                        $('#extra_post').on('remove',function(){})
+                        return true;
+                   }
+                });
+            e.preventDefault(); 
+        });
+
+         $('.inline').on('click',function(){
+            $('.processing').hide();
+            $('.submit').show();
+
+            var content = $(this).data('content');
+            var form_id = $(this).data('id');
+            $('input[name="process_title"]').val(form_id);
+            $('.modal-title').html($(this).data('title'));            
+            $('.modal-body').html($(content).html());
+            $('#small').modal({show:true});
+        });
+    });
+</script>
+
+<!-- END PAGE LEVEL SCRIPTS -->
+<script>
+jQuery(document).ready(function() {       
+   	// initiate layout and plugins
+   	Metronic.init(); // init metronic core components
+	Layout.init(); // init current layout
+	Demo.init(); // init demo features
+	FormValidation.init();
+   	UIGeneral.init();
+    ComponentsDropdowns.init();
+    ComponentsFormTools.init();
+    UINestable.init();
+    FormFileUpload.init();
+});
+</script>
+
+
+<!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

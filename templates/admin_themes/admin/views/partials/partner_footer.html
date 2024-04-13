@@ -1,0 +1,219 @@
+
+
+</div>
+        <!-- END CONTAINER -->
+        <!-- BEGIN FOOTER -->
+        <div class="page-footer">
+            <div class="page-footer-inner"> <?php echo date('Y',time());?> &copy;
+                <a href="<?php echo $this->application_settings->protocol.$this->application_settings->url;?>" title="Chamasoft" target="_blank">Chamasoft.</a>
+            </div>
+            &nbsp;All Rights Reserved. &nbsp; 
+            <?php if(is_file(FCPATH.'app/log.txt')): ?>
+            Updated on: <?php echo timestamp_to_datetime(filemtime (FCPATH.'app/log.txt')); ?>
+            <?php endif; ?>
+
+            <div class="scroll-to-top">
+                <i class="icon-arrow-up"></i>
+            </div>
+        </div>
+        <!-- END FOOTER -->
+        <!--[if lt IE 9]>
+<script src="../assets/global/plugins/respond.min.js"></script>
+<script src="../assets/global/plugins/excanvas.min.js"></script> 
+<![endif]-->
+        <!-- BEGIN CORE PLUGINS -->
+        {group:theme:js file="custom.js"}
+
+        {group:theme:js file="global/plugins/morris/morris.min.js"}
+        <!--{group:theme:js file="pages/scripts/dashboard.min.js"}-->
+
+
+        <!-- END THEME LAYOUT SCRIPTS -->
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('.btn.dropdown-toggle').click(function(){
+                    var btnme = $(this).parent().parent().find('.search-button');
+                    if(btnme.hasClass('open')){
+                        $(btnme).removeClass('open');
+                    }else{
+                        $(btnme).addClass('open');
+                    }
+                });
+                var check_status = '<?php echo $this->input->get("filter");?>';
+
+                $('.submit_form_button').show()
+                $('.processing').hide();
+
+                $('.close-filter').click(function(e){
+                    $(this).parent().parent().parent().parent().find('.search-button').removeClass('open');
+                    var check_status = '<?php echo $this->input->get("filter");?>';
+                    if(check_status)
+                    {
+                        $('.submit_form_button,.close-filter').hide()
+                        $('.processing').show();
+                        window.location.replace('<?php echo current_url();?>');
+                    }
+                    else
+                    {
+                       $('.search-button').removeClass('open');
+                    }
+                    e.stopPropagation();
+                });
+                $('form.filter').submit(function(e){
+                    $('.submit_form_button,.close-filter').hide()
+                    $('.processing').show();
+                });
+            });
+        </script>
+
+
+        <script>
+        jQuery(document).ready(function(){
+            $('input[name=title]').keyup(function(){
+            txt = $(this).val();
+            var re = /\W/gi; 
+            var rew = /\s/gi; 
+        
+            txt2=txt.replace(rew,'-');
+            txt2=txt2.replace(re,'-');
+            $('input[name=slug]').val(txt2.toLowerCase());
+        });
+        $('input[name=title]').blur(function(){
+            txt = $(this).val();
+            var re = /\W/gi; 
+            var rew = /\s/gi; 
+        
+            txt2=txt.replace(rew,'-');
+            txt2=txt2.replace(re,'-');
+            $('input[name=slug]').val(txt2.toLowerCase());
+        });
+        
+        $('.confirmation_link').click(function(){
+            var element = $(this);
+            bootbox.confirm("Are you sure, you want to proceed?", function(result) {
+               if(result==true){
+                    var href = element.attr('href');
+                    window.location = href;
+               }else{
+                    //close the dialog
+                    return true;
+               }
+            });
+            return false; 
+        });
+
+
+        $('.prompt_confirmation_message_link').click(function(){
+            var element = $(this);
+            bootbox.prompt($(this).attr('data-title'), function(result) {
+                if (result === null) {
+                    return true;
+                } else {
+                    var href = element.attr('href');
+                    window.location = href+'?confirmation_code='+result;
+                }
+            });
+            return false;
+        });
+
+      
+        $('.confirmation_bulk_action').click(function(e){
+                var element = $(this);
+                $('<input />').attr('type', 'hidden').attr('id',"extra_post").attr('name',"btnAction").attr('value',$(this).val()).appendTo($(this));
+                bootbox.confirm("Are you sure, you want to proceed?", function(result) {
+                   if(result==true){
+                        //submit the form
+                        form = element.closest('form');
+                        form.submit();
+                   }else{
+                        //close the dialog
+                        $('#extra_post').on('remove',function(){})
+                        return true;
+                   }
+                });
+            e.preventDefault(); 
+        });
+
+         $('.inline').on('click',function(){
+            $('.processing').hide();
+            $('.submit').show();
+
+            var content = $(this).data('content');
+            var form_id = $(this).data('id');
+            $('input[name="process_title"]').val(form_id);
+            $('.modal-title').html($(this).data('title'));            
+            $('.modal-body').html($(content).html());
+            $('#small').modal({show:true});
+        });
+
+         $('.form_submit').submit(function(e)
+        {
+            $('.submit_form_button').hide();
+            $('.processing_form_button').show();
+
+            return true;
+        });//this code is written by a very very hungryy man!!! 
+    });
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('input[name="check"]').click(function(){
+            if($(this).prop("checked") == true)
+            {
+                $('.checkboxes').parent().addClass('checked');
+                $( ".checkboxes" ).prop( "checked", true );
+            }
+            else if($(this).prop("checked") == false)
+            {
+                $('.checkboxes').parent().removeClass('checked');
+                $( ".checkboxes" ).prop( "checked", false );
+            }
+        });
+
+        if($('input[name="check"]').prop("checked") == true)
+            {
+                $('.checkboxes').parent().addClass('checked');
+                $( ".checkboxes" ).prop( "checked", true );
+            }
+            else if($('input[name="check"]').prop("checked") == false)
+            {
+                $('.checkboxes').parent().removeClass('checked');
+                $( ".checkboxes" ).prop( "checked", false );
+            }
+    });
+</script>
+
+
+<script>
+$(document).ready(function(){
+    $('input[name=name]').keyup(function(){
+        txt = $(this).val();
+        var re = /\W/gi; 
+        var rew = /\s/gi; 
+
+        txt2=txt.replace(rew,'-');
+        txt2=txt2.replace(re,'-');
+        $('input[name=slug]').val(txt2.toLowerCase());
+    });
+    $('input[name=name]').blur(function(){
+        txt = $(this).val();
+        var re = /\W/gi; 
+        var rew = /\s/gi; 
+
+        txt2=txt.replace(rew,'-');
+        txt2=txt2.replace(re,'-');
+        $('input[name=slug]').val(txt2.toLowerCase());
+    });
+});
+</script>
+
+<script type="text/javascript">
+    $('.date-picker').datepicker({ dateFormat: 'dd-mm-yy' ,autoclose: true});
+</script>
+
+    </body>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" >
+    <!-- begin::Head -->
+    <head>
+        <meta charset="utf-8" />
+        <title>{group:template:title}</title>
+        <meta name="description" content="Latest updates and statistic charts"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+        <!--begin::Web font -->
+        {group:theme:js file="jquery-3.4.0.js"}
+        {group:theme:js file="webfonts/webfont-1-6-16.js"}
+        <script>
+          WebFont.load({
+            google: {"families":["Poppins:300,400,500,600,700","Roboto:300,400,500,600,700"]},
+            active: function() {
+                sessionStorage.fonts = true;
+            }
+          });
+          var passphrase = '<?php echo $this->session->userdata("pass_key");?>';
+        </script>
+				{group:theme:css file="vendors/base/vendors.bundle.css"}
+        {group:theme:css file="demo/demo11/base/style.bundle.css"}
+        <?php if(strtolower($this->application_settings->application_name) == 'chamasoft') { ?>
+          {group:theme:css file="./custom/chamasoft_theme.css?v=1.0.3"}
+        <?php } elseif(strtolower($this->application_settings->application_name) == 'websacco'){ ?>
+          {group:theme:css file="./custom/websacco_theme.css?v=1.0.3"}
+        <?php } else{ ?>
+            {group:theme:css file="./custom/websacco_theme.css?v=1.0.3"}
+        <?php } ?>
+        {group:theme:css file="custom/authentication.css?v=1.0.3"}
+        
+        <link rel="shortcut icon" href="<?php echo $this->application_settings?site_url('uploads/logos/'.$this->application_settings->favicon):site_url('templates/img/favicon/favicon.png');?>" /> 
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-59515138-7"></script>
+        <script>
+             window.dataLayer = window.dataLayer || [];
+             function gtag(){dataLayer.push(arguments);}
+             gtag('js', new Date());
+
+             gtag('config', 'UA-59515138-7');
+        </script>
+    </head>
+    <body  class="m--skin- m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default"  >

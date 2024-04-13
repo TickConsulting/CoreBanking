@@ -1,0 +1,25 @@
+/* root variables file */
+:root {
+    --danger: #b00;
+    --default_color: #33911a;
+    --default_border: #e2eee0;
+    --default_label_form_text_color: #52c234;
+    --default_label_form_text_color_secondary: #64d345;
+    --default_sidebar_search: #64d3459f;
+    --default_sidebar_menu_color: #64d345c0;
+    --default_sidebar_menu_color_hover: #64d345;
+    --default_body_bg: #fff;
+    --default_bg: #f0ffec;
+    --bg_one: #99db87;
+    --bg_two: #c3fcb4;
+    --bg_three: #d9ffd0;
+    --table_bg_row: #d9ffd048;
+    --default_btn: #33911a;
+    --default_btn_hover: #2b7c15;
+    --default_checkin_accordion_hover: #33911a1c;
+    --default_checkin_admin_hover: rgba(0, 0, 0, 0.07);
+    --default_checkin_status_badge: #2b7c1563;
+    --primary_text: #2a7715;
+    --text_checkin_admin_default: #444444;
+    --text_checkin_admin_active: #333333;
+}

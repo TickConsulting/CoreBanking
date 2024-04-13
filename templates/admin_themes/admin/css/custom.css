@@ -1,0 +1,366 @@
+.body-content-details
+{
+    margin-top: -10px;
+}
+.login .logo {
+    margin: 30px auto 20px;
+    padding: 15px;
+    margin-left: -25px;
+    text-align: center;
+}
+
+.login .logo img
+{
+	    height: 65px;
+}
+
+.login .content .login-form .form-actions{
+    padding: 0 30px 5px;
+}
+
+.login .content .forget-form, .login .content .register-form {
+    display: block;
+}
+
+.login .content .alert p {
+    color: inherit !important;
+    margin: 0px 0;
+}
+
+.table
+{
+    width: 100%;
+}
+
+.btn-default
+{
+    background-color:#E6E6E6 !important;
+}
+
+.default-layout .processing_form_button, .form_submit .processing_form_button,.popup-form
+{
+    display: none;
+}
+
+.form_submit .new-line-table .select2me
+{
+    max-width: 130px !important;
+}
+
+.table_hidden,#total_amount,.exta_fields,.donation
+{
+    display: none;
+}
+.amount
+{
+    text-align: right;
+}
+
+.btn:not(.md-skip) , .label
+{
+    font-weight: 400 !important;
+}
+
+@media (min-width: 992px)
+{
+    .page-sidebar-fixed .page-footer {
+        margin-left: inherit;
+        text-align: left;
+    }
+}
+
+
+.table td, .table th {
+    font-size: 13px;
+}
+p.paging{
+  margin: 0px 0 5px 0px;  
+}
+
+.pagination {
+    margin: 0px 0 5px 0; 
+}
+.pagination>li>a, .pagination>li>span 
+{
+    padding: 3px 10px;
+}
+
+body
+{
+    font-size: 13px;
+}
+
+.page-footer {
+    padding: 7px 20px 10px !important;
+    font-size: 13px;
+    height: 33px;
+}
+
+.colorpicker {
+    margin-top: 0px;
+}
+
+.minicolors-theme-bootstrap .minicolors-swatch {
+    z-index: 100;
+}
+.form-inline .select2
+{
+    min-width: 250px;
+}
+
+.filter-row
+{
+    margin: 1% 0;
+}
+
+.page-header.navbar .page-logo .logo-default {
+    margin: 15px 10px 0;
+    //height:50px;
+    height: 60px;
+}
+
+
+.logos img
+{
+    max-width: 100%;
+}
+.pagination>li>a.active
+{
+    background: #f2f6f9;
+    color: #5b9bd1;
+}
+
+table .actions>.btn:not(.md-skip).btn-xs 
+{
+    font-size: 9px;
+    padding: 2px 8px;
+    font-weight: 100 !important;
+}
+
+input.knob
+{
+    display:none;
+}
+
+.knob-div
+{
+    max-height: 140px;
+     min-height:130px;
+}
+canvas
+{
+    display: none;
+}
+/***Quick Actions on page -***/
+.dropdown-menu>li>a {
+    line-height: 15px;
+}
+.child-menu
+{
+    margin-left:10px;
+}
+.dropdown-menu .divider
+{
+    margin:0px;
+}
+
+/*****For filtering***/
+.form .filter .form-body,.form .filter .form-actions
+{
+    padding:0px;
+}
+
+.form .filter .form-body
+{
+    margin-bottom:10px;
+}
+
+@media(min-width:600px)
+{
+    .search-button .input-large {
+        width: 500px!important;
+    }
+}
+.search-button
+{
+    margin-bottom: 5px;  
+}
+
+.search-button .filter label
+{
+    font-size: 13px;
+}
+
+.search-button .filter .processing
+{
+    display:none;
+}
+/*********end filtering styles***/
+
+/****table multiple lines***/
+.table-multiple-items .form-control,.table-multiple-items .input-icon.right>.form-control {
+    height: 25px;
+    padding: 3px 4px;
+        border-radius: 3px;
+}
+.table-multiple-items  textarea.form-control{
+    height:auto;
+}
+.table-multiple-items .btn-icon-only {
+    height: 24px;
+    width: 24px;
+}
+/**
+.table-multiple-items .btn:not(.md-skip) {
+    padding: 4px 19px 8px 10px;
+}
+**/
+
+.table .btn {
+    margin-right: 0px ! important;
+    margin-bottom: 0px !important;
+}
+
+#append-new-line{
+    display:none;
+}
+.table {
+    margin-bottom:10px;
+}
+.table-multiple-items .input-icon>i {
+    margin: 6px 2px 4px 10px;
+}
+
+.table-multiple-items .input-icon.right>i {
+    left: auto;
+    right: 0px;
+}
+ table td.actions a.btn:not(.md-skip).btn-xs 
+{
+    font-size: 9px;
+    padding: 3px 5px;
+    margin-bottom: 5px !important;
+}
+
+.mt-element-ribbon {
+    padding-bottom: 40px;
+}
+
+.mt-element-ribbon .ribbon-content {
+    line-height: 1.5;
+}
+
+.mt-element-ribbon a.action-link
+{
+    margin-top:5px;
+}
+
+.table-multiple-items  .input-group-addon {
+    padding: 4px 4px 2px 3px ;
+}
+
+.table-multiple-items .has-error  .input-group-addon {
+    padding: 4px 10px 2px 3px ;
+}
+
+#default .portlet>.portlet-title {
+    margin-bottom: 20px;
+}
+
+.timeline-body-content a:hover{
+    text-decoration: none;
+}
+
+.required{
+    color:red;
+}
+
+.table-multiple-items, .table-multiple-items>tbody>tr>td, .table-multiple-items>tbody>tr>th, .table-multiple-items>tfoot>tr>td, .table-multiple-items>tfoot>tr>th, .table-multiple-items>thead>tr>td, .table-multiple-items>thead>tr>th {
+     border: 0px solid #e7ecf1; 
+}
+.table-multiple-items, .table-multiple-items>tbody>tr>td, .table-multiple-items>tbody>tr>th, .table-multiple-items>tfoot>tr>td, .table-multiple-items>tfoot>tr>th, .table-multiple-items>thead>tr>td, .table-multiple-items>thead>tr>th {
+     border-bottom: 1px solid #e7ecf1; 
+}
+.table-multiple-items>thead>tr>td, .table-multiple-items>thead>tr>th {
+     border-bottom: 1px solid #DAD4D4 !important; 
+}
+.table-multiple-items .select2-container--bootstrap .select2-selection--single {
+    height: 26px;
+    line-height: 1.42857;
+    padding: 3px 24px 6px 12px;
+}
+.table-layout-fixed{
+    table-layout: fixed !important;
+}
+.table-multiple-items .btn:not(.md-skip) {
+    padding: 3px 7px 3px 7px;
+}
+
+.payment_description{
+    display: none;
+}
+
+
+.date-time-range{
+    width:100%;
+}
+
+
+.ms-container {
+    width: 100%;
+}
+.ms-container .ms-list{
+    height:400px;
+}
+
+.margin-top-25{
+    margin-top:25px !important;
+}
+
+
+.ms-container .ms-optgroup-label{
+    padding: 5px 0px 0px 25px;
+}
+.tile a:hover{
+    text-decoration: none;
+}
+
+.dashboard-stat2 .display .number h3 {
+    font-size: 23px;
+}
+
+#append-new-fixed-line,#append-new-percentage-line,#percentage_commission,#fixed_commission,#referrer_information_label_holder,#partner_bank_options,#bank_account_number_options,#otp_urls_holder,.specific_user_menu_setting{
+    display:none;
+}
+.page-header.navbar .top-menu .navbar-nav>li.dropdown-user>.dropdown-menu {
+    width: auto;
+}
+
+.table-multiple-items .form-control {
+    font-size: 12px;
+}
+
+.percentage_setting,
+.fixed_amount_setting,
+.waiver_subscription_setting,
+.limited_distribution_setting,
+.partial_waiver_settings,
+.free_subscription_setting{
+    display: none;
+}
+
+@media(min-width: 550px){
+    .page-sidebar .page-sidebar-menu .sub-menu li>a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu li>a{
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+    .page-sidebar .page-sidebar-menu>li>a>.title, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu>li>a>.title {
+        font-size: 13px;
+        font-weight: 400;
+    }
+}
+
+.smses-settings,.extra_charges_settings,.plans_settings,.modulated_billing_settings,.plans_settings{
+    display: none;
+}

@@ -1,0 +1,16 @@
+@page {
+		size: 27cm 27cm;	/* width height  <length>{1,2} | auto | portrait | landscape NB 'em' and 'ex' % are not allowed */
+		margin: 10%;	/* % of page-box width for LR, height for TB */
+		margin-header: 5mm;
+		margin-footer: 15mm;
+		margin-left: 1.5cm;
+		margin-right: 1.5cm;
+		odd-header-name: myHeader2Odd;
+		even-header-name: html_myHTMLHeaderEven;
+		odd-footer-name: html_myHTMLFooterOdd;
+		even-footer-name: myFooter2Even;
+		marks: crop;	 /* crop | cross | none */
+}
+@page :first {
+	margin-top: 1cm;    /* Top margin on first page 10cm */
+}

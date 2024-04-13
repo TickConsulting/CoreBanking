@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <meta name="title" content="{group:template:title}">
+        <link href="<?php echo $this->application_settings?site_url('uploads/logos/'.$this->application_settings->favicon):site_url('templates/img/favicon/favicon.png');?>" rel="shortcut icon" type="image/x-icon" />
+        <title>{group:template:title}</title>
+        {group:theme:css file="fonts/poppins.css?family=Poppins:300,400,500,600,700" media="all" }
+        {group:theme:css file="line-awesome/css/line-awesome.min.css" media="all" }
+        {group:theme:css file="css/open-iconic-bootstrap.min.css" media="all" }
+        {group:theme:css file="css/animate.css" media="all" }
+        {group:theme:css file="css/owl.carousel.min.css" media="all" }
+        {group:theme:css file="css/owl.theme.default.min.css" media="all" }
+        {group:theme:css file="css/magnific-popup.css" media="all" }
+        {group:theme:css file="css/aos.css" media="all" }
+        {group:theme:css file="css/ionicons.min.css" media="all" }
+        {group:theme:css file="css/bootstrap-datepicker.css" media="all" }
+        {group:theme:css file="css/jquery.timepicker.css" media="all" }
+        {group:theme:css file="css/flaticon.css" media="all" }
+        {group:theme:css file="css/icomoon.css" media="all" }
+        {group:theme:css file="css/style.css" media="all" }
+        {group:theme:js file="jquery.min.js" }
+        {group:theme:css file="css/eazzy_kikundi_theme.css?v=1.0.5"}
+        {group:theme:css file="css/custom.css?v=1.0.5" media="all" }
+        {group:theme:partial name="equity_bank_metadata"}
+        <style>
+            body {
+                color: #333333!important;
+            }
+        </style>
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-59515138-7"></script>
+        <script>
+             window.dataLayer = window.dataLayer || [];
+             console.log("dataLayer",dataLayer);
+             function gtag(){dataLayer.push(arguments);}
+             gtag('js', new Date());
+
+             gtag('config', 'UA-59515138-7');
+        </script>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light w3_megamenu" id="ftco-navbar">
+            <div class="container">
+                <a class="navbar-brand" href="<?php echo $this->application_settings->protocol.$this->application_settings->url;?>">
+                    <img src="<?php echo $this->application_settings?site_url('uploads/logos/'.$this->application_settings->responsive_logo):site_url('templates/frontend_themes/chamasoft/images/logo.png');?>" class="logo1" height="80px" alt="<?php echo $this->application_settings->application_name; ?>"/>
+                    <img src="<?php echo $this->application_settings?site_url('uploads/logos/'.$this->application_settings->responsive_logo):site_url('templates/frontend_themes/chamasoft/images/logo2.png');?>" height="80px" class="logo2" alt="<?php echo $this->application_settings->application_name; ?>" style="display:none;"/>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="oi oi-menu"></span> Menu
+                </button>
+
+                <div class="collapse navbar-collapse" id="ftco-nav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item <?php if($this->uri->uri_string(1) == '') echo 'active'; ?>"><a href="<?php echo $this->application_settings->protocol.$this->application_settings->url;?>" class="nav-link"><?php echo translate('Home'); ?></a></li>
+                        <li class="nav-item"><a href="<?php echo $this->application_settings->protocol.$this->application_settings->url.'/features'; ?>" class="nav-link"><?php echo translate('Features'); ?></a></li>
+                        <?php if($this->languages){ ?>
+                        <li class="nav-item dropdown w3_megamenu-fw">
+                            <a href="javascript:;" data-toggle="dropdown" class="nav-link dropdown-toggle">
+                                <img src="<?php echo site_url('templates/admin_themes/admin/img/flags'); ?>/<?php echo strtolower($this->country_code_options[$this->selected_language_id]); ?>.png" class="" alt="<?php echo strtolower($this->country_code_options[$this->selected_language_id]); ?>" width="25px"> <?php echo $this->selected_language_name; ?>
+                            </a>
+                            <ul class="dropdown-menu wauto lang open">
+                                <div class="arrw" style="margin-left:54px;"></div>
+                                <li class="w3_megamenu-content withoutdesc">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <ul>
+                                                <?php foreach($this->languages as $language):?>
+                                                <li>
+                                                    <a href="<?php echo site_url('authentication/change_language/'.$language->id); ?>">
+                                                        <div class="spec_lang">
+                                                        <div class="lang_img">
+                                                            <img src="<?php echo site_url('templates/admin_themes/admin/img/flags'); ?>/<?php echo strtolower($this->country_code_options[$language->country_id]); ?>.png" class="" alt="<?php echo strtolower($this->country_code_options[$language->country_id]); ?>" width="30px">
+                                                        </div>
+                                                        <span class="lang_title"><?php echo $language->name;?></span>
+                                                        <span class="lang_descr"><?php echo $this->country_options[$language->country_id]; ?></span>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <?php }?>
+                        <?php if($this->ion_auth->logged_in()){  ?>
+                            <li class="nav-item cta"><a href="<?php echo $this->application_settings->protocol.$this->application_settings->url.'/authentication'; ?>" class="nav-link"><span><?php echo $this->user->last_name; ?></span></a></li>
+                            <li class="nav-item cta"><a href="<?php echo $this->application_settings->protocol.$this->application_settings->url.'/logout'; ?>" class="nav-link"><span><?php echo translate('Log Out'); ?></span></a></li>
+                        <?php }else{ ?>
+                            <li class="nav-item cta"><a href="<?php echo $this->application_settings->protocol.$this->application_settings->url.'/login'; ?>" class="nav-link"><span><?php echo translate('Log in'); ?></span></a></li>
+                            <li class="nav-item cta"><a href="<?php echo $this->application_settings->protocol.$this->application_settings->url.'/signup'; ?>" class="nav-link"><span><?php echo translate('Get Started'); ?></span></a></li>
+                        <?php } ?>
+                    </ul>
+                </div>
+            
+            </div>
+        </nav>
+    
+

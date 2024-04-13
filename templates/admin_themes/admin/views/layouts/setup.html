@@ -1,0 +1,221 @@
+{group:theme:partial name="admin_header"}
+<div class="page-content-wrapper setup_form">
+		<div class="page-content">
+			<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+			<!-- BEGIN PAGE HEADER-->
+			<!-- BEGIN PAGE HEAD -->
+			
+			<!-- END PAGE HEAD -->
+			<!-- BEGIN PAGE BREADCRUMB -->
+			<ul class="page-breadcrumb breadcrumb">
+				<li>
+					<a href="<?php echo site_url(); ?>">Home</a>
+					<i class="fa fa-play"></i>
+				</li>
+				<li>
+					<a href="<?php echo current_url();//$this->uri->uri_string(); ?>">{group:template:title}</a>
+				</li>
+			</ul>
+			
+			<!-- END PAGE BREADCRUMB -->
+			<!-- END PAGE HEADER-->
+			<!-- BEGIN PAGE CONTENT-->
+			
+			<div class="row">
+	<div class="col-md-12 ">
+		<!-- BEGIN Portlet PORTLET-->
+		<div class="portlet box white">
+			<div class="portlet-title">
+    			<div class="caption">
+                    <i class=" icon-layers font-red"></i>
+                    <span class="caption-subject font-blue  uppercase"><?php echo $this->association->association_name;?> -
+                        <span class="step-title"> Step <?php echo $step_size;?> of 3  {group:template:title} </span>
+                    </span>
+                </div>
+               
+			</div>
+			<div class="portlet-body form">
+			
+			
+			<table class="table_hidden">
+				<tbody>
+					<tr role="row" class="filter new">
+						<td>
+							1. 
+						</td>
+						<td>
+							<div class="margin-bottom-5">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-user"></i>
+									</span>
+									<?php echo form_input('first_name[]','','class="form-control first_name" placeholder="First Name"');?> 
+								</div>
+							</div>
+						</td>
+						
+						<td>
+							<div class="margin-bottom-5">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-user"></i>
+									</span>
+									<?php echo form_input('last_name[]','','class="form-control last_name" placeholder="Last Name"');?>  
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="margin-bottom-5">
+								<div class="input-group">
+									<span class="input-group-addon">
+										+254
+									</span>
+									<?php echo form_input('phone[]','','class="form-control phone" placeholder="eg 0728100000"');?> 
+									
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="margin-bottom-5">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-user"></i>
+									</span>
+									<?php echo form_input('id_no[]','','class="form-control id_no" placeholder="Id Number"');?>  
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="margin-bottom-5">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-envelope"></i>
+									</span>
+									<?php echo form_input('email[]','','class="form-control email_address" placeholder="Email Address"');?>  
+								</div>
+							</div>
+						</td>
+						<td class="text-right">
+							<a class="btn btn-xs red filter-cancel cut" type="button"><i class="fa fa-times"></i> <span class="hidden-480">Remove</span></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+            <?php echo form_open_multipart($this->uri->uri_string(), ' role="form" id="member_registration_form" class="form-horizontal" '); ?>
+                <div class="form-wizard">
+                    <div class="form-body">
+                        <ul class="nav nav-pills nav-justified steps">
+                            <li <?php if($step_size==1){echo 'class="active"';}?>>
+                                <a href="<?php echo site_url('association/setup/register_members');?>" class="step">
+                                    <span class="number"> 1 </span>
+                                    <span class="desc">
+                                        <i class="fa fa-check"></i> Add Members </span>
+                                </a>
+                            </li>
+                            <li <?php if($step_size==2){echo 'class="active"';}?>>
+                                <a href="<?php echo site_url('association/setup/bank_account');?>" class="step">
+                                    <span class="number"> 2 </span>
+                                    <span class="desc">
+                                        <i class="fa fa-check"></i> Add Bank Account </span>
+                                </a>
+                            </li>
+                            <li <?php if($step_size==3){echo 'class="active"';}?>>
+                                <a href="<?php echo site_url('association/setup/set_contribution');?>"  class="step active">
+                                    <span class="number"> 3 </span>
+                                    <span class="desc">
+                                        <i class="fa fa-check"></i> Add Contribution </span>
+                                </a>
+                            </li>
+                           
+                        </ul>
+                        <div id="bar" class="progress progress-striped" role="progressbar">
+                            <div class="progress-bar progress-bar-success"> </div>
+                        </div>
+						
+						<?php if($this->session->flashdata('warning')){?>
+            <div class="alert alert-warning">
+                <button class="close" data-dismiss="alert"></button>
+                <strong>Warning!</strong> <?php echo $this->session->flashdata('warning'); ?>
+            </div>
+            <?php } ?>
+            <?php if($this->session->flashdata('success')){?>
+            <div class="alert alert-success">
+                <button class="close" data-dismiss="alert"></button>
+                <strong>Success!</strong> <?php echo $this->session->flashdata('success'); ?>
+            </div>
+            <?php } ?>
+            <?php if($this->session->flashdata('info')){?>
+            <div class="alert alert-info">
+                <button class="close" data-dismiss="alert"></button>
+                <strong>Information!</strong> <?php echo $this->session->flashdata('info'); ?>
+            </div>
+            <?php } ?>
+            <?php if($this->session->flashdata('message')){?>
+            <div class="alert alert-info">
+                <button class="close" data-dismiss="alert"></button>
+                <strong>Information!</strong> <?php echo $this->session->flashdata('message'); ?>
+            </div>
+            <?php } ?>
+            <?php if($this->session->flashdata('error')){?>
+	            <div class="alert alert-danger">
+	                <button class="close" data-dismiss="alert"></button>
+	                <strong>Error!</strong> <?php echo $this->session->flashdata('error'); ?>
+	            </div>
+            <?php } ?>
+            <?php if(validation_errors()){?>
+				<div class="alert alert-danger">
+					<h4 class="block">Error! Something went wrong.</h4>
+					<p>
+						<?php echo validation_errors(); ?>
+					</p>
+				</div>
+            <?php } ?>
+                        <div class="tab-content">
+
+
+
+                            <hr/>
+			{group:template:body}
+			
+			
+			</div>
+                           
+                    </div>
+                </div>
+
+                    
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                          <a href="<?php echo site_url('association/'.$previous);?>" class="btn default button-previous pull-left">
+                                <i class="fa fa-angle-left"></i> Back </a>
+                        </div>
+
+                       
+
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                             <a href="<?php echo site_url('association/setup/'.$next);?>" class="btn btn-outline green button-next pull-right"> Continue
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </div>
+
+                       
+                    </div>
+                </div>
+                </div>
+            <?php echo form_close();?>
+				
+			</div>
+		</div>
+		<!-- END Portlet PORTLET-->
+	</div>
+</div>
+
+		</div>
+		<!-- END PAGE CONTENT-->
+</div>
+
+
+{group:theme:partial name="admin_footer"}
+

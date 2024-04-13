@@ -1,0 +1,66 @@
+{group:theme:partial name="admin_header"}
+{group:theme:partial name="admin_top"}
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+{group:theme:partial name="sidebar"}
+<div class="page-content-wrapper">
+                <!-- BEGIN CONTENT BODY -->
+                <div class="page-content">
+                    
+                    <!-- END PAGE BREADCRUMB -->
+                    <!-- BEGIN PAGE BASE CONTENT -->
+                    <div class="body-content-details">
+                        <?php if($this->session->flashdata('warning')){?>
+                        <div class="alert alert-warning">
+                            <button class="close" data-dismiss="alert"></button>
+                            <strong>Warning!</strong> <?php echo $this->session->flashdata('warning'); ?>
+                        </div>
+                        <?php } ?>
+                        <?php if($this->session->flashdata('success')){?>
+                        <div class="alert alert-success">
+                            <button class="close" data-dismiss="alert"></button>
+                            <strong>Success!</strong> <?php echo $this->session->flashdata('success'); ?>
+                        </div>
+                        <?php } ?>
+                        <?php if($this->session->flashdata('info')){?>
+                        <div class="alert alert-info">
+                            <button class="close" data-dismiss="alert"></button>
+                            <strong>Information!</strong> <?php echo $this->session->flashdata('info'); ?>
+                        </div>
+                        <?php } ?>
+                        <?php if($this->session->flashdata('message')){?>
+                        <div class="alert alert-info">
+                            <button class="close" data-dismiss="alert"></button>
+                            <strong>Information!</strong> <?php echo $this->session->flashdata('message'); ?>
+                        </div>
+                        <?php } ?>
+                        <?php if($this->session->flashdata('error')){?>
+                            <div class="alert alert-danger">
+                                <button class="close" data-dismiss="alert"></button>
+                                <strong>Error!</strong> <?php echo $this->session->flashdata('error'); ?>
+                            </div>
+                        <?php } ?>
+                        <?php if(validation_errors()){?>
+                            <div class="alert alert-danger">
+                                <button class="close" data-dismiss="alert"></button>
+                                <h4 class="block">Error! Something went wrong.</h4>
+                                <p>
+                                    <?php echo validation_errors(); ?>
+                                </p>
+                            </div>
+                        <?php } ?>
+                        {group:template:body}
+                    </div>
+                    <!-- END PAGE BASE CONTENT -->
+                </div>
+                <!-- END CONTENT BODY -->
+            </div>
+            <!-- END CONTENT -->
+            <!-- BEGIN QUICK SIDEBAR -->
+            <a href="javascript:;" class="page-quick-sidebar-toggler">
+                <i class="icon-login"></i>
+            </a>
+            {group:theme:partial name="right_sidebar"}
+            <!-- END QUICK SIDEBAR -->
+{group:theme:partial name="admin_footer"}
+

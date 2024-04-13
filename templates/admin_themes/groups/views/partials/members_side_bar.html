@@ -1,0 +1,41 @@
+<!-- BEGIN: Left Aside -->
+<button class="m-aside-left-close m-aside-left-close--skin-light " id="m_aside_left_close_btn"><i class="la la-close"></i></button>
+<div id="m_aside_left" class="m-grid__item m-aside-left m-aside-left--skin-light ">
+   <!-- BEGIN: Aside Menu -->
+   <div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-light m-aside-menu--submenu-skin-light " m-menu-vertical="1" m-menu-scrollable="0" m-menu-dropdown-timeout="500">
+      <?php
+            $this->member_menus_m->generate_menu(current_url());
+      ?>
+   </div>
+   <!-- END: Aside Menu -->
+</div>
+
+<script>
+   $(document).ready(function(){
+      $(".no_search").hide();
+      $(".search_input").on("keyup", function() {
+         var value = $(this).val().toLowerCase();
+         $("ul li.li_searchable").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            $("ul li.li_searchable_hidden").toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            // var items = $("ul li.li_searchable:visible").length;
+            // if(items > 0){ $(".no_search").hide(); } else{  $(".no_search").show(); }
+         });
+      });
+
+      $(".search_input").on("keydown", function(event){
+         // Allow controls such as backspace, tab etc.
+         var arr = [8,9,16,17,20,35,36,37,38,39,40,45,46];
+         // Allow letters
+         for(var i = 65; i <= 90; i++){ arr.push(i); }
+         // Prevent default if not in array
+         if(jQuery.inArray(event.which, arr) === -1){
+            event.preventDefault();
+         }
+      });
+
+      $(".clear_search, .no_search").on("click", function(){
+         $(".search_input").val('').focus().trigger('keyup');
+      });
+   });
+</script>

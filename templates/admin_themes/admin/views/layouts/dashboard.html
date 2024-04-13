@@ -1,0 +1,91 @@
+{group:theme:partial name="admin_header"}
+{group:theme:partial name="sidebar"}
+<div class="page-content-wrapper">
+		<div class="page-content">
+			<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+			<!-- BEGIN PAGE HEADER-->
+			<!-- BEGIN PAGE HEAD -->
+			<div class="page-head">
+				<!-- BEGIN PAGE TITLE -->
+				<div class="page-title">
+					<h1>{group:template:title}</h1>
+				</div>
+				<!-- END PAGE TITLE -->
+			</div>
+			<!-- END PAGE HEAD -->
+			<!-- BEGIN PAGE BREADCRUMB -->
+			<ul class="page-breadcrumb breadcrumb">
+				<li>
+					<a href="<?php echo site_url(); ?>">Home</a>
+					<i class="fa fa-play"></i>
+				</li>
+				<li>
+					<a href="<?php echo current_url(); ?>">{group:template:title}</a>
+				</li>
+			</ul>
+			<?php if($this->session->flashdata('warning')){?>
+            <div class="alert alert-warning">
+                <button class="close" data-dismiss="alert"></button>
+                <strong>Warning!</strong> <?php echo $this->session->flashdata('warning'); ?>
+            </div>
+            <?php } ?>
+            <?php if($this->session->flashdata('success')){?>
+            	<div class="note note-success">
+					<h4 class="block">Success! Everything looks OK..</h4>
+					<p>
+						<?php echo $this->session->flashdata('success'); ?>
+					</p>
+				</div>
+            <?php } ?>
+            <?php if($this->session->flashdata('info')){?>
+            <div class="alert alert-info">
+                <button class="close" data-dismiss="alert"></button>
+                <strong>Information!</strong> <?php echo $this->session->flashdata('info'); ?>
+            </div>
+            <?php } ?>
+            <?php if($this->session->flashdata('message')){?>
+            <div class="alert alert-info">
+                <button class="close" data-dismiss="alert"></button>
+                <strong>Information!</strong> <?php echo $this->session->flashdata('message'); ?>
+            </div>
+            <?php } ?>
+            <?php if($this->session->flashdata('error')){?>
+	            <div class="alert alert-danger">
+	                <button class="close" data-dismiss="alert"></button>
+	                <strong>Error!</strong> <?php echo $this->session->flashdata('error'); ?>
+	            </div>
+            <?php } ?>
+            <?php if(validation_errors()){?>
+				<div class="note note-danger">
+					<h4 class="block">Error! Something went wrong.</h4>
+					<p>
+						<?php echo validation_errors(); ?>
+					</p>
+				</div>
+            <?php } ?>
+
+			<!-- END PAGE BREADCRUMB -->
+			<!-- END PAGE HEADER-->
+			<!-- BEGIN PAGE CONTENT-->
+			<div class="row">
+				<div class="col-md-12 ">
+					<!-- BEGIN Portlet PORTLET-->
+					<div class="portlet light">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-list-alt"></i> Menu
+							</div>
+							
+						</div>
+						<div class="portlet-body">
+							<?php $this->menus_m->generate_dashboard_menu(); ?> 
+						</div>
+					</div>
+					<!-- END Portlet PORTLET-->
+				</div>
+			</div>
+		</div>
+		<!-- END PAGE CONTENT-->
+</div>
+{group:theme:partial name="admin_footer"}
+

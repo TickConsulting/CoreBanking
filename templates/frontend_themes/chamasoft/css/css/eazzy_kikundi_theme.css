@@ -1,0 +1,18 @@
+:root{
+    --bg_primary: #ffffff;
+    --bg_secondary: #fddb7c;
+
+    --bg_one: #3a4348 ;
+    --bg_two: #ffe9ad;
+    --bg_three: #fff7e1;
+
+    --hero_gradient_one: #6e2309;
+    --hero_gradient_two: #da720d;
+
+    --primary_text: #6e2309;
+    --primary_text_two: #da720d;
+    --primary_text_three: #b85c00;
+    --primary_text_hover: #421100;
+    --light_text: #ffffff;
+    --dark_text: #000000;
+}

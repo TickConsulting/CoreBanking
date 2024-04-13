@@ -1,0 +1,86 @@
+ {group:theme:partial name="bank_header"} 
+ {group:theme:partial name="bank_top"} 
+ {group:theme:partial name="bank_side_bar"}
+
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
+    <div class="m-content m-cont__no-padding-top">
+        <div class="m-portlet m-portlet--rounded m-portlet--tabs m-portlet--metal m-portlet--head-solid-bg m-cont__portlet" style="min-height: 250px;">
+            <div class="m-portlet__head m-cont__header-title">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">{group:template:title}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet body_content_portlet">
+                <div class="m-portlet__body">
+                    <?php if($this->session->flashdata('warning')){?>
+                        <div id="error-message-holder">
+                            <div class="m-alert m-alert--outline alert alert-warning alert-dismissible fade show" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                                <strong>
+                                 Warning!
+                                 </strong>
+                                <?php echo strip_tags($this->session->flashdata('warning')); ?>
+                            </div>
+                        </div>
+                    <?php } ?>
+
+                    <?php if($this->session->flashdata('success')){?>
+                        <div id="error-message-holder">
+                            <div class="m-alert m-alert--outline alert alert-success alert-dismissible fade show" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                                <strong>Well done!</strong>
+                                <?php echo strip_tags($this->session->flashdata('success')); ?>
+                            </div>
+                        </div>
+                    <?php } ?>
+                    
+                    <?php if($this->session->flashdata('info')){?>
+                        <div id="error-message-holder">
+                            <div class="m-alert m-alert--outline alert alert-accent alert-dismissible fade show" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                                <strong>Heads up!</strong>
+                                <?php echo strip_tags($this->session->flashdata('info')); ?>
+                            </div>
+                        </div>
+                    <?php } ?>
+                                            
+                    <?php if($this->session->flashdata('message')){?>
+                        <div id="error-message-holder">
+                            <div class="m-alert m-alert--outline alert alert-accent alert-dismissible fade show" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                                <strong>Heads up!</strong>
+                                <?php echo strip_tags($this->session->flashdata('message')); ?>
+                            </div>
+                        </div>
+                    <?php } ?>
+                                        
+                    <?php if($this->session->flashdata('error')){?>
+                        <div id="error-message-holder">
+                            <div class="m-alert m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                                <strong>Error!</strong>
+                                <?php echo ($this->session->flashdata('error')); ?>
+                            </div>
+                        </div>
+                    <?php }?>
+                                                
+                    <?php if(validation_errors()){?>
+                        <div id="error-message-holder">
+                            <div id="error-message-holder">
+                                <div class="m-alert m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                                    <strong>Error!</strong>
+                                    <?php echo (validation_errors()); ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+                    {group:template:body}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{group:theme:partial name="bank_footer"}

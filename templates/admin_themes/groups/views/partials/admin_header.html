@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html lang="en" >
+    <!-- begin::Head -->
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            <?php
+                if($this->notifications_count):
+                    echo '('.$this->notifications_count.')';
+                endif;
+            ?>
+            {group:template:title}
+        </title>
+        <meta name="description" content="Latest updates and statistic charts"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+        <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+        <script>
+          WebFont.load({
+            google: {"families":["Poppins:300,400,500,600,700","Roboto:300,400,500,600,700"]},
+            active: function() {
+                sessionStorage.fonts = true;
+            }
+          });
+        </script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.materialdesignicons.com/3.6.95/css/materialdesignicons.min.css">
+        {group:theme:css file="vendors/custom/fullcalendar/fullcalendar.bundle.css"}
+        {group:theme:css file="/vendors/base/vendors.bundle.css"}
+        {group:theme:css file="demo/demo11/base/style.bundle.css"}
+        {group:theme:css file="custom.css"} 
+        <link rel="shortcut icon" href="<?php echo $this->application_settings?site_url('uploads/logos/'.$this->application_settings->favicon):site_url('templates/img/favicon/favicon.png');?>" type="image/x-icon" />
+    </head>
+    <body  class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-light m-aside-left--fixed m-aside-left--offcanvas m-aside-left--minimize m-brand--minimize m-footer--push m-aside--offcanvas-default"  >

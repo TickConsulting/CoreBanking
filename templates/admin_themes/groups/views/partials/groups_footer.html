@@ -1,0 +1,2054 @@
+<?php
+$billing_payments = $this->billing_settings->get_amount_payable('','',$this->group->id,TRUE); //print_r($billing_payments); die;
+if($billing_payments){
+    if($billing_payments['monthly_amount']){
+        $quarterly_off = ceil((((($billing_payments['monthly_amount'] + $billing_payments['monthly_tax'])*3)-($billing_payments['quarterly_amount'] + $billing_payments['quarterly_tax']))/(($billing_payments['monthly_amount'] + $billing_payments['monthly_tax'])*3))*100);
+        $annual_off = ceil((((($billing_payments['monthly_amount'] + $billing_payments['monthly_tax'])*12)-($billing_payments['annual_amount'] + $billing_payments['annual_tax']))/(($billing_payments['monthly_amount'] + $billing_payments['monthly_tax'])*12))*100);
+    }else{
+        $quarterly_off = 0;
+        $annual_off = 0;
+    }
+}else{
+    $quarterly_off = 0;
+    $annual_off = 0;
+}
+?>
+<div class="modal fade bs-modal-lg subscription_modal" id="full-width" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg" style="padding-right:0px!important;">
+        <div class="modal-content">
+            <!-- <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Modal Title</h4>
+            </div> -->
+            <div class="modal-body subscription_body">
+               <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <div class="header">
+                    <h3><?php echo $this->application_settings->application_name;?> Pricing Plans</h3>
+                    <h5 class="text-danger">You have <strong><?php echo $this->group->trial_days; echo ($this->group->trial_days > 1) ? ' days' : ' day';  ?></strong> left on your free trial!</h5>
+                    <!-- <p>Chamasoft is charged on a <strong>monthly</strong>, <strong>quarterly</strong> or <strong>annual</strong> basis, depending on your preferences.</p> -->
+                </div>
+                <div class="subscription_panels row">                    
+                                <div class="wrap mcb-wrap one-third valign-top col-sm-4 <?php if($this->group->billing_cycle == 1) echo 'active'; ?>" id="monthly_plan" onclick="select_plan('monthly_plan')">
+                                    <div class="mcb-wrap-inner">
+                                        <div class="column mcb-column one column_column">
+                                            <div class="column_attr">
+                                                <div style="position: relative; top: -30px; height:20px;">
+                                                    <div class="md-radio has-success" style="margin-left:50%;padding-bottom:20px;">
+                                                        <input type="radio" id="pricing_monthly_plan" name="pricing_options" class="md-radiobtn" <?php if($this->group->billing_cycle == 1) echo 'checked="checked"'; ?>>
+                                                        <label for="pricing_monthly_plan"><span></span><span class="check"></span><span class="box"></span></label>
+                                                    </div>
+                                                </div>
+                                                <h4 class="pricing_name">Monthly</h4>
+                                                <div class="inner-shell">
+                                                    <h3 class="pricing_price" style="text-align: center;"><?php echo $this->default_country->currency_code; ?> <?php echo number_to_currency($billing_payments['monthly_amount'] + $billing_payments['monthly_tax']); ?></h3>
+                                                    <hr class="no_line" style="margin: 0 auto 0px">
+                                                    <p class="plan_off">Basic Plan</p>
+                                                    <hr class="no_line" style="margin: 0 auto 0px">
+                                                    <!-- <p class="pricing_point"><strong><?php echo $billing_payments['monthly_smses'] . ' FREE SMSes'; ?></strong></p> -->
+                                                    <p class="pricing_point">Amount of <?php echo $this->default_country->currency_code; ?> <?php echo number_to_currency($billing_payments['monthly_amount']); ?> + Tax of <?php echo number_to_currency($billing_payments['monthly_tax']); ?></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4 class="pricing_name" style="display: none;">Monthly</h4>
+                                    <div class="inner-shell" style="display: none;">
+                                        <h3 class="pricing_price" style="text-align: center;"><?php echo $this->default_country->currency_code; ?> <?php echo number_to_currency($billing_payments['monthly_amount'] + $billing_payments['monthly_tax']); ?></h3>
+                                        <hr class="no_line" style="margin: 0 auto 0px">
+                                        <p class="plan_off">Basic Plan</p>
+                                        <hr class="no_line" style="margin: 0 auto 0px">
+                                        <p class="pricing_point"><strong>Every member Above 20, <?php echo $this->default_country->currency_code .' '. $billing_payments['monthly_smses'] . ' '; ?></strong></p>
+                                        <p class="pricing_point">Amount of <?php echo $this->default_country->currency_code; ?> <?php echo number_to_currency($billing_payments['monthly_amount']); ?> + Tax of <?php echo number_to_currency($billing_payments['monthly_tax']); ?></p>
+                                    </div>
+                                </div>
+                                <div class="wrap mcb-wrap one-third valign-top col-sm-4 <?php if($this->group->billing_cycle == 2) echo 'active'; ?>" id="quarterly_plan" onclick="select_plan('quarterly_plan')">
+                                    <div class="mcb-wrap-inner">
+                                        <div class="column mcb-column one column_column">
+                                            <div class="column_attr">
+                                                <div style="position: relative; top: -30px; height:20px;">
+                                                    <div class="md-radio has-success" style="margin-left:50%;padding-bottom:20px;">
+                                                        <input type="radio" id="pricing_quarterly_plan" name="pricing_options" class="md-radiobtn" <?php if($this->group->billing_cycle == 2) echo 'checked="checked"'; ?>>
+                                                        <label for="pricing_quarterly_plan"><span></span><span class="check"></span><span class="box"></span></label>
+                                                    </div>
+                                                </div>
+                                                <h4 class="pricing_name">Quarterly</h4>
+                                                <div class="inner-shell">
+                                                    <h3 class="pricing_price" style="text-align: center;font-weight:200;"><?php echo $this->default_country->currency_code; ?> <?php echo number_to_currency($billing_payments['quarterly_amount'] + $billing_payments['quarterly_tax']); ?></h3>
+                                                    <hr class="no_line" style="margin: 0 auto 0px">
+                                                    <p class="plan_off">Get <?php echo $quarterly_off; ?>% off!</p>
+                                                    <hr class="no_line" style="margin: 0 auto 0px">
+                                                    <!-- <p class="pricing_point"><strong><?php echo $billing_payments['quarterly_smses'] . ' FREE SMSes'; ?></strong></p> -->
+                                                    <p class="pricing_point">Amount of <?php echo $this->default_country->currency_code; ?> <?php echo number_to_currency($billing_payments['quarterly_amount']); ?> + Tax of <?php echo number_to_currency($billing_payments['quarterly_tax']); ?></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4 class="pricing_name" style="display: none;">Quarterly</h4>
+                                    <div class="inner-shell"  style="display: none;">
+                                        <h3 class="pricing_price" style="text-align: center;font-weight:200;"><?php echo $this->default_country->currency_code; ?> <?php echo number_to_currency($billing_payments['quarterly_amount'] + $billing_payments['quarterly_tax']); ?></h3>
+                                        <hr class="no_line" style="margin: 0 auto 0px">
+                                        <p class="plan_off">Get <?php echo $quarterly_off; ?>% off!</p>
+                                        <hr class="no_line" style="margin: 0 auto 0px">
+                                        <p class="pricing_point"><strong>Every member Above 20, <?php echo $this->default_country->currency_code .' '. $billing_payments['quarterly_smses'] . ' '; ?></strong></p>
+                                        <p class="pricing_point">Amount of <?php echo $this->default_country->currency_code; ?> <?php echo number_to_currency($billing_payments['quarterly_amount']); ?> + Tax of <?php echo number_to_currency($billing_payments['quarterly_tax']); ?></p>
+                                    </div>
+                                </div>
+                                <div class="wrap mcb-wrap one-third valign-top col-sm-4 <?php if($this->group->billing_cycle == 3) echo 'active'; ?>" id="annual_plan" onclick="select_plan('annual_plan')">
+                                    <div class="mcb-wrap-inner">
+                                        <div class="column mcb-column one column_column">
+                                            <div class="column_attr">
+                                                <div style="position: relative; top: -30px; height:20px;">
+                                                    <div class="md-radio has-success" style="margin-left:50%;padding-bottom:20px;">
+                                                        <input type="radio" id="pricing_annual_plan" name="pricing_options" <?php if($this->group->billing_cycle == 3) echo 'checked="checked"'; ?> class="md-radiobtn">
+                                                        <label for="pricing_annual_plan"><span></span><span class="check"></span><span class="box"></span></label>
+                                                    </div>
+                                                </div>
+                                                <h4 class="pricing_name">Annual</h4>
+                                                <div class="inner-shell">
+                                                    <h3 class="pricing_price" style="text-align: center;"><?php echo $this->default_country->currency_code; ?> <?php echo number_to_currency($billing_payments['annual_amount'] + $billing_payments['annual_tax']); ?></h3>
+                                                    <hr class="no_line" style="margin: 0 auto 0px">
+                                                    <p class="plan_off">Get <?php echo $annual_off; ?>% off!</p>
+                                                    <hr class="no_line" style="margin: 0 auto 0px">
+                                                    <!-- <p class="pricing_point"><strong><?php echo $billing_payments['annual_smses'] . ' FREE SMSes'; ?></strong></p> -->
+                                                    <p class="pricing_point">Amount of <?php echo $this->default_country->currency_code; ?> <?php echo number_to_currency($billing_payments['annual_amount']); ?> + Tax of <?php echo number_to_currency($billing_payments['annual_tax']); ?></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4 class="pricing_name" style="display: none;">Annual</h4>
+                                    <div class="inner-shell"  style="display: none;">
+                                        <h3 class="pricing_price" style="text-align: center;"><?php echo $this->default_country->currency_code; ?> <?php echo number_to_currency($billing_payments['annual_amount'] + $billing_payments['annual_tax']); ?></h3>
+                                        <hr class="no_line" style="margin: 0 auto 0px">
+                                        <p class="plan_off">Get <?php echo $annual_off; ?>% off!</p>
+                                        <hr class="no_line" style="margin: 0 auto 0px">
+                                        <p class="pricing_point"><strong>Every member Above 20, <?php echo  $this->default_country->currency_code .' '. $billing_payments['annual_smses'] . ' '; ?></strong></p>
+                                        <p class="pricing_point">Amount of <?php echo $this->default_country->currency_code; ?> <?php echo number_to_currency($billing_payments['annual_amount']); ?> + Tax of <?php echo number_to_currency($billing_payments['annual_tax']); ?></p>
+                                    </div>
+                                </div>
+                    <div class="fade_effect"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="ftr-icons">
+                    <span>We accept payments from various trusted platforms</span><br>
+                    <img src="<?php echo site_url('templates/admin_themes/groups/img/mpesalogo_small.png');?>" alt="mpesa" height="16px">
+                    <img src="<?php echo site_url('templates/admin_themes/groups/img/paypal_small.png');?>" alt="mpesa" height="16px">
+                    <img src="<?php echo site_url('templates/admin_themes/groups/img/equity_small.png');?>" alt="mpesa" height="16px">
+                    <img src="<?php echo site_url('templates/admin_themes/groups/img/cheque_small.png');?>" alt="mpesa" height="16px">
+                </div>
+                <!-- <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button> -->
+                <a href="javascript:;" type="button" class="btn btn-lg btn-circle green select_bill_btn" style="text-transform:capitalize;margin-right:15px;margin-bottom:15px;">Continue <i class="fa fa-angle-right"></i></a>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="payment_options" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-full">
+        <div class="modal-content" style="padding-bottom: 30px;
+                        padding-top: 10px;
+                        padding-left: 10px;
+            ">
+            <div class="modal-body payment_options_body">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <div class="header">
+                    <h4 class="text-success">Choose a <strong>payment method</strong> that suits you best!</h4>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 free_plan_show">
+                        <div style="margin-top:60px;text-align:center;width:100%;">
+                            <img src="<?php echo site_url('templates/admin_themes/groups/img/free_plan.png') ?>" width="400px" alt="free plan">
+                        </div>
+                    </div>
+                    <div class="col-md-6 payment_details_show" style="display: none;">
+                        <div class="form-group form-md-radios margin-bottom-30 margin-top-10">
+                            <div class="md-radio-inline" style="display:flex;">
+                                <?php if(!preg_match('/256/i',CALLING_CODE)){ ?>
+                                    <div class="md-radio has-success" style="margin-right:30px;">
+                                        <input type="radio" id="tab-mpesa" name="payment_option" checked="checked" class="md-radiobtn">
+                                        <label for="tab-mpesa">
+                                            <span class="inc"></span>
+                                            <span class="check"></span>
+                                            <span class="box"></span> <img src="<?php echo site_url('templates/admin_themes/groups/img/mpesalogo_small.png');?>" alt="mpesa" height="20px"><!-- M-Pesa-->
+                                        </label>
+                                    </div>
+                                    <div class="md-radio has-success" style="margin-right:30px;">
+                                        <input type="radio" id="tab-paypal" name="payment_option"  class="md-radiobtn">
+                                        <label for="tab-paypal">
+                                            <span class="inc"></span>
+                                            <span class="check"></span>
+                                            <span class="box"></span> <img src="<?php echo site_url('templates/admin_themes/groups/img/paypal_small.png');?>" alt="paypal" height="20px"> <!--PayPal-->
+                                        </label>
+                                    </div>
+                                <?php }else{?>
+                                    <div class="md-radio has-success" style="margin-right:30px;">
+                                        <input type="radio" id="tab-paypal" name="payment_option" checked="checked" class="md-radiobtn">
+                                        <label for="tab-paypal">
+                                            <span class="inc"></span>
+                                            <span class="check"></span>
+                                            <span class="box"></span> <img src="<?php echo site_url('templates/admin_themes/groups/img/paypal_small.png');?>" alt="paypal" height="20px"> <!--PayPal-->
+                                        </label>
+                                    </div>
+                                    <div class="md-radio has-success">
+                                        <input type="radio" id="tab-mtn" name="payment_option" class="md-radiobtn">
+                                        <label for="tab-mtn">
+                                            <span class="inc"></span>
+                                            <span class="check"></span>
+                                            <span class="box"></span> <img src="<?php echo site_url('templates/admin_themes/groups/img/mtn-logo.png');?>" alt="mtn" height="20px">  <strong style="color:#2DA6AF;font-weight:900;">MTN</strong>
+                                        </label>
+                                    </div>
+                                <?php }?>
+                                <!-- <div class="md-radio has-success" style="margin-right:30px;">
+                                    <input type="radio" id="tab-equity" name="payment_option" class="md-radiobtn">
+                                    <label for="tab-equity">
+                                        <span class="inc"></span>
+                                        <span class="check"></span>
+                                        <span class="box"></span> <img src="<?php echo site_url('templates/admin_themes/groups/img/equity_small.png');?>" alt="equity" height="20px"> <strong style="color:#AA4C0F;font-weight:900;">Equity</strong>
+                                    </label>
+                                </div> -->
+                                <div class="md-radio has-success">
+                                    <input type="radio" id="tab-cheque" name="payment_option" class="md-radiobtn">
+                                    <label for="tab-cheque">
+                                        <span class="inc"></span>
+                                        <span class="check"></span>
+                                        <span class="box"></span> <img src="<?php echo site_url('templates/admin_themes/groups/img/cheque_small.png');?>" alt="cheque" height="20px">  <strong style="color:#2DA6AF;font-weight:900;">Cheque</strong>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <?php 
+                        $mpesa_style = '';
+                        $paypal_style = '';
+                        $mtn_style = '';
+                            if(preg_match('/256/i',CALLING_CODE)){ 
+                                $mpesa_style = "display:none;";
+                            }else{
+                                $paypal_style = "display:none;";
+                                $mtn_style = "display:none;";
+                            }
+                        ?>
+
+                        <div class="mpesa-tab" style="<?php echo $mpesa_style?>">
+                            <form class="" id="mpesa_payment" action="POST" method="" role="form">
+                                <a class="colpse-title xpress-lnk" href="javascript:;"><h4><i class="colpse-icon fa fa-angle-down"></i> M-Pesa Xpress Billing</h4></a>
+                                <div class="colpse-body mpesa-xpress-info margin-bottom-20-sub">
+                                    <div class="pAlert"></div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h5><strong>Transaction phone number</strong></h5>
+                                                <h6>Enter the phone number to use for payment.</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-12 p_phone">
+                                            <label class="sr-only" for="phoneNumber">Phone Number</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon input-circle-left">
+                                                    +254
+                                                </span>
+                                                <input type="text" class="form-control" value="" style="border-top-right-radius:20px!important;border-bottom-right-radius:20px!important;" name="phone_pay" id="phone_pay" placeholder="Phone number">
+                                            </div>
+                                            <h6>A transaction request will be sent to this number, enter your M-Pesa PIN to finish the transaction.</h6>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <a class="colpse-title paybill-lnk" href="javascript:;"><h4><i class="colpse-icon fa fa-angle-down"></i> M-Pesa Paybill Instructions</h4></a>
+                                <div class="colpse-body mpesa-paybill-info" style="display:;">
+                                    <ul class="c-ul"> 
+                                        <li>
+                                            <?php
+                                                $default_message='Go To Paybill Option';
+                                                $this->languages_m->translate('go_to_pay_bill_option',$default_message);
+                                            ?>
+                                        </li>
+                                        <li>
+                                            <?php
+                                                $default_message='Enter Chamasoft Pay bill number - 967600 and confirm.';
+                                                $this->languages_m->translate('chamasoft_paybill_number',$default_message);
+                                            ?>
+                                        </li>
+                                        <li>
+                                            <?php
+                                                $default_message='Enter your '.$this->application_settings->application_name.' group number - 
+                                                <ul>
+                                                    <li> <strong>'.$this->group->account_number.'</strong> for subscription  </li>
+                                                    <!-- <li> <strong>SMS'.$this->group->account_number.'</strong> to buy group SMS </li> -->
+                                                </ul>';
+                                                $this->languages_m->translate('enter_chamasoft_group_number',$default_message);
+                                            ?>
+                                        </strong></li>
+                                        <li>
+                                            <?php
+                                                $default_message='Enter the Amount to pay - <strong><span id="total_payable">(Amount Quoted on invoice)</span></strong> and confirm.';
+                                                $this->languages_m->translate('enter_amount_to_pay',$default_message);
+                                            ?>
+                                        </li>
+                                        <li>
+                                            <?php
+                                                $default_message='Make sure the details entered are correct, then proceed to confirm the payment. (You will receive an SMS once the payment is received, confirming the receipt of the payment) ';
+                                                $this->languages_m->translate('confirm_details_entered',$default_message);
+                                            ?>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="paypal-tab" style="<?php echo $paypal_style?>">
+                            <div class="paypal-tab-content">
+                                <div class="pAlert"></div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <h5>Use <strong>PayPal</strong> to make payment.</h5>
+                                            <h6>You might be required to securely sign in to your PayPal account.</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="paypal-button-container"></div>
+                            </div>
+                        </div>
+                        <div class="equity-tab" style="display:none;">
+                            
+                            <a class="colpse-title equitel-lnk" href="javascript:;"><h4><i class="colpse-icon fa fa-angle-down"></i> Equitel SIM Card</h4></a>
+                            <div class="colpse-body equitel-info">
+                                <ul class="c-ul"> 
+                                    <li>
+                                        Go to Equitel Sim toolkit on your phone                                                                                            </li>
+                                    <li>
+                                        Then go to My Money                                                                                            </li>
+                                    <li>
+                                            Then go to Send/Pay                                                                                            </li>
+                                    <li>
+                                        Then go to pay bill and enter <?php echo $this->application_settings->application_name;?> Pay bill Number - 967600 and confirm                                                                                            </li>
+                                    <li>
+                                        Enter Chama Account Number - <strong><?php echo $this->group->account_number;?> </strong> and confirm                                                                                            </li>
+                                    <li>
+                                        Enter the Amount to pay - <strong><span id="total_payable">(Amount Quoted on invoice )</span></strong> and confirm                                                                                            </li>
+                                    <li>
+                                        Make sure the details entered are correct, then proceed to confirm the payment. (You will receive an SMS once the payment is received, confirming the receipt of the payment)                                                                                            </li>
+                                </ul>
+                            </div>
+                            <a class="colpse-title eazzy-lnk" href="javascript:;"><h4><i class="colpse-icon fa fa-angle-down"></i> Eazzy Banking App</h4></a>
+                            <div class="colpse-body eazzy-info" style="display:;">
+                                <ul class="c-ul"> 
+                                    <li>
+                                        Go To Paybill Option                                                                                            </li>
+                                    <li>
+                                        Enter <?php echo $this->application_settings->application_name;?> Pay bill number - 967600 and confirm.                                                                                            </li>
+                                    <li>
+                                        Enter your <?php echo $this->application_settings->application_name;?> group number - <strong><?php echo $this->group->account_number;?></strong>                                                                                            </li>
+                                    <li>
+                                        Enter the Amount to pay - <strong><span id="total_payable">(Amount Quoted on invoice)</span></strong> and confirm.                                                                                            </li>
+                                    <li>
+                                        Make sure the details entered are correct, then proceed to confirm the payment. (You will receive an SMS once the payment is received, confirming the receipt of the payment)                                                                                             </li>
+                                </ul>
+                            </div>
+        
+                        </div>
+                        <div class="cheque-tab" style="display:none;">
+                            <ul class="c-ul"> 
+                                <li>
+                                    Write a cheque to Risk Tick Credit Limited, kindly note the amount is on the proforma invoice sent to your email address                                                                                            </li>
+                                <li>
+                                    Deliver the cheque to our offices at Upper Hill, Elgon Court Block D1 along Ralph Bunche Road off Ngong Road                                                                                            </li>
+                                <li>
+                                    Upon receipt our sales team will activate your account for the period subscribed for                                                                                            </li>
+                            </ul>
+                        </div>
+                        <div class="mtn-tab" style="<?php echo $mtn_style;?>">
+                            <form class="" id="mtn_payment" action="POST" method="" role="form">
+                                <a class="colpse-title" href="javascript:;"><h4><i class="colpse-icon fa fa-angle-down"></i> MTN Xpress Payment</h4></a>
+                                <div class="colpse-body mpesa-xpress-info margin-bottom-20-sub">
+                                    <div class="pAlert"></div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h5><strong>Transaction phone number</strong></h5>
+                                                <h6>Enter the phone number to use for payment.</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-12 p_phone">
+                                            <label class="sr-only" for="phoneNumber">Phone Number</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon input-circle-left">
+                                                    <?php echo '+'.CALLING_CODE;?>
+                                                </span>
+                                                <input type="text" class="form-control" value="" style="border-top-right-radius:20px!important;border-bottom-right-radius:20px!important;" name="mtn_phone_pay" id="mtn_phone_pay" placeholder="Phone number">
+                                            </div>
+                                            <h6>A transaction request will be sent to this number, enter your MTN PIN to finish the transaction.</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-6 summary">
+                        <div class="totals margin-top-20">
+                            <div class="row margin-top-10 margin-bottom-20-sub hidden-sm hidden-xs" style="display:none;">
+                                <div class="col-md-5">&nbsp;</div>
+                                <div class="col-md-6">
+                                    <img src="<?php echo site_url('templates/frontend_themes/startuply/img/fade_5.png');?>" width="150px" alt="chamasoft">
+                                </div>
+                            </div>
+                            <div class="row margin-top-10 margin-bottom-30">
+                                <div class="col-md-3">&nbsp;</div>
+                                <div class="col-md-8">
+                                    <h4 class="text-success">Purchase <strong id="selected_group_plan">*</strong> for <strong><?php echo $this->group->name; ?></strong></h4>
+                                    <?php if($this->group->subscription_status == '4' || $this->group->subscription_status == '5' || !$this->group->subscription_status == '6'){?>
+                                        
+                                        <p style="margin-bottom:-10px;">To change current plan, Kindly contact support to revert unpaid invoices to a plan of your wish.</p>
+
+                                    <?php } else{ ?>
+
+                                    <p>You can change the current subscription plan.</p>
+                                    <button onclick="$('#payment_options').one('hidden.bs.modal', function() { $('.subscription_modal').modal('show'); }).modal('hide');" class="btn green btn-circle" style="margin-top:-10px;margin-bottom:10px;" type="submit"><i class="fa fa-angle-left"></i> I want to change current plan</button>
+                                    <?php }?>
+                                </div>
+                            </div>
+                            <div class="row margin-bottom-10">
+                                <div class="col-md-3">&nbsp;</div>
+                                <div class="col-md-8">
+                                    <h4 class="text-success"><strong>Payment Summary</strong></h4>
+                                </div>
+                            </div>
+                            <div class="row margin-bottom-10 actual_amount_setting">
+                                <div class="col-md-3 hidden-xs">&nbsp;</div>
+                                <div class="col-md-4 col-xs-6"><strong><span id="actual_group_plan">*</span>: </strong></div>
+                                <div class="col-md-4 col-xs-6" style="text-align:right;" id="actual_amount">*</div>
+                            </div>
+                            <div class="row margin-bottom-10 above_ten_members_setting">
+                                <div class="col-md-3 hidden-xs">&nbsp;</div>
+                                <div class="col-md-4 col-xs-6"><strong><span id="above_ten_members">*</span>: </strong></div>
+                                <div class="col-md-4 col-xs-6" style="text-align:right;" id="above_ten_members_amount">*</div>
+                            </div>
+                            <div class="row margin-bottom-10 prorated_amount_setting" id="prorated_amount_shell">
+                                <div class="col-md-3 hidden-xs">&nbsp;</div>
+                                <div class="col-md-4 col-xs-6"><strong>Prorated Amount: </strong></div>
+                                <div class="col-md-4 col-xs-6" style="text-align:right;" id="prorated_amount">*</div>
+                            </div>
+                            <div class="row margin-bottom-20-sub tax_amount_setting">
+                                <div class="col-md-3 hidden-xs">&nbsp;</div>
+                                <div class="col-md-4 col-xs-6"><strong>Tax Accrued: </strong></div>
+                                <div class="col-md-4 col-xs-6" style="text-align:right;" id="actual_tax">*</div>
+                            </div>
+                            <div class="row margin-bottom-10 text-info total_amount_setting">
+                                <div class="col-md-3 hidden-xs">&nbsp;</div>
+                                <div class="col-md-4 col-xs-6" style="border-top:1px dotted #ccc;"><h5><strong>Total</strong></h5></div>
+                                <div class="col-md-4 col-xs-6" style="border-top:1px dotted #ccc;text-align:right;"><h5><strong id="actual_total">*</strong></h5></div>
+                            </div>
+                            <div class="row margin-bottom-10 text-info arrears_amount_setting">
+                                <div class="col-md-3 hidden-xs">&nbsp;</div>
+                                <div class="col-md-4 col-xs-6" style="border-top:1px dotted #ccc;"><h5><strong>Unpaid Arrears</strong></h5></div>
+                                <div class="col-md-4 col-xs-6" style="border-top:1px dotted #ccc;text-align:right;"><h5><strong id="actual_total_arrears">*</strong></h5></div>
+                            </div>
+                            
+                            <div class="row margin-bottom-10 text-info next_billing_date_settings">
+                                <div class="col-md-3 hidden-xs">&nbsp;</div>
+                                <div class="col-md-4 col-xs-6" style="border-top:1px dotted #ccc;"><h5><strong>Next billing date</strong></h5></div>
+                                <div class="col-md-4 col-xs-6" style="border-top:1px dotted #ccc;text-align:right;"><h5><strong id="next_billing_date">*</strong></h5></div>
+                            </div>
+                            <div class="row margin-bottom-20-sub">
+                                <div class="col-md-3">&nbsp;</div>
+                                <div class="col-md-8" style="border-top:0px dotted #ccc;padding-top:20px;">
+                                    <button class="btn green btn-circle payBtnSub" style="margin-bottom:10px;float:right; <?php echo $mpesa_style;?>" type="submit"><i class="fa fa-check"></i> Make Payment (M-Pesa)</button>
+                                    <button class="btn green btn-circle payBtnZero" style="margin-bottom:10px;float:right;" type="submit"><i class="fa fa-check"></i> Process Payment</button>
+                                    <button class="btn green btn-circle paypalpreparepayment" style="margin-bottom:10px;float:right; <?php echo $paypal_style;?>" type="submit"><i class="fa fa-check"></i> Make Payment (PayPal)</button>
+                                    <button class="btn green btn-circle mtnpreparepayment" style="margin-bottom:10px;float:right;display:none;" type="submit"><i class="fa fa-check"></i> Make Payment (MTN)</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn dark btn-outline btn-circle" data-dismiss="modal">Close</button>
+                <button type="button" class="btn green btn-circle"><i class="fa fa-lock"></i> Make Payment</button>
+            </div> -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- <script type="text/javascript" src="https://www.paypalobjects.com/api/checkout.js"></script> -->
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.basic_plan').addClass('col-sm-push-4');
+        $('.pro_plan').addClass('col-sm-pull-4');
+    });
+
+    <?php 
+        if($this->group->billing_cycle == 1){?>
+            var selected_plan_id = "monthly_plan";
+    <?php }elseif($this->group->billing_cycle == 2){?>
+        var selected_plan_id = "quarterly_plan";
+    <?php }elseif($this->group->billing_cycle == 3){?>
+        var selected_plan_id = "annual_plan";
+    <?php }else{?>
+        var selected_plan_id = "annual_plan";
+    <?php }?>
+    var to_pay = 0;
+    
+    var zero_payment = false;
+
+    function select_plan(id){
+        set_selected_plan_data(id);
+        $('.wrap.mcb-wrap').removeClass('active');
+        $('#'+id).addClass('active');
+        $('#pricing_'+id).prop("checked",true);
+    }
+
+    function set_selected_plan_data(plan){
+        var sel_plan = document.getElementById('selected_group_plan');
+        var actual_plan = document.getElementById('actual_group_plan');
+        var actual_amount = document.getElementById('actual_amount');
+        var above_ten_members = document.getElementById('above_ten_members');
+        var above_ten_members_amount = document.getElementById('above_ten_members_amount');
+        var prorated_amount = document.getElementById('prorated_amount');
+        var prorated_amount_shell = document.getElementById('prorated_amount_shell');
+        var actual_tax = document.getElementById('actual_tax');
+        var actual_total = document.getElementById('actual_total');
+        var total_payable = document.getElementById('total_payable');
+        var actual_total_arrears = document.getElementById('actual_total_arrears');
+        var actual_gross = document.getElementById('actual_gross');
+        var next_billing_date = document.getElementById('next_billing_date');
+        // TODO: ADD PLANS.
+        var plans=[
+            {
+                id: "monthly_plan",
+                plan_names: "Monthly",
+                // price: "100",
+                // tax: "0.15",
+                // above_ten_members: "0",
+                // above_ten_members_amount: "0",
+                // prorated_amount: "0",
+                // prorated_amount_shell: "0",
+                // actual_tax: "0",
+                // actual_total: "0",
+                // total_payable: "0",
+                // actual_total_arrears: "0",
+                // actual_gross: "0",
+                // next_billing_date: "0"
+            },
+            {
+                id: "quarterly_plan",
+                plan_names: "Quarterly",
+                // price: "300",
+                // tax: "0.15",
+                // above_ten_members: "0",
+                // above_ten_members_amount: "0",
+                // prorated_amount: "0",
+                // prorated_amount_shell: "0",
+                // actual_tax: "0",
+                // actual_total: "0",
+                // total_payable: "0",
+                // actual_total_arrears: "0",
+                // actual_gross: "0",
+                // next_billing_date: "0"
+            },
+            {
+                id: "annual_plan",
+                plan_names: "Annual",
+                // price: "500",
+                // tax: "0.15",
+                // above_ten_members: "0",
+                // above_ten_members_amount: "0",
+                // prorated_amount: "0",
+                // prorated_amount_shell: "0",
+                // actual_tax: "0",
+                // actual_total: "0",
+                // total_payable: "0",
+                // actual_total_arrears: "0",
+                // actual_gross: "0",
+                // next_billing_date: "0"
+            }
+        ];
+        var selected_plan = plans.filter(function(obj){
+            return obj.id == plan;
+        });
+         // Removed if condition
+         // var plans = plans ?  $.parseJSON(plans) : [];
+         if(plan == 'monthly_plan'){
+               $('.payment_details_show').show();
+               $('.free_plan_show').hide();
+               plan_name = plans[0].plan_names;
+               selected_plan_id = 1;
+               sel_plan.innerHTML = plan_name+' Plan';
+               actual_plan.innerHTML = plan_name+' Subscription';
+         }
+         else if(plan == 'quarterly_plan'){
+               $('.payment_details_show').show();
+               $('.free_plan_show').hide();
+               selected_plan_id = 2;
+               plan_name = plans[1].plan_names;
+               sel_plan.innerHTML = plan_name+' Plan';
+               actual_plan.innerHTML = plan_name+' Subscription';
+         }
+         else if(plan == 'annual_plan'){
+               $('.payment_details_show').show();
+               $('.free_plan_show').hide();
+               selected_plan_id = 3;
+               plan_name = plans[2].plan_names;
+               sel_plan.innerHTML = plan_name+' Plan';
+               actual_plan.innerHTML = plan_name+' Subscription';
+        }     
+        $.ajax({
+            type: "POST",
+            url: `<?php echo base_url(); ?>group/billing/get_new_amount_payable/1`,
+            data: {
+                'package_id': '<?php echo $this->group->billing_package_id;?>',
+                'billing_cycle_id': selected_plan_id,
+                'group_id': '<?php echo $this->group->id; ?>'
+            },
+            success: function(response){
+                response = JSON.parse(response);
+                <?php if($this->group->subscription_status == 4 || $this->group->subscription_status == 5){?>
+                    next_billing_date.innerHTML = response['billing_date'];
+                <?php }else{?>
+                    next_billing_date.innerHTML = response['next_biling_date'];
+                <?php }?>                
+                to_pay = (response['amount']+response['prorated_amount']+response['tax']);
+                if(parseInt(response['plan_amount'])>0){
+                    $('#actual_amount').html("<?php echo $this->default_country->currency_code; ?> " + response['plan_amount'].toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'));
+                }else{
+                    $('#actual_amount').html("<?php echo $this->default_country->currency_code; ?> " +"0.00");
+                }
+                if(parseInt(response['past_ten_members_amount'])>0){
+                    $('#above_ten_members_amount').html("<?php echo $this->default_country->currency_code; ?> " + response['past_ten_members_amount'].toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'));
+                }else{
+                    $('.above_ten_members_setting').hide('none');
+                }
+                $('#prorated_amount').html("<?php echo $this->default_country->currency_code; ?> " + response['prorated_amount']?.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'));
+                $('#actual_tax').html("<?php echo $this->default_country->currency_code; ?> " + response['tax']?.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'));
+                $('#actual_total').html("<?php echo $this->default_country->currency_code; ?> " + (response['amount']+response['prorated_amount']+response['tax']).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'));
+                $('#total_payable').html("<?php echo $this->default_country->currency_code; ?> " + (response['amount']+response['prorated_amount']+response['tax']).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'));
+                if(response['account_arrears']){
+                    to_pay = response['account_arrears'];
+                    $('.actual_amount_setting,.prorated_amount_setting,.tax_amount_setting,.total_amount_setting').hide();
+                    //$('.arrears_amount_setting').slideDown();
+                    $('.arrears_amount_setting').css('display','flex');
+
+                    if((response['account_arrears'])>0){
+                        $('#actual_total_arrears').html("<?php echo $this->default_country->currency_code; ?> " + (response['account_arrears']).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'));
+                    }else{
+                        $('#actual_total_arrears').html("<?php echo $this->default_country->currency_code; ?> " + (0).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'));
+                    }
+                    
+                    $('#actual_gross').html("<?php echo $this->default_country->currency_code; ?> " + (response['account_arrears']).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'));
+                //return true;
+                }else{
+                    //$('.arrears_amount_setting').hide();
+                    $('.arrears_amount_setting').css('display','none');
+                    $('.actual_amount_setting,.prorated_amount_setting,.tax_amount_setting,.total_amount_setting').slideDown();
+                    $('#actual_gross').html("<?php echo $this->default_country->currency_code; ?> " + (response['amount']+response['prorated_amount']+response['tax']).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'));
+                //return true;
+                }
+                
+                if(to_pay==0){
+                    zero_payment = true;
+                    $('.payBtnZero').slideDown();
+                    $('.payBtnSub').slideUp();
+                    $('.paypalpreparepayment').slideUp();
+                }else{
+                    zero_payment = false;
+                    $('.payBtnZero').slideUp();
+                    console.log('mpesa_style: <?php echo $mpesa_style;?>');
+                    <?php if($mpesa_style){?>
+                        $('.payBtnSub').slideUp();
+                    <?php }else{?>
+                        $('.payBtnSub').slideDown();
+                    <?php }?>
+                        
+                }
+            },
+            error: function(response){
+                //console.log(response);
+                //return false;
+            }
+        });
+        
+    }
+
+    $(document).ready(function(){
+        
+        //initialize one plan selected by defaault
+        set_selected_plan_data(selected_plan_id);
+        get_unpaid_invoice_data();
+
+        function get_unpaid_invoice_data(){
+            $.ajax({
+                type: "POST",
+                url: '<?php echo base_url(); ?>group/billing/get_group_unpaid_arrears_and_due_date',
+                data: '',
+                success: function(response){
+                    //console.log(response);
+                    var data = $.parseJSON(response);
+                    $('.unpaid_inv_msg').html('You have an unpaid invoice of <?php echo $this->default_country->currency_code; ?> ' + data.arrears.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,') + ' which is due on ' + data.due_date);
+                },
+                error: function(response){
+                    console.log('Error fetching unpaid invoice data.');
+                }
+            });
+        }
+
+        
+        
+        $('.select_bill_btn').click(function(){
+            mApp.block('.subscription_modal .modal-lg',{
+                overlayColor: '#000000',
+                animate: true
+            });
+            $('.select_bill_btn').html('Continue <i class="fa fa-spinner fa-spin"></i>');
+            
+            var plan = '';
+            if(selected_plan_id == 1) { plan = 'monthly_plan'; } else if(selected_plan_id == 2) { plan = 'quarterly_plan'; } else if(selected_plan_id == 3) { plan = 'annual_plan'; }
+            
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url(); ?>group/billing/update_group_billing_cycle",
+                data: {'billing_cycle': selected_plan_id},
+                success: function(response){
+                    //console.log(response);
+                    if(plan == 'monthly_plan'){
+                        $('.payment_details_show').hide();
+                        $('.free_plan_show').show();
+                    }else{
+                        $('.free_plan_show').hide();
+                        $('.payment_details_show').show();
+                    }
+                    set_selected_plan_data(plan)
+                    $('.select_bill_btn').html('Continue <i class="fa fa-angle-right"></i>');
+                    $('.subscription_modal').one('hidden.bs.modal', function() {
+                        $('#payment_options').modal('show');
+                    }).modal('hide');
+                    mApp.unblock('.subscription_modal .modal-lg');
+                },
+                error: function(response){
+                    //console.log(response);
+                    $('.select_bill_btn').html('Continue <i class="fa fa-angle-right"></i>');
+                }
+            });
+        });
+
+
+        $(document).on('shown.bs.modal', "#payment_options",function(e){
+            $('.append-select2').select2();
+            if(to_pay==0){
+                zero_payment = true;
+                $('.payBtnZero').slideDown();
+                $('.payBtnSub').slideUp();
+                //$('.paypalpreparepayment').slideUp();
+            }else{
+                zero_payment = false;
+                $('.payBtnZero').slideUp();
+                <?php if($mpesa_style){?>
+                    $('.payBtnSub').slideUp();
+                <?php }else{?>
+                    $('.payBtnSub').slideDown();
+                <?php }?>
+            }
+            
+            //FormInputMask.init();
+            //alert('Hello!');
+            //$('#full-width > div > div > div.modal-body.subscription_body > button').click();
+        });
+
+        $(document).on('hidden.bs.modal', "#payment_options",function(e){
+            $('#tab-mpesa').click();
+            //remove values
+            $('#actual_group_plan').html("*");
+            $('#selected_group_plan').html("*");
+            $('#actual_amount').html("*");
+            $('#prorated_amount').html("*");
+            $('#actual_tax').html("*");
+            $('#actual_total').html("*");
+            $('#total_payable').html("*");
+            $('#actual_total_arrears').html("*");
+            $('#actual_gross').html("*");
+
+            $('.payBtnZero').slideUp();
+
+            //reset data now
+            var plan = '';
+            if(selected_plan_id == 1) { plan = 'monthly_plan'; } else if(selected_plan_id == 2) { plan = 'quarterly_plan'; } else if(selected_plan_id == 3) { plan = 'annual_plan'; }
+            set_selected_plan_data(plan);
+
+            //from old billing page
+            $('.paypal-tab-content input[name="amount_pay"]').removeAttr('disabled','disabled').val('');
+            $('.paypal-tab-content select[name="service_"]')
+                    .removeAttr('disabled','disabled')
+                    .val('')
+                    .trigger('change');
+            $('.paypal-tab-content input[name="paymentMode"]').removeAttr('disabled','disabled'); 
+            $('.paypal-tab-content .pAlert').addClass('hidden');
+            $('.paypalpreparepayment').show();
+            $('#paypal-button-container').html(''); 
+            $('#tab-mpesa').click();
+            $('#uniform-paymentMode2').click();
+            $('#uniform-paymentMode2 input[type="radio"]').click();
+            
+        });
+        
+        
+        function receive_payment(amount,data,payfor){
+            $(document).ready(function(){
+                if(payfor == 'sms'){
+                    var service_ = "sms";
+                }else{
+                    var service_ = "";
+                }
+                $.ajax({
+                    type: "POST",
+                    url: '<?php echo base_url(); ?>group/billing/receive_complete_billing',
+                    data: {'amount': amount,'data':data,'service_':service_},
+                    success: function(response){
+                        if(response == 'Successful'){
+                            toastr['success']('Your payment has been successfully received, You will receive an email and/or SMS notification for the same bill payment.','Bill payment successfully received');
+                            location.reload();
+                        }else{
+                            alert('Could not complete payment '+response);
+                        }
+                    },
+                    error: function(response){
+                        alert('error');
+                    }
+                });
+            });
+        }
+
+        function convert_currency(amount,content,payfor){
+            var dolar_amount = 0;
+            mApp.block(content,{
+                overlayColor: 'white',
+                animate: true
+            });
+            $('.paypalpreparepayment').slideUp();
+            if(payfor == 'sms'){
+                var description = ("SMS purchase payment for <?php echo $this->group->name;?>").replace(/(['"])/g, "\\$1");
+            }else{
+                var description = ("<?php echo $this->group->name;?> billing subscription payment").replace(/(['"])/g, "\\$1");
+            }
+            
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url(); ?>group/billing/calculate_conversion",
+                data: {'amount': to_pay},
+                success: function(response){
+                    mApp.unblock(content); 
+                    pay_amount = response;
+                    $('.paypal-tab-content input[name="amount_pay"]').attr('disabled','disabled');
+                    $('.paypal-tab-content select[name="service_"]').attr('disabled','disabled');
+                    $('.paypal-tab-content input[name="paymentMode"]').attr('disabled','disabled');                    
+                    paypalpaymentAlerts('info','<strong>Pay USD '+pay_amount+'.</strong> To complete your transaction, select option below')
+                    paypal.Button.render({
+                        // Set your environment
+                        env: 'sandbox', // sandbox | production
+                        // Specify the style of the button
+                        style: {
+                            layout: 'vertical',  // horizontal | vertical
+                            size:   'medium',    // medium | large | responsive
+                            shape:  'rect',      // pill | rect
+                            color:  'gold'       // gold | blue | silver | white | black
+                        },
+
+                        // Specify allowed and disallowed funding sources
+                        //
+                        // Options:
+                        // - paypal.FUNDING.CARD
+                        // - paypal.FUNDING.CREDIT
+                        // - paypal.FUNDING.ELV
+                        funding: {
+                            allowed: [
+                                paypal.FUNDING.CARD,
+                                paypal.FUNDING.CREDIT
+                            ],
+                            disallowed: []
+                        },
+
+                        // PayPal Client IDs - replace with your own
+                        // Create a PayPal app: https://developer.paypal.com/developer/applications/create
+                        client: {
+                            sandbox: 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
+                            production: 'AVFVaViFoKQOjzyqmOmRr1_4SYsmxjICzpLhewcLRBJNU03UhGWQf41GgIL2BjMwVyD4HHlHDzV0rImD'
+                        },
+
+                        payment: function (data, actions) {
+                            return actions.payment.create({
+                                payment: {
+                                    transactions: [{
+                                        amount: {
+                                            total: pay_amount,
+                                            currency: 'USD'
+                                        },
+                                        description: description,
+                                    }]
+                                }
+                            });
+                        },
+
+                        onAuthorize: function (data, actions) {
+                            return actions.payment.execute().then(function () {
+                                    mApp.block(content,{
+                                        overlayColor: 'white',
+                                        animate: true
+                                    });
+                                    receive_payment(amount,data,payfor);
+                            });
+                        }
+                    }, '#paypal-button-container');
+                    $('.paypalpreparepayment').slideDown();
+                },
+                error: function(response){
+                    alert('error');
+                    $('.paypalpreparepayment').slideDown();
+                }
+            });
+        }
+        
+        $('#tab-paypal').click(function(){
+            if ($(this).is(':checked')){
+                if(zero_payment){
+                    $('.payBtnZero').slideDown();
+                    $('.payBtnSub').slideUp();
+                    $('.paypalpreparepayment').slideUp();
+                    $('.mtnpreparepayment').slideUp();
+                }else{
+                    $('.payBtnZero').slideUp();
+                    $('.paypalpreparepayment').slideDown();
+                    $('.payBtnSub').slideUp();
+                    $('.mtnpreparepayment').slideUp();
+                }
+                $('#tab-mpesa').removeClass('selec');
+                $('#tab-equity').removeClass('selec');
+                $('#tab-cheque').removeClass('selec');
+                $('#tab-mtn').removeClass('selec');
+                $('#tab-paypal').addClass('selec');
+                $('.mpesa-tab').slideUp();$('.equity-tab,.mtn-tab').slideUp();$('.cheque-tab').slideUp();
+                $('.paypal-tab').slideDown();
+                $('#gSubscrModal .modal-footer .payBtnSub').slideUp();
+            }
+        });
+        $('#tab-mpesa').click(function(){
+            if ($(this).is(':checked')){
+                if(zero_payment){
+                    $('.payBtnZero').slideDown();
+                    $('.payBtnSub').slideUp();
+                    $('.paypalpreparepayment').slideUp();
+                    $('.mtnpreparepayment').slideUp();
+                }else{
+                    $('.payBtnZero').slideUp();
+                    $('.paypalpreparepayment').slideUp();
+                    $('.mtnpreparepayment').slideUp();
+                    $('.payBtnSub').slideDown();
+                }
+                $('#tab-paypal').removeClass('selec');
+                $('#tab-equity').removeClass('selec');
+                $('#tab-cheque').removeClass('selec');
+                $('#tab-mtn').removeClass('selec');
+                $('#tab-mpesa').addClass('selec');
+                $('.paypal-tab').slideUp();$('.equity-tab,.mtn-tab').slideUp();$('.cheque-tab').slideUp();
+                $('.mpesa-tab').slideDown();
+                $('#gSubscrModal .modal-footer .payBtnSub').slideDown();
+            }
+        });
+        $('#tab-equity').click(function(){
+            if ($(this).is(':checked')){
+                if(zero_payment){
+                    $('.payBtnZero').slideDown();
+                    $('.payBtnSub').slideUp();
+                    $('.paypalpreparepayment').slideUp();
+                    $('.mtnpreparepayment').slideUp();
+                }else{
+                    $('.payBtnZero').slideUp();
+                    $('.paypalpreparepayment').slideUp();
+                    $('.payBtnSub').slideUp();
+                    $('.mtnpreparepayment').slideUp();
+                }
+                $('#tab-paypal').removeClass('selec');
+                $('#tab-mpesa').removeClass('selec');
+                $('#tab-cheque').removeClass('selec');
+                $('#tab-mtn').removeClass('selec');
+                $('#tab-equity').addClass('selec');
+                $('.paypal-tab').slideUp();$('.mpesa-tab,.mtn-tab').slideUp();$('.cheque-tab').slideUp();
+                $('.equity-tab').slideDown();
+                $('#gSubscrModal .modal-footer .payBtnSub').slideUp();
+            }
+        });
+        $('#tab-cheque').click(function(){
+            if ($(this).is(':checked')){
+                if(zero_payment){
+                    $('.payBtnZero').slideDown();
+                    $('.payBtnSub').slideUp();
+                    $('.paypalpreparepayment').slideUp();
+                    $('.mtnpreparepayment').slideUp();
+                }else{
+                    $('.payBtnZero').slideUp();
+                    $('.paypalpreparepayment').slideUp();
+                    $('.payBtnSub').slideUp();
+                    $('.mtnpreparepayment').slideUp();
+                }
+                $('#tab-paypal').removeClass('selec');
+                $('#tab-mpesa').removeClass('selec');
+                $('#tab-equity').removeClass('selec');
+                $('#tab-mtn').removeClass('selec');
+                $('#tab-cheque').addClass('selec');
+                $('.paypal-tab').slideUp();$('.mpesa-tab,.mtn-tab').slideUp();$('.equity-tab').slideUp();
+                $('.cheque-tab').slideDown();
+                $('#gSubscrModal .modal-footer .payBtnSub').slideUp();
+            }
+        });
+        $('#tab-mtn').click(function(){
+            if ($(this).is(':checked')){
+                if(zero_payment){
+                    $('.payBtnZero').slideDown();
+                    $('.payBtnSub').slideUp();
+                    $('.paypalpreparepayment').slideUp();
+                    $('.mtnpreparepayment').slideDown();
+                }else{
+                    $('.payBtnZero').slideUp();
+                    $('.paypalpreparepayment').slideUp();
+                    $('.payBtnSub').slideUp();
+                    $('.mtnpreparepayment').slideDown();
+                }
+                $('#tab-paypal').removeClass('selec');
+                $('#tab-mpesa').removeClass('selec');
+                $('#tab-equity').removeClass('selec');
+                $('#tab-cheque').removeClass('selec');
+                $('#tab-mtn').addClass('selec');
+                $('.paypal-tab').slideUp();$('.mpesa-tab,.cheque-tab').slideUp();$('.equity-tab').slideUp();
+                $('.mtn-tab').slideDown();
+                $('#gSubscrModal .modal-footer .payBtnSub').slideDown();
+            }
+        });
+
+        $('.xpress-lnk').click(function(){
+            if($(this).hasClass('show_')){
+                $('.mpesa-xpress-info').slideDown();
+                $(this).find('.colpse-icon').addClass('fa-angle-down').removeClass('fa-angle-right');
+                $(this).removeClass('show_');
+                if(zero_payment){
+                    $('.payBtnZero').slideDown();
+                    $('.payBtnSub').slideUp();
+                    $('.paypalpreparepayment').slideUp();
+                }else{
+                    $('.payBtnZero').slideUp();
+                    $('.paypalpreparepayment').slideUp();
+                    $('.payBtnSub').slideDown();
+                }
+            }
+            else{
+                $('.mpesa-xpress-info').slideUp();
+                $(this).find('.colpse-icon').addClass('fa-angle-right').removeClass('fa-angle-down');
+                $(this).addClass('show_');
+                if(zero_payment){
+                    $('.payBtnZero').slideDown();
+                    $('.payBtnSub').slideUp();
+                    $('.paypalpreparepayment').slideUp();
+                }else{
+                    $('.payBtnZero').slideUp();
+                    $('.paypalpreparepayment').slideUp();
+                    $('.payBtnSub').slideUp();
+                }
+            }
+        });
+        $('.paybill-lnk').click(function(){
+            if($(this).hasClass('show_')){
+                $('.mpesa-paybill-info').slideDown();
+                $(this).find('.colpse-icon').addClass('fa-angle-down').removeClass('fa-angle-right');
+                $(this).removeClass('show_');
+            }
+            else{
+                $('.mpesa-paybill-info').slideUp();
+                $(this).find('.colpse-icon').addClass('fa-angle-right').removeClass('fa-angle-down');
+                $(this).addClass('show_');
+                //$('.xpress-lnk').click();
+            }
+        });
+        $('.equitel-lnk').click(function(){
+            if($(this).hasClass('show_')){
+                $('.equitel-info').slideDown();
+                $(this).find('.colpse-icon').addClass('fa-angle-down').removeClass('fa-angle-right');
+                $(this).removeClass('show_');
+            }
+            else{
+                $('.equitel-info').slideUp();
+                $(this).find('.colpse-icon').addClass('fa-angle-right').removeClass('fa-angle-down');
+                $(this).addClass('show_');
+            }
+        });
+        $('.eazzy-lnk').click(function(){
+            if($(this).hasClass('show_')){
+                $('.eazzy-info').slideDown();
+                $(this).find('.colpse-icon').addClass('fa-angle-down').removeClass('fa-angle-right');
+                $(this).removeClass('show_');
+            }
+            else{
+                $('.eazzy-info').slideUp();
+                $(this).find('.colpse-icon').addClass('fa-angle-right').removeClass('fa-angle-down');
+                $(this).addClass('show_');
+            }
+        });
+        
+        $(document).on('click','.paypalpreparepayment',function(e){
+            var payfor = '';
+            var paymentMode =  $('.paypal-tab-content input[name="paymentMode"]:checked').val();
+            var amount_pay = to_pay;
+            var content = $('.paypal-tab-content');
+            if(amount_pay){
+                convert_currency(amount_pay,content,payfor);
+            }else{
+                paypalpaymentAlerts('danger', '<strong>Error!</strong> Amount being paid for is required.');
+            }    
+            e.preventDefault();
+        });
+
+
+        //toggle selected radio
+        $("input[name='paymentMode']:checked").parent().addClass("rChkd");
+        $("input[name='paymentMode']").change(function() {
+            $('.pAlert').addClass('hidden');
+            var pMde = $("input[name='paymentMode']:checked").val();
+            $("input[name='paymentMode']").closest('label.mt-radio').removeClass("rChkd");
+            $("input[name='paymentMode']:checked").closest('label.mt-radio').addClass("rChkd");
+            if(pMde=='full'){
+                pmde_type = 'full';
+                $('#amount_pay').val('0<?php //echo $total_balance; ?>');
+                $('.p_amnt').addClass('hidden');
+                //$('.p_amnt3').slideUp();
+                $('.p_phone').removeClass('col-md-6');
+                $('.p_phone').addClass('col-md-12');
+            }
+            else if(pMde=='partial'){
+                pmde_type = 'partial';
+                $('#amount_pay').val('');
+                $('.p_phone').removeClass('col-md-12');
+                $('.p_phone').addClass('col-md-6');
+                $('.p_amnt').removeClass('hidden');
+                //$('.p_amnt3').slideDown();
+            }
+        });
+
+        //remove error on value change
+        $('#amount_pay').on('input',function(e){ $('.pAlert').addClass('hidden'); });
+        $('#phone_pay').on('input',function(e){ $('.pAlert').addClass('hidden'); });
+        /* $('#amount_pay').change(function(){ $('.pAlert').addClass('hidden'); });
+        $('#phone_pay').change(function(){ $('.pAlert').addClass('hidden'); });*/
+
+        $(".payBtnSub").on('click', function() {
+            $('.payBtnSub').prop('disabled', true);
+            $(".payBtnSub").html('<i class="fa fa-spinner fa-spin"></i> Processing...');
+            
+            //if passed validation, send request
+            if(valInputs()){
+                dataString = {
+                    'service_': '', 
+                    'phone_pay': $('#phone_pay').val(), 
+                    'amount_pay': to_pay
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo base_url(); ?>/group/billing/make_mpesa_payment",
+                    data: dataString,
+                    success: function(response){
+                        //console.log(response);
+                        paymentAlerts('success', '<strong>Success!</strong> A request was initiated successfully. Check your phone to continue.');
+                        //reset submit button
+                        $(".payBtnSub").html('<i class="fa fa-check"></i> Make Payment (M-Pesa)');
+                        $('.payBtnSub').prop('disabled', false);
+                        //close modal after 5 seconds
+                        setTimeout(function() {
+                            $('#gSubscrModal').modal('hide');
+                            $('.pAlert').addClass('hidden');
+                            //$("#mpesa_payment").trigger("reset");//reset form
+                        }, 5000);
+                    },
+                    error: function(response){
+                        //console.log(response);
+                        paymentAlerts('danger', '<strong>Error!</strong> A request could not be initiated at this time, please try again later.');
+                        //reset submit button
+                        $(".payBtnSub").html('<i class="fa fa-check"></i> Make Payment');
+                        $('.payBtnSub').prop('disabled', false);
+                    }
+                });
+            }else{
+                //reset submit button
+                $(".payBtnSub").html('<i class="fa fa-check"></i> Make Payment');
+                $('.payBtnSub').prop('disabled', false);
+            };
+
+            //disble submitting form
+            return false;
+        });
+        $(".mtnpreparepayment").on('click', function() {
+            $('.mtnpreparepayment').prop('disabled', true);
+            $(".mtnpreparepayment").html('<i class="fa fa-spinner fa-spin"></i> Processing...');
+            
+            //if passed validation, send request
+            if(mtnValInputs()){
+                dataString = {
+                    'service_': '', 
+                    'phone_pay': $('#mtn_phone_pay').val(), 
+                    'amount_pay': to_pay,
+                    'calling_code' : '<?php echo CALLING_CODE;?>'
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo base_url(); ?>/group/billing/make_mtn_payment",
+                    data: dataString,
+                    success: function(response){
+                        //console.log(response);
+                        paymentAlerts('success', '<strong>Success!</strong> A request was initiated successfully. Check your phone to continue.');
+                        //reset submit button
+                        $(".mtnpreparepayment").html('<i class="fa fa-check"></i> Make Payment (MTN)');
+                        $('.mtnpreparepayment').prop('disabled', false);
+                        //close modal after 5 seconds
+                        setTimeout(function() {
+                            $('#gSubscrModal').modal('hide');
+                            $('.pAlert').addClass('hidden');
+                            //$("#mpesa_payment").trigger("reset");//reset form
+                        }, 5000);
+                    },
+                    error: function(response){
+                        //console.log(response);
+                        paymentAlerts('danger', '<strong>Error!</strong> A request could not be initiated at this time, please try again later.');
+                        //reset submit button
+                        $(".mtnpreparepayment").html('<i class="fa fa-check"></i> Make Payment');
+                        $('.mtnpreparepayment').prop('disabled', false);
+                    }
+                });
+            }else{
+                //reset submit button
+                $(".mtnpreparepayment").html('<i class="fa fa-check"></i> Make Payment');
+                $('.mtnpreparepayment').prop('disabled', false);
+            };
+
+            //disble submitting form
+            return false;
+        });
+
+        $(".payBtnZero").on('click', function() {
+            $('.payBtnZero').prop('disabled', true);
+            $(".payBtnZero").html('<i class="fa fa-spinner fa-spin"></i> Processing...');
+            
+            dataString = {
+                'status': 1
+            };
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url(); ?>/group/billing/confirm_free_billing",
+                data: dataString,
+                success: function(response){
+                    console.log(response);
+                    paymentAlerts('success', '<strong>Success!</strong> Your payment was processed and completed successfully.');
+                    //reset submit button
+                    $(".payBtnZero").html('<i class="fa fa-check"></i> Process Payment');
+                    $('.payBtnZero').prop('disabled', false);
+                    //close modal after 5 seconds
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
+                },
+                error: function(response){
+                    //console.log(response);
+                    paymentAlerts('danger', '<strong>Error!</strong> Your payment could not be processed at this time, please try again later.');
+                    //reset submit button
+                    $(".payBtnZero").html('<i class="fa fa-check"></i> Process Payment');
+                    $('.payBtnZero').prop('disabled', false);
+                }
+            });
+            
+            //disble submitting form
+            return false;
+        });
+        
+        function paypalpaymentAlerts(mde, msg){
+            $('.paypal-tab-content .pAlert').addClass('hidden');
+            $('.paypal-tab-content  .pAlert').html('<div class="alert alert-'+mde+' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>'+msg+'</div>');
+            $('.paypal-tab-content  .pAlert').removeClass('hidden');
+        }
+
+        function paymentAlerts(mde, msg){
+            $('.pAlert').addClass('hidden');
+            $('.pAlert').html('<div class="alert alert-'+mde+' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>'+msg+'</div>');
+            $('.pAlert').removeClass('hidden');
+        }
+
+        function valInputs(){
+            //get input
+            var pamnt = to_pay;
+            var pphne =$('#phone_pay').val();
+            var isnum_p = /^\d+$/.test(pphne);
+
+            if(pamnt==0){
+                paymentAlerts('danger', '<strong>Error!</strong> Amount being paid for is required.');
+                $('#amount_pay').focus();
+                return false;
+            }
+            else if(pphne==''){
+                paymentAlerts('danger', '<strong>Error!</strong> Phone number to use for transaction is required.');
+                $('#phone_pay').focus();
+                return false;
+            }
+            else if(pphne.length < 8){
+                paymentAlerts('danger', '<strong>Error!</strong> Phone number used is too short. Kindly check and try again.');
+                $('#phone_pay').focus();
+                return false;
+            }
+            else if(pphne.length > 14){
+                paymentAlerts('danger', '<strong>Error!</strong> Phone number used is too long. Kindly check and try again.');
+                $('#phone_pay').focus();
+                return false;
+            }
+            else if(!isnum_p){
+                paymentAlerts('danger', '<strong>Error!</strong> Phone number contains invalid characters. Please check and try again.');
+                $('#phone_pay').focus();
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+
+        function mtnValInputs(){
+            //get input
+            var pamnt = to_pay;
+            var pphne =$('#mtn_phone_pay').val();
+            var isnum_p = /^\d+$/.test(pphne);
+
+            if(pamnt==0){
+                paymentAlerts('danger', '<strong>Error!</strong> Amount being paid for is required.');
+                $('#amount_pay').focus();
+                return false;
+            }
+            else if(pphne==''){
+                paymentAlerts('danger', '<strong>Error!</strong> Phone number to use for transaction is required.');
+                $('#mtn_phone_pay').focus();
+                return false;
+            }
+            else if(pphne.length < 8){
+                paymentAlerts('danger', '<strong>Error!</strong> Phone number used is too short. Kindly check and try again.');
+                $('#mtn_phone_pay').focus();
+                return false;
+            }
+            else if(pphne.length > 14){
+                paymentAlerts('danger', '<strong>Error!</strong> Phone number used is too long. Kindly check and try again.');
+                $('#mtn_phone_pay').focus();
+                return false;
+            }
+            else if(!isnum_p){
+                paymentAlerts('danger', '<strong>Error!</strong> Phone number contains invalid characters. Please check and try again.');
+                $('#mtn_phone_pay').focus();
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+    });
+</script>
+
+
+</div>
+<footer class="m-grid__item		m-footer ">
+   <div class="m-container m-container--fluid m-container--full-height m-page__container">
+      <div class="m-stack m-stack--flex-tablet-and-mobile m-stack--ver m-stack--desktop">
+         <div class="m-stack__item m-stack__item--left m-stack__item--middle m-stack__item--last">
+            <span class="m-footer__copyright">
+            <?php echo date('Y');?> &copy; <?php echo $this->application_settings->application_name;?> <a href="chamasoft.com" class="m-link">Chamasoft</a>
+            </span>
+         </div>
+         <div class="m-stack__item m-stack__item--right m-stack__item--middle m-stack__item--first">
+            <ul class="m-footer__nav m-nav m-nav--inline m--pull-right">
+            </ul>
+         </div>
+      </div>
+   </div>
+</footer>
+</div>
+<div id="m_quick_sidebar" class="m-quick-sidebar m-quick-sidebar--tabbed m-quick-sidebar--skin-light">
+   <div class="m-quick-sidebar__content m--hide">
+      <span id="m_quick_sidebar_close" class="m-quick-sidebar__close"><i class="la la-close"></i></span>
+      <ul id="m_quick_sidebar_tabs" class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand" role="tablist">
+         <li class="nav-item m-tabs__item">
+            <a class="nav-link m-tabs__link active" 		data-toggle="tab" href="#m_quick_sidebar_tabs_settings" role="tab">General Settings</a>
+         </li>
+         <li class="nav-item m-tabs__item">
+            <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_quick_sidebar_tabs_logs" role="tab">Group Profile & Settings</a>
+         </li>
+      </ul>
+      <div class="tab-content">
+         <div class="tab-pane active" id="m_quick_sidebar_tabs_settings" role="tabpanel">
+            <div class="m-list-settings m-scrollable">
+               <?php echo form_open_multipart(current_url(),'class="general_settings_form" role="form"'); ?>
+                  <div class="m-list-settings__group">
+                     <div class="m-list-settings__heading">Member Management</div>
+                     <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">Disable Member Edit Profile</span>
+                        <span class="m-list-settings__item-control">
+                           <span class="m-switch m-switch--outline m-switch--icon-check m-switch--brand">
+                              <label>
+                                 <?php echo form_checkbox('disable_member_edit_profile',1,$this->group->disable_member_edit_profile,'class="setting-checkbox"'); ?>
+                                 <span></span> 
+                              </label>
+                           </span>   
+                        </span>
+                     </div>
+                     <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">Member Information Privacy</span>
+                        <span class="m-list-settings__item-control">
+                           <span class="m-switch m-switch--outline m-switch--icon-check m-switch--brand">
+                              <label>
+                                 <?php echo form_checkbox('enable_member_information_privacy',1,$this->group->enable_member_information_privacy,'class="setting-checkbox"'); ?>
+                                 <span></span> 
+                              </label>
+                           </span>   
+                        </span>
+                     </div>
+                     <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">Member Directory</span>
+                        <!-- <span class="m-list-settings__item-label">Disable Member Directory</span> -->
+                        <span class="m-list-settings__item-control">
+                           <span class="m-switch m-switch--outline m-switch--icon-check m-switch--brand">
+                              <label>
+                                 <?php echo form_checkbox('disable_member_directory',1,$this->group->disable_member_directory,'class="setting-checkbox"'); ?>
+                                 <span></span> 
+                              </label>
+                           </span>   
+                        </span>
+                     </div>
+                     <div class="m-list-settings__item">
+                     <span class="m-list-settings__item-label">Member Registration Link</span>
+                     <span class="m-list-settings__item-control">
+                        <button class='btn m-btn--pill btn-default btn-sm float-right' id='copy-member-registration-link-btn'>
+                            <i class='la la-copy'></i>
+                           <?php echo  translate('Copy Link') ?>                       
+                        </button>
+                        <button class='btn m-btn--pill btn-default btn-sm float-right' id='generate-member-registration-link-btn'>
+                            <i class='la la-generate'></i>
+                           <?php echo translate('Generate code') ?>                        
+                        </button>
+                     </span>
+                  </div>
+                  </div>
+
+                  <div class="m-list-settings__group">
+                     <div class="m-list-settings__heading">Disable Contributions Management</div>
+                     <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">Disable Contribution Arrears</span>
+                        <!-- <span class="m-list-settings__item-label">Disable Contribution Arrears</span> -->
+                        <span class="m-list-settings__item-control">
+                           <span class="m-switch m-switch--outline m-switch--icon-check m-switch--brand">
+                              <label>
+                                 <?php echo form_checkbox('disable_arrears',1,$this->group->disable_arrears,'class="setting-checkbox"'); ?>
+                                 <span></span> 
+                              </label>
+                           </span>   
+                        </span>
+                     </div>
+
+                     <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">Ignore Transfers</span>
+                        <!-- <span class="m-list-settings__item-label">Disable Ignore Contribution Transfers</span> -->
+                        <span class="m-list-settings__item-control">
+                           <span class="m-switch m-switch--outline m-switch--icon-check m-switch--brand">
+                              <label>
+                                 <?php echo form_checkbox('disable_ignore_contribution_transfers',1,$this->group->disable_ignore_contribution_transfers,'class="setting-checkbox"'); ?>
+                                 <span></span> 
+                              </label>
+                           </span>   
+                        </span>
+                     </div>
+
+                     <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">Send Monthly Statements</span>
+                        <span class="m-list-settings__item-control">
+                           <span class="m-switch m-switch--outline m-switch--icon-check m-switch--brand">
+                              <label>
+                                 <?php echo form_checkbox('enable_send_monthly_email_statements',1,$this->group->enable_send_monthly_email_statements,'class="email-statements-checkbox"'); ?>
+                                 <span></span> 
+                              </label>
+                           </span>   
+                        </span>
+                     </div>
+                     <div class="email-statements-config" style="display: none;"> 
+                        <small class="m--font-primary">Contribution statements will be sent to members' emails every <b><?php echo ordinal($this->group->statement_send_date?:1); ?></b>. You can change this below</small><br><br>
+                        <?php echo form_dropdown('statement_send_date',array(''=>'-- Send Statements Every --')+$this->statement_sending_date_options,$this->group->statement_send_date?:1,' class="form-control m-input select2 setting-dropdown" ');?>
+                     </div>
+
+                  </div>
+
+                  <div class="m-list-settings__group">
+                     <div class="m-list-settings__heading">Transaction Alerts Management</div>
+                     <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">Bulk Reconciliation</span>
+                        <span class="m-list-settings__item-control">
+                           <span class="m-switch m-switch--outline m-switch--icon-check m-switch--brand">
+                              <label>
+                                 <?php echo form_checkbox('enable_bulk_transaction_alerts_reconciliation',1,$this->group->enable_bulk_transaction_alerts_reconciliation,'class="setting-checkbox"'); ?>
+                                 <span></span> 
+                              </label>
+                           </span>   
+                        </span>
+                     </div>
+                     <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">Allow Merging of Alerts</span>
+                        <span class="m-list-settings__item-control">
+                           <span class="m-switch m-switch--outline m-switch--icon-check m-switch--brand">
+                              <label>
+                                 <?php echo form_checkbox('enable_merge_transaction_alerts',1,$this->group->enable_merge_transaction_alerts,'class="setting-checkbox"'); ?>
+                                 <span></span> 
+                              </label>
+                           </span>   
+                        </span>
+                     </div>
+                  </div>
+
+                  <div class="m-list-settings__group">
+                     <div class="m-list-settings__heading">Loans Management</div>
+                     <div class="m-list-settings__item">
+                        <span class="m-list-settings__item-label">Enable Loans within Group</span>
+                        <span class="m-list-settings__item-control">
+                           <span class="m-switch m-switch--outline m-switch--icon-check m-switch--brand">
+                              <label>
+                                 <?php echo form_checkbox('group_offer_loans',1,$this->group->group_offer_loans,'class="setting-checkbox"'); ?>
+                                 <span></span> 
+                              </label>
+                           </span>   
+                        </span>
+                     </div>
+
+                     <?php if($this->group->group_offer_loans){?>
+
+                        <div class="m-list-settings__item">
+                           <span class="m-list-settings__item-label">Allow members make loan applications</span>
+                           <span class="m-list-settings__item-control">
+                              <span class="m-switch m-switch--outline m-switch--icon-check m-switch--brand">
+                                 <label>
+                                    <?php echo form_checkbox('allow_members_request_loan',1,$this->group->allow_members_request_loan,'class="setting-checkbox"'); ?>
+                                    <span></span> 
+                                 </label>
+                              </span>   
+                           </span>
+                        </div>
+
+                        <div class="m-list-settings__item">
+                           <span class="m-list-settings__item-label">Absolute reducing balance recalculation</span>
+                           <span class="m-list-settings__item-control">
+                              <span class="m-switch m-switch--outline m-switch--icon-check m-switch--brand">
+                                 <label>
+                                    <?php echo form_checkbox('enable_absolute_loan_recalculation',1,$this->group->enable_absolute_loan_recalculation,'class="setting-checkbox"'); ?>
+                                    <span></span> 
+                                 </label>
+                              </span>   
+                           </span>
+                        </div>
+                     <?php }?>
+                  </div>
+               <?php echo form_close(); ?>
+            </div>
+         </div>
+         <div class="tab-pane" id="m_quick_sidebar_tabs_logs" role="tabpanel">
+            <div class="m-list-settings m-scrollable">
+               <div class="m-list-settings__group">
+                  <!-- <div class="m-list-settings__heading">General Settings</div> -->
+                  <div class="m-list-settings__item">
+                     <span class="m-list-settings__item-label">Group Name</span>
+                     <span class="m-list-settings__item-control">
+                        <?php echo $this->group->name; ?>
+                     </span>
+                  </div>
+                  <div class="m-list-settings__item">
+                     <span class="m-list-settings__item-label">Group Logo:</span>
+                     <span class="m-list-settings__item-control">
+                        <img src="<?php echo base_url().'uploads/groups/'.$this->group->avatar; ?>" alt="logo" width="100%">
+                     </span>
+                  </div>
+                  <div class="m-list-settings__item">
+                     <span class="m-list-settings__item-label">Group Admin</span>
+                     <span class="m-list-settings__item-control">
+                        <?php $owner = $this->ion_auth->get_user($this->group->owner); echo $owner->first_name.' '.$owner->last_name; ?>
+                     </span>
+                  </div>
+                  <div class="m-list-settings__item">
+                     <span class="m-list-settings__item-label">Order Member List By</span>
+                     <span class="m-list-settings__item-control">
+                        <?php echo isset($this->member_listing_order_by_options[$this->group->member_listing_order_by])?$this->member_listing_order_by_options[$this->group->member_listing_order_by]:'Not Set'; ?>
+                     </span>
+                  </div>
+                  <div class="m-list-settings__item">
+                     <span class="m-list-settings__item-label">Order From</span>
+                     <span class="m-list-settings__item-control">
+                        <?php echo isset($this->order_by_options[$this->group->order_members_by])?$this->order_by_options[$this->group->order_members_by]:'Not Set'; ?>
+                     </span>
+                  </div>
+                  <div class="m-list-settings__item">
+                     <button class="btn m-btn--pill btn-primary btn-sm float-right" data-toggle="modal" data-target="#settings_modal">
+                        <i class="la la-edit"></i>
+                        <?php echo translate('Modify Settings');?>
+                     </button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="modal fade" id="settings_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+   <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modify Settings</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">×</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form class="m-form m-form--state" id="more-settings-form">
+               <span class="error"></span>
+               <div class="m-form__section m-form__section--first">
+                  <div class="form-group m-form__group row">
+                     <div class="col-lg-4">
+                        <label>SACCO Name:</label>
+                        <div class="input-group">
+                           <?php echo form_input('name',$this->group->name,'class="form-control" id="name" placeholder="SACCO Name"');?>
+                        </div>
+                     </div>
+                     <div class="col-lg-4">
+                        <label>SACCO Phone Number:</label>
+                        <div class="input-group">
+                           <?php echo form_input('phone',$this->group->phone,'class="form-control" id="phone" placeholder="SACCO Phone Number"');?>
+                        </div>
+                     </div>
+                     <div class="col-lg-4">
+                        <label>SACCO Email Address:</label>
+                        <div class="input-group">
+                           <?php echo form_input('email',$this->group->email,'class="form-control" id="email" placeholder="SACCO Email Address"');?>
+                        </div>
+                     </div>
+                  </div> 
+                  <div class="form-group m-form__group row">
+                     <div class="col-lg-6">
+                        <label>SACCO address:</label>
+                        <div class="input-group">
+                           <?php 
+                                 $textarea = array(
+                                    'name'  =>  'address',
+                                    'class' =>  'form-control',
+                                    'rows'  =>  3,
+                                    'value' =>  $this->group->address,
+                                 );
+                              echo form_textarea($textarea);
+                           ?>
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <label>SACCO Admin:</label>
+                        <div class="input-group">
+                           <?php echo form_dropdown('owner',$this->group_user_options,$this->group->owner,'class="form-control m-select2" id="owner" placeholder="Group Owner"');?>
+                        </div>
+                     </div>
+                  </div> 
+                     
+                  <div class="form-group m-form__group row">
+                     <div class="col-md-4">
+                        <label>Order Members By</label>
+                        <div class="input-group">
+                           <?php echo form_dropdown('member_listing_order_by',array(''=> '-- Order Members By? --')+$this->member_listing_order_by_options,$this->group->member_listing_order_by,'class="form-control m-select2" placeholder="Group Member List Ordering"');?>
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        <label>Order From</label>
+                        <div class="input-group">
+                           <?php echo form_dropdown('order_members_by',array(''=> '-- Order Members from? --')+$this->order_by_options,$this->group->order_members_by,'class="form-control m-select2" id="order_members_by" placeholder="Order Members By"');?>
+                        </div>
+                     </div> 
+                     <div class="col-md-4">
+                        <label>Type of Investment club: </label>
+                        <div class="input-group">
+                           <?php echo form_dropdown('group_type',array(''=> '-- Type of Investment club? --')+$this->group_type_options,$this->group->group_type,'class="form-control m-select2" placeholder="Invesment Club"');?>
+                        </div>
+                     </div> 
+                  </div>
+
+                  <div class="form-group m-form__group">
+                     <label for="">SACCO Logo</label>
+                     <div class="m-dropzone dropzone m-dropzone--success" action="<?php echo site_url('ajax/groups/upload_logo'); ?>" id="m-dropzone-three">
+                        <div class="m-dropzone__msg dz-message needsclick">
+                           <h3 class="m-dropzone__msg-title">Drop Logo Here.</h3>
+                        </div>
+                     </div>
+                  </div>
+
+               </div>
+            </form>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="submit-more-settings-form">Save changes</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div id="m_scroll_top" class="m-scroll-top">
+   <i class="la la-arrow-up"></i>
+</div>
+<ul class="m-nav-sticky" style="margin-top: 30px;">
+   <li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Get help & FAQs" data-placement="left">
+      <a href="https://help.chamasoft.com/" target="_blank"><i class="mdi mdi-account-switch"></i></a>
+   </li>
+   <li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Schedule a meeting" data-placement="left">
+      <a href="https://calendly.com/chamasoft-meetings/support-meeting" target="_blank"><i class="mdi mdi-calendar-clock"></i></a>
+   </li>
+   <li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Group settings" data-placement="left">
+      <a href="<?php echo site_url('group/settings')?>" target=""><i class="mdi mdi-settings-outline"></i></a>
+   </li>
+</ul>
+      
+   </body>
+   <!-- end::Body -->
+</html>
+
+
+
+<!-- {group:theme:js file="custom/custom.js"} -->
+{group:theme:js file="vendors/base/vendors.bundle.js"}
+{group:theme:js file="demo/demo11/base/scripts.bundle.js"}
+{group:theme:js file="vendors/custom/fullcalendar/fullcalendar.bundle.js"}
+{group:theme:js file="app/js/dashboard.js"} 
+{group:theme:js file="vendors/custom/datatables/datatables.bundle.js"}
+{group:theme:js file="custom/custom.js"}
+{group:theme:js file="custom/bootbox.min.js"}
+{group:theme:js file="responsive_tabs.js"}
+{group:theme:js file="vendors/custom/datatables/bootstrap-editable.js"}
+{group:theme:js file="custom/cryptojs/aes.js"}
+{group:theme:js file="custom/cryptojs/aes-json-format.js"}
+<!-- <script src="https://www.paypalobjects.com/api/checkout.js"></script> -->
+
+
+<script type="text/javascript">
+   var session_length = '<?php echo $this->application_settings->session_timeout?>';
+   var session_redirect = session_length * 2;;
+  // alert(session_redirect)
+   var base_url = window.location.origin;
+   $(document).ready(function () {
+      modifyGroupSettings();
+      //KTSessionTimeout.init();
+      $('#m_quick_sidebar .m-select2').select2({
+         placeholder:{
+             id: '-1',
+             text: "--Select option--",
+         }, 
+      });
+      if($('.email-statements-checkbox').prop('checked')){
+         $('.email-statements-config').slideDown();
+      }else{
+         $('.email-statements-config').slideUp();
+      }
+
+      $(document).on('change','.email-statements-checkbox',function(){
+         if($(this).prop('checked')){
+            $('.email-statements-config').slideDown();
+         }else{
+            $('.email-statements-config').slideUp();
+         }
+      });
+
+      $(function() {
+         $('.page_title_cust_navs.nav-tabs').responsiveTabs();
+      });
+
+      // Select2.init(".m-select2");
+      //Select2.init();
+     $('.date-picker').datepicker({ dateFormat: 'dd-mm-yy' ,autoclose: true});
+     $('.m-form').attr('autocomplete',"off");
+
+      //initialize select2 on any modal open
+      $(window).on('shown.bs.modal', function() { 
+         $(".modal .m-select2").select2({
+            placeholder:{
+                id: '-1',
+                text: "--Select option--",
+            }, 
+            width: "100%"
+        });
+      });
+
+      $(window).on('hidden.bs.modal', function(e) {
+         $(e.target.id).find('.error').html('').slideUp();
+         RemoveDangerClass($(e.target.id));
+      });
+
+      BootstrapSwitch.init();
+      FormInputMask.init();
+      $('.datatable').DataTable({});
+      $('.scrollable-datatable').DataTable({
+         scrollY: "50vh",
+         scrollX: !0,
+         scrollCollapse: !0,
+      });
+      Inputmask.init();
+      Datepicker.init();
+      $(document).on('keyup','.slug_parent',function(){ 
+         txt = $(this).val();
+         var re = /\W/gi; 
+         var rew = /\s/gi; 
+         txt2=txt.replace(rew,'-');
+         txt2=txt2.replace(re,'-');
+         $('input[name=slug]').each(function(){
+             $(this).val(txt2.toLowerCase());
+         });
+      });
+
+      $(document).on('blur','.slug_parent',function(){ 
+         txt = $(this).val();
+         var re = /\W/gi; 
+         var rew = /\s/gi; 
+         txt2=txt.replace(rew,'-');
+         txt2=txt2.replace(re,'-');
+         $('input[name=slug]').each(function(){
+             $(this).val(txt2.toLowerCase());
+         });
+      });
+
+      $(document).on('keyup','input.currency',function(){
+         TotalAmount.init();
+      });
+
+      $(document).on('blur','input.currency',function(){
+         TotalAmount.init();
+      });
+     
+      TotalAmount.init();
+
+      $(document).on('click','.check_all',function(){
+         if($(this).prop("checked") == true){
+             $('.checkboxes').parent().addClass('checked');
+             $( ".checkboxes" ).prop( "checked", true );
+         }else if($(this).prop("checked") == false){
+             $('.checkboxes').parent().removeClass('checked');
+             $( ".checkboxes" ).prop( "checked", false );
+         }
+      });
+
+      $(document).ready(function(){
+
+        // check if group has join_code
+        var join_code = `<?php echo $this->group->join_code?>`;
+        // if group has join_code, show the copy button
+        if(join_code != ''){
+            $("#copy-member-registration-link-btn").show();
+            $("#generate-member-registration-link-btn").hide();
+        }else {
+            // if group does not have join_code, show generate button
+             $("#generate-member-registration-link-btn").show();
+             $("#copy-member-registration-link-btn").hide();
+        }
+
+        // Copying group member registration link
+        $("#copy-member-registration-link-btn").on('click',function(e){
+            e.preventDefault();
+            var textarea = document.createElement("textarea");
+            document.body.appendChild(textarea);
+            var protocol = `<?php echo $this->application_settings->protocol ?>`;
+            var link = `<?php echo $this->application_settings->url ?>`;
+            textarea.value = protocol +  link + '/join_group/' + join_code;
+            textarea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textarea);        
+            $('#copy-member-registration-link-btn').html('Copied');
+            setTimeout(function(){
+                $('#copy-member-registration-link-btn').html('Copy');
+            },2000);
+        });
+
+        // Generating group member registration link
+      $("#generate-member-registration-link-btn").on('click',function(e){
+            e.preventDefault();
+            $('#generate-member-registration-link-btn').html('Generating...');
+            $.ajax({
+                type: "POST",
+                url: `<?php echo base_url(); ?>ajax/groups/update_group_join_code`,           
+                success: function(response){
+                    response = JSON.parse(response);
+                    if(response.result_code == 1){
+                       join_code = response.data.join_code;
+                       $("#copy-member-registration-link-btn").show();
+                       $("#generate-member-registration-link-btn").hide();
+                    }
+                },
+                error: function(error){
+                    $('#generate-member-registration-link-btn').html('Generate');
+                }
+            });
+        });
+
+      })      
+
+      $(document).ready(function(){
+         $(document).on('click','.cancel_form',function(){
+            refer = '<?php echo $this->agent->referrer();?>';
+            if(refer){
+               window.location.href = refer;
+            }
+         });
+      });            
+
+      $(document).ready(function(){
+            $(document).on('click','.btn.dropdown-toggle',function(){
+                var btnme = $(this).parent();
+                if(btnme.hasClass('open')){
+                    $(btnme).removeClass('open');
+                }else{
+                    $(btnme).addClass('open');
+                }
+            });
+            var check_status = '<?php echo $this->input->get("filter");?>';
+
+            $('.submit_form_button').show();
+            $('.processing').hide();
+
+
+            $('.close-filter').click(function(e){
+                $(this).parent().parent().parent().parent().find('.search-button').removeClass('open');
+                var check_status = '<?php echo $this->input->get("filter");?>';
+                if(check_status)
+                {
+                    $('.submit_form_button,.close-filter').hide()
+                    $('.processing').show();
+                    window.location.replace('<?php echo current_url();?>');
+                }
+                else
+                {
+                   $('.search-button').removeClass('open');
+                }
+                e.stopPropagation();
+            });
+            $('form.filter').submit(function(e){
+                $('.submit_form_button,.close-filter').hide()
+                $('.processing').show();
+            });
+
+            function formatSettings(repo) {
+                if (repo.loading) return repo.text;
+                
+                var markup = "<div class='select2-result-repository clearfix'>" +
+                    "<div class='select2-result-repository__avatar' style='padding:10px;'><span style='font-size:35px;' class='"+repo.icon+"'></span></div>" +
+                    "<div class='select2-result-repository__meta'>" +
+                    "<div class='select2-result-repository__title'>" + repo.name + "</div>"+
+                    "<div class='select2-result-repository__statistics'>"+repo.description+"</div>"+
+                    "<div class='select2-result-repository__statistics'></div>";
+
+                    markup += "<div class='select2-result-repository__statistics'>" +
+                    "</div>" +
+                    "</div></div>";
+
+                if (repo.description) {
+                    //markup += "<div class='select2-result-repository__description'>" + repo.description + "</div>";
+                }
+                var status = "";
+                if(repo.name==1){
+                    status = "<span class='label label-success'>Subscribed</label>";
+                }else if(repo.name==2){
+                    status = "<span class='label label-danger'>Suspended</label>";
+                }else{
+                    if(repo.name>0){
+                        status = "<span class='label label-info'>On Trial</label> <span class=''> "+repo.name+" Day(s) Left</label> ";
+                    }else{
+                        status = "<span class='label label-warning'>Trial Expired</label>";
+                    }
+                }
+
+                markup += "<div class='select2-result-repository__statistics'>" +
+                    "" +
+                    "" +
+                    "</div>" +
+                    "</div></div>";
+
+                return markup;
+            }
+
+            function formatSettingsSelection(repo) {
+                return repo.name || repo.text;
+            }
+        
+            $(".settings-search").select2({            
+                ajax: {
+                    //url: "https://api.github.com/search/repositories",
+                    url: '<?php echo site_url("group/settings_menus/ajax_search_options"); ?>',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            q: params.term, // search term
+                            page: params.page
+                        };
+                    },
+                    processResults: function(data, page) {
+                        // parse the results into the format expected by Select2.
+                        // since we are using custom formatting functions we do not need to
+                        // alter the remote JSON data
+
+                        return {
+                            results: data.items
+                        };
+                    },
+                    cache: true
+                },
+                escapeMarkup: function(markup) {
+                    return markup;
+                }, // let our custom formatter work
+                minimumInputLength: 1,
+                templateResult: formatSettings,
+                templateSelection: formatSettingsSelection
+            });
+            
+            $('#settings_search').change(function(){
+                var url = $(this).val();
+                window.location = "../"+url;
+            });
+
+        });
+   });
+
+   var KTSessionTimeout = function() {
+       var initDemo = function() {
+           $.sessionTimeout({
+               title: "Session Timeout Notification",
+               message: "Your session is about to expire.",
+               keepAliveUrl:'',
+               redirUrl:base_url+'/logout',
+               logoutUrl: base_url+'/logout',
+               warnAfter: session_length, //warn after r seconds
+               redirAfter: session_redirect, //redirect after r seconds,
+               ignoreUserActivity: true,
+               countdownMessage: "Redirecting in {timer} seconds.",
+               countdownBar: true
+           });
+       }
+
+       return {
+           //main function to initiate the module
+           init: function() {
+               initDemo();
+           }
+       };
+   }();
+
+
+
+   var user_name = '<?php echo $this->user->first_name." ".$this->user->last_name;?>';
+   var phone = '<?php echo $this->user->phone;?>';
+   var Email = '<?php echo $this->user->email;?>';
+   var groupName = '<?php echo $this->group->name;?>';
+   window.$crisp=[];window.CRISP_WEBSITE_ID="c5270f37-ed0b-4d2d-a591-66750519833e";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);
+       $crisp.push(["set", "session:data", [[["Group Name",""+groupName+""],["Name",""+user_name+""],["Phone",""+phone+""],["Email",""+Email+""]]]]);
+   })();
+</script>

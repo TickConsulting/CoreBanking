@@ -1,0 +1,783 @@
+<?php
+if($this->application_settings->activate_billing){
+if($this->group->subscription_status == "1" || !$this->group->subscription_status ) {
+   // Group on ongoing trials.
+?>
+<style>
+.m-header.gen_hdr{
+    top:50px!important;
+}
+.m-body.gen_hdr{
+   margin-top: 28px!important;
+}
+</style>
+<div class="upper_notification noselect_">
+   <div class="container">
+       <div class="row">
+           <div class="col-md-12">
+               <h4>
+                   You have <span><?php echo $this->group->trial_days; echo ($this->group->trial_days > 1) ? ' days' : ' day';  ?></span> left on your free trial!
+                   &nbsp;
+                   <button id="subscr_mdl_btn" data-backdrop="static" data-keyboard="false" data-target=".subscription_modal" data-toggle="modal" type="button" class="white btn-sm btn-circle unotif_subscribe" disabled>
+                       <i class="fa fa-check"></i>
+                       <span class="">Subscribe Now&nbsp;</span>
+                   </button>
+                   <a href="javascript:;" class="hide_upper_notification">&times;</a>
+               </h4>
+           </div>
+       </div>
+   </div>
+</div>
+<script>
+   $(document).ready(function(){
+       $('#subscr_mdl_btn').prop('disabled', false);
+       $('.hide_upper_notification').click(function(){
+           $('.upper_notification').slideUp();
+           $('.m-header').removeClass(' gen_hdr');
+           $('.m-body').removeClass(' gen_hdr');
+           $('body > div.page-container').css({'top': '0px'});
+           $('.page-sidebar-fixed .page-sidebar').css({'top': '80px'});
+           $('.page-header-fixed .page-container').css({'margin-top': '60px'});
+       });
+   });
+</script>
+
+<?php
+} else if($this->group->subscription_status == "2" && $this->group->trial_days == '0'){ 
+   // Group not subscribed but trial expired
+?>
+<style>
+.m-header.gen_hdr{
+    top:50px!important;
+}
+.m-body.gen_hdr{
+   margin-top: 28px!important;
+}
+</style>
+   <div class="upper_notification noselect">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-12">
+                  <h4>
+                      You have <span><?php echo $this->group->trial_days; echo ($this->group->trial_days > 1) ? ' days' : ' day';  ?></span> left on your free trial!
+                     
+                      <button id="subscr_mdl_btn" data-backdrop="static" data-keyboard="false" data-target=".subscription_modal" data-toggle="modal" type="button" class="white btn-sm btn-circle unotif_subscribe" disabled>
+                          <i class="fa fa-check"></i>
+                          <span class="">Subscribe Now&nbsp;</span>
+                      </button>
+                      <a href="javascript:;" class="hide_upper_notification">&times;</a>
+                  </h4>
+              </div>
+          </div>
+      </div>
+  </div>
+  <script>
+      $(document).ready(function(){
+          $('#subscr_mdl_btn').prop('disabled', false);
+          $('.hide_upper_notification').click(function(){
+              $('.upper_notification').slideUp();
+              $('.m-header').removeClass(' gen_hdr');
+              $('.m-body').removeClass(' gen_hdr');
+              $('body > div.page-container').css({'top': '0px'});
+              $('.page-sidebar-fixed .page-sidebar').css({'top': '80px'});
+              $('.page-header-fixed .page-container').css({'margin-top': '60px'});
+          });
+      });
+  </script>
+
+  <div class="out_of_trial noselect">
+      <style>
+          body{
+              overflow: hidden;
+              position: fixed;
+          }
+      </style>
+      
+      <div class="shell">
+          <h3>Hello <?php echo $this->user->first_name; ?>, your group "<?php echo $this->group->name;?>" trial period has ended.</h3>
+          <p>Want to access your group? Dont worry, now would be a great time to subscribe!</p>
+              <br>
+              <div class="btn-group">
+              <button id="" data-backdrop="static" data-keyboard="false" data-target=".subscription_modal" data-toggle="modal" type="button" class="btn btn-primary btn-md btn-circle mr-2"><span class="">Subscribe Now&nbsp;</span></button>
+              <br>
+              <button id="contact_us_al_btn" type="button" class="btn btn-md btn-circle btn-outline"><span class=""><i class="mdi mdi-alert-circle-outline"></i> Contact Support&nbsp;</span></button>
+              </div>
+              &nbsp;
+              <br>
+              <p>
+               <span class="text-danger contact_us_al_det" style="display:none;">
+                  <span style="font-weight:900;font-size:20px;">+254 733 366 240</span>
+                  <br>
+                  <span style="font-weight:600;font-size:14px;">support@chamasoft.com</span>
+               </span> 
+              </p>
+              <div class="btn-group">
+               <a href="<?php echo site_url('logout');?>" class="btn m-btn--pill btn-danger m-btn btn-sm m-btn--custom m-btn--label-brand m-btn--bolder px-4"><i class="mdi mdi-power-standby mr-2"></i> Logout</a>
+              </div>            
+              <!--
+              <button id="" type="button" class="btn red btn-md btn-circle btn-outline"><span class=""><i class="mdi mdi-account-key-outline"></i> Reset Group&nbsp;</span></button>-->
+          
+      </div>
+  </div>
+
+  <script>
+   $(document).ready(function(){
+       $('#contact_us_al_btn').on('click', function(){
+           $(this).slideUp();
+           $('.contact_us_al_det').slideDown();
+       });
+   });
+</script>
+<?php 
+} else if($this->group->subscription_status == '3'){
+   //Group paying and has no unpaid invoice
+?>
+   <!-- everything's okay with this group -->
+   <style>
+      .page-header-fixed .page-container {
+          margin-top: 70px!important;
+      }
+      @media (min-width: 992px){
+          .page-sidebar-fixed .page-sidebar {
+              top: 90px!important;
+          }
+      }
+  </style>
+
+<?php
+}else if($this->group->subscription_status == '4'){ //Group paying but has unpaid invoice but yet due date
+?>
+<style>
+.m-header.gen_hdr{
+    top:50px!important;
+}
+.m-body.gen_hdr{
+   margin-top: 28px!important;
+}
+</style>
+<div class="upper_notification noselect">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>
+                    <span class="unpaid_inv_msg" style="font-weight:400;">You have an unpaid invoice which is due soon</span>  
+                    <?php if(preg_match('/(eazzyclub)/',$_SERVER['HTTP_HOST'])){?>
+                    <?php }else{?>
+                    <button id="subscr_mdl_btn" data-backdrop="static" data-keyboard="false" data-target="#payment_options" data-toggle="modal" type="button" class="btn white btn-sm btn-circle unotif_subscribe" disabled>
+                        <span class="">&nbsp;Pay Now</span>
+                        <i class="fa fa-angle-right"></i>
+                    </button>
+                    <a href="javascript:;" class="hide_upper_notification">&times;</a>
+                    <?php }?>
+                </h4>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        $('#subscr_mdl_btn').prop('disabled', false);
+        $('.hide_upper_notification').click(function(){
+            $('.upper_notification').slideUp();
+            $('.m-header').removeClass(' gen_hdr');
+            $('.m-body').removeClass(' gen_hdr');
+            $('body > div.page-container').css({'top': '0px'});
+            $('.page-sidebar-fixed .page-sidebar').css({'top': '80px'});
+            $('.page-header-fixed .page-container').css({'margin-top': '60px'});
+        });
+    });
+</script>
+<?php
+}else if($this->group->subscription_status == '5'){
+   // Paying group but invoice overdue
+?>
+<style>
+   body{
+      overflow:hidden;
+      position:fixed;
+   }
+   .page-header-fixed .page-container {
+       margin-top: 70px!important;
+   }
+   @media (min-width: 992px){
+       .page-sidebar-fixed .page-sidebar {
+           top: 90px!important;
+       }
+   }
+</style>
+<div class="subscr_expired noselect">
+   <div class="shell">
+       <h3>Hello <?php echo $this->user->first_name; ?>, your <?php echo $this->application_settings->application_name;?> subscription has <span class="text-danger">expired</span></h3>
+       <p>Want to access your group? Now's a great time to renew!
+           <br>
+           <br/>
+           <button id="" data-backdrop="static" data-keyboard="false" data-target="#payment_options" data-toggle="modal" type="button" class="btn btn-primary btn-md btn-circle"><span class="">Renew Subscription&nbsp;</span></button>
+       </p>
+   </div>
+</div>
+<?php
+} else if($this->group->subscription_status == '6') {
+   //Group in arrears and locked but has some free trial days
+?>
+<style>
+.m-header.gen_hdr{
+    top:50px!important;
+}
+.m-body.gen_hdr{
+   margin-top: 28px!important;
+}
+</style>
+<div class="upper_notification noselect">
+   <div class="container">
+       <div class="row">
+           <div class="col-md-12">
+               <h4>
+                   You have unpaid overdue invoice and <span><?php echo $this->group->trial_days; echo ($this->group->trial_days > 1) ? ' days' : ' day';  ?></span> left on your free trial!
+                   &nbsp;
+                   <?php if(preg_match('/(eazzyclub)/',$_SERVER['HTTP_HOST'])){?>
+                   <?php }else{?>
+                   <button id="subscr_mdl_btn" data-backdrop="static" data-keyboard="false" data-target="#payment_options" data-toggle="modal" type="button" class="btn white btn-sm btn-circle unotif_subscribe" disabled>
+                       <span class="">&nbsp;Pay Now</span>
+                       <i class="fa fa-angle-right"></i>
+                   </button>
+                   <a href="javascript:;" class="hide_upper_notification">&times;</a>
+                   <?php }?>
+               </h4>
+           </div>
+       </div>
+   </div>
+</div>
+<script>
+   $(document).ready(function(){
+       $('#subscr_mdl_btn').prop('disabled', false);
+       $('.hide_upper_notification').click(function(){
+           $('.upper_notification').slideUp();
+           $('.m-header').removeClass(' gen_hdr');
+           $('.m-body').removeClass(' gen_hdr');
+           $('body > div.page-container').css({'top': '0px'});
+           $('.page-sidebar-fixed .page-sidebar').css({'top': '80px'});
+           $('.page-header-fixed .page-container').css({'margin-top': '60px'});
+       });
+   });
+</script>
+<?php
+} else if ($this->group->subscription_status == '7') {
+   // Group has been temporarily suspended and no one can log in.
+?>
+<div class="out_of_trial noselect">
+   <style>
+       body{
+           overflow: hidden;
+           position: fixed;
+       }
+   </style>
+   <div class="shell noselect">
+       <h3 class="text-danger">Hello <?php echo $this->user->first_name; ?>, your group has been <b>suspended</b>.</h3>
+       <p>If you want to access your group, contact our support team now!</p>
+      <br>
+      <div class="btn-group">
+      <button id="contact_us_al_btn" type="button" class="btn-primary red btn-lg btn-circle"><span class="">Contact Support&nbsp;</span></button>
+      </div>           
+      <br>
+      <p>
+      <span class="text-danger contact_us_al_det" style="display:none;">
+         <span style="font-weight:900;font-size:20px;">+254 733 366 240</span>
+         <br>
+         <span style="font-weight:600;font-size:14px;">support@chamasoft.com</span>
+      </span>
+      </p>
+      <div class="btn-group">
+         <a href="<?php echo site_url('logout');?>" class="btn m-btn--pill btn-danger m-btn btn-sm m-btn--custom m-btn--label-brand m-btn--bolder px-4"><i class="mdi mdi-power-standby mr-2"></i> Logout</a>
+      </div>       
+   </div>
+</div>
+<script>
+   $(document).ready(function(){
+       $('#contact_us_al_btn').on('click', function(){
+           $(this).slideUp();
+           $('.contact_us_al_det').slideDown();
+       });
+   });
+</script>
+<?php
+}}
+?>
+
+<div class="m-grid m-grid--hor m-grid--root m-page">
+   <!-- BEGIN: Header -->
+   <header id="m_header" class="m-grid__item m-header gen_hdr"  m-minimize-offset="200" m-minimize-mobile-offset="200">
+      <div class="m-container m-container--fluid m-container--full-height">
+         <div class="m-stack m-stack--ver m-stack--desktop">
+            <!-- BEGIN: Brand -->
+            <div class="m-stack__item m-brand  m-brand--skin-light ">
+               <div class="m-stack m-stack--ver m-stack--general m-stack--fluid">
+                  <div class="m-stack__item m-stack__item--middle m-brand__logo">
+                     <?php if($this->group->avatar){ ?>
+                        <a href="<?php echo site_url();?>" class="m-brand__logo-wrapper-">
+                           <img src="<?php echo base_url().'uploads/groups/'.$this->group->avatar;?>" alt="logo" style="max-height: 48px; margin-right: 20px;">
+                        </a>
+                     <?php }else{ ?>
+                           <a href="<?php echo site_url();?>" class="m-brand__logo-wrapper">
+                              <img alt="" src="<?php echo $this->application_settings?site_url('uploads/logos/'.$this->application_settings->logo):site_url('templates/frontend_themes/chamasoft/images/logo.png');?>" height="40px"/>
+                           </a>
+                     <?php } ?> 
+                  </div>
+                  <!-- <div class="m-stack__item m-stack__item--middle m-brand__tools">
+                     <button class="btn btn-outline-info m-btn m-btn--pill btn-sm m-btn--outline-2x ml-md-5">Group Billing</button>
+                  </div> -->
+                  <!-- <div class="m-stack__item m-stack__item--middle m-brand__tools">
+                     <button class="btn btn-success m-btn m-btn--pill btn-sm m-btn--outline-2x ml-md-2">Make Contribution</button>
+                  </div> -->
+                  <div class="m-stack__item m-stack__item--middle m-brand__tools">
+                     <!-- <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-left m-dropdown--align-push" m-dropdown-toggle="click" aria-expanded="true">
+                        <a href="#" class="dropdown-toggle m-dropdown__toggle btn btn-outline-metal m-btn  m-btn--icon m-btn--pill">
+                        <span>Dashboard</span>
+                        </a>
+                        <div class="m-dropdown__wrapper">
+                           <span class="m-dropdown__arrow m-dropdown__arrow--left m-dropdown__arrow--adjust"></span>
+                           <div class="m-dropdown__inner">
+                              <div class="m-dropdown__body">
+                                 <div class="m-dropdown__content">
+                                    <ul class="m-nav">
+                                       <li class="m-nav__section m-nav__section--first m--hide">
+                                          <span class="m-nav__section-text">Quick Menu</span>
+                                       </li>
+                                       <li class="m-nav__item">
+                                          <a href="" class="m-nav__link">
+                                          <i class="m-nav__link-icon flaticon-share"></i>
+                                          <span class="m-nav__link-text">Human Resources</span>
+                                          </a>
+                                       </li>
+                                       <li class="m-nav__item">
+                                          <a href="" class="m-nav__link">
+                                          <i class="m-nav__link-icon flaticon-chat-1"></i>
+                                          <span class="m-nav__link-text">Customer Relationship</span>
+                                          </a>
+                                       </li>
+                                       <li class="m-nav__item">
+                                          <a href="" class="m-nav__link">
+                                          <i class="m-nav__link-icon flaticon-info"></i>
+                                          <span class="m-nav__link-text">Order Processing</span>
+                                          </a>
+                                       </li>
+                                       <li class="m-nav__item">
+                                          <a href="" class="m-nav__link">
+                                          <i class="m-nav__link-icon flaticon-lifebuoy"></i>
+                                          <span class="m-nav__link-text">Accounting</span>
+                                          </a>
+                                       </li>
+                                       <li class="m-nav__separator m-nav__separator--fit">
+                                       </li>
+                                       <li class="m-nav__item">
+                                          <a href="" class="m-nav__link">
+                                          <i class="m-nav__link-icon flaticon-chat-1"></i>
+                                          <span class="m-nav__link-text">Customer Relationship</span>
+                                          </a>
+                                       </li>
+                                       <li class="m-nav__item">
+                                          <a href="" class="m-nav__link">
+                                          <i class="m-nav__link-icon flaticon-info"></i>
+                                          <span class="m-nav__link-text">Order Processing</span>
+                                          </a>
+                                       </li>
+                                    </ul>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div> -->
+                     <!-- BEGIN: Responsive Aside Left Menu Toggler -->
+                     <a href="javascript:;" id="m_aside_left_offcanvas_toggle" class="m-brand__icon m-brand__toggler m-brand__toggler--left m--visible-tablet-and-mobile-inline-block">
+                     <span></span>
+                     </a>
+                     <!-- END -->
+                     <!-- BEGIN: Topbar Toggler -->
+                     <a id="m_aside_header_topbar_mobile_toggle" href="javascript:;" class="m-brand__icon m--visible-tablet-and-mobile-inline-block">
+                     <i class="flaticon-more"></i>
+                     </a>
+                     <!-- BEGIN: Topbar Toggler -->
+                  </div>
+                  <div class="m-stack__item m-stack__item--middle m-brand__tools">
+                     <div class="ml-md-5 group_header_name">
+                        <!--<img src="<?php echo base_url().'uploads/groups/'.$this->group->avatar;?>" alt="logo" width="100%" style="height: 45px; width: 45px;border-radius: 50%;margin-right: 20px;">-->
+                        <?php echo (strlen($this->group->name)>18)?substr($this->group->name,0,18).'...':$this->group->name;?>
+                        <?php 
+                           if($this->ion_auth->is_group_member($this->user->id)){
+                              $role_name = isset($this->group_role_options[$this->member->group_role_id])?' - '.translate($this->group_role_options[$this->member->group_role_id]):'';
+                              echo (strlen($role_name)>20)?(substr($role_name,0,20)).'...':$role_name;
+                           }else if($this->ion_auth->is_group_account_manager($this->user->id)){
+                              $role_name = "Group Account Manager";
+                              echo (strlen($role_name)>20)?(substr($role_name,0,20)).'...':$role_name;
+                           }else if($this->ion_auth->is_admin($this->user->id)){
+                              $role_name = "Super Admin";
+                              echo (strlen($role_name)>20)?(substr($role_name,0,20)).'...':$role_name;
+                           }else if($this->ion_auth->is_bank_admin($this->user->id)){
+                              $role_name = "Bank Admin";
+                              echo (strlen($role_name)>20)?(substr($role_name,0,20)).'...':$role_name;
+                           }
+                        ?>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- END: Brand -->        
+            <div class="m-stack__item m-stack__item--fluid m-header-head" id="m_header_nav">
+               <!-- BEGIN: Topbar -->
+               <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
+                  <div class="m-stack__item m-topbar__nav-wrapper">
+                     <ul class="m-topbar__nav m-nav m-nav--inline">
+                        <!-- Search widget: Hidden -->
+                        <li class="m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-center m-dropdown--mobile-full-width m-dropdown--skin-light   m-list-search m-list-search--skin-light  d-none" 
+                           m-dropdown-toggle="click" id="m_quicksearch" m-quicksearch-mode="dropdown" m-dropdown-persistent="1">
+                           <a href="#" class="m-nav__link m-dropdown__toggle">
+                           <span class="m-nav__link-icon"><span class="m-nav__link-icon-wrapper"><i class="flaticon-search-1"></i></span></span>
+                           </a>
+                           <div class="m-dropdown__wrapper">
+                              <span class="m-dropdown__arrow m-dropdown__arrow--center"></span>
+                              <div class="m-dropdown__inner ">
+                                 <div class="m-dropdown__header">
+                                    <form  class="m-list-search__form">
+                                       <div class="m-list-search__form-wrapper">
+                                          <span class="m-list-search__form-input-wrapper">
+                                          <input id="m_quicksearch_input" autocomplete="off" type="text" name="q" class="m-list-search__form-input" value="" placeholder="Search...">
+                                          </span>
+                                          <span class="m-list-search__form-icon-close" id="m_quicksearch_close">
+                                          <i class="la la-remove"></i>
+                                          </span>
+                                       </div>
+                                    </form>
+                                 </div>
+                                 <div class="m-dropdown__body">
+                                    <div class="m-dropdown__scrollable m-scrollable" data-scrollable="true" data-height="300" data-mobile-height="200">
+                                       <div class="m-dropdown__content">
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </li>
+
+                        <!-- Notifications widget -->
+                        <li class="m-nav__item m-topbar__notifications m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-center  m-dropdown--mobile-full-width" m-dropdown-toggle="click" m-dropdown-persistent="1">
+                           <a href="#" class="m-nav__link m-dropdown__toggle" id="m_topbar_notification_icon">
+                           <span class="m-nav__link-icon">
+                           <span class="m-nav__link-icon-wrapper"><i class="flaticon-music-2"></i></span>
+                           <?php if($this->notifications_count){ ?>
+                              <span class="m-nav__link-badge m-badge m-badge--success" style="font-weight: 600;">
+                                 <?php echo $this->notifications_count<10?$this->notifications_count:'9+'; ?>
+                              </span>
+                           <?php } ?>
+                           </span>
+                           </a>
+                           <div class="m-dropdown__wrapper">
+                              <span class="m-dropdown__arrow m-dropdown__arrow--center"></span>
+                              <div class="m-dropdown__inner">
+                                <!--  <div class="m-dropdown__header m--align-center">
+                                    <span class="m-dropdown__header-title">9 New</span>
+                                    <span class="m-dropdown__header-subtitle">User Notifications</span>
+                                 </div> -->
+                                 <div class="m-dropdown__body">
+                                    <div class="m-dropdown__content">
+                                       <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand" role="tablist">
+                                          <li class="nav-item m-tabs__item">
+                                             <a class="nav-link m-tabs__link active" data-toggle="tab" href="#topbar_notifications_notifications" role="tab">
+                                             Notifications
+                                             </a>
+                                          </li>
+                                          <li class="nav-item m-tabs__item">
+                                             <a class="nav-link m-tabs__link" data-toggle="tab" href="#topbar_notifications_events" role="tab">Mail</a>
+                                          </li>
+                                       </ul>
+                                       <div class="tab-content">
+                                          <div class="tab-pane active" id="topbar_notifications_notifications" role="tabpanel">
+                                             <?php if($this->unread_member_notifications){ ?>
+                                                <div class="m-scrollable" data-scrollable="true" data-height="250" data-mobile-height="200">
+                                                   <div class="m-list-timeline m-list-timeline--skin-light">
+                                                      <div class="m-list-timeline__items">
+                                                         <?php foreach($this->unread_member_notifications as $notification): ?>
+                                                            <a href="<?php echo site_url('group/notifications'); ?>" class="m-list-timeline__item notification-item">
+                                                               <span class="m-list-timeline__badge -m-list-timeline__badge--state-success"></span>
+                                                               <span class="m-list-timeline__text"><?php echo $notification->subject; ?></span>
+                                                               <span class="m-list-timeline__time"><?php echo timestamp_to_time_elapsed($notification->created_on); ?></span>
+                                                            </a>
+                                                         <?php endforeach; ?>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                            <?php }else if($this->group_unlinked_bank_accounts){?>
+                                                <div class="m-scrollable" data-scrollable="true" data-height="250" data-mobile-height="200">
+                                                   <div class="m-list-timeline m-list-timeline--skin-light">
+                                                      <div class="m-list-timeline__items">
+                                                         <?php foreach($this->group_unlinked_bank_accounts as $unverified_account): ?>
+                                                            <a href="<?php echo site_url('group/bank_accounts/connect/'.$unverified_account->id); ?>" class="m-list-timeline__item notification-item">
+                                                               <span class="m-list-timeline__badge -m-list-timeline__badge--state-success"></span>
+                                                               <span class="m-list-timeline__text">Link Account: <strong><?php echo $unverified_account->account_name.'('.$unverified_account->account_number.')';?></strong> to start transacting</span>
+                                                               <span class="m-list-timeline__time"><?php echo timestamp_to_time_elapsed($unverified_account->created_on); ?></span>
+                                                            </a>
+                                                         <?php endforeach; ?>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                            <?php }else{ ?>
+                                                <div class="m-stack m-stack--ver m-stack--general" style="min-height: 180px;">
+                                                   <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                                      <span class="">All caught up!<br>No new notifications.</span>
+                                                   </div>
+                                                </div>
+                                             <?php } ?>
+                                          </div>
+                                          <div class="tab-pane" id="topbar_notifications_events" role="tabpanel">
+                                            <?php if($this->unread_member_emails_count){ ?>
+                                                <div class="m-scrollable" data-scrollable="true" data-height="250" data-mobile-height="200">
+                                                   <div class="m-list-timeline m-list-timeline--skin-light">
+                                                      <div class="m-list-timeline__items">
+                                                         <?php foreach($this->unread_member_emails as $email): ?>
+                                                            <a href="<?php echo site_url('group/emails'); ?>" class="m-list-timeline__item notification-item">
+                                                               <span class="m-list-timeline__badge -m-list-timeline__badge--state-success"></span>
+                                                               <span class="m-list-timeline__text"><?php echo $email->subject; ?></span>
+                                                               <span class="m-list-timeline__time"><?php echo timestamp_to_time_elapsed($email->created_on); ?></span>
+                                                            </a>
+                                                         <?php endforeach; ?>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             <?php }else{ ?>
+                                                <div class="m-stack m-stack--ver m-stack--general" style="min-height: 180px;">
+                                                   <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                                      <span class="">All caught up!<br>No new mail.</span>
+                                                   </div>
+                                                </div>
+                                             <?php } ?>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </li>
+
+                        <!-- Quick Actions widget: Hidden -->
+                        <li class="m-nav__item m-topbar__quick-actions m-dropdown m-dropdown--skin-light m-dropdown--large m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push m-dropdown--mobile-full-width m-dropdown--skin-light d-none"  m-dropdown-toggle="click">
+                           <a href="#" class="m-nav__link m-dropdown__toggle">
+                           <span class="m-nav__link-icon">
+                           <span class="m-nav__link-icon-wrapper"><i class="flaticon-share"></i></span>
+                           <!-- <span class="m-nav__link-badge m-badge m-badge--brand">5</span> -->
+                           </span>  
+                           </a>
+                           <div class="m-dropdown__wrapper">
+                              <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                              <div class="m-dropdown__inner">
+                                 <div class="m-dropdown__header m--align-center">
+                                    <span class="m-dropdown__header-title">Quick Actions</span>
+                                    <span class="m-dropdown__header-subtitle">Shortcuts</span>
+                                 </div>
+                                 <div class="m-dropdown__body m-dropdown__body--paddingless">
+                                    <div class="m-dropdown__content">
+                                       <div class="m-scrollable" data-scrollable="false" data-height="380" data-mobile-height="200">
+                                          <div class="m-nav-grid m-nav-grid--skin-light">
+                                             <div class="m-nav-grid__row">
+                                                <a href="#" class="m-nav-grid__item">
+                                                <i class="m-nav-grid__icon flaticon-file"></i>
+                                                <span class="m-nav-grid__text">Generate Report</span>
+                                                </a>
+                                                <a href="#" class="m-nav-grid__item">
+                                                <i class="m-nav-grid__icon flaticon-time"></i>
+                                                <span class="m-nav-grid__text">Add New Event</span>
+                                                </a>
+                                             </div>
+                                             <div class="m-nav-grid__row">
+                                                <a href="#" class="m-nav-grid__item">
+                                                <i class="m-nav-grid__icon flaticon-folder"></i>
+                                                <span class="m-nav-grid__text">Create New Task</span>
+                                                </a>
+                                                <a href="#" class="m-nav-grid__item">
+                                                <i class="m-nav-grid__icon flaticon-clipboard"></i>
+                                                <span class="m-nav-grid__text">Completed Tasks</span>
+                                                </a>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </li>
+                        <?php if($this->languages){ ?>
+                        <li class="m-nav__item m-topbar__languages m-dropdown m-dropdown--small m-dropdown--arrow m-dropdown--align-right m-dropdown--mobile-full-width"  m-dropdown-toggle="click">
+                           <a href="#" class="m-nav__link m-dropdown__toggle">
+                              <span class="m-nav__link-text">
+                                 <?php $user_language = $this->user->language_id;
+                                    $selected_language_id = '1';
+                                    foreach($this->languages as $language){
+                                       if($language->id == $user_language){
+                                          $selected_language_id = $language->country_id;
+                                       }
+                                    }
+                                 ?>
+                              <img class="m-topbar__language-selected-img" src="<?php echo base_url();?>templates/admin_themes/admin/img/flags/<?php echo strtolower($this->country_code_options[$selected_language_id]); ?>.png">  <?php echo $this->selected_language_name; ?>
+                              </span>
+                           </a>
+                           <div class="m-dropdown__wrapper">
+                              <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                              <div class="m-dropdown__inner">
+                                 <div class="m-dropdown__header m--align-center">
+                                    <!-- <span class="m-dropdown__header-title">9 New</span> -->
+                                    <span class="m-dropdown__header-subtitle">Select your language</span>
+                                 </div>
+                                 <div class="m-dropdown__body">
+                                    <div class="m-dropdown__content">
+                                       <ul class="m-nav m-nav--skin-light">
+                                          <?php foreach($this->languages as $language):?>
+                                             <li class="m-nav__item m-nav__item--active">
+                                                <a href="<?php echo site_url('authentication/change_language/'.$language->id); ?>" class="m-nav__link m-nav__link--active">
+                                                <span class="m-nav__link-icon">
+                                                   <img class="m-topbar__language-img"  src="<?php echo base_url();?>templates/admin_themes/admin/img/flags/<?php echo strtolower($this->country_code_options[$language->country_id]); ?>.png" alt="flags/<?php echo strtolower($this->country_code_options[$language->country_id]); ?>"/>
+                                                </span>
+                                                <span class="m-nav__link-title m-topbar__language-text m-nav__link-text overflow_text"><?php echo $language->name;?> (<?php echo $this->country_options[$language->country_id]; ?>)
+                                                   </span>
+                                                </a>
+                                             </li>
+                                          <?php
+                                             endforeach;
+                                          ?>
+                                       </ul>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </li>
+                        <?php }?>
+                        <li class="m-nav__item m-topbar__user-profile  m-dropdown m-dropdown--medium m-dropdown--arrow  m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
+                           <a href="#" class="m-nav__link m-dropdown__toggle">
+                              <span class="m-topbar__username m--hidden-tablet m--hidden-mobile m--padding-right-15 m--hide">
+                                 <span class="m-link"><?php echo $this->user->last_name; ?></span>
+                              </span>
+                              <span class="m-topbar__userpic">
+                                 <?php if(preg_match('/eazzy/i', $this->application_settings->application_name)){ ?>
+                                 <img src="https://ui-avatars.com/api/?name=<?php echo $this->user->first_name; ?>+<?php echo $this->user->last_name; ?>&background=da720d&color=fff&size=56&bold=true" class="m--img-rounded m--marginless m--img-centered" alt=""/>
+                                 <?php } 
+                                 if(preg_match('/websacco/i', $this->application_settings->application_name)){ ?>
+                                 <img src="https://ui-avatars.com/api/?name=<?php echo $this->user->first_name; ?>+<?php echo $this->user->last_name; ?>&background=00abf2&color=fff&size=56&" class="m--img-rounded m--marginless m--img-centered" alt=""/>
+                                 <?php } ?>
+                              </span>
+                           </a>
+                           <div class="m-dropdown__wrapper">
+                              <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                              <div class="m-dropdown__inner">
+                                 <div class="m-dropdown__header m--align-center">
+                                    <div class="m-card-user m-card-user--skin-light">
+                                       <div class="m-card-user__pic">
+                                          <?php if(preg_match('/eazzy/i', $this->application_settings->application_name)){ ?>
+                                          <img src="https://ui-avatars.com/api/?name=<?php echo $this->user->first_name; ?>+<?php echo $this->user->last_name; ?>&background=da720d&color=fff&size=56&bold=true" class="m--img-rounded m--marginless m--img-centered" alt=""/>
+                                          <?php } 
+                                          if(preg_match('/websacco/i', $this->application_settings->application_name)){ ?>
+                                          <img src="https://ui-avatars.com/api/?name=<?php echo $this->user->first_name; ?>+<?php echo $this->user->last_name; ?>&background=00abf2&color=fff&size=56&" class="m--img-rounded m--marginless m--img-centered" alt=""/>
+                                          <?php } ?>
+                                       </div>
+                                       <div class="m-card-user__details">
+                                          <span class="m-card-user__name m--font-weight-500"><?php echo $this->user->first_name.' '.$this->user->last_name;?></span>
+                                          <a href="" class="m-card-user__email m--font-weight-300 m-link overflow_text" style="width:200px;"><?php echo $this->user->email;?></a>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="m-dropdown__body">
+                                    <div class="m-dropdown__content">
+                                       <ul class="m-nav m-nav--skin-light">
+                                          <li class="m-nav__section m--hide">
+                                             <span class="m-nav__section-text">Section</span>
+                                          </li>
+                                          <?php if(!$this->group->disable_member_edit_profile){?> 
+                                                <li class="m-nav__item">
+                                                   <a href="<?php echo site_url('group/members/edit/'.$this->member->id); ?>
+                                                   " class="m-nav__link">
+                                                   <i class="m-nav__link-icon mdi mdi-account-edit cht_icn"></i>
+                                                   <span class="m-nav__link-title">  
+                                                   <span class="m-nav__link-wrap">      
+                                                   <span class="m-nav__link-text">Edit Profile</span>      
+                                                   <span class="m-nav__link-badge"></span>  
+                                                   </span>
+                                                   </span>
+                                                   </a>
+                                                </li>
+                                          <?php } ?>
+                                          <li class="m-nav__item">
+                                             <a href="<?php echo site_url('group/members/change_password'); ?>
+                                             " class="m-nav__link">
+                                             <i class="m-nav__link-icon mdi mdi-textbox-password cht_icn"></i>
+                                             <span class="m-nav__link-title">  
+                                             <span class="m-nav__link-wrap">      
+                                             <span class="m-nav__link-text">Change Password</span>      
+                                             <span class="m-nav__link-badge"></span>  
+                                             </span>
+                                             </span>
+                                             </a>
+                                          </li>
+                                          <li class="m-nav__item">
+                                             <a href="<?php echo $this->application_settings->protocol.$this->application_settings->url.'/member';?>" class="m-nav__link">
+                                             <i class="m-nav__link-icon mdi mdi-account-arrow-right-outline"></i>
+                                             <span class="m-nav__link-title">  
+                                             <span class="m-nav__link-wrap">      
+                                             <span class="m-nav__link-text">Switch to Member</span>      
+                                             <span class="m-nav__link-badge"></span>  
+                                             </span>
+                                             </span>
+                                             </a>
+                                          </li>
+                                          <?php 
+                                             if($this->user_groups){?>
+                                                <li class="m-nav__item">
+                                                   <a href="
+                                                      <?php echo $this->application_settings->protocol.$this->application_settings->url.'/checkin';?>
+                                                   " class="m-nav__link">
+                                                   <i class="m-nav__link-icon mdi mdi-account-convert"></i>
+                                                   <span class="m-nav__link-title">  
+                                                   <span class="m-nav__link-wrap">      
+                                                   <span class="m-nav__link-text">Switch Group</span>      
+                                                   <span class="m-nav__link-badge"><span class="m-badge m-badge--success">
+                                                      <?php echo $this->user_groups;?>
+                                                   </span></span>  
+                                                   </span>
+                                                   </span>
+                                                   </a>
+                                                </li>
+                                          <?php }
+                                             if($this->ion_auth->is_admin()){?>
+                                                <li class="m-nav__item">
+                                                   <a href="
+                                                      <?php echo $this->application_settings->protocol.$this->application_settings->url.'/admin';?>
+                                                   " class="m-nav__link">
+                                                   <i class="m-nav__link-icon mdi mdi-account-star cht_icn"></i>
+                                                   <span class="m-nav__link-title">  
+                                                   <span class="m-nav__link-wrap">      
+                                                   <span class="m-nav__link-text">Switch to Admin</span>      
+                                                   <span class="m-nav__link-badge"></span>  
+                                                   </span>
+                                                   </span>
+                                                   </a>
+                                                </li>
+                                          <?php }?>
+                                          <li class="m-nav__separator m-nav__separator--fit">
+                                          </li>
+                                          <li class="m-nav__item">
+                                             <a href="<?php echo site_url('logout');?>" class="btn m-btn--pill btn-danger m-btn btn-sm m-btn--custom m-btn--label-brand m-btn--bolder px-4"><i class="mdi mdi-power-standby mr-2"></i> Logout</a>
+                                          </li>
+                                       </ul>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </li>
+                        <li id="m_quick_sidebar_toggle" class="m-nav__item m-topbar__quick-sidebar">
+                           <a href="#" class="m-nav__link m-dropdown__toggle">
+                           <span class="m-nav__link-icon"><i class="flaticon-grid-menu"></i></span>
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+               <!-- END: Topbar -->       
+            </div>
+         </div>
+      </div>
+   </header>
+   <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body gen_hdr">

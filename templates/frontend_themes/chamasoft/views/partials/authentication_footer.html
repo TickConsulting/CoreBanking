@@ -1,0 +1,23 @@
+{group:theme:js file="vendors/base/vendors.bundle.js"}
+{group:theme:js file="demo/demo11/base/scripts.bundle.js"}
+{group:theme:js file="custom/hideShowPassword.min.js"}
+{group:theme:js file="custom/custom.js"}
+{group:theme:js file="custom/cryptojs/aes.js"}
+{group:theme:js file="custom/cryptojs/aes-json-format.js"}
+  {group:theme:js file="custom/bootbox.min.js"}
+<script type="text/javascript">
+    $(document).ready(function(){
+        EmailPhoneValidation.init();
+    });
+    var user_name = '<?php echo isset($this->user)?($this->user->first_name." ".$this->user->last_name):"";?>';
+    var phone = '<?php echo isset($this->user)?($this->user->phone):"";?>';
+    var Email = '<?php echo isset($this->user)?($this->user->email):"";?>';
+    // window.$crisp=[];window.CRISP_WEBSITE_ID="c5270f37-ed0b-4d2d-a591-66750519833e";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);
+    //      $crisp.push(["set", "session:data", [[["Name",""+user_name+""],["Phone",""+phone+""],["Email",""+Email+""] ]]]);
+    // })();
+</script>
+<!--  */<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="10943500-0982-435a-bb69-0092888ccafd";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script> */ -->
+
+
+</body>
+</html>
