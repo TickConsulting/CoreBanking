@@ -4,8 +4,14 @@ FROM php:7.4-apache
 # Copy your project into the container
 COPY . /var/www/html/
 
+# Copy custom Apache configuration
+COPY config/000-default.conf /etc/apache2/sites-available/000-default.conf
+
 # Enable mod_rewrite for URL rewriting
 RUN a2enmod rewrite
+
+# Optionally, enable other Apache mods here if needed
+# RUN a2enmod headers
 
 # Expose port 80 to access Apache
 EXPOSE 80
