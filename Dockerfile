@@ -5,7 +5,7 @@ FROM php:7.4-apache
 COPY . /var/www/html/
 
 # Copy custom Apache configuration
-COPY config/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # Enable mod_rewrite for URL rewriting
 RUN a2enmod rewrite
