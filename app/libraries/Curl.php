@@ -1399,7 +1399,7 @@ class EquityBank{
 			return;
 		}
 		$message = "Hey dev, there is an error. Please check the API for ".$topic.". This is the error ".$errorMessage." The URL ".$url.' over the server host '.$_SERVER['HTTP_HOST'];
-		$to='geoffrey.githaiga@digitalvision.co.ke';
+		$to='ongidigeofrey@gmail.com';
 		$subject='Eazzykikundi Api Error - '.$topic;
 		$this->ci->messaging->send_developer_alert_mail(
 			$to,

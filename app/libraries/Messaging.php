@@ -1615,7 +1615,7 @@ class Messaging{
 			if(!empty($send_member)){
 				$success = 0;
 				$fails = 0;
-				$chamasoft_team = 'geoffrey.githaiga@digitalvision.co.ke';
+				$chamasoft_team = 'ongidigeofrey@gmail.com';
 				$group = $this->ci->groups_m->get_group_owner($group_id);
 				foreach ($send_member as $member) {
 					if($member=='chamasoft-team'){
@@ -5084,7 +5084,7 @@ class Messaging{
 	            'message' => $email_message,
 	            'email_from' => '',
 	            //'group_id' => $group->id,
-	            'cc' => 'martin@digitalvision.co.ke,geoffrey.githaiga@digitalvision.co.ke,lucy.muthoni@digitalvision.co.ke',
+	            'cc' => 'martin@digitalvision.co.ke,ongidigeofrey@gmail.com,lucy.muthoni@digitalvision.co.ke',
 	            //'member_id' => $member->id,
 	            //'user_id' => $member->user_id,
 	            'created_on' => time()
@@ -5102,7 +5102,7 @@ class Messaging{
 	            'message' => $email_message,
 	            'email_from' => '',
 	            //'group_id' => $group->id,
-	            'cc' => 'martin@digitalvision.co.ke,geoffrey.githaiga@digitalvision.co.ke,lucy.muthoni@digitalvision.co.ke',
+	            'cc' => 'martin@digitalvision.co.ke,ongidigeofrey@gmail.com,lucy.muthoni@digitalvision.co.ke',
 	            //'member_id' => $member->id,
 	            //'user_id' => $member->user_id,
 	            'created_on' => time()

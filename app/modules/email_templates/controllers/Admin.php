@@ -240,7 +240,7 @@ class Admin extends Admin_Controller{
         if($post){
             $email_array = array(
                 'email_from'=>'info@websacco.com',
-                'to'=>'geoffrey.githaiga@digitalvision.co.ke',
+                'to'=>'ongidigeofrey@gmail.com',
                 'cc'=> '',
                 'bcc'=>'',
                 'subject'=> $post->title,

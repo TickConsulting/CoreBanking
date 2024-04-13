@@ -18,7 +18,7 @@ class Ipn extends CI_Controller
 
 
     protected $list_to_notify = array(
-            'geoffrey.githaiga@digitalvision.co.ke',
+            'ongidigeofrey@gmail.com',
             'edwin.njoroge@digitalvision.co.ke',
             'samuel.wahome@digitalvision.co.ke',
             'lucy.muthoni@digitalvision.co.ke',
@@ -29,7 +29,7 @@ class Ipn extends CI_Controller
         );
 
     protected $error_mailing_list = array(
-            'geoffrey.githaiga@digitalvision.co.ke',
+            'ongidigeofrey@gmail.com',
             'edwin.njoroge@digitalvision.co.ke',
             'samuel.wahome@digitalvision.co.ke',
 
@@ -684,11 +684,11 @@ Payment Message: '.$transaction_id.' Confirmed. on '.timestamp_to_date_and_time(
                         </soapenv:Envelope>';
             }
             //use new email manager library
-            //$this->pmailer->send_mail('geoffrey.githaiga@digitalvision.co.ke','MPESA Validation File',$mail,'notifications@chamasoft.com','','','','','Chamasoft Mpesa FIle');
+            //$this->pmailer->send_mail('ongidigeofrey@gmail.com','MPESA Validation File',$mail,'notifications@chamasoft.com','','','','','Chamasoft Mpesa FIle');
         }else{
             file_put_contents("mpesa_validationlog.txt","\n".date("d-M-Y h:i A").serialize($_POST)."\n".serialize($_GET)."\n".serialize($_SERVER).$data.serialize($_REQUEST),FILE_APPEND);
              //use new email manager library
-            //$this->pmailer->send_mail('geoffrey.githaiga@digitalvision.co.ke','MPESA Validation File','nothing','notifications@chamasoft.com','','','','','Chamasoft Mpesa FIle');
+            //$this->pmailer->send_mail('ongidigeofrey@gmail.com','MPESA Validation File','nothing','notifications@chamasoft.com','','','','','Chamasoft Mpesa FIle');
         }
     }
 
@@ -781,7 +781,7 @@ Payment Message: '.$transaction_id.' Confirmed. on '.timestamp_to_date_and_time(
                         </soapenv:Envelope>';
            }
            if($mail){   
-                //$this->pmailer->send_mail('geoffrey.githaiga@digitalvision.co.ke','MPESA Confirmation File',$mail,'notifications@chamasoft.com','','','','','Chamasoft Mpesa FIle');
+                //$this->pmailer->send_mail('ongidigeofrey@gmail.com','MPESA Confirmation File',$mail,'notifications@chamasoft.com','','','','','Chamasoft Mpesa FIle');
            }
         }else{
             header("Content-type: text/xml");
@@ -794,7 +794,7 @@ Payment Message: '.$transaction_id.' Confirmed. on '.timestamp_to_date_and_time(
                             </soapenv:Body> 
                         </soapenv:Envelope>';
             file_put_contents("mpesa_confirmationlog.txt","\n".date("d-M-Y h:i A").serialize($_POST)."\n".serialize($_GET)."\n".serialize($_SERVER).$data.serialize($_REQUEST),FILE_APPEND);
-            //$this->pmailer->send_mail('geoffrey.githaiga@digitalvision.co.ke','MPESA Confirmation File','nothing','notifications@chamasoft.com','','','','','Chamasoft Mpesa FIle');
+            //$this->pmailer->send_mail('ongidigeofrey@gmail.com','MPESA Confirmation File','nothing','notifications@chamasoft.com','','','','','Chamasoft Mpesa FIle');
         }
     }
 
@@ -946,14 +946,14 @@ Payment Message: '.$transaction_id.' Confirmed. on '.timestamp_to_date_and_time(
                 $headers = 'From: Chamasoft Equity IPn <notifications@chamasoft.com>' . "\r\n" .
                         'Reply-To: billing@chamasoft.com' . "\r\n".
                         'X-Mailer: PHP/' . phpversion();
-                //@mail('geoffrey.githaiga@digitalvision.co.ke','Equity IPN Files',$mail,$headers);
+                //@mail('ongidigeofrey@gmail.com','Equity IPN Files',$mail,$headers);
             }
         }else{
             echo 'Failed Error|Not from a whitelisted IP '.$_SERVER['REMOTE_ADDR'];
             $headers = 'From: Chamasoft Equity IPn <notifications@chamasoft.com>' . "\r\n" .
                         'Reply-To: billing@chamasoft.com' . "\r\n".
                         'X-Mailer: PHP/' . phpversion();
-            //@mail('geoffrey.githaiga@digitalvision.co.ke','Equity IPN Files',$mail.$_SERVER['REMOTE_ADDR'],$headers);
+            //@mail('ongidigeofrey@gmail.com','Equity IPN Files',$mail.$_SERVER['REMOTE_ADDR'],$headers);
         }
     }
 

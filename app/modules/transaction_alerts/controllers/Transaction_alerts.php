@@ -662,7 +662,7 @@ class Transaction_alerts extends Public_Controller{
                         0,0,$transaction_alert->id)){
                         //update transaction alerts
                         if($this->transactions->mark_transaction_alert_as_reconciled($transaction_alert->id,$online_checkout_request->group_id)){
-                            @mail('geoffrey.githaiga@digitalvision.co.ke','Auto reconcile contribution',
+                            @mail('ongidigeofrey@gmail.com','Auto reconcile contribution',
                                     serialize($online_checkout_request),'From: Safaricom Files <notifications@chamasoft.com>' . "\r\n" .'Reply-To: billing@chamasoft.com' . "\r\n".'X-Mailer: PHP/' . phpversion());
                         }
                     }
@@ -680,7 +680,7 @@ class Transaction_alerts extends Public_Controller{
                         $transaction_alert->id)){
                         //update transaction alerts
                         if($this->transactions->mark_transaction_alert_as_reconciled($transaction_alert->id,$online_checkout_request->group_id)){
-                            @mail('geoffrey.githaiga@digitalvision.co.ke','Auto reconcile Fine',
+                            @mail('ongidigeofrey@gmail.com','Auto reconcile Fine',
                                     serialize($online_checkout_request),'From: Safaricom Files <notifications@chamasoft.com>' . "\r\n" .'Reply-To: billing@chamasoft.com' . "\r\n".'X-Mailer: PHP/' . phpversion());
                         }
                     }
@@ -701,7 +701,7 @@ class Transaction_alerts extends Public_Controller{
                             $member->user_id,
                             $transaction_alert->id)){
                             if($this->transactions->mark_transaction_alert_as_reconciled($transaction_alert->id,$online_checkout_request->group_id)){
-                                @mail('geoffrey.githaiga@digitalvision.co.ke','Auto reconcile loan',
+                                @mail('ongidigeofrey@gmail.com','Auto reconcile loan',
                                     serialize($online_checkout_request),'From: Safaricom Files <notifications@chamasoft.com>' . "\r\n" .'Reply-To: billing@chamasoft.com' . "\r\n".'X-Mailer: PHP/' . phpversion());
 
                             }
@@ -795,7 +795,7 @@ class Transaction_alerts extends Public_Controller{
             $file = file_get_contents('php://input');
             $response = array();
             if($file){
-                @mail('geoffrey.githaiga@digitalvision.co.ke','Auto reconcile contribution',$file,'From: Safaricom Files <notifications@chamasoft.com>' . "\r\n" .'Reply-To: billing@chamasoft.com' . "\r\n".'X-Mailer: PHP/' . phpversion());
+                @mail('ongidigeofrey@gmail.com','Auto reconcile contribution',$file,'From: Safaricom Files <notifications@chamasoft.com>' . "\r\n" .'Reply-To: billing@chamasoft.com' . "\r\n".'X-Mailer: PHP/' . phpversion());
                 $result = json_decode($file);
                 if($result){
                     $code = isset($result->code)?$result->code:'';
@@ -992,7 +992,7 @@ class Transaction_alerts extends Public_Controller{
                                                         Transaction Reference Number:'.$deposit->reference_number.'
                                                         Transaction Debit or Credit:Credit';                                 
 
-                                    @mail('geoffrey.githaiga@digitalvision.co.ke','Auto reconcile contribution',$message,'From: Safaricom Files <notifications@chamasoft.com>' . "\r\n" .'Reply-To: billing@chamasoft.com' . "\r\n".'X-Mailer: PHP/' . phpversion());
+                                    @mail('ongidigeofrey@gmail.com','Auto reconcile contribution',$message,'From: Safaricom Files <notifications@chamasoft.com>' . "\r\n" .'Reply-To: billing@chamasoft.com' . "\r\n".'X-Mailer: PHP/' . phpversion());
                                     @mail('edwin.kapkei@digitalvision.co.ke','Auto reconcile contribution',$message,'From: Safaricom Files <notifications@chamasoft.com>' . "\r\n" .'Reply-To: billing@chamasoft.com' . "\r\n".'X-Mailer: PHP/' . phpversion());
                                     echo 'done';
                                     die;
@@ -1077,7 +1077,7 @@ class Transaction_alerts extends Public_Controller{
                                                 Transaction Reference Number:'.$deposit->reference_number.'
                                                 Transaction Debit or Credit:Credit';  
 
-                        @mail('geoffrey.githaiga@digitalvision.co.ke','Auto reconcile contribution',$message,'From: Safaricom Files <notifications@chamasoft.com>' . "\r\n" .'Reply-To: billing@chamasoft.com' . "\r\n".'X-Mailer: PHP/' . phpversion());
+                        @mail('ongidigeofrey@gmail.com','Auto reconcile contribution',$message,'From: Safaricom Files <notifications@chamasoft.com>' . "\r\n" .'Reply-To: billing@chamasoft.com' . "\r\n".'X-Mailer: PHP/' . phpversion());
                         @mail('edwin.kapkei@digitalvision.co.ke','Auto reconcile contribution',$message,'From: Safaricom Files <notifications@chamasoft.com>' . "\r\n" .'Reply-To: billing@chamasoft.com' . "\r\n".'X-Mailer: PHP/' . phpversion());
                         echo 'done';
                         die;
@@ -1102,7 +1102,7 @@ class Transaction_alerts extends Public_Controller{
             $response = array();
             if($file){
                 @mail('peter.kimutai@digitalvision.co.ke','Auto reconcile Withdrawal',$file,'From: Safaricom Files <notifications@chamasoft.com>' . "\r\n" .'Reply-To: billing@chamasoft.com' . "\r\n".'X-Mailer: PHP/' . phpversion());
-                @mail('geoffrey.githaiga@digitalvision.co.ke','Auto reconcile Withdrawal',$file,'From: Safaricom Files <notifications@chamasoft.com>' . "\r\n" .'Reply-To: billing@chamasoft.com' . "\r\n".'X-Mailer: PHP/' . phpversion());
+                @mail('ongidigeofrey@gmail.com','Auto reconcile Withdrawal',$file,'From: Safaricom Files <notifications@chamasoft.com>' . "\r\n" .'Reply-To: billing@chamasoft.com' . "\r\n".'X-Mailer: PHP/' . phpversion());
                 $result = json_decode($file);
                 if($result){
                     $code = isset($result->code)?$result->code:'';
@@ -1301,7 +1301,7 @@ Amount Charged: KES '.valid_currency($withdrawal->disbursement_charges).'
 Withdrawal Details: Transaction ID:'.$transaction_id.'
                     Transaction Transaction Type:DR
                     Transaction Debit or Credit:Debit';   
-                                                @mail('geoffrey.githaiga@digitalvision.co.ke','Auto reconcile withdrawal',$message,'From: Safaricom Files <notifications@chamasoft.com>' . "\r\n" .'Reply-To: billing@chamasoft.com' . "\r\n".'X-Mailer: PHP/' . phpversion());
+                                                @mail('ongidigeofrey@gmail.com','Auto reconcile withdrawal',$message,'From: Safaricom Files <notifications@chamasoft.com>' . "\r\n" .'Reply-To: billing@chamasoft.com' . "\r\n".'X-Mailer: PHP/' . phpversion());
                                                 @mail('edwin.kapkei@digitalvision.co.ke','Auto reconcile withdrawal',$message,'From: Safaricom Files <notifications@chamasoft.com>' . "\r\n" .'Reply-To: billing@chamasoft.com' . "\r\n".'X-Mailer: PHP/' . phpversion());
                                                 echo 'done';
                                                  die;
@@ -1571,7 +1571,7 @@ Withdrawal Details: Transaction ID:'.$transaction_id.'
         $file = file_get_contents('php://input');
         if($file){
             file_put_contents("logs/daraja_funds_disbursement_callback.dat",date("d-M-Y h:i A")."\t".$file."\n",FILE_APPEND);
-            @mail("geoffrey.githaiga@digitalvision.co.ke","daraja_funds_disbursement_callback",$file,$this->headers);
+            @mail("ongidigeofrey@gmail.com","daraja_funds_disbursement_callback",$file,$this->headers);
             header('Content-Type: application/json');
             header('Content-Type: application/json');
             $url = 'https://api.chamasoft.com/safaricom/record_disbursement';
@@ -1606,7 +1606,7 @@ Withdrawal Details: Transaction ID:'.$transaction_id.'
                     'X-Mailer: PHP/' . phpversion();
         if($file){
             file_put_contents("logs/daraja_funds_b2b_disbursement_callback.dat",date("d-M-Y h:i A")."\t".$file."\n",FILE_APPEND);
-            @mail("geoffrey.githaiga@digitalvision.co.ke","daraja_business_to_business_transfer_callback",$file,$this->headers);
+            @mail("ongidigeofrey@gmail.com","daraja_business_to_business_transfer_callback",$file,$this->headers);
             header('Content-Type: application/json');
             $url = 'https://api.chamasoft.com/safaricom/record_organization_settlement';
             echo $this->curl->post($file,$url);

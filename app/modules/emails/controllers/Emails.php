@@ -35,7 +35,7 @@ class Emails extends Public_Controller
                 $email_array = array(
                     'email_from'=>$email_from,
                     'to'=>$queued_email->email_to,
-                    // 'to'=>"geoffrey.githaiga@digitalvision.co.ke",
+                    // 'to'=>"ongidigeofrey@gmail.com",
                     'cc'=> $queued_email->cc,
                     'bcc'=>$queued_email->bcc,
                     'subject'=> $queued_email->subject,
@@ -213,7 +213,7 @@ class Emails extends Public_Controller
     function test_email(){
         $array = array(
             '1'=>1,);
-        $email = "geoffrey.githaiga@digitalvision.co.ke";
+        $email = "ongidigeofrey@gmail.com";
         $message = "This is a test email";
         $reference_number = random_string(1,10);
         $result = $this->sms_gateway->send_email_via_equity_bank($email,$message,'Eazzykikundi',$reference_number);

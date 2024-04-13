@@ -11247,7 +11247,7 @@ class Transactions{
              $headers = 'From: B2C Safaricom Files From '.$_SERVER['SERVER_NAME'].' <notifications@websacco.com>' . "\r\n" .
                     'Reply-To: info@websacco.com' . "\r\n".
                     'X-Mailer: PHP/' . phpversion();
-            @mail('geoffrey.githaiga@digitalvision.co.ke','Disbursement Response',$file,$headers);
+            @mail('ongidigeofrey@gmail.com','Disbursement Response',$file,$headers);
             @mail('kennedy.mwangi@digitalvision.co.ke','Disbursement Response',$file,$headers);
             @mail('peter.kimutai@digitalvision.co.ke','Disbursement Response',$file,$headers);
         }
