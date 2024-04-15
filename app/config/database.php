@@ -117,7 +117,7 @@ $db['new'] = array(
 	'hostname' => 'localhost',
 	'username' => 'root',
 	'password' =>  $password,
-	'database' =>  'kodi',
+	'database' =>  'tick',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
@@ -136,7 +136,7 @@ $db['new'] = array(
 
 $db['live'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
+	'hostname' => $host_name,
 	'username' =>  $username,
 	'password' =>  $password,
 	'database' =>  $database,
