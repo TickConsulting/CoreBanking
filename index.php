@@ -63,15 +63,18 @@
 		"41.191.230.226",
 		"102.215.34.11",
 		"196.216.84.4",
-		"196.100.120.108"
+		"196.100.120.108",
+		"102.0.4.72"
 	);
 
 	// if(in_array($_SERVER['REMOTE_ADDR'], $ip_addresses) || preg_match('/local/', $_SERVER['HTTP_HOST'])){
 	// 	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
 		
 	// }else{
-		define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'production');	
+	// 	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'production');	
 	// }
+	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+
 	define('IPADDESSES',$ip_addresses);
 /*
  *---------------------------------------------------------------
