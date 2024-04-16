@@ -83,7 +83,6 @@ if (preg_match('/(\.local)/', $_SERVER['HTTP_HOST'])) {
 	$active_group = 'live';
 	$host_name='54.93.184.124';
 	$username = 'root';
-	// $database = 'systems_beyond';
 	$database = 'tick';
 	$password = '12345678';
 }

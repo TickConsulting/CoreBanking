@@ -17,6 +17,10 @@ class Migrate extends Public_Controller{
     	$str = $this->input->post('str');
     	echo translate($str);
     }
+    function phpInfo(){
+        print_r(phpinfo());
+        die;
+    }
 
     function handle_localhost_requests(){
         
