@@ -1,7 +1,0 @@
-Order Allow,Deny
-Deny from all
-
-<Files ~ "\.(js|css|woff|png|woff2|webp|bmp|map|ttf|jpg)$">
-   	Order Allow,Deny
-    Allow from all
-</Files>

@@ -39,19 +39,19 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /nbproject/
 uploads/*
 
-# templates/admin_themes/admin/css/apps
-# templates/admin_themes/admin/css/custom
-# templates/admin_themes/admin/css/global
-# templates/admin_themes/admin/css/layouts
-# templates/admin_themes/admin/css/pages
-# templates/admin_themes/admin/js/apps
-# templates/admin_themes/admin/js/custom
-# templates/admin_themes/admin/js/global
-# templates/admin_themes/admin/js/layouts
-# templates/admin_themes/admin/js/pages
-# templates/admin_themes/admin/js/googleapis
-# templates/admin_themes/admin/css/googleapis
-# templates/admin_themes/admin/css/plugins
+templates/admin_themes/admin/css/apps
+templates/admin_themes/admin/css/custom
+templates/admin_themes/admin/css/global
+templates/admin_themes/admin/css/layouts
+templates/admin_themes/admin/css/pages
+templates/admin_themes/admin/js/apps
+templates/admin_themes/admin/js/custom
+templates/admin_themes/admin/js/global
+templates/admin_themes/admin/js/layouts
+templates/admin_themes/admin/js/pages
+templates/admin_themes/admin/js/googleapis
+templates/admin_themes/admin/css/googleapis
+templates/admin_themes/admin/css/plugins
 
 .idea/*
 logs/*
