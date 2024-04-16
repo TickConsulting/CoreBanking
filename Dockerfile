@@ -13,7 +13,7 @@ RUN a2enmod rewrite
 RUN docker-php-ext-install mysqli
 
 # Optionally, enable other Apache mods here if needed
-# RUN a2enmod headers
+RUN a2enmod headers
 
 # Expose port 80 to access Apache
 EXPOSE 80
