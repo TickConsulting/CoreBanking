@@ -118,8 +118,107 @@ class Dbfix extends CI_Controller
             )
         ));
 
+        $this->dbfix_m->add_column('safaricomb2btransactions',
+        array(
+            'credit_account_balance'=>array(
+                'type'=> 'blob',
+            ),
+        )
+    );
+    $this->dbfix_m->add_column('safaricomc2bpayments',
+			array(
+				'is_reversed'=>array(
+					'type'=> 'blob',
+				),
+			)
+		);
 
+		$this->dbfix_m->add_column('safaricomc2bpayments',
+			array(
+				'reversed_on'=>array(
+					'type'=> 'blob',
+				),
+			)
+		);
 
+		$this->dbfix_m->add_column('safaricomc2bpayments',
+			array(
+				'reversal_transaction_id'=>array(
+					'type'=> 'blob',
+				),
+			)
+		);
+
+		$this->dbfix_m->add_column('safaricomc2bpayments',
+			array(
+				'reversal_charge'=>array(
+					'type'=> 'blob',
+				),
+			)
+		);
+        $this->dbfix_m->add_column('safaricomb2crequest',
+			array(
+				'account_id'=>array(
+					'type'=> 'blob',
+				),
+			)
+		);
+
+		$this->dbfix_m->add_column('safaricomb2crequest',
+			array(
+				'request_reconcilled'=>array(
+					'type'=> 'blob',
+				),
+			)
+		);
+
+		$this->dbfix_m->add_column('safaricomb2crequest',
+			array(
+				'callback_sent'=>array(
+					'type'=> 'blob',
+				),
+			)
+		);
+
+		$this->dbfix_m->add_column('safaricomb2crequest',
+			array(
+				'reference_number'=>array(
+					'type'=> 'blob',
+				),
+			)
+		);
+        
+        $this->dbfix_m->add_column('safaricomb2crequest',
+        array(
+            'account_id'=>array(
+                'type'=> 'blob',
+            ),
+        )
+    );
+
+    $this->dbfix_m->add_column('safaricomb2crequest',
+        array(
+            'request_reconcilled'=>array(
+                'type'=> 'blob',
+            ),
+        )
+    );
+
+    $this->dbfix_m->add_column('safaricomb2crequest',
+        array(
+            'callback_sent'=>array(
+                'type'=> 'blob',
+            ),
+        )
+    );
+
+    $this->dbfix_m->add_column('safaricomb2crequest',
+        array(
+            'reference_number'=>array(
+                'type'=> 'blob',
+            ),
+        )
+    );
 
 
         $this->dbfix_m->add_column('loan_applications', array(
