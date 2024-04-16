@@ -9,6 +9,8 @@ COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # Enable mod_rewrite for URL rewriting
 RUN a2enmod rewrite
+  
+RUN docker-php-ext-install mysqli
 
 # Optionally, enable other Apache mods here if needed
 # RUN a2enmod headers
