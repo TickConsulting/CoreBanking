@@ -11,12 +11,8 @@ class Process_transactions{
         ini_set('max_execution_time', 1200);
 		$this->ci->load->model('transactions/transactions_m');
 		$this->ci->load->model('safaricom/safaricom_m');
-		$this->ci->load->model('accounts/accounts_m');
-		$this->ci->load->model('deposits/deposits_m');
-		$this->ci->load->model('withdrawals/withdrawals_m');
-        $this->ci->load->model('tariffs/tariffs_m');
         $this->ci->load->model('banks/banks_m');
-        $this->ci->load->config('transaction');
+        // $this->ci->load->config('transactions');
 	}
 
 

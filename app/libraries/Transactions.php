@@ -723,6 +723,7 @@ class Transactions{
         $this->ci->load->model('banks/banks_m');
         $this->ci->load->library('loan');
         $this->ci->load->library('curl');
+        $this->ci->load->library('process_transactions');
         $this->deposit_transaction_types = $this->bank_deposit_transaction_types + $this->sacco_deposit_transaction_types + $this->mobile_deposit_transaction_types + $this->petty_deposit_transaction_types;
         $this->withdrawal_transaction_types = $this->bank_withdrawal_transaction_types + $this->sacco_withdrawal_transaction_types + $this->mobile_withdrawal_transaction_types + $this->petty_withdrawal_transaction_types;
         $this->currency_code_options = $this->ci->countries_m->get_currency_code_options();
@@ -10655,8 +10656,8 @@ class Transactions{
     }
 
     function process_withdrawal_request_disbursement_riskTick($request = array()){
+         
         if($request){
-            if($account = $this->ci->bank_accounts_m->get_group_default_bank_account($request->group_id)){
                 file_put_contents("logs/ongoing_withdrawal_disbursement.dat",' Time: '.time().' Request Data '.json_encode($request)."\n",FILE_APPEND);
                 $reference_number = $this->get_withdrawal_request_reference_number();
                 $channel = 1;
@@ -10677,6 +10678,7 @@ class Transactions{
                         $valid_recipient = FALSE;
                     } 
                 }else if(preg_match('/mobile-/', $request->recipient_id)){
+                     
                     $recipient_id = str_replace('mobile-', '', $request->recipient_id);
                     $recipient = $this->ci->recipients_m->get($recipient_id);
                     if($recipient){
@@ -10684,6 +10686,7 @@ class Transactions{
                         $valid_recipient = FALSE;
                     }
                 }else if(preg_match('/member-/', $request->recipient_id)){
+                  
                     $member_id = str_replace('member-', '', $request->recipient_id);
                     $member = $this->ci->members_m->get_group_member($member_id,$request->group_id);
                     if($member){
@@ -10719,7 +10722,8 @@ class Transactions{
                     }else{ // via paybill
                         $channel = 2;
                     }
-
+                    print_r($account);
+                    die;
                     $account_password = $account->account_password;
                     $jsondata = json_encode(array(
                         'request_id' => time(),
@@ -10745,18 +10749,8 @@ class Transactions{
                             'request_callback_url' => site_url('transaction_alerts/reconcile_online_banking_withdrawal'),
                         ),
                     ));
-                    if(
-                        preg_match('/\.local/', $_SERVER['HTTP_HOST']) || 
-                        preg_match('/uat\.chamasoft\.com/', $_SERVER['HTTP_HOST']) || 
-                        preg_match('/chamasoftbeta/', $_SERVER['HTTP_HOST']) || 
-                        preg_match('/demo\.websacco\.com/', $_SERVER['HTTP_HOST']) || 
-                        preg_match('/uat\.websacco\.com/', $_SERVER['HTTP_HOST'])
-                    ){
-                        $url = "https://api-test.chamasoft.com:443/api/transactions/disburse_funds";
-                    }else{
-                        $url = "https://api-test.chamasoft.com:443/api/transactions/disburse_funds";
-                    }
-                    $response = $this->ci->curl->post_json_payment($jsondata,$url);
+                 
+                    $response = $this->ci->process_transactions->disburse_funds($request->amount,$phone,);
                     print_r($response); echo "some response";
                     if($response){
                         if($response_data = json_decode($response)){
@@ -10792,9 +10786,7 @@ class Transactions{
                 }else{
                     echo "Invalid recipient";
                 }   
-            }else{//declined. No default bank account to disburse from
-
-            }
+            
         }else{
 
         }
