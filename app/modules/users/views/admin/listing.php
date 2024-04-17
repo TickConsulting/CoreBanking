@@ -140,9 +140,7 @@
                                     <th>
                                         User Groups
                                     </th>
-                                    <th>
-                                        Investment Groups
-                                    </th>
+                                  
                                     <th>
                                         Status
                                     </th>
@@ -166,17 +164,7 @@
                                                 }
                                             ?>
                                         </td>
-                                        <td>
-                                            <?php 
-                                                $investment_groups = $this->groups_m->get_groups_for_user($post->id);
-                                                echo '<ul>';
-                                                foreach ($investment_groups as $group){
-                                                   echo '<li><a href="'.site_url('admin/groups/view/'.$group->group_id).'">'.$group->name;
-                                                   echo '</a></li>';
-                                                }
-                                                echo '</ul>';
-                                            ?>
-                                        </td>
+                                      
                                         <td>
                                             <?php if($post->active)
                                             {
