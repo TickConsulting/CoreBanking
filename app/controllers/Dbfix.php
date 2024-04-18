@@ -315,6 +315,21 @@ array(
         ),
     )
 );
+$this->db->query("CREATE TABLE IF NOT EXISTS `accounts` (
+    `id` int(11) NOT NULL,
+    `account_name` blob DEFAULT NULL,
+    `account_number` blob DEFAULT NULL,
+    `reference_number` blob DEFAULT NULL,
+    `balance` blob DEFAULT NULL,
+    `currency_id` blob DEFAULT NULL,
+    `is_closed` blob DEFAULT NULL,
+    `active` blob DEFAULT NULL,
+    `created_on` blob DEFAULT NULL,
+    `created_by` blob DEFAULT NULL,
+    `modified_on` blob DEFAULT NULL,
+    `modified_by` blob DEFAULT NULL
+  )");
+
     $this->dbfix_m->add_column('payment_transactions',
         array(
             'transaction_id'=>array(

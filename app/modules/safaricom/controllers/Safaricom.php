@@ -51,7 +51,7 @@ class Safaricom extends Public_Controller{
         file_put_contents("logs/payment_log.dat","\n".date("d-M-Y h:i A")."\t".current_url()."\t".serialize($_REQUEST)."\t".serialize($_GET)."\t".serialize(file_get_contents('php://input'))."\t Headers are: \n",FILE_APPEND);
 
         // $this->paybills = $this->transactions->paybills;
-        $this->load->config('transaction');
+        // $this->load->config('transaction');
         $this->paybills  = $this->config->item('paybills');
     }
 

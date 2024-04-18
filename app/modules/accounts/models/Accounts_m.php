@@ -42,6 +42,17 @@ class Accounts_m extends My_Model{
         return $this->insert_secure_data('account_transfers',$input);
     }
 
+	function get_account_number($id = 0){
+		$this->db->select(array(
+			$this->dxa('account_number'),
+		));
+		$this->db->where('id',$id);
+		$this->db->limit(1);
+		$res = $this->db->get('accounts')->row();
+		if($res){
+			return $res->account_number;
+		}
+	}
     
     function update_account_transfer($id,$input=array(),$SKIP_VALIDATION=FALSE){
         return $this->update_secure_data($id,'account_transfers',$input);

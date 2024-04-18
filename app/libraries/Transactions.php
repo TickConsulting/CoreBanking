@@ -10794,6 +10794,395 @@ class Transactions{
 
         }
     }
+    function reconcile_account_disbursement($request = array(),$channel = 1){
+		if($request){
+			if($request->request_reconcilled !=1){
+				if($channel == 1){
+					$update = array(
+						'result_code' => $request->callback_result_code,
+						'result_description' => $request->callback_result_description,
+						'transaction_id' => $request->transaction_id,
+						'status' => ($request->callback_result_code =='0')?4:3,
+						'transaction_date' => $request->transaction_completed_time?:time(),
+					);
+					$payment_request = $this->ci->transactions_m->get_payment_transaction_by_originator_conversation_id($request->originator_conversation_id);
+					if($payment_request){
+						$this->ci->transactions_m->update_payment($payment_request->id,$update);
+					}
+					if($request->callback_result_code=='0'){
+						$transaction_id = $request->transaction_receipt;
+						if($this->ci->withdrawals_m->is_unique_withdrawal($transaction_id)){
+							$amount = currency($request->transaction_amount);
+							$account_id = $request->account_id;
+							$withdrawal = array(
+								'withdrawal_date' => $request->transaction_completed_time,
+								'account_id' => $account_id,
+								'withdrawal_method' => 1,
+								'description' => $request->receiver_party_public_name.' Receipt number: '.$request->transaction_receipt,
+								'amount' => $amount,
+								'transaction_id' => $transaction_id,
+								'safaricom_b2c_id' => $request->id,
+								'active' => 1,
+								'created_by' => 1,
+								'created_on' => time(),
+							);
+							if($withdrawal_id = $this->ci->withdrawals_m->insert($withdrawal)){
+								$balance = $this->calculate_account_balance($account_id,3,$amount);
+								$transaction_data = array(
+									'transaction_type' => 3,
+									'transaction_particulars' => $request->receiver_party_public_name.' Receipt number: '.$request->transaction_receipt,
+									'transaction_id' => $request->transaction_receipt,
+									'account_id' => $account_id,
+									'amount' => $amount,
+									'transaction_date' => $request->transaction_completed_time,
+									'transaction_channel' => 3,
+									'withdrawal_id' => $withdrawal_id,
+									'balance' => $balance,
+									'active' => 1,
+									'created_on' => time(),
+								);
+								if($transaction_statement_id = $this->ci->transactions_m->insert($transaction_data)){
+									if($this->update_account_balances($account_id,$balance)){
+										$update = array(
+											'request_reconcilled' => 1,
+											'modified_on' => time(),
+										);
+										$this->ci->safaricom_m->update_b2c_request($request->id,$update);
+										if($request->disburse_charge){
+											if($this->_reconcile_withdrawal_charges($request)){
+												if($account_number=$this->ci->accounts_m->get_account_number($request->account_id)){
+													clear_transaction($account_number);
+												}
+												return TRUE;
+											}else{
+												return FALSE;
+											}
+										}else{
+											if($account_number=$this->ci->accounts_m->get_account_number($request->account_id)){
+												clear_transaction($account_number);
+											}
+											return TRUE;
+										}
+									}else{
+										$this->ci->session->set_flashdata('error','Could not update B2C request reconcilled');
+										return FALSE;
+									}
+								}else{
+									$this->ci->session->set_flashdata('error','Could not create transaction statement');
+									return FALSE;
+								}
+							}else{
+								$this->ci->session->set_flashdata('error','Could not insert withdrawal');
+								return FALSE;
+							}
+						}else{
+							$this->ci->session->set_flashdata('error','Withdrawal not unique');
+							return FALSE;
+						}
+					}else{
+						$update = array(
+							'request_reconcilled' => 1,
+							'modified_on' => time(),
+						);
+						$this->ci->safaricom_m->update_b2c_request($request->id,$update);
+						if($account_number=$this->ci->accounts_m->get_account_number($request->account_id)){
+							clear_transaction($account_number);
+						}
+						return TRUE;
+					}
+				}elseif($channel==2){
+					$update = array(
+						'transaction_id' => $request->transaction_id,
+						'transaction_date' => $request->transaction_completed_time?:time(),
+						'amount' => $request->amount,
+					);
+					$payment_request = $this->ci->transactions_m->get_payment_transaction_by_transaction_id($request->transaction_id);
+					if($payment_request){
+						$this->ci->transactions_m->update_transaction_payment($payment_request->id,$update);
+					}
+					if($request->result_code=='0'){
+						$transaction_id = $request->transaction_id;
+						if($this->ci->withdrawals_m->is_unique_withdrawal($transaction_id)){
+							$amount = currency($request->amount);
+							$request->account_id = $request->account_id?:1;
+							$account_id = $request->account_id;
+							$withdrawal = array(
+								'withdrawal_date' => $request->transaction_completed_time,
+								'account_id' => $account_id,
+								'withdrawal_method' => 1,
+								'description' => $request->receiver_party_public_name.' Receipt number: '.$transaction_id,
+								'amount' => $amount,
+								'transaction_id' => $transaction_id,
+								'safaricom_b2c_id' => $request->id,
+								'active' => 1,
+								'created_by' => 1,
+								'created_on' => time(),
+							);
+							$withdrawal_id = $this->ci->withdrawals_m->insert($withdrawal);
+							if($withdrawal_id){
+								$balance = $this->calculate_account_balance($account_id,3,$amount);
+								$transaction_data = array(
+									'transaction_type' => 3,
+									'transaction_particulars' => $request->receiver_party_public_name.' Receipt number: '.$transaction_id,
+									'transaction_id' => $transaction_id,
+									'account_id' => $account_id,
+									'amount' => $amount,
+									'transaction_date' => $request->transaction_completed_time,
+									'transaction_channel' => 3,
+									'withdrawal_id' => $withdrawal_id,
+									'balance' => $balance,
+									'active' => 1,
+									'created_on' => time(),
+								);
+								$transaction_statement_id = $this->ci->transactions_m->insert($transaction_data);
+								if($transaction_statement_id){
+									if($this->update_account_balances($account_id,$balance)){
+										$update = array(
+											'request_reconcilled' => 1,
+											'account_id' => $account_id,
+											'modified_on' => time(),
+										);
+										$this->ci->safaricom_m->update_b2b_transactions($request->id,$update);
+										if($request->disburse_charge){
+											if($this->_reconcile_withdrawal_charges($request)){
+												if($account_number=$this->ci->accounts_m->get_account_number($request->account_id)){
+													clear_transaction($account_number);
+												}
+												return TRUE;
+											}else{
+												return FALSE;
+											}
+										}else{
+											if($account_number=$this->ci->accounts_m->get_account_number($request->account_id)){
+												clear_transaction($account_number);
+											}
+											return TRUE;
+										}
+									}else{
+										$this->ci->session->set_flashdata('error','Could not update B2C request reconcilled');
+										return FALSE;
+									}
+								}else{
+									$this->ci->session->set_flashdata('error','Could not create transaction statement');
+									return FALSE;
+								}
+							}else{
+								$this->ci->session->set_flashdata('error','Could not insert withdrawal');
+								return FALSE;
+							}
+						}else{
+							$this->ci->session->set_flashdata('error','Withdrawal not unique');
+							return FALSE;
+						}
+					}else{
+						$update = array(
+							'request_reconcilled' => 1,
+							'modified_on' => time(),
+						);
+						$this->ci->safaricom_m->update_b2b_transactions($request->id,$update);
+						if($account_number=$this->ci->accounts_m->get_account_number($request->account_id)){
+							clear_transaction($account_number);
+						}
+						return TRUE;
+					}
+					$account_number=$this->ci->accounts_m->get_account_number($request->account_id);
+					clear_transaction($account_number);
+				}elseif ($channel == 3) {
+					$update = array(
+						'result_code' => $request->callback_result_code,
+						'result_description' => $request->callback_result_description,
+						'transaction_id' => $request->transaction_id,
+						'status' => ($request->callback_result_code =='0')?4:3,
+						'transaction_date' => $request->transaction_completed_time?:time(),
+					);
+					$payment_request = $this->ci->transactions_m->get_payment_transaction_by_originator_conversation_id($request->originator_conversation_id);
+					if($payment_request){
+						$this->ci->transactions_m->update_payment($payment_request->id,$update);
+					}
+					if($request->callback_result_code=='0'){
+						$transaction_id = $request->transaction_id;
+						if($this->ci->withdrawals_m->is_unique_withdrawal($transaction_id)){
+							$amount = currency($request->transaction_amount);
+							$account_id = $request->account_id;
+							$withdrawal = array(
+								'withdrawal_date' => $request->transaction_completed_time,
+								'account_id' => $account_id,
+								'withdrawal_method' => 1,
+								'description' => "MTN Disbursement",
+								'amount' => $amount,
+								'transaction_id' => $transaction_id,
+								'mtn_disbursement_id' => $request->id,
+								'active' => 1,
+								'created_by' => 1,
+								'created_on' => time(),
+							);
+							if($withdrawal_id = $this->ci->withdrawals_m->insert($withdrawal)){
+								$balance = $this->calculate_account_balance($account_id,3,$amount);
+								$transaction_data = array(
+									'transaction_type' => 3,
+									'transaction_particulars' => 'MTN Withdrawal Receipt number: '.$request->transaction_id,
+									'transaction_id' => $request->transaction_id,
+									'account_id' => $account_id,
+									'amount' => $amount,
+									'transaction_date' => $request->transaction_completed_time,
+									'transaction_channel' => 3,
+									'withdrawal_id' => $withdrawal_id,
+									'balance' => $balance,
+									'active' => 1,
+									'created_on' => time(),
+								);
+								if($transaction_statement_id = $this->ci->transactions_m->insert($transaction_data)){
+									if($this->update_account_balances($account_id,$balance)){
+										$update = array(
+											'request_reconcilled' => 1,
+											'modified_on' => time(),
+										);
+										$this->ci->mtn_m->update_disbursement_request($request->id,$update);
+										if($request->disburse_charge){
+											if($this->_reconcile_withdrawal_charges($request,$channel)){
+												if($account_number=$this->ci->accounts_m->get_account_number($request->account_id)){
+													clear_transaction($account_number);
+												}
+												return TRUE;
+											}else{
+												return FALSE;
+											}
+										}else{
+											if($account_number=$this->ci->accounts_m->get_account_number($request->account_id)){
+												clear_transaction($account_number);
+											}
+											return TRUE;
+										}
+									}else{
+										$this->ci->session->set_flashdata('error','Could not update B2C request reconcilled');
+										return FALSE;
+									}
+								}else{
+									$this->ci->session->set_flashdata('error','Could not create transaction statement');
+									return FALSE;
+								}
+							}else{
+								$this->ci->session->set_flashdata('error','Could not insert withdrawal');
+								return FALSE;
+							}
+						}else{
+							$this->ci->session->set_flashdata('error','Withdrawal not unique');
+							return FALSE;
+						}
+					}else{
+						$update = array(
+							'request_reconcilled' => 1,
+							'modified_on' => time(),
+						);
+						$this->ci->mtn_m->update_disbursement_request($request->id,$update);
+						if($account_number=$this->ci->accounts_m->get_account_number($request->account_id)){
+							clear_transaction($account_number);
+						}
+						return TRUE;
+					}
+				}elseif($channel == 4){
+					$update = array(
+						'result_code' => $request->result_code,
+						'result_description' => $request->result_description,
+						'transaction_id' => $request->transaction_id,
+						'status' => ($request->result_code =='0')?4:3,
+						'transaction_date' => $request->transaction_completed_time?:time(),
+					);
+					$payment_request = $this->ci->transactions_m->get_payment_transaction_by_destination_reference_number($request->destination_reference_number);
+					if($payment_request){
+						$this->ci->transactions_m->update_payment($payment_request->id,$update);
+					}
+					if($request->result_code=='0'){
+						$transaction_id = $request->transaction_id;
+						if($this->ci->withdrawals_m->is_unique_withdrawal($transaction_id)){
+							$amount = currency($request->amount);
+							$account_id = $request->account_id;
+							$withdrawal = array(
+								'withdrawal_date' => $request->transaction_completed_time,
+								'account_id' => $account_id,
+								'withdrawal_method' => 1,
+								'description' => $request->destination_naration.' Receipt number: '.$request->transaction_id,
+								'amount' => $amount,
+								'transaction_id' => $transaction_id,
+								'coop_bank_funds_transfer_id' => $request->id,
+								'active' => 1,
+								'created_by' => 1,
+								'created_on' => time(),
+							);
+							if($withdrawal_id = $this->ci->withdrawals_m->insert($withdrawal)){
+								$balance = $this->calculate_account_balance($account_id,3,$amount);
+								$transaction_data = array(
+									'transaction_type' => 3,
+									'transaction_particulars' => $request->destination_naration.' Receipt number: '.$request->transaction_id,
+									'transaction_id' => $request->transaction_id,
+									'account_id' => $account_id,
+									'amount' => $amount,
+									'transaction_date' => $request->transaction_completed_time,
+									'transaction_channel' => 3,
+									'withdrawal_id' => $withdrawal_id,
+									'balance' => $balance,
+									'active' => 1,
+									'created_on' => time(),
+								);
+								if($transaction_statement_id = $this->ci->transactions_m->insert($transaction_data)){
+									if($this->update_account_balances($account_id,$balance)){
+										$update = array(
+											'request_reconcilled' => 1,
+											'modified_on' => time(),
+										);
+										$this->ci->coop_bank_m->update_disbursement($request->id,$update);
+										if($request->disburse_charge){
+											if($this->_reconcile_withdrawal_charges($request,4)){
+												if($account_number=$this->ci->accounts_m->get_account_number($request->account_id)){
+													clear_transaction($account_number);
+												}
+												return TRUE;
+											}else{
+												return FALSE;
+											}
+										}else{
+											if($account_number=$this->ci->accounts_m->get_account_number($request->account_id)){
+												clear_transaction($account_number);
+											}
+											return TRUE;
+										}
+									}else{
+										$this->ci->session->set_flashdata('error','Could not update B2C request reconcilled');
+										return FALSE;
+									}
+								}else{
+									$this->ci->session->set_flashdata('error','Could not create transaction statement');
+									return FALSE;
+								}
+							}else{
+								$this->ci->session->set_flashdata('error','Could not insert withdrawal');
+								return FALSE;
+							}
+						}else{
+							$this->ci->session->set_flashdata('error','Withdrawal not unique');
+							return FALSE;
+						}
+					}else{
+						$update = array(
+							'request_reconcilled' => 1,
+							'modified_on' => time(),
+						);
+						$this->ci->coop_bank_m->update_disbursement($request->id,$update);
+						if($account_number=$this->ci->accounts_m->get_account_number($request->account_id)){
+							clear_transaction($account_number);
+						}
+						return TRUE;
+					}
+				}
+			}else{
+				$this->ci->session->set_flashdata('error','Request already reconcilled');
+				return FALSE;
+			}
+		}else{
+			$this->ci->session->set_flashdata('error','Request not sent');
+			return FALSE;
+		}
+	}
 
     function process_withdrawal_request_disbursement($request = array()){
         if($request){
