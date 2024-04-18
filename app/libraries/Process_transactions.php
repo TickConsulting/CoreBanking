@@ -362,8 +362,9 @@ class Process_transactions{
             $url = 'https://api.safaricom.co.ke/mpesa/b2c/v1/paymentrequest';
         }
         if($shortcode && $username && $initiator_password && $url){
-            // $result_url = 'https://tickconsulting.co.ke//transaction_alerts/daraja_funds_disbursement_callback';
-            $result_url = site_url('transaction_alerts/daraja_funds_disbursement_callback');
+            $result_url = site_url('safaricom/record_disbursement');
+
+            // $result_url = site_url('transaction_alerts/daraja_funds_disbursement_callback');
             $encypted_initiator_password = openssl_key_encrypt($initiator_password,FALSE,TRUE);
             $amount = currency($amount);
             $phone_number = str_replace("+", "", valid_phone($phone_number));
@@ -383,6 +384,7 @@ class Process_transactions{
             ));
             //$url = 'https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest';
             if($response = $this->ci->curl->darajaRequests->process_request($post_data,$url,$shortcode)){
+                
                 if($res = json_decode($response)){
                     $error_code = isset($res->errorCode)?$res->errorCode:'';
                     $error_message = isset($res->errorMessage)?$res->errorMessage:'';
@@ -391,6 +393,7 @@ class Process_transactions{
                     $OriginatorConversationID = isset($res->OriginatorConversationID)?$res->OriginatorConversationID:'';
                     $ConversationID = isset($res->ConversationID)?$res->ConversationID:'';
                     if($response_description || $error_message){
+                       
                         $data = array(
                             'paybill'           =>  $shortcode,
                             'amount'            =>  $amount,
@@ -406,13 +409,15 @@ class Process_transactions{
                             'user_id'           =>  1,
                             'test_environment' => 'Production',
                             'command_id' => $command_id,
-                            'account_id' => $account->id,
+                            'account_id' => '',
                             'reference_number' => $reference_number,
                             'disburse_charge' => $disburse_charge,
                         );
+                          
                         if($req_id = $this->ci->safaricom_m->insert_b2c($data)){
+                            
                             $payment_input = array(
-                                'account_id' => $account->id,
+                                'account_id' => '',
                                 'reference_number' => $reference_number,
                                 'phone_number' => $phone_number,
                                 'amount' => currency($amount),
@@ -433,33 +438,49 @@ class Process_transactions{
                                 clear_transaction($account->account_number);
                                 return array(
                                     'code' => 'API063',
-                                    'description' => $error_message,
+                                    'description' => $error_message
                                 );
                             }else{
                                 return array(
                                     'code' => 200,
-                                    'description' => $response_description,
+                                    'description' => $response_description
                                 );
                             }
                         }else{
+                            
                             $this->ci->session->set_flashdata('error','Could not complete transaction at the moment. Try again later');
-                            return FALSE;
+                            return array(
+                                'code' => 200,
+                                'description' => $response_description
+                            );
                         }
                     }else{
                         $this->ci->session->set_flashdata('error','This transaction could not be completed at the moment. Try again later.');
-                        return FALSE;
+                        return array(
+                            'code' => 200,
+                            'description' => "This transaction could not be completed at the moment. Try again later"
+                        );
                     }
                 }else{
                     $this->ci->session->set_flashdata('error','Could not receive response from server. Try again later');
-                    return FALSE;
+                    return array(
+                        'code' => 200,
+                        'description' =>"Could not receive response from server. Try again later"
+                    );
                 }
             }else{
                 $this->ci->session->flashdata('error');
-                return FALSE;
+                return array(
+                    'code' => 200,
+                    'description' =>"Could not receive response from server. Try again later"
+                );
             }
         }else{
             $this->ci->session->set_flashdata('error','Invalid paybill and paybill data');
-            return FALSE;
+            return array(
+                'code' => 200,
+                'description' =>"Invalid paybill and paybill data"
+            );
         }
     }
 

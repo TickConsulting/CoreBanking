@@ -195,7 +195,11 @@ class Dbfix extends CI_Controller
             ),
         )
     );
-
+    $this->dbfix_m->add_column('equity_bank_configurations',array(
+        'username'=>array(
+            'type'=> 'blob',
+        ))
+    );
     $this->dbfix_m->add_column('safaricomb2crequest',
         array(
             'request_reconcilled'=>array(
@@ -211,7 +215,41 @@ class Dbfix extends CI_Controller
             ),
         )
     );
-
+    $this->dbfix_m->add_column('safaricomb2crequest',
+        array(
+            'disburse_charge'=>array(
+                'type'=> 'blob',
+            ),
+        )
+    );
+    $this->dbfix_m->add_column('safaricomb2crequest',
+    array(
+        'is_reversed'=>array(
+            'type'=> 'blob',
+        ),
+    )
+);
+    $this->dbfix_m->add_column('safaricom_configurations',
+        array(
+            'consumer_key'=>array(
+                'type'=> 'blob',
+            ),
+        )
+    );
+    $this->dbfix_m->add_column('safaricom_configurations',
+        array(
+            'consumer_secret'=>array(
+                'type'=> 'blob',
+            ),
+        )
+    );
+    $this->dbfix_m->add_column('safaricom_configurations',
+    array(
+        'endpoint'=>array(
+            'type'=> 'blob',
+        ),
+    )
+);
     $this->dbfix_m->add_column('safaricomb2crequest',
         array(
             'reference_number'=>array(
@@ -219,13 +257,109 @@ class Dbfix extends CI_Controller
             ),
         )
     );
-
+    $this->dbfix_m->add_column('safaricomb2crequest',
+    array(
+        'test_environment'=>array(
+            'type'=> 'blob',
+        ),
+    )
+);
+$this->dbfix_m->add_column('safaricomb2crequest',
+array(
+    'command_id'=>array(
+        'type'=> 'blob',
+    ),
+)
+);
 
         $this->dbfix_m->add_column('loan_applications', array(
             'reference_number' => array(
                 'type' => 'blob'
             )
         ));
+        $this->dbfix_m->add_column('payment_transactions',
+        array(
+            'checkout_request_id'=>array(
+                'type'=> 'blob',
+            ),
+        )
+    );
+
+    $this->dbfix_m->add_column('payment_transactions',
+        array(
+            'shortcode'=>array(
+                'type'=> 'blob',
+            ),
+        )
+    );
+
+    $this->dbfix_m->add_column('payment_transactions',
+        array(
+            'merchant_request_id'=>array(
+                'type'=> 'blob',
+            ),
+        )
+    );
+
+    $this->dbfix_m->add_column('payment_transactions',
+        array(
+            'transaction_date'=>array(
+                'type'=> 'blob',
+            ),
+        )
+    );
+    $this->dbfix_m->add_column('payment_transactions',
+    array(
+        'unique_reference_number'=>array(
+            'type'=> 'blob',
+        ),
+    )
+);
+    $this->dbfix_m->add_column('payment_transactions',
+        array(
+            'transaction_id'=>array(
+                'type'=> 'blob',
+            ),
+        )
+    );
+
+    $this->dbfix_m->add_column('payment_transactions',
+        array(
+            'narration'=>array(
+                'type'=> 'blob',
+            ),
+        )
+    );
+    $this->dbfix_m->add_column('payment_transactions',
+    array(
+        'disburse_charge'=>array(
+            'type'=> 'blob',
+        ),
+    )
+);	 
+$this->dbfix_m->add_column('payment_transactions',
+			array(
+				'bank_account_number'=>array(
+					'type'=> 'blob',
+				),
+			)
+		);
+
+		$this->dbfix_m->add_column('payment_transactions',
+			array(
+				'source_account_number'=>array(
+					'type'=> 'blob',
+				),
+			)
+		);
+
+		$this->dbfix_m->add_column('payment_transactions',
+			array(
+				'destination_reference_number'=>array(
+					'type'=> 'blob',
+				),
+			)
+		);
 
         $this->dbfix_m->add_column('loan_applications', array(
             'disbursement_failed_error_message' => array(

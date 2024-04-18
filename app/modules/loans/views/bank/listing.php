@@ -278,7 +278,7 @@ $(document).ready(function(){
                             }else if(loan.loan_fine_type==2){
                                 fine = loan.percentage_fine_rate+'% fine '+loan_data.late_payments_fine_frequency[loan.percentage_fine_frequency]+' on '+loan_data.percentage_fine_on[loan.percentage_fine_on];
                             }else if(loan.loan_fine_type==3){
-                                if(loan.one_off_fine_type==1){o
+                                if(loan.one_off_fine_type==1){
                                     fine = 'One Off Amount of <?php echo $this->group_currency;?> '+' '+number_to_currency(loan.one_off_fixed_amount);
                                 }else if(loan.one_off_fine_type==2){
                                     fine = loan.one_off_percentage_rate+'% One of Fine on '+loan_data.percentage_fine_on[loan.one_off_percentage_rate_on];

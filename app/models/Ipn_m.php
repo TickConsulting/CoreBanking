@@ -321,11 +321,13 @@ Class Ipn_m extends MY_Model{
 
 	function get_token($shortcode = 0){
 		$configuration = $this->get_paybill_configuration($shortcode);
+		 
 		if($configuration){
 			if($configuration->access_token){
 				if($configuration->access_token_expires_at > time()){
 					return $configuration->access_token_type.' '.$configuration->access_token;
 				}else{
+					 
 					if($this->curl->darajaRequests->generate_token($configuration)){
 						$token = $this->get_token($shortcode);
 						if($token){
@@ -338,6 +340,7 @@ Class Ipn_m extends MY_Model{
 					}
 				}
 			}else{
+				 
 				if($this->curl->darajaRequests->generate_token($configuration)){
 					$token = $this->get_token($shortcode);
 					if($token){

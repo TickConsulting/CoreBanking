@@ -41,13 +41,22 @@
                                             Shortcode
                                         </th>
                                         <th>
-                                            Username
+                                            Initiator Username
                                         </th>
                                         <th>
-                                            Password
+                                            Initiator Password
                                         </th>
                                          <th>
                                             Header Authorization
+                                        </th>
+                                        <th>
+                                            Consumer Key
+                                        </th>
+                                        <th>
+                                            Consumer Secret
+                                        </th>
+                                        <th>
+                                            Endpoint
                                         </th>
                                         <th>
                                             Status
@@ -69,6 +78,9 @@
                                             <td><?php echo $post->username; ?></td>
                                             <td><?php echo $post->password; ?></td>
                                             <td><?php echo $post->api_key; ?></td>
+                                            <td><?php echo $post->consumer_key; ?></td>
+                                            <td><?php echo $post->consumer_secret; ?></td>
+                                            <td><?php echo $post->endpoint; ?></td>
                                             <td>
                                                 <?php
                                                     if($post->active){

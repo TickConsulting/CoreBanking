@@ -67,13 +67,13 @@
 		"102.0.4.72"
 	);
 
-	if(in_array($_SERVER['REMOTE_ADDR'], $ip_addresses) || preg_match('/local/', $_SERVER['HTTP_HOST'])){
-		define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+	// if(in_array($_SERVER['REMOTE_ADDR'], $ip_addresses) || preg_match('/local/', $_SERVER['HTTP_HOST'])){
+	// 	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
 		
-	}else{
-		define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'production');	
-	}
-	// define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'production');
+	// }else{
+	// 	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'production');	
+	// }
+	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'production');
 
 	define('IPADDESSES',$ip_addresses);
 /*

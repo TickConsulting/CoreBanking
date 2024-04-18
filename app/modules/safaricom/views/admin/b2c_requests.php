@@ -83,7 +83,7 @@
                                                 <?php echo 'AC: '. $post->account_id;?>
                                             </td>
                                             <td>
-                                                Group Name :<?php echo $post->group_name; ?><br/>
+                                                <!-- Group Name :<?php echo $post->group_name; ?><br/> -->
                                                 User ID :<?php echo $post->user_id; ?><br/>
                                                 Callback URL :<?php //echo $post->callback_url; ?><br/>
                                                 <?php echo $post->originator_conversation_id; ?><br/>

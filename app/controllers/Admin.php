@@ -17,7 +17,7 @@ class Admin extends Admin_Controller{
 
 	function index(){
      
-     
+       
         $this->$data['account_number_count'] = 100;
         $this->$data['total_transactions_amount'] = 250;
         $this->data['total_deposit_transactions_amount'] =80000;

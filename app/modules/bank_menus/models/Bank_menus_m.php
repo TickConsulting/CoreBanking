@@ -1857,7 +1857,7 @@ class Bank_menus_m extends MY_Model {
 				               </div>
 				            </li>
 			        	</div>
-			       		<li class="m-menu__item '.$active.'" aria-haspopup="true"  m-menu-link-redirect="1"><a  href="'.site_url('bank').'" class="m-menu__link "><i class="m-menu__link-icon mdi mdi-view-dashboard"></i><span class="m-menu__link-text">'.translate('Dashboard').'</span></a></li>
+			       		<li class="m-menu__item '.$active.'" aria-haspopup="true"  m-menu-link-redirect="1"><a  href="'.site_url('dashboard').'" class="m-menu__link "><i class="m-menu__link-icon mdi mdi-view-dashboard"></i><span class="m-menu__link-text">'.translate('Dashboard').'</span></a></li>
 				';
 				foreach($parent_links as $link){
 					$href = $link->url?site_url($link->url):'javascript:;';

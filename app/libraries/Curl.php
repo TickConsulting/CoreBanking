@@ -1420,7 +1420,10 @@ class DarajaRequests{
 	}
 
 	function generate_token($configuration=array()){
-		$url = "https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
+		 
+		$url = isset($configuration->endpoint)?$configuration->endpoint:"https://sandbox.safaricom.co.ke";
+		$url=$url.'/oauth/v1/generate?grant_type=client_credentials';
+		 
 		$this->api_key = $configuration->api_key;
 		$curl = curl_init();
 		curl_setopt_array($curl, array(
@@ -1436,11 +1439,13 @@ class DarajaRequests{
 		  	),
 		));
 		$output = curl_exec($curl);
+		 
 		$err = curl_error($curl);
 		curl_close($curl);
         if($output){
         	$result = json_decode($output);
         	if($result){
+			 
         		if(isset($result->access_token)){
         			$update = array(
         				'access_token' => $result->access_token,
@@ -1468,10 +1473,7 @@ class DarajaRequests{
 	}
 
 	function process_request($post_data = '',$url='',$shortcode = 0){
-		 
 		$token = $this->ci->ipn_m->get_token($shortcode);
-		print_r($token);
-		die;
 		if($token){
 			$curl = curl_init();
 			curl_setopt_array($curl, array(

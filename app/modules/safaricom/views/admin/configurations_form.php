@@ -21,6 +21,15 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label>Endpoint <span class="required">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa  fa-file-text-o"></i>
+                                </span>
+                                <?php echo form_input('endpoint',$post->endpoint?:"",'class="form-control" placeholder="https://"');?>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label>Username<span class="required">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-addon">
@@ -47,6 +56,25 @@
                                 <?php echo form_input('access_token',$post->access_token?:"",'class="form-control" placeholder="access_token"');?>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label>Consumer Key<span class="required">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-lock"></i>
+                                </span>
+                                <?php echo form_input('consumer_key',$post->consumer_key?:"",'class="form-control" placeholder="consumer_key"');?>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Consumer Secret<span class="required">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-lock"></i>
+                                </span>
+                                <?php echo form_input('consumer_secret',$post->consumer_secret?:"",'class="form-control" placeholder="consumer_secret"');?>
+                            </div>
+                        </div>
+                       
                         <!--
                         <div class="form-group">
                             <label>API Key<span class="required">*</span></label>

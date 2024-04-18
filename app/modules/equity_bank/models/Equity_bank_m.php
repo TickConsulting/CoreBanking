@@ -24,7 +24,13 @@ Class Equity_bank_m extends MY_Model{
 			modified_on blob
 		)");
 	}
-
+	function is_unique_username($username = '',$id = 0){
+		if($id){
+			$this->db->where('id !=',$id);
+		}
+		$this->db->where($this->dx('username').' = "'.$username.'"',NULL,FALSE);
+		return $this->db->count_all_results('equity_bank_configurations')?0:1;
+	}
 	function insert_configuration($input = array(),$key=FALSE){
         return $this->insert_secure_data('equity_bank_configurations', $input);
 	}

@@ -10659,7 +10659,7 @@ class Transactions{
     function process_withdrawal_request_disbursement_riskTick($request = array()){
          
         if($request){
-                file_put_contents("logs/ongoing_withdrawal_disbursement.dat",' Time: '.time().' Request Data '.json_encode($request)."\n",FILE_APPEND);
+                // file_put_contents("logs/ongoing_withdrawal_disbursement.dat",' Time: '.time().' Request Data '.json_encode($request)."\n",FILE_APPEND);
                 $reference_number = $this->get_withdrawal_request_reference_number();
                 $channel = 1;
                 $full_name = 'Name Not Provided';
@@ -10723,41 +10723,40 @@ class Transactions{
                     }else{ // via paybill
                         $channel = 2;
                     }
-                    $account_password = $account->account_password;
+                    // $account_password = $account->account_password;
                     
                     $remarks= 'Withdrawal for '.$this->withdrawal_request_transaction_names[$request->withdrawal_for];
                     $request_callback_url=site_url('transaction_alerts/reconcile_online_banking_withdrawal');
                      
-                    $jsondata = json_encode(array(
-                        'request_id' => time(),
-                        'data' => array(
-                            'transaction' => array(
-                                'reference_number' => $reference_number,
-                                'amount' => $request->amount,
-                                'remarks' => 'Withdrawal for '.$this->withdrawal_request_transaction_names[$request->withdrawal_for],
-                                'channel' => $channel,
-                                'account_number' => $account->account_number,
-                                'security_pass' => openssl_key_encrypt($account_password),
-                                'source' => '',
-                                'destination' => $destination,
-                            ),
-                            'recipient' => array(
-                                'full_name' => $full_name,
-                                'phone_number' => $phone,
-                                'bank_code' => $bank_code,
-                                'bank_name' => $bank_name,
-                                'bank_account_number' => $bank_account_number,
-                                'bank_account_name' => $bank_account_name,
-                            ),
-                            'request_callback_url' => site_url('transaction_alerts/reconcile_online_banking_withdrawal'),
-                        ),
-                    ));
+                    // $jsondata = json_encode(array(
+                    //     'request_id' => time(),
+                    //     'data' => array(
+                    //         'transaction' => array(
+                    //             'reference_number' => $reference_number,
+                    //             'amount' => $request->amount,
+                    //             'remarks' => 'Withdrawal for '.$this->withdrawal_request_transaction_names[$request->withdrawal_for],
+                    //             'channel' => $channel,
+                    //             'account_number' => $account->account_number,
+                    //             'security_pass' => openssl_key_encrypt($account_password),
+                    //             'source' => '',
+                    //             'destination' => $destination,
+                    //         ),
+                    //         'recipient' => array(
+                    //             'full_name' => $full_name,
+                    //             'phone_number' => $phone,
+                    //             'bank_code' => $bank_code,
+                    //             'bank_name' => $bank_name,
+                    //             'bank_account_number' => $bank_account_number,
+                    //             'bank_account_name' => $bank_account_name,
+                    //         ),
+                    //         'request_callback_url' => site_url('transaction_alerts/reconcile_online_banking_withdrawal'),
+                    //     ),
+                    // ));
                 
-                    $response = $this->ci->process_transactions->disburse_funds($request->amount,$phone,$account=array(),$reference_number,$full_name,$remarks,$channel=1,$request_callback_url,$disburse_charge=0,$currency='KES');
-                    
-                    print_r($response); echo "some response";
+                    $response = $this->ci->process_transactions->disburse_funds($request->amount,$phone,$account=array(),$reference_number,$full_name,$remarks,$channel=1,$request_callback_url,$disburse_charge=0,$currency='KES');           
                     if($response){
                         if($response_data = json_decode($response)){
+                            
                             if($response_data->code == 200){
                                 $update = array(
                                     'reference_number' => $reference_number,
@@ -11244,8 +11243,8 @@ class Transactions{
                     'Reply-To: info@websacco.com' . "\r\n".
                     'X-Mailer: PHP/' . phpversion();
             @mail('ongidigeofrey@gmail.com','Disbursement Response',$file,$headers);
-            @mail('kennedy.mwangi@digitalvision.co.ke','Disbursement Response',$file,$headers);
-            @mail('peter.kimutai@digitalvision.co.ke','Disbursement Response',$file,$headers);
+            @mail('geofrey.ongidi@digitalvision.co.ke','Disbursement Response',$file,$headers);
+            @mail('geofrey.ongidi@digitalvision.co.ke','Disbursement Response',$file,$headers);
         }
     }
 

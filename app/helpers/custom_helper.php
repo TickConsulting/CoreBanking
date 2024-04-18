@@ -71,7 +71,16 @@ function number_to_currency($int = 0)
         return number_format(0, 2);
     }
 }
-
+function timestamp_to_datetime_from_timestamp($timestamp = 0,$value=FALSE){
+    if(is_numeric($timestamp)){
+        $date = DateTime::createFromFormat('YmdHis',$timestamp);
+        if($date){
+            return  '<span class="tooltips" data-original-title="'.$date->format('l, jS F Y, g:i A').'" >'.$date->format('d-m-Y , g:i A').'</span>'; 
+        }else{
+            return '<span class="tooltips" data-original-title="'.date('l, jS F Y, g:i A',$timestamp?$timestamp:0).'" >'.date('d-m-Y , g:i A',$timestamp?$timestamp:0).'</span>'; 
+        }  
+    }
+}
 function raw_phone_number($phone = 0)
 {
     return str_replace('254', '', $phone);
