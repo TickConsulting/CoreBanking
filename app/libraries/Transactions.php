@@ -10646,6 +10646,7 @@ class Transactions{
 
     function process_bulk_withdrawal_disbursement_requests($limit=20){
         $requests = $this->ci->withdrawals_m->get_undisbursed_approved_withdrawal_requests($limit);
+        
        //print_r($requests); die;
         $i = 0;
         foreach ($requests as $key => $request) {
@@ -10686,7 +10687,7 @@ class Transactions{
                         $valid_recipient = FALSE;
                     }
                 }else if(preg_match('/member-/', $request->recipient_id)){
-                  
+                    
                     $member_id = str_replace('member-', '', $request->recipient_id);
                     $member = $this->ci->members_m->get_group_member($member_id,$request->group_id);
                     if($member){
@@ -10722,9 +10723,11 @@ class Transactions{
                     }else{ // via paybill
                         $channel = 2;
                     }
-                    print_r($account);
-                    die;
                     $account_password = $account->account_password;
+                    
+                    $remarks= 'Withdrawal for '.$this->withdrawal_request_transaction_names[$request->withdrawal_for];
+                    $request_callback_url=site_url('transaction_alerts/reconcile_online_banking_withdrawal');
+                     
                     $jsondata = json_encode(array(
                         'request_id' => time(),
                         'data' => array(
@@ -10749,8 +10752,9 @@ class Transactions{
                             'request_callback_url' => site_url('transaction_alerts/reconcile_online_banking_withdrawal'),
                         ),
                     ));
-                 
-                    $response = $this->ci->process_transactions->disburse_funds($request->amount,$phone,);
+                
+                    $response = $this->ci->process_transactions->disburse_funds($request->amount,$phone,$account=array(),$reference_number,$full_name,$remarks,$channel=1,$request_callback_url,$disburse_charge=0,$currency='KES');
+                    
                     print_r($response); echo "some response";
                     if($response){
                         if($response_data = json_decode($response)){

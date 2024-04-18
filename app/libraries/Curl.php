@@ -1468,7 +1468,10 @@ class DarajaRequests{
 	}
 
 	function process_request($post_data = '',$url='',$shortcode = 0){
+		 
 		$token = $this->ci->ipn_m->get_token($shortcode);
+		print_r($token);
+		die;
 		if($token){
 			$curl = curl_init();
 			curl_setopt_array($curl, array(

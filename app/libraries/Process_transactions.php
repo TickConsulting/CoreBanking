@@ -349,26 +349,27 @@ class Process_transactions{
     function disburse_funds($amount=0,$phone_number=0,$account=array(),$reference_number=0,$full_name='',$remarks='',$channel=1,$request_callback_url='',$disburse_charge=0,$currency=''){
         $initiator_password='';
         $shortcode='';
-        $user_name='';
+        $username='';
         if(preg_match('/54\.93\.184\.124/', $_SERVER['HTTP_HOST']) || preg_match('/local/', $_SERVER['HTTP_HOST'])){
             $shortcode = '600996';
-            $user_name='testapi';
+            $username='testapi';
             $initiator_password='Safaricom999!*!';
             $url = 'https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest';
         }else{
             $shortcode = '600996';
-            $user_name='testapi';
+            $username='testapi';
             $initiator_password='Safaricom999!*!';
             $url = 'https://api.safaricom.co.ke/mpesa/b2c/v1/paymentrequest';
         }
-        if($shortcode && $user_name && $initiator_password && $url){
+        if($shortcode && $username && $initiator_password && $url){
             // $result_url = 'https://tickconsulting.co.ke//transaction_alerts/daraja_funds_disbursement_callback';
-            $result_url = 'https://tickconsulting.co.ke/daraja_funds_disbursement_callback.php';
+            $result_url = site_url('transaction_alerts/daraja_funds_disbursement_callback');
             $encypted_initiator_password = openssl_key_encrypt($initiator_password,FALSE,TRUE);
             $amount = currency($amount);
             $phone_number = str_replace("+", "", valid_phone($phone_number));
             $command_id = "BusinessPayment";
             $post_data = json_encode(array(
+                "OriginatorConversationID"=>$reference_number.'-'.$reference_number.'-'.$reference_number,
                 "InitiatorName" => $username,
                 "SecurityCredential" => $encypted_initiator_password,
                 "CommandID" => $command_id,
@@ -378,7 +379,7 @@ class Process_transactions{
                 "Remarks" =>  $remarks,
                 "QueueTimeOutURL" => $result_url,
                 "ResultURL" => $result_url,
-                "Occassion" =>  ""
+                "Occassion" =>  "Loan Disbursement"
             ));
             //$url = 'https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest';
             if($response = $this->ci->curl->darajaRequests->process_request($post_data,$url,$shortcode)){

@@ -1574,7 +1574,7 @@ Withdrawal Details: Transaction ID:'.$transaction_id.'
             @mail("ongidigeofrey@gmail.com","daraja_funds_disbursement_callback",$file,$this->headers);
             header('Content-Type: application/json');
             header('Content-Type: application/json');
-            $url = 'https://api.chamasoft.com/safaricom/record_disbursement';
+            $url = site_url('safaricom/record_disbursement');
             echo $this->curl->post($file,$url);
         }else{
             echo json_encode(array(

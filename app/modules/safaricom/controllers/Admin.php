@@ -85,7 +85,7 @@ class Admin extends Admin_Controller
         $this->load->library('transactions');
         $this->load->model('safaricom_m');
         $this->load->model('accounts/accounts_m');
-        $this->load->model('tariffs/tariffs_m');
+        // $this->load->model('tariffs/tariffs_m');
     }
     function index()
     {
