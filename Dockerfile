@@ -6,6 +6,8 @@ COPY . /var/www/html/
 
 # Copy custom Apache configuration
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
+#installing sendmail
+RUN apt-get update && apt-get install -y sendmail
 
 # Enable mod_rewrite for URL rewriting
 RUN a2enmod rewrite
