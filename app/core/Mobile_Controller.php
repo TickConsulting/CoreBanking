@@ -38,7 +38,7 @@ class Mobile_Controller extends CI_Controller{
         $this->load->model('members/members_m');
         $this->load->helper('string');
         $this->beta = FALSE;
-        if(preg_match('/uat\.chamasoft\.com/', $_SERVER['HTTP_HOST']) || preg_match('/eazzychama\.local/', $_SERVER['HTTP_HOST']) || preg_match('/eazzykikundidemo\.com/', $_SERVER['HTTP_HOST'])){
+        if( preg_match('/riskTick\.local/', $_SERVER['HTTP_HOST'])){
             $this->beta = TRUE;
         }
         $this->request_headers = apache_request_headers();
@@ -104,23 +104,23 @@ class Mobile_Controller extends CI_Controller{
                             //there is need to log actions to know what members are doing that are affecting thr system
                             $activity_log_options = array(
                                 '' => array(
-                                    'description' => 'View Group Dashboard via Mobile App',
+                                    'description' => 'View  Dashboard via Mobile App',
                                     'action' => 'Read',
                                 ),
                                 '/group' => array(
-                                    'description' => 'View Group Dashboard via Mobile App',
+                                    'description' => 'View  Dashboard via Mobile App',
                                     'action' => 'Read',
                                 ),
                                 'login' => array(
-                                    'description' => 'Log into Chamasoft via Mobile App',
+                                    'description' => 'Log into Risk Tick Consulting via Mobile App',
                                     'action' => 'Read',
                                     ),
                                 'logout' => array(
-                                    'description' => 'Logout of Chamasoft via Mobile App',
+                                    'description' => 'Logout of Risk Tick Consulting via Mobile App',
                                     'action' => 'Read',
                                     ),
                                 'checkin' => array(
-                                    'description' => 'Check into Chamasoft via Mobile App',
+                                    'description' => 'Check into Risk Tick Consulting via Mobile App',
                                     'action' => 'Read',
                                     ),
                             ); 
@@ -332,7 +332,7 @@ class Mobile_Controller extends CI_Controller{
         if($id && ($user_id||$identity)){
             $access_token = random_string('alnum', 32);
             if($access_token){
-                if(preg_match('/chamasoft/i', $this->chamasoft_settings->application_name)){
+                if(preg_match('/riskTick/i', $this->chamasoft_settings->application_name)){
                     $input = array(
                         'user_id' => $user_id,
                         'user_id' => $user_id,
