@@ -262,6 +262,7 @@ class Group_members{
 				}
 			}else if($this->ci->ion_auth->identity_check($email)&&valid_email($email)){
 				//email address user is found
+				
 				$user = $this->ci->ion_auth->get_user_by_email($email);
 				if($user->id_number){
 					//$id_number = $user->id_number;
@@ -275,7 +276,7 @@ class Group_members{
 					'email' => $user->email?$user->email:$email,
 					'modified_on' => time(),
 				);
-				 
+			
 				if($this->ci->ion_auth->update($user->id,$input)){	
 					if($member_id = $this->create($group->id,$user,$current_user->id,FALSE,$group_role_id,'','',$group_admin,$membership_number,$date_of_birth,$physical_address,$next_of_kin_full_name,$next_of_kin_id_number,$next_of_kin_phone,$next_of_kin_relationship)){
 						//send the user an invitation if notification requests set and add notifications
@@ -323,19 +324,22 @@ class Group_members{
                     'original_phone' => $original_phone,
                     'date_of_birth' => $date_of_birth,
 					'id_number' => $id_number,
-					'loan_limit' => $loan_limit?currency($loan_limit):$user->loan_limit,
+					'loan_limit' => $loan_limit?currency($loan_limit):0,
 					'prompt_to_change_password' => 1,
 					'password_check'=>$this->ci->ion_auth->hash_password($password,'','',1),
-                );                
+                );    
+			 
                 $user_id = $this->ci->ion_auth->register($phone,$password,$email,$additional_data,$groups);
                 if($user_id){
                 	$user = $this->ci->ion_auth->get_user($user_id);
-					if($member_id = $this->create($group->id,$user,$current_user->id,FALSE,$group_role_id,'','','',$membership_number,$date_of_birth,$physical_address,$next_of_kin_full_name,$next_of_kin_id_number,$next_of_kin_phone,$next_of_kin_relationship)){
+					
+					if($member_id = $this->create(10,$user,1,FALSE,$group_role_id,'','','',$membership_number,$date_of_birth,$physical_address,$next_of_kin_full_name,$next_of_kin_id_number,$next_of_kin_phone,$next_of_kin_relationship)){
 						//send the user an invitation if notification requests set and add notifications
 						if($user->id == $current_user->id){
 							return $member_id;
 						}
 						$member = $this->ci->members_m->get_group_member($member_id,$group->id);
+						
 						if($this->ci->messaging->send_group_invitation_to_user($group,$user,$member,$current_user,$current_member_id,$send_invitation_sms,$send_invitation_email)){
 							$this->ci->session->set_userdata('success_feedback',$this->success_feedback);
 							$this->ci->session->set_userdata('warning_feedback',$this->warning_feedback);

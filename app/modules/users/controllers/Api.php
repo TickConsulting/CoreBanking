@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Mobile extends Mobile_Controller{
+class Api extends Mobile_Controller{
 
     protected $validation_rules = array(
         /*array(
@@ -38,7 +38,7 @@ class Mobile extends Mobile_Controller{
         array(
             'field' => 'id_number',
             'label' => 'ID Number',
-            'rules' => 'trim'
+            'rules' => 'trim|required'
         ),
         array(
             'field' => 'phone_number',
@@ -48,6 +48,11 @@ class Mobile extends Mobile_Controller{
         array(
             'field' => 'last_name',
             'label' => 'Last Name',
+            'rules' => 'required|trim'
+        ),
+        array(
+            'field' => 'calling_code',
+            'label' => 'Calling Code',
             'rules' => 'required|trim'
         ),
         array(
@@ -64,7 +69,12 @@ class Mobile extends Mobile_Controller{
             'field' =>  'email',
             'label' =>  'Email address',
             'rules' =>  'trim|valid_email',
-        )
+        ),
+        array(
+            'field' => 'loan_limit',
+            'label' => 'Loan  Limit',
+            'rules' => 'trim|required|valid_currency'
+        ),
         /*array(
             'field' => 'password',
             'label' => 'Password',
@@ -74,6 +84,7 @@ class Mobile extends Mobile_Controller{
 	function __construct(){
         parent::__construct();
         $this->load->model('users/users_m');
+        $this->load->library('group_members');
     }
 
     public function _remap($method, $params = array()){
@@ -321,35 +332,80 @@ class Mobile extends Mobile_Controller{
         }
         $id_number=$this->input->post("id_number");
         $phone_number=$this->input->post("phone_number");
+        $email_address=($this->input->post("email"))?$this->input->post("email"):'';
         $first_name=$this->input->post("first_name");
+        $send_invitation_sms=0;
+        $send_invitation_email=0;
         $middle_name=$this->input->post("middle_name");
         $last_name=$this->input->post("last_name");
+        $calling_code=$this->input->post("calling_code");
+        $loan_limit=$this->input->post("loan_limit");
+        $response=array();
+        $this->form_validation->set_rules($this->user_registration_rules);
+        if($this->form_validation->run()){
         if(!$this->user = $this->users_m->get_user_by_phone_or_id_number($phone_number,$id_number)){
            
             $this->form_validation->set_rules($this->user_registration_rules);
-            if($this->form_validation->run()){
-                if($member_id = $this->group_members->add_member_to_group($this->group,$first_name,$last_name,$phone_number,$email_address,$send_invitation_sms,$send_invitation_email,$this->user,$this->member->id,$posts['group_roles'][$i])){
+            $this->group=array(
+                'id'=>1
+             );
+             $this->user=array(
+                'id'=>1
+             );
+             if ($member_id=$this->group_members->add_member_to_group(
+                $this->group,
+                $first_name,
+                $last_name,
+                $phone_number,
+                $email_address,
+                FALSE,
+                FALSE,
+                $this->user,
+                '',
+                1,
+                '',
+                $calling_code,
+                $phone_number,
+                FALSE,
+                $id_number,
+                $loan_limit,
+            )) {
+                         
+                    $response = array(
+                        'status' => 0,
+                        'message' => 'A user Registered successfully'
+                    );  
+                }
+                else{
+                    $response = array(
+                        'status' => 1,
+                        'message' => 'A user Not registered'
+                    );
                 }
                 
-            }else{
-                $post = array();
-                $form_errors = $this->form_validation->error_array();
-                foreach ($form_errors as $key => $value) {
-                    $post[$key] = $value;
-                }
-                $response = array(
-                    'status' => 0,
-                    'message' => 'Form validation failed',
-                    'validation_errors' => $post,
-                    'time' => time(),
-                );
-            }
+           
         }else{
+            
             $response = array(
                 'status' => 1,
                 'message' => 'A user is already registered to that phone number or ID'
             );
         }
+    }
+    else{
+        $post = array();
+        $form_errors = $this->form_validation->error_array();
+        foreach ($form_errors as $key => $value) {
+            $post[$key] = $value;
+        }
+        $response = array(
+            'status' => 0,
+            'message' => 'Form validation failed',
+            'validation_errors' => $post,
+            'time' => time(),
+        );
+    }
+
         echo json_encode(array('response'=>$response));
     }
 

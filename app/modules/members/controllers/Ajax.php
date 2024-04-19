@@ -1353,13 +1353,13 @@ class Ajax extends Ajax_Controller
                         if ($successful_invitations_count == 1) {
                             $response = array(
                                 'status' => 1,
-                                'message' => $successful_invitations_count . ' member successfully added to your group.',
+                                'message' => $successful_invitations_count . ' user successfully added .',
                                 'refer' => site_url('bank/members/listing'),
                             );
                         } else {
                             $response = array(
                                 'status' => 1,
-                                'message' => $successful_invitations_count . ' members successfully added to your group.',
+                                'message' => $successful_invitations_count . ' user successfully added.',
                                 'refer' => site_url('bank/members/listing'),
                             );
                         }

@@ -748,9 +748,9 @@ class Users_m extends MY_Model {
 	}
 	function get_user_by_phone_or_id_number($phone = "",$id = ""){
 		$this->select_all_secure('users');
-		// $this->db->where(" (".$this->dx('phone')." = '".$phone."' OR ".$this->dx('id_number')." = '".$id."' ) ",NULL,FALSE);
+		$this->db->where(" (".$this->dx('phone')." = '".$phone."' OR ".$this->dx('id_number')." = '".$id."' ) ",NULL,FALSE);
 		//$this->db->limit(1);
-		$this->db->where($this->dx('phone').' = "'.$phone.'"',NULL,FALSE);
+		// $this->db->where($this->dx('phone').' = "'.$phone.'"',NULL,FALSE);
 
 		return $this->db->get('users')->row();
 	}
