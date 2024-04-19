@@ -260,5 +260,129 @@ class Endpoint extends CI_Controller{
         }        
         return false;
     }
+    function record_disbursement(){
+        $file = file_get_contents('php://input');
+        file_put_contents("logs/b2c_disbursement.txt","\n".date("d-M-Y h:i A").$file,FILE_APPEND);
+        
+        $response = array();
+        if($file){
+            $result = json_decode($file);
+            if($result){
+                $result_body = isset($result->Result)?$result->Result:'';
+                if($result_body){
+                    $originator_conversation_id = isset($result_body->OriginatorConversationID)?$result_body->OriginatorConversationID:'';
+                    $conversation_id = isset($result_body->ConversationID)?$result_body->ConversationID:'';
+                    $transaction_id = isset($result_body->TransactionID)?$result_body->TransactionID:'';
+                    $result_type = isset($result_body->ResultType)?$result_body->ResultType:'';
+                    $result_code = isset($result_body->ResultCode)?$result_body->ResultCode:'';
+                    $result_description = isset($result_body->ResultDesc)?$result_body->ResultDesc:'';
 
+                    $update= array(
+                        'callback_result_description'   =>  $result_description,
+                        'callback_result_code'          =>  $result_code,
+                        'transaction_id'                =>  $transaction_id,
+                        'modified_on'                   =>  time(),
+                    );
+                    if($result_code == '0'){
+                        $result_params = isset($result_body->ResultParameters)?$result_body->ResultParameters:'';
+                        if($result_params){
+                            $result_parameter = $result_params->ResultParameter;
+                            $transaction_receipt = '';
+                            $transaction_amount = '';
+                            $b2c_charges_paid_account_available_funds = '';
+                            $b2c_receipt_is_registered_customer = '';
+                            $transaction_completed_time = '';
+                            $receiver_party_public_name = '';
+                            $b2c_working_account_available_funds = '';
+                            $b2c_utility_account_available_funds = '';
+                            for($i=0;$i<20;$i++){
+                                $value_data = isset($result_parameter[$i])?$result_parameter[$i]:'';
+                                if($value_data){
+                                    $name = isset($value_data->Key)?$value_data->Key:'';
+                                    $value = isset($value_data->Value)?$value_data->Value:'';
+                                    if(preg_match('/TransactionAmount/', $name)){
+                                        $transaction_amount = $value;
+                                    }
+                                    if(preg_match('/TransactionReceipt/', $name)){
+                                        $transaction_receipt = $value;
+                                    }
+                                    if(preg_match('/B2CRecipientIsRegisteredCustomer/', $name)){
+                                        $b2c_receipt_is_registered_customer = $value;
+                                    }
+                                    if(preg_match('/B2CChargesPaidAccountAvailableFunds/', $name)){
+                                        $b2c_charges_paid_account_available_funds = $value;
+                                    }
+                                    if(preg_match('/ReceiverPartyPublicName/', $name)){
+                                        $receiver_party_public_name = $value;
+                                    }
+                                    if(preg_match('/TransactionCompletedDateTime/', $name)){
+                                        $transaction_completed_time = $value;
+                                    }
+                                    if(preg_match('/B2CUtilityAccountAvailableFunds/', $name)){
+                                        $b2c_utility_account_available_funds = $value;
+                                    }
+                                    if(preg_match('/B2CWorkingAccountAvailableFunds/', $name)){
+                                        $b2c_working_account_available_funds = $value;
+                                    }
+                                }
+                            }
+                            $update = $update+array(
+                                'transaction_receipt'           =>  $transaction_receipt,
+                                'transaction_amount'            =>  $transaction_amount,
+                                'b2c_charges_paid_account_available_funds' =>  $b2c_charges_paid_account_available_funds,
+                                'b2c_receipt_is_registered_customer' =>  $b2c_receipt_is_registered_customer,
+                                'transaction_completed_time'    =>  strtotime($transaction_completed_time),
+                                'receiver_party_public_name'    =>  $receiver_party_public_name,
+                                'b2c_working_account_available_funds'    =>  $b2c_working_account_available_funds,
+                                'b2c_utility_account_available_funds'    =>  $b2c_utility_account_available_funds,
+                            );
+                        }
+                    }
+                    if($request = $this->safaricom_m->get_b2c_request_by_originator_conversation_id($originator_conversation_id)){
+                        if($update_id = $this->safaricom_m->update_b2c_request($request->id,$update)){
+                            $request = $this->safaricom_m->get_b2c_request($request->id);
+                            if($this->transactions->reconcile_account_disbursement($request)){
+                                $response = array(
+                                    "ResultDesc" => "success",
+                                    "ResultCode" => "0"
+                                );
+                                print_r($this->transactions->send_customer_disbursement_callback($request));die;
+                            }else{
+                                $response = array(
+                                    "ResultDesc" => "Result file sent : ".$this->session->flashdata('error'),
+                                    "ResultCode" => "1"
+                                );  
+                            }
+                        }else{
+                            $response = array(
+                                "ResultDesc" => "Result file sent : Transaction not recorded",
+                                "ResultCode" => "1"
+                            );  
+                        }
+                    }else{
+                        $response = array(
+                            "ResultDesc" => "Result file sent : Transaction not found",
+                            "ResultCode" => "1"
+                        );  
+                    }
+                }else{
+                    $response = array(
+                        "ResultDesc" => "Result file sent : Result body not found",
+                        "ResultCode" => "1"
+                    );  
+                }           
+            }else{
+                $response = array(
+                    "ResultDesc" => "Result file sent : file format error",
+                    "ResultCode" => "1"
+                );
+            }
+        }else{
+            $response = array(
+                "ResultDesc" => "Empty File",
+                "ResultCode" => "1"
+            );
+        }
+        echo json_encode($response);
+    }
 }
