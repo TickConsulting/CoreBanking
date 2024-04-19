@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Mobile extends Mobile_Controller{
+class Api extends Mobile_Controller{
 
   function __construct(){
         parent::__construct();
@@ -898,7 +898,7 @@ class Mobile extends Mobile_Controller{
         echo encrypt_json_encode(array('response'=>$response));
     }
 
-    function get_group_loan_types_list(){
+    function get_loan_types_list(){
         foreach ($this->request as $key => $value) {
             if(preg_match('/phone/', $key)){
                 $_POST[$key] = valid_phone($value);
@@ -906,20 +906,17 @@ class Mobile extends Mobile_Controller{
                 $_POST[$key] = $value;
             }
         }
-        $user_id = $this->input->post('user_id');
-        if($this->user = $this->ion_auth->get_user($user_id)){
+        $id_number = $this->input->post('id_number')??0;
+        if($this->user = $this->users_m->get_user_by_id_number($id_number)){
             $this->ion_auth->update_last_login($this->user->id);
-            $group_id = $this->input->post('group_id');
-            if($this->group = $this->groups_m->get($group_id)){
-                if($this->member = $this->members_m->get_group_member_by_user_id($this->group->id,$this->user->id)){
                     $lower_limit = $this->input->post('lower_limit')?:0;
                     $upper_limit = $this->input->post('upper_limit')?:20;
                     $records_per_page = $upper_limit - $lower_limit;
-                    $total_rows = $this->loan_types_m->count_group_loan_types($this->group->id);
+                    $total_rows = $this->loan_types_m->count_group_loan_types();
                     $pagination = create_custom_pagination('group',$total_rows,$records_per_page,$lower_limit,TRUE);
-                    $posts = $this->loan_types_m->limit($pagination['limit'])->get_group_loan_types($this->group->id);
+                    $posts = $this->loan_types_m->limit($pagination['limit'])->get_group_loan_types();
                     $loan_types = array();
-                    $group_currency = $this->countries_m->get_group_currency($this->group->id);
+                    $group_currency = "KES";
                     foreach ($posts as $post) {
                         $repayment_period ='';
                         if($post->loan_repayment_period_type == 1){
@@ -1003,23 +1000,10 @@ class Mobile extends Mobile_Controller{
                     $response = array(
                         'status' => 1,
                         'time' => time(),
-                        'message' => 'deposit list',
+                        'message' => 'Loan Types list',
                         'loan_types' => $loan_types,
                     );
-                }else{
-                    $response = array(
-                        'status' => 6,
-                        'message' => 'Could not find member details',
-                        'time' => time(),
-                    );
-                }
-            }else{
-                $response = array(
-                    'status' => 5,
-                    'message' => 'Could not find group details',
-                    'time' => time(),
-                );
-            }
+                
         }else{
             $response = array(
                 'status' => 4,

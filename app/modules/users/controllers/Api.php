@@ -27,6 +27,14 @@ class Api extends Mobile_Controller{
             'rules' => 'required|trim'
         ),
     );
+    protected $validation_rules_check_limit = array(
+  
+        array(
+            'field' => 'id_number',
+            'label' => 'ID number',
+            'rules' => 'required|trim'
+        ),
+    );
     protected $change_number_validation_rules =array(
         array(
             'field' => 'phone',
@@ -264,14 +272,14 @@ class Api extends Mobile_Controller{
         $this->form_validation->set_rules($this->validation_rules_user_details);
         if($this->form_validation->run()){
             $user_id = $this->input->post('id_number')?:0;
-            $loan_limit = $this->input->post('loan_limit')?:0;
         if($this->user = $this->users_m->get_user_by_id_number($user_id)){
+             
             $this->ion_auth->update_last_login($this->user->id);
             $loan_limit =($this->input->post('loan_limit')) ??$this->user->limit;
             $update=array(
                 "loan_limit"=>$loan_limit
             );
-            if($this->users_m->update($this->user->id,$update)){
+            if($this->users_m->update_user($this->user->id,$update)){
                 $response = array(
                     'status' => 0,
                     'message' => 'User details updated successfully',
@@ -310,7 +318,49 @@ class Api extends Mobile_Controller{
     }
         echo json_encode(array('response'=>$response));
     }
-
+    function check_user_loan_limit(){
+        foreach ($this->request as $key => $value) {
+            if(preg_match('/phone/', $key)){
+                $_POST[$key] = valid_phone($value);
+            }else{
+                $_POST[$key] = $value;
+            }
+        }
+        $this->form_validation->set_rules($this->validation_rules_check_limit);
+        if($this->form_validation->run()){
+            $user_id = $this->input->post('id_number')?:0;
+        if($this->user = $this->users_m->get_user_by_id_number($user_id)){
+            print_r($this->user);
+            die;
+            $this->ion_auth->update_last_login($this->user->id);  
+            $response = array(
+                'status' => 0,
+                'message' => 'User details Found',
+                'limit'=>$this->user->loan_limit,
+                'time' => time(),
+            );  
+        }else{
+            $response = array(
+                'status' => 1,
+                'message' => 'Could not find user details',
+                'time' => time(),
+            );
+        }
+    }else{
+        $post = array();
+        $form_errors = $this->form_validation->error_array();
+        foreach ($form_errors as $key => $value) {
+            $post[$key] = $value;
+        }
+        $response = array(
+            'status' => 0,
+            'message' => 'Form validation failed',
+            'validation_errors' => $post,
+            'time' => time(),
+        );
+    }
+        echo json_encode(array('response'=>$response));
+    }
     function change_user_phone_number(){
         foreach ($this->request as $key => $value) {
             if(preg_match('/phone/', $key)){
