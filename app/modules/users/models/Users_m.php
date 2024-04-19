@@ -754,6 +754,13 @@ class Users_m extends MY_Model {
 
 		return $this->db->get('users')->row();
 	}
+	function get_user_by_id_number($id = ""){
+		$this->select_all_secure('users');
+
+		$this->db->where($this->dx('id_number').' = "'.$id.'"',NULL,FALSE);
+
+		return $this->db->get('users')->row();
+	}
 	function insert_change_phone_request($input = array(),$skip_value = FALSE){
 		return $this->insert_secure_data('user_change_phone_number_requests',$input);
 	}

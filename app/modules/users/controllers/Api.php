@@ -15,7 +15,18 @@ class Api extends Mobile_Controller{
             'rules' => 'required|trim|valid_email'
         ),
     );
-
+    protected $validation_rules_user_details = array(
+        array(
+            'field' => 'loan_limit',
+            'label' => 'Loan Limit',
+            'rules' => 'required|valid_currency'
+        ),
+        array(
+            'field' => 'id_number',
+            'label' => 'ID number',
+            'rules' => 'required|trim'
+        ),
+    );
     protected $change_number_validation_rules =array(
         array(
             'field' => 'phone',
@@ -240,6 +251,63 @@ class Api extends Mobile_Controller{
                 'time' => time(),
             );
         }
+        echo json_encode(array('response'=>$response));
+    }
+    function update_user_details(){
+        foreach ($this->request as $key => $value) {
+            if(preg_match('/phone/', $key)){
+                $_POST[$key] = valid_phone($value);
+            }else{
+                $_POST[$key] = $value;
+            }
+        }
+        $this->form_validation->set_rules($this->validation_rules_user_details);
+        if($this->form_validation->run()){
+            $user_id = $this->input->post('id_number')?:0;
+            $loan_limit = $this->input->post('loan_limit')?:0;
+        if($this->user = $this->users_m->get_user_by_id_number($user_id)){
+            $this->ion_auth->update_last_login($this->user->id);
+            $loan_limit =($this->input->post('loan_limit')) ??$this->user->limit;
+            $update=array(
+                "loan_limit"=>$loan_limit
+            );
+            if($this->users_m->update($this->user->id,$update)){
+                $response = array(
+                    'status' => 0,
+                    'message' => 'User details updated successfully',
+                    'time' => time(),
+                );
+            }
+            else{
+                $response = array(
+                    'status' => 1,
+                    'message' => 'Something went wrong when updating user Details',
+                    'time' => time(),
+                );
+            }
+               
+        
+            
+        }else{
+            $response = array(
+                'status' => 1,
+                'message' => 'Could not find user details',
+                'time' => time(),
+            );
+        }
+    }else{
+        $post = array();
+        $form_errors = $this->form_validation->error_array();
+        foreach ($form_errors as $key => $value) {
+            $post[$key] = $value;
+        }
+        $response = array(
+            'status' => 0,
+            'message' => 'Form validation failed',
+            'validation_errors' => $post,
+            'time' => time(),
+        );
+    }
         echo json_encode(array('response'=>$response));
     }
 
