@@ -362,7 +362,7 @@ class Process_transactions{
             $url = 'https://api.safaricom.co.ke/mpesa/b2c/v1/paymentrequest';
         }
         if($shortcode && $username && $initiator_password && $url){
-            $result_url = "https://core.tickconsulting.co.ke/safaricom/record_disbursement";
+            $result_url = "https://core.tickconsulting.co.ke/endpoint/record_disbursement";
 
             // $result_url = site_url('transaction_alerts/daraja_funds_disbursement_callback');
             $encypted_initiator_password = openssl_key_encrypt($initiator_password,FALSE,TRUE);

@@ -266,7 +266,6 @@ class Endpoint extends CI_Controller{
     function record_disbursement(){
         $file = file_get_contents('php://input');
         file_put_contents("logs/b2c_disbursement.txt","\n".date("d-M-Y h:i A").$file,FILE_APPEND);
-        
         $response = array();
         if($file){
             $result = json_decode($file);
