@@ -20,6 +20,9 @@ class Endpoint extends CI_Controller{
         $this->load->model('transaction_alerts/transaction_alerts_m');
         $this->load->model('banks/banks_m');
         $this->load->library('transactions');
+        $this->load->model('safaricom/safaricom_m');
+        $this->load->library('mailer');
+        $this->load->model('transactions/transactions_m');
         $this->equity_transaction_type_options_keys = array_flip($this->equity_transaction_type_options);
     }
 
