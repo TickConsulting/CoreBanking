@@ -21,6 +21,11 @@ class Mobile extends Mobile_Controller{
             'field' => 'loan_application_amount', 
             'label' => 'Loan Application Amount', 
             'rules' => 'trim|required|currency|callback__valid_application_amount'
+        ),
+        array(
+            'field' => 'id_number', 
+            'label' => 'Id Number', 
+            'rules' => 'trim|required|currency|callback__valid_application_amount'
         ), array(
             'field' => 'loan_rules_check_box', 
             'label' => 'Agree to loan rules', 
@@ -1840,7 +1845,7 @@ class Mobile extends Mobile_Controller{
         }
     }
 
-    function member_apply_loan(){
+    function apply_loan(){
         foreach ($this->request as $key => $value) {
             if(preg_match('/phone/', $key)){
                 $_POST[$key] = valid_phone($value);
@@ -1848,18 +1853,12 @@ class Mobile extends Mobile_Controller{
                 $_POST[$key] = $value;
             }
         }
-        $user_id = $this->input->post('user_id');
-        if($this->user = $this->ion_auth->get_user($user_id)){
+        $user_id = $this->input->post('id_number');
+        if($this->user = $this->users_m->get_user_by_id_number($user_id)){
             $this->ion_auth->update_last_login($this->user->id);
-            $group_id = $this->input->post('group_id');
-            if($this->group = $this->groups_m->get($group_id)){
-                $this->group_currency = $this->currency_code_options[$this->group->currency_id];
-                $member_id = $this->input->post('member_id');
-                if($member_id){
-                    $this->member = $this->members_m->get_group_member($member_id,$this->group->id);
-                }else{
-                    $this->member = $this->members_m->get_group_member_by_user_id($this->group->id,$this->user->id);
-                }
+                $this->group_currency = "KES";
+                $member_id = $this->user->id_number;
+                    $this->member = $this->members_m->get_group_member_by_id_number($member_id);
                 if($this->member){ 
                     $loan_type_id = $this->input->post('loan_type_id');
                     if($loan_type_id){
@@ -1867,7 +1866,7 @@ class Mobile extends Mobile_Controller{
                        if($this->loan_type){                   
                            $this->form_validation->set_rules($this->application_rules);
                            if($this->form_validation->run()){
-                                $active_group_member_options = $this->members_m->get_active_group_member_options($this->group->id);
+                                $active_group_member_options = $this->members_m->get_active_group_member_options();
                                 $loan_application_amount = $this->input->post('loan_application_amount');
                                 if($this->loan_type){
                                     $validation_errors = array();
@@ -2151,13 +2150,7 @@ class Mobile extends Mobile_Controller{
                         'time' => time(),
                     );
                 }
-            }else{
-                $response = array(
-                    'status' => 5,
-                    'message' => 'Could not find group details',
-                    'time' => time(),
-                );
-            }
+            
         }else{
             $response = array(
                 'status' => 4,

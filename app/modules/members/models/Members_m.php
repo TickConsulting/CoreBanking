@@ -239,7 +239,35 @@
 		$this->db->join('users','users.id = '.$this->dx('members.user_id'));
 		return $this->db->get('members')->row();
 	}
-
+	function get_group_member_by_id_number($id_number=''){
+		$this->db->select(
+			array(
+				'members.id as id',
+				$this->dx('members.user_id').' as user_id',
+				$this->dx('members.group_id').' as group_id',
+				$this->dx('members.group_role_id').' as group_role_id',
+				$this->dx('members.is_admin').' as is_admin',
+				$this->dx('members.membership_number').' as membership_number',
+			)
+		);
+		$this->db->select(
+			array(
+				$this->dx('users.avatar').' as avatar',
+				$this->dx('users.first_name').' as first_name',
+				$this->dx('users.middle_name').' as middle_name',
+				$this->dx('users.last_name').' as last_name',
+				$this->dx('users.phone').' as phone',
+				$this->dx('users.email').' as email',
+				$this->dx('users.loan_limit').' as loan_limit',
+				$this->dx('users.id_number').' as id_number',
+				$this->dx('users.language_id').' as language_id',
+			)
+		);
+		$this->db->where($this->dx('users.id_number').'="'.$id_number.'"',NULL,FALSE);
+		$this->db->where($this->dx('members.is_deleted').' IS NULL ',NULL,FALSE);
+		$this->db->join('users','users.id = '.$this->dx('members.user_id'));
+		return $this->db->get('members')->row();
+	}
 	function get_all_member_options_only($group_id = 0){
 		$this->db->select('id');
 		$this->db->where($this->dx('members.is_deleted').' IS NULL ',NULL,FALSE);
