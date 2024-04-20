@@ -13,53 +13,7 @@ class Api extends Mobile_Controller{
             'rules' =>  'trim|numeric',
         )
     );
-	protected $user_registration_rules =array(
-        array(
-            'field' => 'id_number',
-            'label' => 'ID Number',
-            'rules' => 'trim|required'
-        ),
-        array(
-            'field' => 'phone_number',
-            'label' => 'Phone Number',
-            'rules' => 'required|trim|valid_phone'
-        ),
-        array(
-            'field' => 'last_name',
-            'label' => 'Last Name',
-            'rules' => 'required|trim'
-        ),
-        array(
-            'field' => 'calling_code',
-            'label' => 'Calling Code',
-            'rules' => 'required|trim'
-        ),
-        array(
-            'field' => 'first_name',
-            'label' => 'First Name',
-            'rules' => 'required|trim'
-        ),
-        array(
-            'field' => 'middle_name',
-            'label' => 'Middle Name',
-            'rules' => 'trim'
-        ),
-        array(
-            'field' =>  'email',
-            'label' =>  'Email address',
-            'rules' =>  'trim|valid_email',
-        ),
-        array(
-            'field' => 'loan_limit',
-            'label' => 'Loan  Limit',
-            'rules' => 'trim|required|valid_currency'
-        ),
-        /*array(
-            'field' => 'password',
-            'label' => 'Password',
-            'rules' => 'required'
-        ),*/
-    );
+
 	protected $validation_rules_user_details = array(
         array(
             'field' => 'loan_limit',
@@ -1409,161 +1363,161 @@ class Api extends Mobile_Controller{
     	echo encrypt_json_encode(array('response'=>$response));
 	}
 
-	function register_user(){
-		foreach ($this->request as $key => $value) {
-			if(preg_match('/phone/', $key)){
-				$_POST[$key] = valid_phone($value);
-			}else{
-				$_POST[$key] = $value;
-			}
-		}
-		$unique_code = $this->input->post('unique_code');
-		$this->form_validation->set_rules($this->user_registration_rules);
-		if($this->form_validation->run()){
-			$first_name = $this->input->post('first_name');
-			$last_name = $this->input->post('last_name');
-			$identity = $this->input->post('identity');
-			$document_type = $this->input->post('document_type');
-			$document_number = $this->input->post('document_number');
-			$password = $this->input->post('password');
-			$avatar = $this->input->post('avatar');
-			$terms_and_conditions = $this->input->post('terms_and_conditions');
-			$exempted_names = array('customer','equity');
-			if(!in_array(strtolower($first_name),$exempted_names)){
-				$original_phone = '';
-				$calling_code ='';
-				$phone = 0;
-				$email = '';
-				if(valid_phone($identity)){
-					$original_phone = substr($identity,-9);
-					$calling_code = substr($identity,0,3);
-					$phone = valid_phone($identity);
-				}elseif (valid_email($identity)) {
-					$email = $identity;
-				}
-				$auth = $this->users_m->get_user_authentication_by_identity($identity,$phone,$email);
-				if($auth && ($auth->unique_code == $unique_code)){
-					$this->user = $this->ion_auth->get_user_by_identity($identity);
-					$update_user_profile = FALSE;
-					$user_exists = FALSE;
-					if($this->user){
-						$user_exists = TRUE;
-					}
-					if($user_exists){
-						$response = array(
-							'status' => 0,
-							'message' => 'User already exists. Proceed to next step',
-							'time' => time(),
-						);
-					}else{
-						$group_id = $this->ion_auth->get_group_by_name('member');
-						if($group_id){
-							$groups = array($group_id->id);
-						}
-						if($groups){
-							$message = 'Please confirm your MPesa Identity to link to '.$this->chamasoft_settings->application_name.'.';
-							if($avatar){
-								$directory = './uploads/groups';
-								if(!is_dir($directory)){
-									mkdir($directory,0777,TRUE);
-								}
-								$file_name = generate_slug($first_name.$last_name.rand(99999,1000000).time()).'.jpeg';
-								if(base64ToImage($avatar,$directory.'/'.$file_name)){
-									if(is_file($directory.'/'.$file_name)){
-									}else{
-										$file_name=null;
-									}
-								}else{
-									$file_name = null;
-								}
-							}else{
-								$file_name = null;
-							}
-							$additional_data = array(
-								'created_on'=>time(),
-								'active'=>1,
-								'ussd_pin'=>rand(1000,9999),
-								'first_name'=> strtoupper($first_name),
-								'last_name'=> strtoupper($last_name),
-								'date_of_birth' => '',
-								'gender' => '',
-								'document_type' => $document_type,
-								'document_number' => $document_number,
-								'terms_and_conditions' => $terms_and_conditions,
-								'phone' => $phone,
-								'original_phone' => $original_phone,
-								'calling_code' => $calling_code,
-								'is_validated' => 1,
-								'avatar' => $file_name,
-							);
-							$user_id = $this->ion_auth->register($identity,$password,'', $additional_data,$groups,TRUE);
-							if($user_id){
-								$this->user = $this->ion_auth->get_user($user_id);
-								$this->ion_auth->update_last_login($this->user->id);
-								$user = (object)array(
-									'id' => $this->user->id,
-									'first_name' => strtoupper($this->user->first_name),
-									'last_name' => strtoupper($this->user->last_name),
-									'username' => $this->user->username,
-									'phone' => valid_phone($this->user->phone)?:0,
-									'email' => $this->user->email,
-									'avatar' => is_file('./uploads/groups/'.$this->user->avatar)?$this->user->avatar:null,
-									'is_validated' => 1,
-								);
-								$token = $this->_generate_access_token($auth->id,$this->user->id);
-								$response = array(
-									'status' => 1,
-									'message' => 'Registration request successful',
-									'time' => time(),
-									'access_token' => $token->access_token,
-									'user' => $user,
-								);
-								$group_data = $this->_get_checkin_data($user,array());
-								$response = array_merge($response,$group_data);
-							}else{
-								$response = array(
-									'status' => 0,
-									'message' => 'Error occured while adding user details',
-									'time' => time(),
-								);
-							}
-						}else{
-							$response = array(
-								'status' => 7,
-								'message' => 'Could not get user group',
-								'time' => time(),
-							);
-						}
-					}
-				}else{
-					$response = array(
-						'status' => 9,
-						'message' => 'Authentication failed. Generate a new pin',
-						'time' => time(),
-					);
-				}
-			}else{
-				$response = array(
-					'status' => 9,
-					'message' => 'First Name not accepted',
-					'time' => time(),
-				);
-			}
-		}else{
-			$post = array();
-            $form_errors = $this->form_validation->error_array();
-			foreach ($form_errors as $key => $value) {
-				$post[$key] = $value;
-			}
-            $response = array(
-				'status' => 0,
-				'message' => 'Form validation failed',
-				'validation_errors' => $post,
-				'time' => time(),
-			);
-		}
-    	echo encrypt_json_encode(array('response'=>$response));
-	}
+	// function register_user(){
+	// 	foreach ($this->request as $key => $value) {
+	// 		if(preg_match('/phone/', $key)){
+	// 			$_POST[$key] = valid_phone($value);
+	// 		}else{
+	// 			$_POST[$key] = $value;
+	// 		}
+	// 	}
+	// 	$unique_code = $this->input->post('unique_code');
+	// 	$this->form_validation->set_rules($this->user_registration_rules);
+	// 	if($this->form_validation->run()){
+	// 		$first_name = $this->input->post('first_name');
+	// 		$last_name = $this->input->post('last_name');
+	// 		$identity = $this->input->post('identity');
+	// 		$document_type = $this->input->post('document_type');
+	// 		$document_number = $this->input->post('document_number');
+	// 		$password = $this->input->post('password');
+	// 		$avatar = $this->input->post('avatar');
+	// 		$terms_and_conditions = $this->input->post('terms_and_conditions');
+	// 		$exempted_names = array('customer','equity');
+	// 		if(!in_array(strtolower($first_name),$exempted_names)){
+	// 			$original_phone = '';
+	// 			$calling_code ='';
+	// 			$phone = 0;
+	// 			$email = '';
+	// 			if(valid_phone($identity)){
+	// 				$original_phone = substr($identity,-9);
+	// 				$calling_code = substr($identity,0,3);
+	// 				$phone = valid_phone($identity);
+	// 			}elseif (valid_email($identity)) {
+	// 				$email = $identity;
+	// 			}
+	// 			$auth = $this->users_m->get_user_authentication_by_identity($identity,$phone,$email);
+	// 			if($auth && ($auth->unique_code == $unique_code)){
+	// 				$this->user = $this->ion_auth->get_user_by_identity($identity);
+	// 				$update_user_profile = FALSE;
+	// 				$user_exists = FALSE;
+	// 				if($this->user){
+	// 					$user_exists = TRUE;
+	// 				}
+	// 				if($user_exists){
+	// 					$response = array(
+	// 						'status' => 0,
+	// 						'message' => 'User already exists. Proceed to next step',
+	// 						'time' => time(),
+	// 					);
+	// 				}else{
+	// 					$group_id = $this->ion_auth->get_group_by_name('member');
+	// 					if($group_id){
+	// 						$groups = array($group_id->id);
+	// 					}
+	// 					if($groups){
+	// 						$message = 'Please confirm your MPesa Identity to link to '.$this->chamasoft_settings->application_name.'.';
+	// 						if($avatar){
+	// 							$directory = './uploads/groups';
+	// 							if(!is_dir($directory)){
+	// 								mkdir($directory,0777,TRUE);
+	// 							}
+	// 							$file_name = generate_slug($first_name.$last_name.rand(99999,1000000).time()).'.jpeg';
+	// 							if(base64ToImage($avatar,$directory.'/'.$file_name)){
+	// 								if(is_file($directory.'/'.$file_name)){
+	// 								}else{
+	// 									$file_name=null;
+	// 								}
+	// 							}else{
+	// 								$file_name = null;
+	// 							}
+	// 						}else{
+	// 							$file_name = null;
+	// 						}
+	// 						$additional_data = array(
+	// 							'created_on'=>time(),
+	// 							'active'=>1,
+	// 							'ussd_pin'=>rand(1000,9999),
+	// 							'first_name'=> strtoupper($first_name),
+	// 							'last_name'=> strtoupper($last_name),
+	// 							'date_of_birth' => '',
+	// 							'gender' => '',
+	// 							'document_type' => $document_type,
+	// 							'document_number' => $document_number,
+	// 							'terms_and_conditions' => $terms_and_conditions,
+	// 							'phone' => $phone,
+	// 							'original_phone' => $original_phone,
+	// 							'calling_code' => $calling_code,
+	// 							'is_validated' => 1,
+	// 							'avatar' => $file_name,
+	// 						);
+	// 						$user_id = $this->ion_auth->register($identity,$password,'', $additional_data,$groups,TRUE);
+	// 						if($user_id){
+	// 							$this->user = $this->ion_auth->get_user($user_id);
+	// 							$this->ion_auth->update_last_login($this->user->id);
+	// 							$user = (object)array(
+	// 								'id' => $this->user->id,
+	// 								'first_name' => strtoupper($this->user->first_name),
+	// 								'last_name' => strtoupper($this->user->last_name),
+	// 								'username' => $this->user->username,
+	// 								'phone' => valid_phone($this->user->phone)?:0,
+	// 								'email' => $this->user->email,
+	// 								'avatar' => is_file('./uploads/groups/'.$this->user->avatar)?$this->user->avatar:null,
+	// 								'is_validated' => 1,
+	// 							);
+	// 							$token = $this->_generate_access_token($auth->id,$this->user->id);
+	// 							$response = array(
+	// 								'status' => 1,
+	// 								'message' => 'Registration request successful',
+	// 								'time' => time(),
+	// 								'access_token' => $token->access_token,
+	// 								'user' => $user,
+	// 							);
+	// 							$group_data = $this->_get_checkin_data($user,array());
+	// 							$response = array_merge($response,$group_data);
+	// 						}else{
+	// 							$response = array(
+	// 								'status' => 0,
+	// 								'message' => 'Error occured while adding user details',
+	// 								'time' => time(),
+	// 							);
+	// 						}
+	// 					}else{
+	// 						$response = array(
+	// 							'status' => 7,
+	// 							'message' => 'Could not get user group',
+	// 							'time' => time(),
+	// 						);
+	// 					}
+	// 				}
+	// 			}else{
+	// 				$response = array(
+	// 					'status' => 9,
+	// 					'message' => 'Authentication failed. Generate a new pin',
+	// 					'time' => time(),
+	// 				);
+	// 			}
+	// 		}else{
+	// 			$response = array(
+	// 				'status' => 9,
+	// 				'message' => 'First Name not accepted',
+	// 				'time' => time(),
+	// 			);
+	// 		}
+	// 	}else{
+	// 		$post = array();
+    //         $form_errors = $this->form_validation->error_array();
+	// 		foreach ($form_errors as $key => $value) {
+	// 			$post[$key] = $value;
+	// 		}
+    //         $response = array(
+	// 			'status' => 0,
+	// 			'message' => 'Form validation failed',
+	// 			'validation_errors' => $post,
+	// 			'time' => time(),
+	// 		);
+	// 	}
+    // 	echo encrypt_json_encode(array('response'=>$response));
+	// }
 
 	
 	function validate_user(){
