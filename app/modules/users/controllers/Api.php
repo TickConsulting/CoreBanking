@@ -265,17 +265,24 @@ class Api extends Mobile_Controller{
         foreach ($this->request as $key => $value) {
             if(preg_match('/phone/', $key)){
                 $_POST[$key] = valid_phone($value);
+                $_GET[$key] = valid_phone($value);
             }else{
                 $_POST[$key] = $value;
+                $_GET[$key] = $value;
             }
-        }
+        }   
         $this->form_validation->set_rules($this->validation_rules_user_details);
         if($this->form_validation->run()){
-            $user_id = $this->input->post('id_number')?:0;
+            $user_id = $this->input->post('id_number')?:$this->input->get('id_number');
         if($this->user = $this->users_m->get_user_by_id_number($user_id)){
              
             $this->ion_auth->update_last_login($this->user->id);
-            $loan_limit =($this->input->post('loan_limit')) ??$this->user->limit;
+            if($this->input->post('loan_limit') || $this->input->get('loan_limit')){
+                $loan_limit =($this->input->post('loan_limit')) ??$this->input->get('loan_limit');
+            }
+            else{
+                $loan_limit=$this->user->loan_limit;
+            }
             $update=array(
                 "loan_limit"=>$loan_limit
             );
