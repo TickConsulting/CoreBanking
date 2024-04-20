@@ -1,5 +1,5 @@
 <?php if(!defined('BASEPATH')) exit('You are not allowed to view this script');
-class Mobile extends Mobile_Controller{
+class Api extends Mobile_Controller{
 
 	protected $group_registration_rules = array(
 	    array(
@@ -12,6 +12,73 @@ class Mobile extends Mobile_Controller{
             'label' =>  'Country Name',
             'rules' =>  'trim|numeric',
         )
+    );
+	protected $user_registration_rules =array(
+        array(
+            'field' => 'id_number',
+            'label' => 'ID Number',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'phone_number',
+            'label' => 'Phone Number',
+            'rules' => 'required|trim|valid_phone'
+        ),
+        array(
+            'field' => 'last_name',
+            'label' => 'Last Name',
+            'rules' => 'required|trim'
+        ),
+        array(
+            'field' => 'calling_code',
+            'label' => 'Calling Code',
+            'rules' => 'required|trim'
+        ),
+        array(
+            'field' => 'first_name',
+            'label' => 'First Name',
+            'rules' => 'required|trim'
+        ),
+        array(
+            'field' => 'middle_name',
+            'label' => 'Middle Name',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' =>  'email',
+            'label' =>  'Email address',
+            'rules' =>  'trim|valid_email',
+        ),
+        array(
+            'field' => 'loan_limit',
+            'label' => 'Loan  Limit',
+            'rules' => 'trim|required|valid_currency'
+        ),
+        /*array(
+            'field' => 'password',
+            'label' => 'Password',
+            'rules' => 'required'
+        ),*/
+    );
+	protected $validation_rules_user_details = array(
+        array(
+            'field' => 'loan_limit',
+            'label' => 'Loan Limit',
+            'rules' => 'required|valid_currency'
+        ),
+        array(
+            'field' => 'id_number',
+            'label' => 'ID number',
+            'rules' => 'required|trim'
+        ),
+    );
+    protected $validation_rules_check_limit = array(
+  
+        array(
+            'field' => 'id_number',
+            'label' => 'ID number',
+            'rules' => 'required|trim'
+        ),
     );
 
 	protected $signup_rules = array(
@@ -6922,10 +6989,316 @@ class Mobile extends Mobile_Controller{
 			'invited_user_groups' => $invited_user_groups,
 		);
 	}
-
+	function update_user_details(){
+        foreach ($this->request as $key => $value) {
+            if(preg_match('/phone/', $key)){
+                $_POST[$key] = valid_phone($value);
+                $_GET[$key] = valid_phone($value);
+            }else{
+                $_POST[$key] = $value;
+                $_GET[$key] = $value;
+            }
+        }   
+        $this->form_validation->set_rules($this->validation_rules_user_details);
+        if($this->form_validation->run()){
+            $user_id = $this->input->post('id_number')?:$this->input->get('id_number');
+        if($this->user = $this->users_m->get_user_by_id_number($user_id)){
+             
+            $this->ion_auth->update_last_login($this->user->id);
+            if($this->input->post('loan_limit') || $this->input->get('loan_limit')){
+                $loan_limit =($this->input->post('loan_limit')) ??$this->input->get('loan_limit');
+            }
+            else{
+                $loan_limit=$this->user->loan_limit;
+            }
+            $update=array(
+                "loan_limit"=>$loan_limit
+            );
+            if($this->users_m->update_user($this->user->id,$update)){
+                $response = array(
+                    'status' => 0,
+                    'message' => 'User details updated successfully',
+                    'time' => time(),
+                );
+            }
+            else{
+                $response = array(
+                    'status' => 1,
+                    'message' => 'Something went wrong when updating user Details',
+                    'time' => time(),
+                );
+            }
+               
+        
+            
+        }else{
+            $response = array(
+                'status' => 1,
+                'message' => 'Could not find user details',
+                'time' => time(),
+            );
+        }
+    }else{
+        $post = array();
+        $form_errors = $this->form_validation->error_array();
+        foreach ($form_errors as $key => $value) {
+            $post[$key] = $value;
+        }
+        $response = array(
+            'status' => 0,
+            'message' => 'Form validation failed',
+            'validation_errors' => $post,
+            'time' => time(),
+        );
+    }
+        echo json_encode(array('response'=>$response));
+    }
 
     /*****************************/
+	function check_user_loan_limit(){
+        foreach ($this->request as $key => $value) {
+            if(preg_match('/phone/', $key)){
+                $_POST[$key] = valid_phone($value);
+            }else{
+                $_POST[$key] = $value;
+            }
+        }
+        $this->form_validation->set_rules($this->validation_rules_check_limit);
+        if($this->form_validation->run()){
+            $user_id = $this->input->post('id_number')?:0;
+        if($this->user = $this->users_m->get_user_by_id_number($user_id)){
+             
+            $this->ion_auth->update_last_login($this->user->id);  
+            $response = array(
+                'status' => 0,
+                'message' => 'User details Found',
+                'limit'=>$this->user->loan_limit,
+                'time' => time(),
+            );  
+        }else{
+            $response = array(
+                'status' => 1,
+                'message' => 'Could not find user details',
+                'time' => time(),
+            );
+        }
+    }else{
+        $post = array();
+        $form_errors = $this->form_validation->error_array();
+        foreach ($form_errors as $key => $value) {
+            $post[$key] = $value;
+        }
+        $response = array(
+            'status' => 0,
+            'message' => 'Form validation failed',
+            'validation_errors' => $post,
+            'time' => time(),
+        );
+    }
+        echo json_encode(array('response'=>$response));
+    }
+	function register_user(){
+        foreach ($this->request as $key => $value) {
+            if(preg_match('/phone/', $key)){
+                $_POST[$key] = valid_phone($value);
+            }else{
+                $_POST[$key] = $value;
+            }
+        }
+        $id_number=$this->input->post("id_number");
+        $phone_number=$this->input->post("phone_number");
+        $email_address=($this->input->post("email"))?$this->input->post("email"):'';
+        $first_name=$this->input->post("first_name");
+        $send_invitation_sms=0;
+        $send_invitation_email=0;
+        $middle_name=$this->input->post("middle_name");
+        $last_name=$this->input->post("last_name");
+        $calling_code=$this->input->post("calling_code");
+        $loan_limit=$this->input->post("loan_limit");
+        $response=array();
+        $this->form_validation->set_rules($this->user_registration_rules);
+        if($this->form_validation->run()){
+        if(!$this->user = $this->users_m->get_user_by_phone_or_id_number($phone_number,$id_number)){
+           
+            $this->form_validation->set_rules($this->user_registration_rules);
+            $this->group=array(
+                'id'=>1
+             );
+             $this->user=array(
+                'id'=>1
+             );
+             if ($member_id=$this->group_members->add_member_to_group(
+                $this->group,
+                $first_name,
+                $last_name,
+                $phone_number,
+                $email_address,
+                FALSE,
+                FALSE,
+                $this->user,
+                '',
+                1,
+                '',
+                $calling_code,
+                $phone_number,
+                FALSE,
+                $id_number,
+                $loan_limit,
+            )) {
+                         
+                    $response = array(
+                        'status' => 0,
+                        'message' => 'A user Registered successfully'
+                    );  
+                }
+                else{
+                    $response = array(
+                        'status' => 1,
+                        'message' => 'A user Not registered'
+                    );
+                }
+                
+           
+        }else{
+            
+            $response = array(
+                'status' => 1,
+                'message' => 'A user is already registered to that phone number or ID'
+            );
+        }
+    }
+    else{
+        $post = array();
+        $form_errors = $this->form_validation->error_array();
+        foreach ($form_errors as $key => $value) {
+            $post[$key] = $value;
+        }
+        $response = array(
+            'status' => 0,
+            'message' => 'Form validation failed',
+            'validation_errors' => $post,
+            'time' => time(),
+        );
+    }
 
+        echo json_encode(array('response'=>$response));
+    }
+
+	function get_loan_types_list(){
+        foreach ($this->request as $key => $value) {
+            if(preg_match('/phone/', $key)){
+                $_POST[$key] = valid_phone($value);
+            }else{
+                $_POST[$key] = $value;
+            }
+        }
+        $id_number = $this->input->post('id_number')??0;
+        if($this->user = $this->users_m->get_user_by_id_number($id_number)){
+            $this->ion_auth->update_last_login($this->user->id);
+                    $lower_limit = $this->input->post('lower_limit')?:0;
+                    $upper_limit = $this->input->post('upper_limit')?:20;
+                    $records_per_page = $upper_limit - $lower_limit;
+                    $total_rows = $this->loan_types_m->count_group_loan_types();
+                    $pagination = create_custom_pagination('group',$total_rows,$records_per_page,$lower_limit,TRUE);
+                    $posts = $this->loan_types_m->limit($pagination['limit'])->get_group_loan_types();
+                    $loan_types = array();
+                    $group_currency = "KES";
+                    foreach ($posts as $post) {
+                        $repayment_period ='';
+                        if($post->loan_repayment_period_type == 1){
+                            $repayment_period = 'Fixed repayment of '.$post->fixed_repayment_period.' month(s)';
+                        }elseif($post->loan_repayment_period_type == 2){
+                            $repayment_period = 'Varying repayment between '.$post->minimum_repayment_period.' and '.$post->maximum_repayment_period.' month(s)';
+                        }
+                        if($post->loan_amount_type == 1){
+                            $minimum_loan_amount = $post->minimum_loan_amount;
+                            $maximum_loan_amount = $post->maximum_loan_amount;
+                            $loan_amount = 'Between '.$group_currency.' '.number_to_currency($minimum_loan_amount).' - '.$group_currency.' '.number_to_currency($maximum_loan_amount);
+                        }elseif($post->loan_amount_type == 2){  
+                            $loan_amount = $post->loan_times_number.' times member savings';
+                        }else{
+                            $loan_amount = '';
+                        }
+                        if($post->enable_loan_processing_fee):
+                            if($post->loan_processing_fee_type==1){
+                                $loan_processing= 'Fixed Amount of '.number_to_currency($post->loan_processing_fee_fixed_amount);
+                            }else{
+                                $loan_processing = $post->loan_processing_fee_percentage_rate.'% of '.$this->loan->loan_processing_fee_percentage_charged_on[$post->loan_processing_fee_percentage_charged_on];
+                            }
+                        else:
+                            $loan_processing = 'No Charge';
+                        endif;
+
+                        if($post->enable_loan_guarantors == 1){
+                                if($post->loan_guarantors_type == 1){
+                                    $guarantors= 'Atleast '.$post->minimum_guarantors.' guarantors every time a member is applying a loan ';   
+                                }else if($post->loan_guarantors_type == 2){
+                                   $guarantors= 'Atleast '.$post->minimum_guarantors.' guarantors when loan request exceeds maximum loan amount';
+                                }else{
+                                    $guarantors= 'Unknown value '.$post->loan_guarantors_type;
+                                }
+                        }else{
+                            $guarantors = 'Not Required';  
+                        }
+                        if($post->enable_loan_fines):
+                            $late_payment_fines= $this->loan->late_loan_payment_fine_types[$post->loan_fine_type].' of ';
+                                if($post->loan_fine_type==1){
+                                    $late_payment_fines.= $group_currency.' '.number_to_currency($post->fixed_fine_amount).' fine '.$this->loan->late_payments_fine_frequency[$post->fixed_amount_fine_frequency].' on ';
+                                    $late_payment_fines.= isset($this->loan->fixed_amount_fine_frequency_on[$post->fixed_amount_fine_frequency_on])?$this->loan->fixed_amount_fine_frequency_on[$post->fixed_amount_fine_frequency_on]:'';
+                                }else if($post->loan_fine_type==2){
+                                    $late_payment_fines.= $post->percentage_fine_rate.'% fine '.$this->loan->late_payments_fine_frequency[$post->percentage_fine_frequency].' on '.$this->loan->percentage_fine_on[$post->percentage_fine_on];
+                                }else if($post->loan_fine_type==3){
+                                    if($post->one_off_fine_type==1){
+                                        $late_payment_fines.= $group_currency.' '.number_to_currency($post->one_off_fixed_amount).' per Installment';
+                                    }else if($post->one_off_fine_type==2){
+                                        $late_payment_fines.=  $post->one_off_percentage_rate.'% on '.$this->loan->percentage_fine_on[$post->one_off_percentage_rate_on];
+                                    }
+                                }else{
+
+                                }
+                        else:
+                            $late_payment_fines = 'Disabled';
+                        endif;
+                        if($post->enable_outstanding_loan_balance_fines):
+                            if($post->outstanding_loan_balance_fine_type==1){
+                                $outstanding_payment_fines = $group_currency.' '.number_to_currency($post->outstanding_loan_balance_fine_fixed_amount).' '.$this->loan->late_payments_fine_frequency[$post->outstanding_loan_balance_fixed_fine_frequency];
+                            }else if($post->outstanding_loan_balance_fine_type==2){
+                                $outstanding_payment_fines =  $post->outstanding_loan_balance_percentage_fine_rate.'% fine '.$this->loan->late_payments_fine_frequency[$post->outstanding_loan_balance_percentage_fine_frequency].' on '.$this->loan->percentage_fine_on[$post->outstanding_loan_balance_percentage_fine_on];
+                            }else{
+                                $outstanding_payment_fines =  'One Off Amount of '.$group_currency.' '.number_to_currency($post->outstanding_loan_balance_fine_one_off_amount);
+                            }
+                        else:
+                            $outstanding_payment_fines = 'Disabled';
+                        endif;
+                        $loan_types[] = array(
+                            'id' => $post->id,
+                            'name' => $post->name,
+                            'repayment_period' => $repayment_period,
+                            'loan_amount' => $loan_amount,
+                            'interest_rate' =>  $post->interest_rate.'% per '.$this->loan->loan_interest_rate_per[$post->loan_interest_rate_per].' on '.$this->loan->interest_types[$post->interest_type],
+                            'loan_processing' => $loan_processing,
+                            'guarantors' => $guarantors,
+                            'late_payment_fines'=> $late_payment_fines,
+                            'outstanding_payment_fines'=> $outstanding_payment_fines,
+                            'is_hidden' => $post->active?0:1,
+                        );
+                    }
+                    $response = array(
+                        'status' => 1,
+                        'time' => time(),
+                        'message' => 'Loan Types list',
+                        'loan_types' => $loan_types,
+                    );
+                
+        }else{
+            $response = array(
+                'status' => 4,
+                'message' => 'Could not find user details',
+                'time' => time(),
+            );
+        }
+        echo encrypt_json_encode(array('response'=>$response));
+    }
     function generate_member_statement(){
     	$file = file_get_contents('php://input');
     	$response = array();
