@@ -262,8 +262,7 @@ class Mobile_Controller extends CI_Controller{
                     $access_token = trim(str_replace("Bearer","",$access_token));
                     $access_token = trim(str_replace("Basic","",$access_token));
                     $this->user_id = $this->users_m->is_access_token_valid($access_token);
-                    //'/197\.237\.107\.3/'
-                    if($access_token == 'abcdefghhgfedcba'||preg_match('/197\.237\.106\.185/', $_SERVER['REMOTE_ADDR']) || preg_match('/127\.0\.0\.1/', $_SERVER['REMOTE_ADDR'])){
+                    if($access_token == 'abcdefghhgfedcba'||preg_match('/54\.93\.184\.124/', $_SERVER['REMOTE_ADDR']) || preg_match('/127\.0\.0\.1/', $_SERVER['REMOTE_ADDR'])){
                         return $access_token;
                     }
                     if($this->user_id){
