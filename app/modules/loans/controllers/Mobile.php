@@ -2073,6 +2073,15 @@ class Mobile extends Mobile_Controller{
                 echo json_encode($response);
                 die;
             }
+         
+            if($this->user->loan_limit < currency($this->input->post('loan_amount'))){
+                $response = array(
+                    'status' => 0,
+                    'message' => 'Sorry! you qualify for a loan amount of upto '.number_to_currency($this->user->loan_limit),
+                );
+                echo json_encode($response);
+                die;
+            }
             $member=$this->members_m->get_applicant_by_id_number($this->input->post('id_number'));
              if(!$member){
                 $response = array(
