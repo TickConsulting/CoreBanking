@@ -247,10 +247,11 @@ class Pages extends Public_Controller
 	}
 
 	function error_404_page(){
-		if(preg_match("/websacco/i",$this->application_settings->application_name)){
+		if(preg_match("/tick/i",$this->application_settings->application_name)){
 			$this->template->set_layout('blank.html')->title($this->application_settings->application_name .' - 404 Page Not Found')->build('pages/error_404_websacco_page');
 		}else{
-			$this->template->set_layout('blank.html')->title($this->application_settings->application_name .' - 404 Error Page')->build('pages/error_404_page');
+			$this->template->set_layout('blank.html')->title($this->application_settings->application_name .' - 404 Page Not Found')->build('pages/error_404_websacco_page');
+			// $this->template->set_layout('blank.html')->title($this->application_settings->application_name .' - 404 Error Page')->build('pages/error_404_page');
 		}
 	}
 

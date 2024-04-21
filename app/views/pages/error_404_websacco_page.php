@@ -1,6 +1,6 @@
 <!doctype html>
 <meta charset="UTF-8">
-<link href="https://app.websacco.com/uploads/logos/favicon.png" rel="shortcut icon" type="image/x-icon">
+<link href="https://core.tickconsulting.co.ke/uploads/logos/favicon.png" rel="shortcut icon" type="image/x-icon">
 <title>Page Not Found</title>
 <style>
     :root {
@@ -67,7 +67,7 @@
             Your URL returned a <strong>404</strong>, that's all we know.
         </p>
         <p>
-            If you need help you can always <a href="https://websacco.com/">contact us</a>, or use the chat plat option to chat us, otherwise go home <a href="https://websacco.com/">Home</a>
+            If you need help you can always <a href="https://tickconsulting.co.ke/">contact us</a>, or use the chat plat option to chat us, otherwise go home <a href="<?php echo site_url();?>">Home</a>
         </p>
 
         <!-- <p style="font-size:18px;">Sorry for the inconvenience but we&rsquo;re performing some maintenance at the moment. If you need to you can always <a href="mailto:#">contact us</a>, otherwise we&rsquo;ll be back online shortly!</p>

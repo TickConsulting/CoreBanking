@@ -88,13 +88,12 @@ class Recipients_m extends MY_Model {
 
 	function get_group_recipients(){
 		$this->select_all_secure('recipients');
-		$this->db->where($this->dx('group_id').'='.$this->group->id,NULL,FALSE);
 		$this->db->order_by($this->dx('name'), 'DESC',FALSE);
 		return $this->db->get('recipients')->result();
 	}
 
 	function count_group_recipients(){
-		$this->db->where($this->dx('group_id').'='.$this->group->id,NULL,FALSE);
+		
 		return $this->db->count_all_results('recipients')?:0;
 	}
 	
@@ -170,7 +169,7 @@ class Recipients_m extends MY_Model {
 
 	function get_group_back_dating_recipient(){
 		$this->select_all_secure('recipients');
-		$this->db->where($this->dx('group_id')." = '".$this->group->id."' ",NULL,FALSE);
+		
 		$this->db->where($this->dx('is_system')." = '1' ",NULL,FALSE);
 		$this->db->where($this->dx('active')." = '0' ",NULL,FALSE);
 		$this->db->limit(1);
@@ -246,7 +245,6 @@ class Recipients_m extends MY_Model {
 		$this->select_all_secure('recipients');
 		$this->db->where($this->dx('account_number').' = "'.$account_number.'"',NULL,FALSE);
 		$this->db->where($this->dx('type').' = "'.$type.'"',NULL,FALSE);
-		$this->db->where($this->dx('group_id').' = "0"',NULL,FALSE);
 		$this->db->where($this->dx('created_by').' = "'.$user_id.'"',NULL,FALSE);
 		return $this->db->get('recipients')->row();
 	}

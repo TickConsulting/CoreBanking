@@ -1,6 +1,6 @@
 <!doctype html>
 <meta charset="UTF-8">
-<link href="https://eazzychama.co.ke/uploads/logos/favicon2.png" rel="shortcut icon" type="image/x-icon">
+<link href="https://core.tickconsulting.co.ke/uploads/logos/favicon2.png" rel="shortcut icon" type="image/x-icon">
 <title>Page Not Found</title>
 <style>
     :root {
