@@ -6,12 +6,35 @@ class Mobile extends Mobile_Controller{
 
         $this->load->library('loan');
         $this->load->model('group_roles/group_roles_m');
+        $this->load->model('accounts/accounts_m');
         $this->load->model('wallets/wallets_m');
         $this->interest_types_option = $this->loan->interest_types;
         $this->loan_interest_rate_per = $this->loan->loan_interest_rate_per;
         $this->interest_types = $this->loan->interest_types;
     }
-    
+    protected $validation_rules = array(
+        array(
+            'field' => 'loan_type_id',
+            'label' => 'Loan Type',
+            'rules' => 'xss_clean|trim|required|numeric',
+        ),
+        array(
+            'field' => 'id_number',
+            'label' => 'Id  Number',
+            'rules' => 'xss_clean|trim|required',
+        ),
+        array(
+            'field' =>  'loan_amount',
+            'label' =>  'Loan Amount',
+            'rules' =>  'xss_clean|trim|required|currency|greater_than[0]|callback__valid_application_amount'
+        ),
+        array(
+            'field' => 'repayment_period', 
+            'label' => 'Loan Repayment Period', 
+            'rules' => 'trim|callback__valid_repayment_period'
+        )
+    );
+  
     protected $application_rules = array(
         array(
             'field' => 'loan_type_id', 
@@ -47,220 +70,88 @@ class Mobile extends Mobile_Controller{
         )
     );
 
-    protected $validation_rules = array(
-        array(
-            'field' => 'member_id',
-            'label' => 'Member Name',
-            'rules' => 'required|xss_clean|trim|numeric|callback__member_exists',
-        ),
-        array(
-            'field' => 'disbursement_date',
-            'label' => 'Disbursement Date',
-            'rules' => 'required|date|xss_clean|trim',
-        ),
-        array(
-            'field' => 'loan_amount',
-            'label' => 'Loan Amount',
-            'rules' => 'required|xss_clean|trim|currency',
-        ),
-        array(
-            'field' => 'repayment_period',
-            'label' => 'Repayment Period',
-            'rules' => 'required|xss_clean|trim|numeric',
-        ),
-        array(
-            'field' => 'interest_rate',
-            'label' => 'Interest Rate',
-            'rules' => 'required|xss_clean|trim|numeric',
-        ),
-        array(
-            'field' => 'loan_interest_rate_per',
-            'label' => 'Loan Interest Rate Per',
-            'rules' => 'required|xss_clean|trim|numeric',
-        ),
-        array(
-            'field' => 'interest_type',
-            'label' => 'Interest Type',
-            'rules' => 'required|xss_clean|trim|numeric',
-        ),
-        array(
-            'field' => 'account_id',
-            'label' => 'Account',
-            'rules' => 'xss_clean|trim|required|callback__valid_account_id'
-        ),
-        array(
-            'field' => 'grace_period',
-            'label' => 'Grace Period',
-            'rules' => 'xss_clean|trim|required|numeric'
-        ),
-        array(
-            'field' => 'enable_loan_fines',
-            'label' => 'Enable Loan Fines',
-            'rules' => 'xss_clean|trim'
-        ),
-    );
-
-    public function _additional_rules(){
-        if($this->input->post('enable_loan_fines')){
+    // protected $validation_rules = array(
+    //     array(
+    //         'field' => 'member_id',
+    //         'label' => 'Member Name',
+    //         'rules' => 'required|xss_clean|trim|numeric|callback__member_exists',
+    //     ),
+    //     array(
+    //         'field' => 'disbursement_date',
+    //         'label' => 'Disbursement Date',
+    //         'rules' => 'required|date|xss_clean|trim',
+    //     ),
+    //     array(
+    //         'field' => 'loan_amount',
+    //         'label' => 'Loan Amount',
+    //         'rules' => 'required|xss_clean|trim|currency',
+    //     ),
+    //     array(
+    //         'field' => 'repayment_period',
+    //         'label' => 'Repayment Period',
+    //         'rules' => 'required|xss_clean|trim|numeric',
+    //     ),
+    //     array(
+    //         'field' => 'interest_rate',
+    //         'label' => 'Interest Rate',
+    //         'rules' => 'required|xss_clean|trim|numeric',
+    //     ),
+    //     array(
+    //         'field' => 'loan_interest_rate_per',
+    //         'label' => 'Loan Interest Rate Per',
+    //         'rules' => 'required|xss_clean|trim|numeric',
+    //     ),
+    //     array(
+    //         'field' => 'interest_type',
+    //         'label' => 'Interest Type',
+    //         'rules' => 'required|xss_clean|trim|numeric',
+    //     ),
+    //     array(
+    //         'field' => 'account_id',
+    //         'label' => 'Account',
+    //         'rules' => 'xss_clean|trim|required|callback__valid_account_id'
+    //     ),
+    //     array(
+    //         'field' => 'grace_period',
+    //         'label' => 'Grace Period',
+    //         'rules' => 'xss_clean|trim|required|numeric'
+    //     ),
+    //     array(
+    //         'field' => 'enable_loan_fines',
+    //         'label' => 'Enable Loan Fines',
+    //         'rules' => 'xss_clean|trim'
+    //     ),
+    // );
+    function _additional_validation_rules_mobile(){
+        if($this->input->post('enable_loan_guarantors') == 1){
             $this->validation_rules[] = array(
-                    'field' =>  'loan_fine_type',
-                    'label' =>  'Late Loan Fine Type',
-                    'rules' =>  'required|xss_clean|trim'
-                );
-
-            if($this->input->post('loan_fine_type')==1){
-                $this->validation_rules[] = array(
-                        'field' =>  'fixed_fine_amount',
-                        'label' =>  'Fixed Fine Amount',
-                        'rules' =>  'required|xss_clean|trim|currency'
-                    );
-
-                $this->validation_rules[] = array(
-                        'field' =>  'fixed_amount_fine_frequency',
-                        'label' =>  'Fixed Amount Fine Frequency',
-                        'rules' =>  'required|xss_clean|trim'
-                    );
-
-                $this->validation_rules[] = array(
-                        'field' =>  'fixed_amount_fine_frequency_on',
-                        'label' =>  'Fixed Amount Fine Frequency On',
-                        'rules' =>  'required|xss_clean|trim'
-                    );
-            }
-
-            if($this->input->post('loan_fine_type')==2){
-                $this->validation_rules[] = array(
-                    'field' =>  'percentage_fine_rate',
-                    'label' =>  'Percentage(%) Fine Rate',
-                    'rules' =>  'required|xss_clean|trim|numeric'
-                );
-
-                $this->validation_rules[] = array(
-                    'field' =>  'percentage_fine_frequency',
-                    'label' =>  'Percentage Fine Frequency',
-                    'rules' =>  'required|xss_clean|trim'
-                );
-
-                $this->validation_rules[] = array(
-                    'field' =>  'percentage_fine_on',
-                    'label' =>  'Percentage Fine Frequency on',
-                    'rules' =>  'required|xss_clean|trim'
-                );
-            }
-
-            if($this->input->post('loan_fine_type')==3)
-            {
-                $this->validation_rules[] = array(
-                    'field' =>  'one_off_fine_type',
-                    'label' =>  'One off Fine Type',
-                    'rules' =>  'required|xss_clean|trim'
-                );
-
-                if($this->input->post('one_off_fine_type')==1){
-                    $this->validation_rules[] = array(
-                        'field' =>  'one_off_fixed_amount',
-                        'label' =>  'One off Fine Fixed Amount',
-                        'rules' =>  'required|xss_clean|trim|currency'
-                    );
-                }
-
-                if($this->input->post('one_off_fine_type')==2){
-                    $this->validation_rules[] = array(
-                        'field' =>  'one_off_percentage_rate',
-                        'label' =>  'One off Percentage (%) Rate',
-                        'rules' =>  'required|xss_clean|trim|numeric'
-                    );
-
-                    $this->validation_rules[] = array(
-                        'field' =>  'one_off_percentage_rate_on',
-                        'label' =>  'One off Percentage Rate On',
-                        'rules' =>  'required|xss_clean|trim'
-                    );
-                }
-            }
+                'field' => 'guarantor_id[]',
+                'label' => 'Guarantor name required',
+                'rules' => 'callback__verify_guarantor_name',
+            );
+            $this->validation_rules[] = array(
+                'field' => 'guaranteed_amount[]',
+                'label' => 'Guarantor Amount ',
+                'rules' => 'callback__valid_application_amount',
+            );
         }
 
-        if($this->input->post('enable_outstanding_loan_balance_fines')){
+    } 
+    function _additional_validation_rules(){
+        if($this->input->post('enable_loan_guarantors') == 1){
             $this->validation_rules[] = array(
-                    'field' =>  'outstanding_loan_balance_fine_type',
-                    'label' =>  'Outstanding Loan FIne Types',
-                    'rules' =>  'required|xss_clean|trim'
-                );
-
-            if($this->input->post('outstanding_loan_balance_fine_type')==1){
-                $this->validation_rules[] = array(
-                    'field' =>  'outstanding_loan_balance_fine_fixed_amount',
-                    'label' =>  'Outstanding Loan Balance FIne Fixed Amount',
-                    'rules' =>  'required|xss_clean|trim|currency'
-                );
-                $this->validation_rules[] = array(
-                    'field' =>  'outstanding_loan_balance_fixed_fine_frequency',
-                    'label' =>  'Outstanding Loan Balance FIne Fixed Frequency Rate',
-                    'rules' =>  'required|xss_clean|trim'
-                );
-            }
-
-            if($this->input->post('outstanding_loan_balance_fine_type')==2){
-                $this->validation_rules[] = array(
-                    'field' =>  'outstanding_loan_balance_percentage_fine_rate',
-                    'label' =>  'Outstanding Loan Balance Percentage Rate',
-                    'rules' =>  'required|xss_clean|trim|numeric'
-                );
-                $this->validation_rules[] = array(
-                    'field' =>  'outstanding_loan_balance_percentage_fine_frequency',
-                    'label' =>  'Outstanding Loan Balance Percentage Fine Frequency',
-                    'rules' =>  'required|xss_clean|trim'
-                );
-                $this->validation_rules[] = array(
-                    'field' =>  'outstanding_loan_balance_percentage_fine_on',
-                    'label' =>  'Outstanding Loan Balance Percentage Rate on',
-                    'rules' =>  'required|xss_clean|trim'
-                );
-            }
-
-            if($this->input->post('outstanding_loan_balance_fine_type')==3){
-                $this->validation_rules[] = array(
-                    'field' =>  'outstanding_loan_balance_fine_one_off_amount',
-                    'label' =>  'Outstanding Loan Balance One Off Amount',
-                    'rules' =>  'required|xss_clean|trim|currency'
-                );
-            }
+                'field' => 'guarantor_id[]',
+                'label' => 'Guarantor name required',
+                'rules' => 'callback__verify_guarantor_name',
+            );
+            $this->validation_rules[] = array(
+                'field' => 'guaranteed_amount[]',
+                'label' => 'Guarantor Amount ',
+                'rules' => 'callback__valid_application_amount',
+            );
         }
 
-        if($this->input->post('enable_loan_processing_fee')){
-            $this->validation_rules[] = array(
-                    'field' =>  'loan_processing_fee_type',
-                    'label' =>  'Loan Processing Fee Type',
-                    'rules' =>  'required|xss_clean|trim'
-                );
-            if($this->input->post('loan_processing_fee_type')==1){
-                $this->validation_rules[] = array(
-                    'field' =>  'loan_processing_fee_fixed_amount',
-                    'label' =>  'Loan Processing Fee Fixed Amount',
-                    'rules' =>  'required|xss_clean|trim|currency'
-                );
-            }else if($this->input->post('loan_processing_fee_type')==2){
-                 $this->validation_rules[] = array(
-                    'field' =>  'loan_processing_fee_percentage_rate',
-                    'label' =>  'Loan Processing Percentage Value',
-                    'rules' =>  'required|xss_clean|trim|numeric'
-                ); 
-                 $this->validation_rules[] = array(
-                    'field' =>  'loan_processing_fee_percentage_charged_on',
-                    'label' =>  'Loan Processing Fee Charged On',
-                    'rules' =>  'required|xss_clean|trim'
-                );
-            }
-        }
-
-        if($this->input->post('enable_loan_guarantors')){
-            $this->validation_rules[] = array(
-                    'field' =>  'guarantor_id[]',
-                    'label' =>  'Guarontor Name',
-                    'rules' =>  'callback__verify_guarantor_name'
-                );
-        }        
-    }
+    } 
 
     public $_from_loan_type_validation_rules = array(
         array(
@@ -1785,7 +1676,7 @@ class Mobile extends Mobile_Controller{
         echo json_encode(array('response'=>$response));
     }
     function _valid_application_amount(){
-        $loan_application_amount = currency($this->input->post('loan_application_amount'));
+        $loan_application_amount = currency($this->input->post('loan_amount'));
         if($this->loan_type->loan_amount_type == 1){//range
             if($loan_application_amount < $this->loan_type->minimum_loan_amount){
                 $this->form_validation->set_message('_valid_application_amount','Amount applied is below the allowed minimum amount');
@@ -2159,6 +2050,182 @@ class Mobile extends Mobile_Controller{
             );
         }
         echo json_encode(array('response'=>$response));
+    }
+    function create_loan(){
+        foreach ($this->request as $key => $value) {
+            if(preg_match('/phone/', $key)){
+                $_POST[$key] = valid_phone($value);
+            }else{
+                $_POST[$key] = $value;
+            }
+        }
+       
+        $post = new StdClass();
+       
+        $response = array();
+        $this->_additional_validation_rules_mobile();
+        $loan_type_id = $this->input->post('loan_type_id');
+        $this->loan_type = $this->loan_types_m->get($loan_type_id);
+       
+
+        $this->form_validation->set_rules($this->validation_rules);
+        if($this->form_validation->run()){ 
+            $loan_details = new StdClass();
+            $custom_loan_values = array();
+            
+            if(!$this->user=$this->users_m->get_user_by_id_number($this->input->post('id_number'))){
+                $response = array(
+                    'status' => 0,
+                    'message' => 'We could not get the User with this Id Number in our records',
+                );
+                echo json_encode($response);
+                die;
+            }
+            $member=$this->members_m->get_applicant_by_id_number($this->input->post('id_number'));
+             if(!$member){
+                $response = array(
+                    'status' => 0,
+                    'message' => 'Applicant details not found. Please contact support',
+                );
+                echo json_encode($response);
+                die;
+             }
+            $member_id = $member->id;
+            $loan_amount = currency($this->input->post('loan_amount'));
+            $accounts=$this->accounts_m->get_active_group_account_options('','','','',FALSE);
+            $account_id='';
+            foreach($accounts as $key=>$value){
+                if(preg_match('/mobile/',$key)){
+                    $account_id=$key;
+                    break;
+                }
+            }
+            $disbursement_date = time();
+            $disbursement_option_id =1;
+            $mobile_money_wallet_id = "member-".$member_id;
+            $equity_bank_account_id = ($this->input->post('equity_bank_account_id'))??'';
+            $repayment_period = $this->input->post('repayment_period');
+            $guarantor_id = $this->input->post('guarantor_ids');
+            $guaranteed_amount = $this->input->post('guaranteed_amounts');
+            $guarantor_comment = $this->input->post('guarantor_comments');
+            $guarantors= array();
+            foreach ($guarantor_id as $key => $value) {
+                if($value){
+                    $guarantors['guarantor_id'][] = $value;
+                    $guarantors['guaranteed_amount'][] = $guaranteed_amount[$key];
+                    $guarantors['guarantor_comment'][] = $guarantor_comment[$key];
+                }
+            }
+            $loan_type = $this->loan_types_m->get_group_loan_type($loan_type_id);
+            if($loan_type){
+                $loan_details->loan_type_id = $loan_type_id;
+                $loan_details->disbursement_date = $disbursement_date;
+                $loan_details->account_id = $account_id;
+                $loan_details->loan_amount = $loan_amount;
+                $loan_details->created_by = $member->user_id;
+                $loan_details->created_on = time();
+                if($loan_type->loan_repayment_period_type == 1){
+                    $loan_details->repayment_period = $loan_type->fixed_repayment_period;
+                }else{
+                    $loan_details->repayment_period = $repayment_period;
+                }
+                $fields = $this->loans_m->get_table_fields();
+                foreach ($loan_type as $key => $value) {
+                    if(!isset($loan_details->$key)){
+                        if(in_array($key, $fields) && $key!='id'){
+                            $loan_details->$key = $value;
+                        }
+                    }
+                }
+                $verified_bank_accounts = $this->bank_accounts_m->get_group_verified_partner_bank_account_options_ids($this->group->id);
+                if(preg_match('/bank-/', $account_id) && array_key_exists(trim(preg_replace('/[^0-9]/', '', $account_id)), $verified_bank_accounts)){
+                    //withdrawal request
+                    $bank_account_id = trim(preg_replace('/[^0-9]/','', $account_id));
+                    $withdrawal = new StdClass();
+                    $withdrawal->withdrawal_for = 1;
+                    $withdrawal->amount = $loan_amount;
+                    $withdrawal->bank_account_id = $bank_account_id;
+                    $withdrawal->transfer_to = $disbursement_option_id==1?1:3;
+                    $withdrawal->recipient = $disbursement_option_id==1?$mobile_money_wallet_id:$equity_bank_account_id;
+                    $withdrawal->loan_type_id = $loan_type_id;
+                    $withdrawal->member_id = $member_id;
+                    $withdrawal->disbursement_channel = $disbursement_option_id;
+                    $bank_account = $this->bank_accounts_m->get_group_verified_bank_account_by_id($bank_account_id,$this->group->id);
+                    if($bank_account){
+                        if(floatval($bank_account->current_balance) >= floatval($withdrawal->amount)){
+                            if($this->transactions->process_batch_withdrawal_requests($withdrawal,$this->group_currency,$this->member,$this->group,$this->user)){
+                                $response = array(
+                                    'status' => 1,
+                                    'message' => 'Successfully processed withdrawal request(s)',
+                                    'refer' => site_url('bank/withdrawals/withdrawal_requests'),
+                                );
+                            }else{
+                                $response = array(
+                                    'status' => 0,
+                                    'message' => $this->session->flashdata('error'),
+                                );
+                            }
+                        }else{
+                            $response = array(
+                                'status' => 0,
+                                'message' => translate('You can not disburse more than is in the selected account. Available balance is ').$this->group_currency.' '.number_to_currency($bank_account->current_balance),
+                            );
+                        }
+                    }else{
+                         $response = array(
+                            'status' => 0,
+                            'message' => translate('You must select a valid disbursing bank account that is connected'),
+                        );
+                    }
+                }else{
+                    if($id = $this->loan->create_automated_group_loan(1,$member_id,$group_id,(array)$loan_details,'','',$guarantors)){
+                        $withdrawal = new StdClass();
+                        $withdrawal->withdrawal_for = 1;
+                        $withdrawal->amount = $loan_amount;
+                        $withdrawal->bank_account_id = $bank_account_id;
+                        $withdrawal->transfer_to = $disbursement_option_id==1?1:3;
+                        $withdrawal->recipient = $disbursement_option_id==1?$mobile_money_wallet_id:$equity_bank_account_id;
+                        $withdrawal->loan_type_id = $loan_type_id;
+                        $withdrawal->member_id = $member_id;
+                        $withdrawal->disbursement_channel = $disbursement_option_id;
+                        $this->member=$this->members_m->get($member_id);
+                        if($this->transactions->process_batch_withdrawal_requests($withdrawal,"KES",$this->member,$this->group,$this->user)){
+                            $response = array(
+                                'status' => 1,
+                                'message' => 'Successfully processed withdrawal request(s)',
+                                'refer' => site_url('bank/withdrawals/withdrawal_requests'),
+                            );
+                        }
+                    $response = array(
+                        'status' => 1,
+                        'message' => 'Loan Successfully created',
+                    );
+                    }else{
+                        $response = array(
+                            'status' => 0,
+                            'message' => $this->session->flashdata('error')
+                        );
+                    }
+                }
+            }else{
+                $response = array(
+                    'status' => 0,
+                    'message' => 'We could not get the loan type you trying to create',
+                );
+            }
+        }else{
+            $post = array();
+            $form_errors = $this->form_validation->error_array();
+            foreach ($form_errors as $key => $value) {
+                $post[$key] = $value;
+            }
+            $response = array(
+                'status' => 0,
+                'message' => 'There are some errors on the form. Please review and try again.',
+                'validation_errors' => $post,
+            );
+        }
+        echo json_encode($response);
     }
     function get_member_loan_application_status(){        
         foreach ($this->request as $key => $value) {

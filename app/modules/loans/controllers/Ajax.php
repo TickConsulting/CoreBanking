@@ -37,6 +37,11 @@ class Ajax extends Ajax_Controller{
             'label' =>  'Loan Disbursing Account',
             'rules' =>  'xss_clean|trim|required'
         ),
+        array(
+            'field' => 'repayment_period', 
+            'label' => 'Loan Repayment Period', 
+            'rules' => 'xss_clean|trim|callback__valid_repayment_period'
+        )
     );
 
     protected $application_rules = array(
@@ -1515,6 +1520,8 @@ class Ajax extends Ajax_Controller{
 
     function create_withdrawal_request(){
         $post = new StdClass();
+        print_r($_POST);
+        die;
         $response = array();
         $this->_additional_validation_rules();
         $this->form_validation->set_rules($this->validation_rules);
