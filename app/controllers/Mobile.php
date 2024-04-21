@@ -1,5 +1,5 @@
 <?php if(!defined('BASEPATH')) exit('You are not allowed to view this script');
-class Api extends Mobile_Controller{
+class Mobile extends Mobile_Controller{
 
 	protected $group_registration_rules = array(
 	    array(
