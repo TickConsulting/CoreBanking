@@ -350,7 +350,7 @@ class Process_transactions{
         $initiator_password='';
         $shortcode='';
         $username='';
-        if(preg_match('/54\.93\.184\.124/', $_SERVER['HTTP_HOST']) || preg_match('/local/', $_SERVER['HTTP_HOST'])){
+        if(preg_match('/core\.tickconsulting\.co\.ke/', $_SERVER['HTTP_HOST']) || preg_match('/local/', $_SERVER['HTTP_HOST'])){
             $shortcode = '600996';
             $username='testapi';
             $initiator_password='Safaricom999!*!';

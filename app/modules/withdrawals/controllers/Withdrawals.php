@@ -14,6 +14,9 @@ class Withdrawals extends Public_Controller{
     }
 
     function process_withdrawal_request_disbursement($limit=20){
+        @ini_set('memory_limit','100M');
+        ini_set('max_execution_time', 600);
+        error_reporting(-1);
        echo $this->transactions->process_bulk_withdrawal_disbursement_requests($limit).' requests';
     }
 
