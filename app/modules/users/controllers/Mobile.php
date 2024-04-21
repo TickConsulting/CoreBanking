@@ -337,8 +337,7 @@ class Mobile extends Mobile_Controller{
         if($this->form_validation->run()){
             $user_id = $this->input->post('id_number')?:0;
         if($this->user = $this->users_m->get_user_by_id_number($user_id)){
-            print_r($this->user);
-            die;
+           
             $this->ion_auth->update_last_login($this->user->id);  
             $response = array(
                 'status' => 0,
