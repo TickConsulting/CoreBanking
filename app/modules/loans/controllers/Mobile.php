@@ -2434,7 +2434,7 @@ class Mobile extends Mobile_Controller{
         }    
         echo json_encode(array('response'=>$response));
     }
-    function get_member_loan_statement(){
+    function get_loan_statement(){
         foreach ($this->request as $key => $value) {
              if(preg_match('/phone/', $key)){
                  $_POST[$key] = valid_phone($value);
