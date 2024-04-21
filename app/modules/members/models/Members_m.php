@@ -245,6 +245,7 @@
 				'members.id as id',
 				$this->dx('members.user_id').' as user_id',
 				$this->dx('members.group_id').' as group_id',
+				$this->dx('members.active').' as active',
 				$this->dx('members.group_role_id').' as group_role_id',
 				$this->dx('members.is_admin').' as is_admin',
 				$this->dx('members.membership_number').' as membership_number',

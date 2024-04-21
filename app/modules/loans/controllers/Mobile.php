@@ -1247,7 +1247,7 @@ class Mobile extends Mobile_Controller{
         }
         echo encrypt_json_encode(array('response'=>$response));
     }
-    function _get_member_loan_limit($group_id,$member_id){
+    function _get_member_loan_limit($group_id='',$member_id){
         $loan_limit = 0;
         $loan_products = $this->loan_types_m->get_group_loan_types($group_id);
         if($loan_products){
@@ -1275,13 +1275,11 @@ class Mobile extends Mobile_Controller{
                 $_POST[$key] = $value;
             }
         }
-        $user_id = $this->input->post('user_id');
-        if($this->user = $this->ion_auth->get_user($user_id)){
+        $user_id = $this->input->post('id_number');
+        if($this->user = $this->users_m->get_user_by_id_number($user_id)){
             $this->ion_auth->update_last_login($this->user->id);
             // $group_id = $this->input->post('group_id');
-            $group_id = "5573";
-            if($this->group = $this->groups_m->get($group_id)){
-                if($this->member = $this->members_m->get_group_member_by_user_id($this->group->id,$this->user->id)){
+                if($this->member = $this->members_m->get_group_member_by_id_number($this->user->id_number)){
                     if($this->member->active){
                         $today = time();
                         $outstanding_loan = 0;
@@ -1431,7 +1429,7 @@ class Mobile extends Mobile_Controller{
                             endforeach;
                         }
 
-                        $loan_limit = $this->_get_member_loan_limit($this->group->id,$this->member->id);
+                        $loan_limit = $this->_get_member_loan_limit('',$this->member->id);
                         $loan_details = array(
                             'loan_balance'=>$outstanding_loan,
                             'total_amount_borrowed'=>$total_loan_borrowed,
@@ -1461,13 +1459,7 @@ class Mobile extends Mobile_Controller{
                         'time' => time(),
                     );
                 }
-            }else{
-                $response = array(
-                    'status' => 5,
-                    'message' => 'Could not find group details',
-                    'time' => time(),
-                );
-            }
+            
         }else{
             $response = array(
                 'status' => 4,
@@ -2450,12 +2442,10 @@ class Mobile extends Mobile_Controller{
                  $_POST[$key] = $value;
              }
          }
-         $user_id = $this->input->post('user_id');
-         if($this->user = $this->ion_auth->get_user($user_id)){
+         $user_id = $this->input->post('id_number');
+         if($this->user = $this->users_m->get_user_by_id_number($user_id)){
              $this->ion_auth->update_last_login($this->user->id);
-             $group_id = $this->input->post('group_id');
-             if($this->group = $this->groups_m->get($group_id)){
-                 if($this->member = $this->members_m->get_group_member_by_user_id($this->group->id,$this->user->id)){
+                 if($this->member = $this->members_m->get_group_member_by_user_id('',$this->user->id)){
                      if($this->member->active){
                          $loan_id = $this->input->post('loan_id');
                          if($loan_id){
@@ -2585,13 +2575,7 @@ class Mobile extends Mobile_Controller{
                          'time' => time(),
                      );
                  }
-             }else{
-                 $response = array(
-                     'status' => 5,
-                     'message' => 'Could not find group details',
-                     'time' => time(),
-                 );
-             }
+             
          }else{
              $response = array(
                  'status' => 4,

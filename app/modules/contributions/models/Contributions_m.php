@@ -533,11 +533,7 @@ class Contributions_m extends MY_Model{
 				$this->dx('name').' as name '
 			)
 		);
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+		
 		$this->db->order_by($this->dx('name'),'ASC',FALSE);
 		$this->db->where($this->dx('contributions.category').' = "2" ',NULL,FALSE);
 		$this->db->where("(".$this->dx('is_deleted').' IS NULL OR '.$this->dx('is_deleted').' = "")',NULL,FALSE);

@@ -407,7 +407,7 @@ class Loans_m extends MY_Model{
             $this->dx('loan_id').' as loan_id',
         ));
         $this->db->where($this->dx('loan_invoices.loan_id').' IN ('.$loan_ids.')',NULL,FALSE);
-        $this->db->where($this->dx("loan_invoices.group_id").'="'.$this->group->id.'"',NULL,FALSE);
+        
         $this->db->where($this->dx('loan_invoices.active').'="1"',NULL,FALSE);
         $this->db->group_by(array(
             $this->dx('loan_id'),
@@ -2319,11 +2319,7 @@ class Loans_m extends MY_Model{
                 }
             }
         } 
-        if($group_id){
-            $this->db->where($this->dx('group_id').'="'.$group_id.'"',NULL,FALSE);
-        }else{
-            $this->db->where($this->dx('group_id').'="'.$this->group->id.'"',NULL,FALSE);
-        }
+      
         $this->db->where($this->dx('active').' ="1"',NULL,FALSE);
         $this->db->order_by($this->dx('disbursement_date'),'DESC',FALSE);
         return $this->db->get('loans')->result();

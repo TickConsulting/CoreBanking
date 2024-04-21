@@ -524,7 +524,7 @@ class Reports_m extends MY_Model {
 			//$contribution_id_list = implode(',',array_flip($contribution_options));
 		}
 		//Get contributions paid
-		$total_member_contributions = $this->deposits_m->get_group_member_total_contributions($member_id,$this->group->id,$contribution_id_list);
+		$total_member_contributions = $this->deposits_m->get_group_member_total_contributions($member_id,'',$contribution_id_list);
 		//echo $total_member_contributions;
 		//die;
 		//Subtract contribution refunds

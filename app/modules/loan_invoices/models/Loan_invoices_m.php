@@ -675,10 +675,7 @@ class Loan_invoices_m extends MY_Model{
     {
         $this->db->select('sum('.$this->dx('amount_payable').') as amount_payable');
         $this->db->where($this->dx('loan_id').'="'.$loan_id.'"',NULL,FALSE);
-        if($group_id){
-        }else{
-            $this->db->where($this->dx('group_id').'="'.$this->group->id.'"',NULL,FALSE);
-        }
+        
         $this->db->where($this->dx('active').'="1"',NULL,FALSE);
         $this->db->where($this->dx('type').'="1"',NULL,FALSE);
         return $this->db->get('loan_invoices')->row()->amount_payable?:0;
