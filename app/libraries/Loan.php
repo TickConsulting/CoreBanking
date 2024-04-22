@@ -5693,7 +5693,7 @@ class Loan{
             }
             
         }else{
-            $this->ci->session->set_flashdata('error','Sorry, Loan ID was not passed to calculate processing Fee');
+            // $this->ci->session->set_flashdata('error','Sorry, Loan ID was not passed to calculate processing Fee');
             return FALSE;
         }
     }
@@ -5761,7 +5761,7 @@ class Loan{
             }
             
         }else{
-            $this->ci->session->set_flashdata('error','Sorry, Loan ID was not passed to calculate processing Fee');
+            // $this->ci->session->set_flashdata('error','Sorry, Loan ID was not passed to calculate processing Fee');
             return FALSE;
         }
     }
@@ -8948,7 +8948,7 @@ class Loan{
                 return FALSE;
             }
         }else{
-            $this->ci->session->set_flashdata('error','Sorry, Loan ID was not passed to calculate processing Fee');
+            // $this->ci->session->set_flashdata('error','Sorry, Loan ID was not passed to calculate processing Fee');
             return FALSE;
         }
     }
