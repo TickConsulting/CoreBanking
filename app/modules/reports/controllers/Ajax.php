@@ -1358,6 +1358,823 @@ class Ajax extends Ajax_Controller{
            echo $html; 
        }
     }
+    public function get_aging_loans_summary_pdf($generate_pdf=FALSE){ 
+        $query_string = $_GET;
+        $query_string['generate_excel'] = 1;
+        $generated_query_string = http_build_query($query_string);
+        $from = $this->input->get('from')?strtotime($this->input->get('from')):strtotime('-10 year');
+        $to = $this->input->get('to')?strtotime($this->input->get('to')):strtotime('tomorrow');
+        $member_ids = $this->input->get_post('member_ids')?:0;
+        $loan_type_ids = $this->input->get_post('loan_type_ids')?:0;
+        $total_loan_out = $this->loans_m->get_total_loaned_amount();
+        $total_loan_paid = $this->loan_repayments_m->get_total_loan_paid();
+        $external_lending_total_loan_out = $this->debtors_m->get_total_loaned_amount();
+        $external_lending_total_loan_paid = $this->debtors_m->get_total_loan_paid();
+        $loan_type_options = $this->loan_types_m->get_options();
+        $base_where = array(
+            'member_id' => $member_ids,
+            'loan_type_id' => $loan_type_ids,
+            'from' => $from,
+            'to' => $to,
+        );
+        $amount_paid = array();
+        $amount_payable_to_date = array();
+        $projected_profit = array();
+        $loans = $this->loans_m->_get_group_aging_loans_for_all_classes($base_where,$this->group->id);
+    
+        $loan_ids = '0';
+        foreach($loans as $loan){
+            $loan_ids.=','.$loan->id;
+        }
+        $invoice_summations = $this->loans_m->get_loans_summation_for_ivoices_by_loan_ids($loan_ids);
+        $amount_paid_to_group = $this->loan_repayments_m->get_loan_total_payments_by_loan_ids($loan_ids);
+        $amounts_payable_to_date = $this->loans_m->loan_payable_and_principle_todate_by_loan_ids($loan_ids);
+        $projected_profits=$this->loans_m->get_projected_interest_by_loan_ids($loan_ids,$amount_paid_to_group);
+ 
+        $external_lending_post = array();
+        $external_lending_amount_paid = array();
+        $external_lending_amount_payable_to_date = array();
+        $external_lending_projected_profit = array();
+        $external_lending_total_loan_out = $this->debtors_m->get_total_loaned_amount();
+        $external_lending_total_loan_paid = $this->debtors_m->get_total_loan_paid();
+        $external_lending_loans = $this->debtors_m->get_many_by();
+        foreach ($external_lending_loans as $loan){
+            $external_lending_post[] = $this->debtors_m->get_summation_for_invoice($loan->id);
+            $external_lending_amount_paid[$loan->id] = $this->debtors_m->get_loan_total_payments($loan->id);
+            $external_lending_amount_payable_to_date[$loan->id] = $this->debtors_m->loan_payable_and_principle_todate($loan->id);
+            $external_lending_projected_profit[$loan->id] = $this->debtors_m->get_projected_interest($loan->id,$external_lending_amount_paid[$loan->id]);
+        }
+        $html= '            
+        <div class="table-responsive table-scrollable" style="font-family: arial;">
+        <div class="invoice-content-2 bordered document-border">
+
+        <br><br>
+        <div class="row invoice-head">
+        <div class="col-md-7 col-lg-7">
+             
+            <div class="invoice-logo"  style="text-align:center;">
+                <img src="';
+                    $html.=is_file(FCPATH.'uploads/groups/'.$this->group->avatar)?site_url('uploads/groups/'.$this->group->avatar):site_url('uploads/logos/'.$this->application_settings->paper_header_logo);
+                    $html.= '" alt="" class="group-logo image-responsive" style="max-height: 120px;" />
+            </div>
+        
+        </div>
+        <br>
+        <div class="col-md-5 col-lg-5 text-right">
+        <div class="company-address" style="text-align:center;">
+                <span class="bold uppercase" style="font-weight:bold; text-transform:uppercase; font-size:22px; ">'.$this->group->name.'</span><br/>';
+                $html.= nl2br($this->group->address);
+                $html.= '<br/>
+                <span class="bold" style="font-weight:bold;">'.translate('Telephone').': </span> '.$this->group->phone.'
+                <br/>
+                <span class="bold"  style="font-weight:bold;">'.translate('Email Address').': </span> '.$this->group->email.'
+                <br/>
+            </div>
+        </div>
+
+        <div class="company-address" style="text-align:center;">
+                <span class="bold uppercase" style="font-weight:bold; font-size:18px; ">Loan Arrears Report As at '.timestamp_to_date($to).'</span><br/>';
+                 
+                $html.= '<br/>
+                <span class="bold" style="font-weight:bold;"> 
+                 
+            </div>
+        </div>
+    </div>';
+                    $total_loan=0;
+                    $total_interest=0;
+                    $total_paid=0;
+                    $total_balance=0;
+                    $total_projected=0;
+                    $total_outstanding_profit=0;
+                    $total_profits=0;
+                    $total_pca_amount=0;
+                    $total_value_for_class_A=0;
+                    $total_value_for_class_B=0;
+                    $total_value_for_class_C=0;
+                    $total_value_for_class_D=0;
+                    $total_value_for_class_E=0;
+                    $total_balance=0;
+
+                    if(!empty($loans)){
+                        $html.=
+                        '<div class="col-xs-12 table-responsive ">
+                            <table class="table table-hover table-condensed table-checkable dataTable no-footer table-statement" style="width:100%;height:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="invoice-title ">#</th>
+                                        <th class="invoice-title">'.translate('IPPS Number').'</th>
+                                       
+                                        <th class="invoice-title">'.translate('Loan Type').'</th>
+                                        <th class="invoice-title">'.translate('Period').'</th>
+                                        <th class="invoice-title  text-right">'.translate('Amount Loaned').'</th>
+                                        <th class="invoice-title  text-right">'.translate('<=30').'</th>
+                                        <th class="invoice-title">'.translate('31-60').'</th>
+                                        <th class="invoice-title">'.translate('61-90').'</th>
+                                        <th class="invoice-title">'.translate('91-180').'</th>
+                                        <th class="invoice-title">'.translate('>180').'</th>
+                                        <th class="invoice-title">'.translate('Balance').'</th>
+                                        
+                                     </tr>
+                                </thead>
+                                <tbody>';
+                                    $i=0;
+                                    foreach($loans as $post):
+                                        $disbursement_date=$post->disbursement_date;
+                                        //class A
+                                          $to_for_class_A= strtotime('-30 days');
+                                         //class B 
+                                          $from_for_class_B= strtotime('-31 days');
+                                          $to_for_class_B= strtotime('-60 days');
+        
+                                          //class C
+                                          $from_for_class_C= strtotime('-61 days');
+                                          $to_for_class_C= strtotime('-90 days');
+        
+                                           //class D
+                                           $from_for_class_D= strtotime('-91 days');
+                                           $to_for_class_D= strtotime('-180 days');
+        
+                                            //class E
+                                        
+                                        $loan_type = $this->loan_types_m->get($post->loan_type_id);
+                                         
+                                        // print_r($this->members_m->get_member_additional_fields_mapping_data($post->member_id));
+                                        $secondary_data_value = $this->members_m->get_member_additional_fields_mapping_data_using_field_slug($post->member_id,'ipps-number');
+                                        $created_by  = $this->members_m->get_group_member_by_user_id($this->group->id,$post->created_by);
+                                      
+ 
+                                        $created_by_full_name=$created_by->first_name.' '.$created_by->last_name;
+                                      
+                                        if(isset($post->id)):
+                                            
+                                            $total_interest_payable = isset($invoice_summations[$post->id])?$invoice_summations[$post->id]->total_interest_payable:0;
+                                            $total_amount_payable = isset($invoice_summations[$post->id])?$invoice_summations[$post->id]->total_amount_payable:0;
+                                            $total_principle_payable = isset($invoice_summations[$post->id])?$invoice_summations[$post->id]->total_principle_payable:0;
+                                            $amount_paid = isset($amount_paid_to_group[$post->id])?$amount_paid_to_group[$post->id]:0;
+                                            $balance=$total_amount_payable-$amount_paid;
+                                            
+                                            $total_amount_payable_to_date = isset($amounts_payable_to_date[$post->id])?$amounts_payable_to_date[$post->id]->todate_amount_payable:0;
+                                            $principle_payable_todate  = isset($amounts_payable_to_date[$post->id])?$amounts_payable_to_date[$post->id]->todate_principle_payable:0;
+
+                                                
+                                           $from_for_class_E= strtotime('-180 days');
+                                           $value_for_class_A =  ($disbursement_date<=$to_for_class_A)? number_to_currency($total_amount_payable):0;
+                                           $value_for_class_B =  (($disbursement_date>=$from_for_class_B) && ($disbursement_date<=$to_for_class_B))? number_to_currency($total_amount_payable):0;
+                                           $value_for_class_C  =  (($disbursement_date>=$from_for_class_C) && ($disbursement_date<=$to_for_class_C))? number_to_currency($total_amount_payable):0;
+                                           $value_for_class_D   =  (($disbursement_date>=$from_for_class_D) && ($disbursement_date<=$to_for_class_D))? number_to_currency($total_amount_payable):0;
+                                           $value_for_class_E  =  (($disbursement_date>=$from_for_class_E))? ($total_amount_payable):0;
+                                           
+
+                                            // $total_amount_payable_to_date=$amount_payable_to_date[$post->id]->todate_amount_payable?:0;
+                                            // $principle_payable_todate = $amount_payable_to_date[$post->id]->todate_principle_payable?:0;
+                                            if((round($total_amount_payable_to_date-$amount_paid)) <= 0){
+                                                $intere = $total_amount_payable_to_date - $principle_payable_todate;
+                                                $overpayments = $amount_paid - $total_amount_payable_to_date;
+                                                if($overpayments<0){
+                                                    $overpayments = '';
+                                                }
+                                                $due_inter = '';
+                                                $pen = ($total_amount_payable) - ($total_interest_payable+$total_principle_payable);
+                                                if($pen>0){
+                                                    $penalty = $pen;
+                                                }
+                                                else{
+                                                    $penalty = 0;
+                                                }
+                                            }  
+                                            else{
+                                                $intere = '';
+                                                $overpayments = '';
+                                                $penalty = ($total_amount_payable) - ($total_interest_payable+$total_principle_payable);
+                                            }
+
+                                            $html.='
+                                            <tr>
+                                                <td> <small>'.++$i.'</small></td>
+                                                <td style="text-align:center;" nowrap> <small>'.(isset($secondary_data_value)?$secondary_data_value:'---').'</small></td>
+                                                <td nowrap style="text-align:center;"> <small>'.(isset($loan_type_options[$post->loan_type_id])?$loan_type_options[$post->loan_type_id]:'---').'</small></td>
+                                                <td nowrap style="text-align:center;"> <small>'.$post->repayment_period.'</small></td>
+                                                <td class="text-center" style="text-align:center;"> <small>';
+                                                $loan = $post->loan_amount;
+                                                $html.=number_to_currency($loan).
+                                            '</small></td>
+                                            
+                                            <td nowrap style="text-align:center;"> <small>'.round($value_for_class_A).'</small></td>
+                                            <td nowrap style="text-align:center;"> <small>'.round($value_for_class_B).'</small></td>
+                                            <td nowrap style="text-align:center;"> <small>'.round($value_for_class_C).'</small></td>
+                                            <td nowrap style="text-align:center;"> <small>'.round($value_for_class_D).'</small></td>
+                                            <td nowrap style="text-align:center;"> <small>'.round($value_for_class_E).'</small></td>
+                                            <td nowrap style="text-align:center;"> <small>'.round($balance).'</small></td>
+                                             
+ 
+                                               
+                                                 
+                                            </tr>';
+                                                $total_loan+=$loan; 
+                                                $total_value_for_class_A+=$value_for_class_A;
+                                                $total_value_for_class_B+=$value_for_class_B;
+                                                $total_value_for_class_C+=$value_for_class_C;
+                                                $total_value_for_class_D+=$value_for_class_D;
+                                                $total_value_for_class_E+=$value_for_class_E;
+                                                $total_balance+=$balance;
+                                              
+                                        endif;
+                                    endforeach;
+                                $html.='
+                                </tbody>
+                                <tfoot>
+                                    <tr  style="font-weight:bold">
+                                       <td colspan="4">Totals</td>
+                                        <td class="text-right" style="text-align:center;">'.number_to_currency($total_loan).'</td>
+                                        <td class="text-right" style="text-align:center;">'.number_to_currency(round($total_value_for_class_A)).'</td>
+                                        <td class="text-right" style="text-align:center;">'.number_to_currency(round($total_value_for_class_B)).'</td>
+                                        <td class="text-right" style="text-align:center;">'.number_to_currency(round($total_value_for_class_C)).'</td>
+                                        <td class="text-right" style="text-align:center;">'.number_to_currency(round($total_value_for_class_D)).'</td>
+                                        <td class="text-right" style="text-align:center;">'.number_to_currency(round($total_value_for_class_E)).'</td>
+                                        <td class="text-right" style="text-align:center;">'.number_to_currency(round($total_balance)).'</td>
+                                         
+                                        <td class=""></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div> ';
+                    }else{
+                        $html.='
+                        <div class="col-xs-12 margin-bottom-10 ">
+                            <div class="m-alert m-alert--outline alert alert-info fade show" role="alert"">
+                                <strong>'.translate('Information').'!</strong> '.translate('No Members loan records to display').'.
+                            </div>
+                        </div>';
+                    }
+                $html.='
+                </div>
+
+                <br/>';
+                
+                $external_lending_total_loan=0;
+                $external_lending_total_interest=0;
+                $external_lending_total_paid=0;
+                $external_lending_total_balance=0;
+                $external_lending_total_projected=0;
+                $external_lending_total_outstanding_profit=0;
+                $external_lending_total_profits=0;
+                if($external_lending_post):
+                    $html.='
+                    <div class="clearfix"></div>
+                    <br/>
+                    <hr/>
+                    <div class="row invoice-body">';
+                        if(!empty($external_lending_post)){
+                            $html.='<div class="col-xs-12 table-responsive ">
+                                <table class="table table-hover table-condensed table-checkable dataTable no-footer table-statement">
+                                    <thead>
+                                        <tr>
+                                            <th class="invoice-title ">#</th>
+                                            <th class="invoice-title" width="17%">'.translate('Debtor').'</th>
+                                            <th class="invoice-title">'.translate('Loan Duration').'</th>
+                                            <th class="invoice-title  text-right">'.translate('Amount Loaned').'</th>
+                                            <th class="invoice-title  text-right">'.translate('Interest').'</th>
+                                            <th class="invoice-title  text-right">'.translate('Amount Paid').'</th>
+                                            <th class="invoice-title  text-right">'.translate('Arrears').'</th>
+                                            <th class="invoice-title  text-right">'.translate('Profits').'</th>
+                                            <th class="invoice-title  text-right">'.translate('Outstanding Profits').'</th>
+                                            <th class="invoice-title  text-right">'.translate('Projected Profits').'</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>';
+                                        $i=0;
+                                        foreach($external_lending_post as $post):
+                                            if(isset($post->id)):
+                                                $total_amount_payable_to_date=$external_lending_amount_payable_to_date[$post->id]->todate_amount_payable?:0;
+                                                $principle_payable_todate = $external_lending_amount_payable_to_date[$post->id]->todate_principle_payable?:0;
+                                                if((round($total_amount_payable_to_date-$external_lending_amount_paid[$post->id])) <= 0){
+                                                    $intere = $total_amount_payable_to_date - $principle_payable_todate;
+                                                    $overpayments = $external_lending_amount_paid[$post->id] - $total_amount_payable_to_date;
+                                                    if($overpayments<0){
+                                                        $overpayments = '';
+                                                    }
+                                                    $due_inter = '';
+                                                    $pen = ($post->total_amount_payable) - ($post->total_interest_payable+$post->total_principle_payable);
+                                                    if($pen>0){
+                                                        $penalty = $pen;
+                                                    }else{
+                                                        $penalty = 0;
+                                                    }
+                                                }else{
+                                                    $intere = '';
+                                                    $overpayments = '';
+                                                    $penalty = ($post->total_amount_payable) - ($post->total_interest_payable+$post->total_principle_payable);
+                                                }
+                                                $html.='
+                                                <tr>
+                                                    <td>'.
+                                                        ++$i.'
+                                                    </td>
+                                                    <td>
+                                                        '.$this->group_debtor_options[$post->debtor_id].'
+                                                    </td>
+                                                    <td>
+                                                        '.timestamp_to_date($post->disbursement_date).' - '.timestamp_to_date(strtotime("+".$post->repayment_period." months", $post->disbursement_date)).'
+                                                    </td>
+                                                    <td class="text-right">';
+                                                        $loan = $post->loan_amount;
+                                                        $html.=number_to_currency($loan).'
+                                                    </td>
+                                                    <td class="text-right">
+                                                        '.number_to_currency($interest = $post->total_interest_payable).'
+                                                    </td>
+                                                    <td class="text-right">
+                                                        '.number_to_currency($paid = $external_lending_amount_paid[$post->id]).'
+                                                    </td>
+                                                    <td class="text-right ">
+                                                        <span class="tooltips" data-original-title="Interest Breakdown" data-content="Overpayment : '.number_to_currency($overpayments).' , Penalties : '.number_to_currency($penalty).'">';
+                                                        $balance = $post->total_amount_payable - $paid;
+                                                        $html.=number_to_currency($balance).'</span>
+                                                    </td>
+                                                    <td class="text-right">';
+                                                        $profit = $external_lending_projected_profit[$post->id];
+                                                        $html.=number_to_currency($profit).'
+                                                    </td>
+                                                    <td class="text-right">';
+                                                        $outstanding_profit = round(($post->total_interest_payable+$penalty)-$profit);
+                                                        $html.=number_to_currency($outstanding_profit).'
+                                                    </td>
+                                                    <td class="text-right">';
+                                                        $projected_profits = $post->total_interest_payable+$penalty;
+                                                        $html.=number_to_currency($projected_profits).'
+                                                    </td>
+                                                </tr>';
+                                                $external_lending_total_loan+=$loan; 
+                                                $external_lending_total_interest+=$interest;
+                                                $external_lending_total_paid+=$paid;
+                                                $external_lending_total_balance+=$balance; 
+                                                $external_lending_total_profits+=$profit; 
+                                                $external_lending_total_projected+=$projected_profits; 
+                                                $external_lending_total_outstanding_profit+=$outstanding_profit;
+                                            endif;
+                                        endforeach;
+                                    $html.='
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="4">'.translate('Totals').'</td>
+                                            <td class="text-right">'.number_to_currency($external_lending_total_loan).'</td>
+                                            <td class="text-right">'.number_to_currency($external_lending_total_interest).'</td>
+                                            <td class="text-right">'.number_to_currency($external_lending_total_paid).'</td>
+                                            <td class="text-right">'.number_to_currency($external_lending_total_balance).'</td>
+                                            <td class="text-right">'.number_to_currency($external_lending_total_profits).'</td>
+                                            <td class="text-right">'.number_to_currency($external_lending_total_outstanding_profit).'</td>
+                                            <td class="text-right">'.number_to_currency($external_lending_total_projected).'</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>'; 
+                        }else{
+                            $hntl.='
+                            <div class="col-xs-12 margin-bottom-10 ">
+                                <div class="m-alert m-alert--outline alert alert-info fade show" role="alert"">
+                                    <strong>'.translate('Information').'!</strong> '.translate('No Debtor loan records to display').'.
+                                </div>
+                            </div>';
+                        } 
+                    $html.='
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <a class="btn btn-sm blue hidden-print uppercase print-btn" onclick="javascript:window.print();"><i class="fa fa-print"></i> Print</a>
+                            
+                        </div>
+                    </div>
+                    </div>';
+                endif;
+
+                $html.='
+                <div class="row">
+                    <div class="col-md-6 summary-details">
+                        <h4>Loan Details</h4>
+                        <span class="bold">'.translate('Total Loaned Amount').' : </span>'.$this->group_currency.' '.number_to_currency($total_loan+$external_lending_total_loan).'<br/>
+                        
+                </div>
+                <hr/>';
+            $html.='
+            </div>';
+
+            if($generate_pdf){
+                // check if possible to add custom styles here.
+                $html_data = '
+                <html>
+                <head>
+                 <link href="http://app.eazzykikundi.local/templates/admin_themes/groups/css/pdf.css" type="text/css" rel="stylesheet" />
+                </head>
+                <div id="statement_paper"  class="pt-3">
+                    <div id="transaction_statement">'.$html.'
+                    </div>
+                    <div id="statement_footer" style="display: none;">
+                        <p style="text-align:center;">© '.date('Y').'. This statement was issued with no alteration </p>
+                        <p style="text-align:center;">
+                            <strong>Powered by:</strong>
+                            <br>
+                            <img width="150px" src="'.site_url('uploads/logos/'.$this->application_settings->paper_header_logo).'" alt="'.$this->application_settings->application_name.'">
+                        </p>
+                    </div>
+                </div>
+                </html>';
+                header('Content-Disposition: attachment; filename=testfile'); 
+                $this->pdf_library->generate_landscape_report($html_data);
+                die;
+            }else{
+               echo $html; 
+           }
+        
+
+            
+
+            // echo $html;
+    }
+    public function get_aging_loans_summary($generate_pdf=FALSE){
+        $query_string = $_GET;
+        $query_string['generate_excel'] = 1;
+        $generated_query_string = http_build_query($query_string);
+        $from = $this->input->get('from')?strtotime($this->input->get('from')):strtotime('-10 year');
+        $to = $this->input->get('to')?strtotime($this->input->get('to')):strtotime('tomorrow');
+        $member_ids = $this->input->get_post('member_ids')?:0;
+        $loan_type_ids = $this->input->get_post('loan_type_ids')?:0;
+        $total_loan_out = $this->loans_m->get_total_loaned_amount();
+        $total_loan_paid = $this->loan_repayments_m->get_total_loan_paid();
+        $external_lending_total_loan_out = $this->debtors_m->get_total_loaned_amount();
+        $external_lending_total_loan_paid = $this->debtors_m->get_total_loan_paid();
+        $loan_type_options = $this->loan_types_m->get_options();
+        $base_where = array(
+            'member_id' => $member_ids,
+            'loan_type_id' => $loan_type_ids,
+            'from' => $from,
+            'to' => $to,
+        );
+        $amount_paid = array();
+        $amount_payable_to_date = array();
+        $projected_profit = array();
+        $loans = $this->loans_m->_get_group_aging_loans_for_all_classes($base_where);
+        
+        $loan_ids = '0';
+        foreach($loans as $loan){
+            $loan_ids.=','.$loan->id;
+        }
+      $this->group=array(
+        "avatar"=>''
+      );
+        $html='<div class="invoice-content-2 bordered document-border">
+                <div class="row invoice-head">
+                    <div class="col-md-7 col-xs-6">
+                        <div class="invoice-logo">
+                            <img src="';
+                            $html.=is_file(FCPATH.'uploads/groups/'.$this->group->avatar)?site_url('uploads/groups/'.$this->group->avatar):site_url('uploads/logos/'.$this->application_settings->paper_header_logo);
+                            $html.='" alt="" class="group-logo image-responsive" /> 
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-xs-6 text-right">
+                        <div class="company-address">
+                            <span class="bold uppercase">'.$this->group->name.'</span><br/>
+                            '.nl2br($this->group->address).'<br/>
+                            <span class="bold">'.translate('Telephone').': </span>'.$this->group->phone.'
+                            <br/>
+                            <span class="bold">'.translate('Email Address').': </span> '.$this->group->email.'
+                            <br/>
+                        </div>
+                    </div>
+                
+            </div>
+                </div>
+                <div class="company-address" style="text-align:center;">
+                <span class="bold uppercase" style="font-weight:bold; font-size:18px; ">Loan Aging Report As at '.timestamp_to_date(time()).'</span><br/>';
+                 
+                $html.= '<br/>
+                <span class="bold" style="font-weight:bold;"> 
+                 
+            </div>
+                <hr/>
+                
+                <div class="row invoice-body">';
+                    $total_loan=0;
+                    $total_profits=0;
+                    $total_pca_amount=0;
+                    $value_for_class_A=0;
+                    $value_for_class_B=0;
+                    $value_for_class_C=0;
+                    $value_for_class_D=0;
+                    $value_for_class_E=0;
+                   
+
+                    if(!empty($loans)){
+                        $html.=
+                        '<div class="col-xs-12 table-responsive ">
+                            <table class="table table-hover table-condensed table-checkable dataTable no-footer table-statement" style="width:100%;height:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="invoice-title ">#</th>';
+                                       
+                                        $html.='
+                                        <th class="invoice-title">'.translate('Applicant  Name').'</th>
+                                        <th class="invoice-title">'.translate('Loan Type').'</th>
+                                        <th class="invoice-title">'.translate('Disbursement Date').'</th>
+                                        <th class="invoice-title">'.translate('Period').'</th>
+                                        <th class="invoice-title  text-right">'.translate('Amount Loaned').'</th>
+                                        <th class="invoice-title  text-right">'.translate('<=30').'</th>
+                                        <th class="invoice-title">'.translate('31-60').'</th>
+                                        <th class="invoice-title">'.translate('61-90').'</th>
+                                        <th class="invoice-title">'.translate('91-180').'</th>
+                                        <th class="invoice-title">'.translate('>180').'</th>
+                                        <th class="invoice-title">'.translate('Balance').'</th>
+                                        
+                                     </tr>
+                                </thead>
+                                <tbody>';
+                                    $i=0;
+                                    $value_for_class_A=0;
+                                    $value_for_class_B=0;
+                                    $value_for_class_C=0;
+                                    $value_for_class_D=0;
+                                    $value_for_class_E=0;
+                                    $total_value_for_class_A=0;
+                                    $total_value_for_class_B=0;
+                                    $total_value_for_class_C=0;
+                                    $total_value_for_class_D=0;
+                                    $total_value_for_class_E=0;
+                                    $total_balance=0;
+
+                                    foreach($loans as $post):
+                                        //class A
+                                        /* Class A <=30 , Class B 31-60 , Class C 61 -90, Class D 91-180   Class E >180*/
+                                           $number_of_days=(time()-$post->disbursement_date)/(24*60*60);
+                                            $value_for_class_A =  ($number_of_days<=30)? (round($post->loan_amount)):0;
+                                            $value_for_class_B =  (($number_of_days>30) && ($number_of_days<=60))? (round($post->loan_amount)):0;
+                                            $value_for_class_C =  (($number_of_days>60) && ($number_of_days<=90))? (round($post->loan_amount)):0;
+                                            $value_for_class_D =  (($number_of_days>90) && ($number_of_days<=180))? (round($post->loan_amount)):0;
+                                            $value_for_class_E =  (($number_of_days>180))? (($post->loan_amount)):0;
+                                            
+                                            // print_r($value_for_class_A);
+                                            // print_r($value_for_class_B);
+                                            // print_r($value_for_class_C);
+                                            // print_r($value_for_class_D);
+                                            // print_r($value_for_class_E);
+                                            // die();
+
+
+                                        
+                                        $loan_type = $this->loan_types_m->get($post->loan_type_id);
+                                         
+                                        $created_by  = $this->members_m->get_group_member_by_user_id($post->created_by);
+                                        $members_details=$this->members_m->get_group_member($post->member_id);
+                                        $created_by_full_name=$created_by->first_name.' '.$created_by->last_name;
+                                        if(isset($post->id)):
+                                            $html.='
+                                            <tr>
+                                                <td> <small>'.++$i.'</small></td>';
+                                             
+                                                $html.='
+                                                <td style="text-align:center;" nowrap> <small>'.(isset($members_details)?$members_details->first_name.' '.$members_details->last_name:'---').'</small></td>
+                                                <td nowrap style="text-align:center;"> <small>'.(isset($loan_type_options[$post->loan_type_id])?$loan_type_options[$post->loan_type_id]:'---').'</small></td>
+                                                <td nowrap style="text-align:center;"> <small>'.timestamp_to_date($post->disbursement_date).'</small></td>
+                                                <td nowrap style="text-align:center;"> <small>'.$post->repayment_period.'</small></td>
+                                                <td class="text-center" style="text-align:center;"> <small>';
+                                                $loan = $post->loan_amount;
+                                                $html.=number_to_currency($loan).
+                                            '</small></td>
+                                            
+                                            <td nowrap style="text-align:center;"> <small>'.number_format($value_for_class_A).'</small></td>
+                                            <td nowrap style="text-align:center;"> <small>'.number_format($value_for_class_B).'</small></td>
+                                            <td nowrap style="text-align:center;"> <small>'.number_format($value_for_class_C).'</small></td>
+                                            <td nowrap style="text-align:center;"> <small>'.number_format($value_for_class_D).'</small></td>
+                                            <td nowrap style="text-align:center;"> <small>'.number_format($value_for_class_E).'</small></td>
+                                            <td nowrap style="text-align:center;"> <small>'.number_format($post->loan_amount).'</small></td>
+                                             
+ 
+                                               
+                                                 
+                                            </tr>';
+                                                $total_loan+=$loan; 
+                                                $total_value_for_class_A+=$value_for_class_A;
+                                                $total_value_for_class_B+=$value_for_class_B;
+                                                $total_value_for_class_C+=$value_for_class_C;
+                                                $total_value_for_class_D+=$value_for_class_D;
+                                                $total_value_for_class_E+=$value_for_class_E;
+                                                $total_balance+=$post->loan_amount;
+                                              
+                                        endif;
+                                    endforeach;
+                                $html.='
+                                </tbody>
+                                <tfoot>
+                                    <tr >
+                                       <td colspan="4">Totals</td>
+                                       <td></td>';
+                                 
+                                      
+                                       $html.='
+                                        <td  style="font-weight:bold" class="text-right" style="text-align:center;">'.number_to_currency($total_loan).'</td>
+                                        <td  style="font-weight:bold" class="text-right" style="text-align:center;">'.number_to_currency(round($total_value_for_class_A)).'</td>
+                                        <td  style="font-weight:bold" class="text-right" style="text-align:center;">'.number_to_currency(round($total_value_for_class_B)).'</td>
+                                        <td  style="font-weight:bold" class="text-right" style="text-align:center;">'.number_to_currency(round($total_value_for_class_C)).'</td>
+                                        <td  style="font-weight:bold" class="text-right" style="text-align:center;">'.number_to_currency(round($total_value_for_class_D)).'</td>
+                                        <td  style="font-weight:bold" class="text-right" style="text-align:center;">'.number_to_currency(round($total_value_for_class_E)).'</td>
+                                        <td  style="font-weight:bold" class="text-right" style="text-align:center;">'.number_to_currency(round($total_balance)).'</td>
+                                         
+                                        <td class=""></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div> ';
+                    }else{
+                        $html.='
+                        <div class="col-xs-12 margin-bottom-10 ">
+                            <div class="m-alert m-alert--outline alert alert-info fade show" role="alert"">
+                                <strong>'.translate('Information').'!</strong> '.translate('No Members loan records to display').'.
+                            </div>
+                        </div>';
+                    }
+                $html.='
+                </div>
+
+                <br/>';
+                
+                $external_lending_total_loan=0;
+                $external_lending_total_interest=0;
+                $external_lending_total_paid=0;
+                $external_lending_total_balance=0;
+                $external_lending_total_projected=0;
+                $external_lending_total_outstanding_profit=0;
+                $external_lending_total_profits=0;
+                if($external_lending_post):
+                    $html.='
+                    <div class="clearfix"></div>
+                    <br/>
+                    <hr/>
+                    <div class="row invoice-body">';
+                        if(!empty($external_lending_post)){
+                            $html.='<div class="col-xs-12 table-responsive ">
+                                <table class="table table-hover table-condensed table-checkable dataTable no-footer table-statement">
+                                    <thead>
+                                        <tr>
+                                            <th class="invoice-title ">#</th>
+                                            <th class="invoice-title" width="17%">'.translate('Debtor').'</th>
+                                            <th class="invoice-title">'.translate('Loan Duration').'</th>
+                                            <th class="invoice-title  text-right">'.translate('Amount Loaned').'</th>
+                                            <th class="invoice-title  text-right">'.translate('Interest').'</th>
+                                            <th class="invoice-title  text-right">'.translate('Amount Paid').'</th>
+                                            <th class="invoice-title  text-right">'.translate('Arrears').'</th>
+                                            <th class="invoice-title  text-right">'.translate('Profits').'</th>
+                                            <th class="invoice-title  text-right">'.translate('Outstanding Profits').'</th>
+                                            <th class="invoice-title  text-right">'.translate('Projected Profits').'</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>';
+                                        $i=0;
+                                        foreach($external_lending_post as $post):
+                                            if(isset($post->id)):
+                                                $total_amount_payable_to_date=$external_lending_amount_payable_to_date[$post->id]->todate_amount_payable?:0;
+                                                $principle_payable_todate = $external_lending_amount_payable_to_date[$post->id]->todate_principle_payable?:0;
+                                                if((round($total_amount_payable_to_date-$external_lending_amount_paid[$post->id])) <= 0){
+                                                    $intere = $total_amount_payable_to_date - $principle_payable_todate;
+                                                    $overpayments = $external_lending_amount_paid[$post->id] - $total_amount_payable_to_date;
+                                                    if($overpayments<0){
+                                                        $overpayments = '';
+                                                    }
+                                                    $due_inter = '';
+                                                    $pen = ($post->total_amount_payable) - ($post->total_interest_payable+$post->total_principle_payable);
+                                                    if($pen>0){
+                                                        $penalty = $pen;
+                                                    }else{
+                                                        $penalty = 0;
+                                                    }
+                                                }else{
+                                                    $intere = '';
+                                                    $overpayments = '';
+                                                    $penalty = ($post->total_amount_payable) - ($post->total_interest_payable+$post->total_principle_payable);
+                                                }
+                                                $html.='
+                                                <tr>
+                                                    <td>'.
+                                                        ++$i.'
+                                                    </td>
+                                                    <td>
+                                                        '.$this->group_debtor_options[$post->debtor_id].'
+                                                    </td>
+                                                    <td>
+                                                        '.timestamp_to_date($post->disbursement_date).' - '.timestamp_to_date(strtotime("+".$post->repayment_period." months", $post->disbursement_date)).'
+                                                    </td>
+                                                    <td class="text-right">';
+                                                        $loan = $post->loan_amount;
+                                                        $html.=number_to_currency($loan).'
+                                                    </td>
+                                                    <td class="text-right">
+                                                        '.number_to_currency($interest = $post->total_interest_payable).'
+                                                    </td>
+                                                    <td class="text-right">
+                                                        '.number_to_currency($paid = $external_lending_amount_paid[$post->id]).'
+                                                    </td>
+                                                    <td class="text-right ">
+                                                        <span class="tooltips" data-original-title="Interest Breakdown" data-content="Overpayment : '.number_to_currency($overpayments).' , Penalties : '.number_to_currency($penalty).'">';
+                                                        $balance = $post->total_amount_payable - $paid;
+                                                        $html.=number_to_currency($balance).'</span>
+                                                    </td>
+                                                    <td class="text-right">';
+                                                        $profit = $external_lending_projected_profit[$post->id];
+                                                        $html.=number_to_currency($profit).'
+                                                    </td>
+                                                    <td class="text-right">';
+                                                        $outstanding_profit = round(($post->total_interest_payable+$penalty)-$profit);
+                                                        $html.=number_to_currency($outstanding_profit).'
+                                                    </td>
+                                                    <td class="text-right">';
+                                                        $projected_profits = $post->total_interest_payable+$penalty;
+                                                        $html.=number_to_currency($projected_profits).'
+                                                    </td>
+                                                </tr>';
+                                                $external_lending_total_loan+=$loan; 
+                                                $external_lending_total_interest+=$interest;
+                                                $external_lending_total_paid+=$paid;
+                                                $external_lending_total_balance+=$balance; 
+                                                $external_lending_total_profits+=$profit; 
+                                                $external_lending_total_projected+=$projected_profits; 
+                                                $external_lending_total_outstanding_profit+=$outstanding_profit;
+                                            endif;
+                                        endforeach;
+                                    $html.='
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="4">'.translate('Totals').'</td>
+                                            <td class="text-right">'.number_to_currency($external_lending_total_loan).'</td>
+                                            <td class="text-right">'.number_to_currency($external_lending_total_interest).'</td>
+                                            <td class="text-right">'.number_to_currency($external_lending_total_paid).'</td>
+                                            <td class="text-right">'.number_to_currency($external_lending_total_balance).'</td>
+                                            <td class="text-right">'.number_to_currency($external_lending_total_profits).'</td>
+                                            <td class="text-right">'.number_to_currency($external_lending_total_outstanding_profit).'</td>
+                                            <td class="text-right">'.number_to_currency($external_lending_total_projected).'</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>'; 
+                        }else{
+                            $hntl.='
+                            <div class="col-xs-12 margin-bottom-10 ">
+                                <div class="m-alert m-alert--outline alert alert-info fade show" role="alert"">
+                                    <strong>'.translate('Information').'!</strong> '.translate('No Debtor loan records to display').'.
+                                </div>
+                            </div>';
+                        } 
+                    $html.='
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <a class="btn btn-sm blue hidden-print uppercase print-btn" onclick="javascript:window.print();"><i class="fa fa-print"></i> Print</a>
+                            
+                        </div>
+                    </div>
+                    </div>';
+                endif;
+
+                $html.='
+                <div class="row">
+                    <div class="col-md-6 summary-details">
+                        <h4>Loan Details</h4>
+                        <span class="bold">'.translate('Total Loaned Amount').' : </span>'.$this->group_currency.' '.number_to_currency($total_loan+$external_lending_total_loan).'<br/>
+                        
+                </div>
+                <hr/>';
+            $html.='
+            </div>';
+
+            if($generate_pdf){
+                // check if possible to add custom styles here.
+                $html_data = '
+                <html>
+                <head>
+                 <link href="http://api.riskTick.local/templates/admin_themes/groups/css/pdf.css" type="text/css" rel="stylesheet" />
+                </head>
+                <div id="statement_paper"  class="pt-3">
+                    <div id="transaction_statement">'.$html.'
+                    </div>
+                    <div id="statement_footer" style="display: none;">
+                        <p style="text-align:center;">© '.date('Y').'. This statement was issued with no alteration </p>
+                        <p style="text-align:center;">
+                            <strong>Powered by:</strong>
+                            <br>
+                            <img width="150px" src="'.site_url('uploads/logos/'.$this->application_settings->paper_header_logo).'" alt="'.$this->application_settings->application_name.'">
+                        </p>
+                    </div>
+                </div>
+                </html>';
+                header('Content-Disposition: attachment; filename=testfile'); 
+                $this->pdf_library->generate_landscape_report($html_data);
+                die;
+            }else{
+               echo $html; 
+           }
+        
+
+            
+
+            // echo $html;
+    }
 
     function get_cash_flow_statement(){
         $from = strtotime($this->input->get_post('from'));

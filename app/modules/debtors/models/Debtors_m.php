@@ -554,11 +554,6 @@ class Debtors_m extends MY_Model{
         $this->db->select('sum('.$this->dx('debtor_loans.loan_amount').') as amount');
         $this->db->where($this->dx("debtor_loans.active").'="1"',NULL,FALSE);
         $this->db->where($this->dx("debtor_loans.created_on").'<="'.time().'"',NULL,FALSE);
-        if($group_id){
-            $this->db->where($this->dx('group_id').'="'.$group_id.'"',NULL,FALSE);
-        }else{
-            $this->db->where($this->dx('group_id').'="'.$this->group->id.'"',NULL,FALSE);
-        }
         $amount = $this->db->get('debtor_loans')->row();
         if($amount){
             return $amount->amount?:0;
@@ -1437,7 +1432,7 @@ class Debtors_m extends MY_Model{
     function get_total_loan_paid($group_id=0){
         $this->db->select('sum('.$this->dx('debtor_loan_repayments.amount').') as amount');
         $this->db->where($this->dx("debtor_loan_repayments.active").'="1"',NULL,FALSE);
-        $this->db->where($this->dx('group_id').'="'.$this->group->id.'"',NULL,FALSE);
+      
         $amount = $this->db->get('debtor_loan_repayments')->row();
         if($amount){
             return $amount->amount?:0;

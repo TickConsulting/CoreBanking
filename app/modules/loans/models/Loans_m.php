@@ -2248,11 +2248,7 @@ class Loans_m extends MY_Model{
         $this->db->select('sum('.$this->dx('loans.loan_amount').') as amount');
         $this->db->where($this->dx("loans.active").'="1"',NULL,FALSE);
         $this->db->where($this->dx("loans.created_on").'<="'.time().'"',NULL,FALSE);
-        if($group_id){
-            $this->db->where($this->dx('group_id').'="'.$group_id.'"',NULL,FALSE);
-        }else{
-            $this->db->where($this->dx('group_id').'="'.$this->group->id.'"',NULL,FALSE);
-        }
+       
         if($from&&$to){
             $this->db->where($this->dx('disbursement_date').' >= "'.$from.'"',NULL,FALSE);
             $this->db->where($this->dx('disbursement_date').' <= "'.$to.'"',NULL,FALSE);
@@ -2339,7 +2335,134 @@ class Loans_m extends MY_Model{
         $this->db->join('loans',$this->dx('loan_invoices.loan_id').'= loans.id');
         return $this->db->get('loan_invoices')->row();
     }
+    function _get_group_aging_loans_for_all_classes($filter_parameters = array(),$group_id = 0,$include_invoice_details=FALSE){
+        $this->select_all_secure('loans');
+        if($include_invoice_details){
+            $this->db->select(
+                array(
+                    $this->dx('loan_invoices.amount_payable').' as amount_payable',
+                    $this->dx('loan_invoices.principle_amount_payable').' as principle_payable',
+                    $this->dx('loan_invoices.interest_amount_payable').' as interest_payable',
+                    $this->dx('loan_invoices.amount_paid').' as amount_paid',
+                    $this->dx('loan_repayments.receipt_date').' as receipt_date',
+                    $this->dx('users.first_name').' as first_name',
+                    $this->dx('users.last_name').' as last_name',
+                    $this->dx('users.phone').' as phone',
+                    $this->dx('users.email').' as email',
+                )
+            );
+        }
+        if(isset($filter_parameters['member_id']) && $filter_parameters['member_id']){
 
+            if(isset($filter_parameters['member_id']) && $filter_parameters['member_id']){
+                $member_list = '0';
+                $members = $filter_parameters['member_id'];
+                $count = 1;
+                foreach($members as $member_id){
+                    if($member_id){
+                        if($count==1){
+                            $member_list = $member_id;
+                        }else{
+                            $member_list .= ','.$member_id;
+                        }
+                        $count++;
+                    }
+                }
+
+                if($member_list){
+                    $this->db->where($this->dx('member_id').' IN ('.$member_list.')',NULL,FALSE);
+                }
+            }
+        }
+
+        if(isset($filter_parameters['created_by']) && $filter_parameters['created_by']){
+
+            if(isset($filter_parameters['created_by']) && $filter_parameters['created_by']){
+                $created_by_list = '0';
+                $created_bys = $filter_parameters['created_by'];
+                $count = 1;
+                foreach($created_bys as $created_by){
+                    if($created_by){
+                        if($count==1){
+                            $created_by_list = $created_by;
+                        }else{
+                            $created_by_list .= ','.$created_by;
+                        }
+                        $count++;
+                    }
+                }
+
+                if($created_by_list){
+                    $this->db->where($this->dx('created_by').' IN ('.$created_by_list.')',NULL,FALSE);
+                }
+            }
+        }
+
+        if(isset($filter_parameters['accounts']) && $filter_parameters['accounts']){
+            $account_list = '0';
+            $accounts = $filter_parameters['accounts'];
+            $count = 1;
+            foreach($accounts as $account_id){
+                if($account_id){
+                    if($count==1){
+                        $account_list = '"'.$account_id.'"';
+                    }else{
+                        $account_list .= ',"'.$account_id.'"';
+                    }
+                    $count++;
+                }
+            }
+            if($account_list){
+                $this->db->where($this->dx('account_id').' IN ('.$account_list.')',NULL,FALSE);
+            }
+        }
+
+        if(isset($filter_parameters['is_fully_paid']) && $filter_parameters['is_fully_paid']){
+            if($filter_parameters['is_fully_paid']==1){
+                $this->db->where($this->dx('is_fully_paid').' = "1" ',NULL,FALSE);
+            }else if($filter_parameters['is_fully_paid']==0){
+                $this->db->where($this->dx('is_fully_paid').' = "0" ',NULL,FALSE);
+                
+                $this->db->or_where($this->dx('is_fully_paid').' = "IS NULL" ',NULL,FALSE);
+            }
+        }
+        
+        //check for loan type.
+        if(isset($filter_parameters['loan_type']) && $filter_parameters['loan_type']){
+			$loan_types_id_list = '0';
+			$loan_types = $filter_parameters['loan_type'];
+			$count = 1;
+			foreach($loan_types as $loan_type_id){
+				if($loan_type_id){
+					if($count==1){
+						$loan_types_id_list = $loan_type_id;
+					}else{
+						$loan_types_id_list .= ','.$loan_type_id;
+					}
+					$count++;
+				}
+			}
+			if($loan_types_id_list){
+        		$this->db->where($this->dx('loan_type_id').' IN ('.$loan_types_id_list.')',NULL,FALSE);
+			}
+		}
+
+        // // if($include_invoice_details){
+            $this->db->join('loan_invoices',$this->dx('loan_invoices.loan_id').'= loans.id');
+            // $this->db->join('loan_repayments',$this->dx('loan_repayments.loan_id').'= loans.id');
+            $this->db->join('members','members.id = '.$this->dx('loan_invoices.member_id'));
+            $this->db->join('users','users.id = '.$this->dx('members.user_id'));
+            $this->db->group_by('loan_invoices.loan_id');
+             
+        // }
+
+        $this->db->where($this->dx('loans.active').'="1"',NULL,FALSE);
+        $this->db->where($this->dx('loans.is_fully_paid')." IS NULL", NULL, FALSE);
+        $this->db->order_by($this->dx('loans.disbursement_date'),'DESC',FALSE);
+        $this->db->order_by($this->dx('loans.created_on'),'DESC',FALSE);
+        // $this->db->limit(100);
+        return $this->db->get('loans')->result();
+    }
     function loan_payable_and_principle_todate($loan_id=0)
     {
         $this->db->select(array(
@@ -2362,11 +2485,7 @@ class Loans_m extends MY_Model{
             $this->db->where($this->dx("loans.active").'="1"',NULL,FALSE);
             $this->db->where($this->dx('loan_invoices.active').'="1"',NULL,FALSE);
             $this->db->where($this->dx('loan_invoices.loan_id').'="'.$loan_id.'"',NULL,FALSE);
-            if($group_id){
-                $this->db->where($this->dx("loans.group_id").'="'.$group_id.'"',NULL,FALSE);
-            }else{
-                $this->db->where($this->dx("loans.group_id").'="'.$this->group->id.'"',NULL,FALSE);
-            }
+         
             
             $this->db->join('loans',$this->dx('loan_invoices.loan_id').'= loans.id');
             $this->db->order_by($this->dx('loan_invoices.invoice_date'),'ASC',FALSE);
@@ -2417,7 +2536,7 @@ class Loans_m extends MY_Model{
 
     function get_group_member_back_dated_loans(){
         $this->select_all_secure('loans');
-        $this->db->where($this->dx('group_id')." = '".$this->group->id."' ",NULL,FALSE);
+        
         $this->db->where($this->dx('active')." = '1' ",NULL,FALSE);
         $this->db->where($this->dx('is_a_back_dating_record')." = '1' ",NULL,FALSE);
         return $this->db->get('loans')->result();
@@ -2444,11 +2563,7 @@ class Loans_m extends MY_Model{
     function get_fully_paid_loans_id($group_id=0,$from=0,$to=0){
         $this->db->select('id');
         $this->db->where($this->dx('is_fully_paid').' ="1"',NULL,FALSE);
-        if($group_id){
-            $this->db->where($this->dx('group_id')." = '".$group_id."' ",NULL,FALSE);
-        }else{
-            $this->db->where($this->dx('group_id')." = '".$this->group->id."' ",NULL,FALSE);
-        }
+      
         if($from){
             $this->db->where($this->dx('disbursement_date').'>="'.$from.'"',NULL,FALSE);
         }
@@ -2480,11 +2595,7 @@ class Loans_m extends MY_Model{
 
     function count_group_loan_types($id = 0,$group_id=0){
         $this->db->where($this->dx('loans.loan_type_id'). ' = "'.$id.'"',NULL,FALSE);
-        if($group_id){
-            $this->db->where($this->dx('loans.group_id'). ' = "'.$group_id.'"',NULL,FALSE);
-        }else{
-            $this->db->where($this->dx('loans.group_id'). ' = "'.$this->group->id.'"',NULL,FALSE);
-        }
+       
         return $this->db->count_all_results('loans');
     }
 
@@ -2557,11 +2668,7 @@ class Loans_m extends MY_Model{
                 "DATE_FORMAT(FROM_UNIXTIME(".$this->dx('disbursement_date')." ),'%Y') as year ",
             )
         );
-        if($group_id){
-            $this->db->where($this->dx('group_id').' = "'.$group_id.'" ',NULL,FALSE);
-        }else{
-            $this->db->where($this->dx('group_id').'="'.$this->group->id.'" ',NULL,FALSE);
-        }
+    
         $this->db->where($this->dx('active').'="1"',NULL,FALSE);
         $this->db->order_by($this->dx('disbursement_date'),'ASC',FALSE);
         $this->db->group_by(
@@ -2682,11 +2789,7 @@ class Loans_m extends MY_Model{
 
     function get_total_loan_balances($group_id=0,$member_id=0){
         $this->db->select(array('id'));
-        if($group_id){
-            $this->db->where($this->dx('loans.group_id').'="'.$group_id.'"',NULL,FALSE);
-        }else{
-            $this->db->where($this->dx('loans.group_id').'="'.$this->group->id.'"',NULL,FALSE);
-        }
+      
         if($member_id){
             $this->db->where($this->dx('loans.member_id').'="'.$member_id.'"',NULL,FALSE);
         }
@@ -2722,11 +2825,7 @@ class Loans_m extends MY_Model{
         $this->db->select(array(
             "SUM(".$this->dx('loan_amount').") as total_amount"
         ));
-        if($group_id){
-            $this->db->where($this->dx('loans.group_id').'="'.$group_id.'"',NULL,FALSE);
-        }else{
-            $this->db->where($this->dx('loans.group_id').'="'.$this->group->id.'"',NULL,FALSE);
-        }
+      
         if($member_id){
             $this->db->where($this->dx('loans.member_id').'="'.$member_id.'"',NULL,FALSE);
         }
@@ -2743,11 +2842,7 @@ class Loans_m extends MY_Model{
         $this->db->select(array(
             "SUM(".$this->dx('amount').") as total_amount"
         ));
-        if($group_id){
-            $this->db->where($this->dx('loan_repayments.group_id').'="'.$group_id.'"',NULL,FALSE);
-        }else{
-            $this->db->where($this->dx('loan_repayments.group_id').'="'.$this->group->id.'"',NULL,FALSE);
-        }
+      
         if($member_id){
             $this->db->where($this->dx('loan_repayments.member_id').'="'.$member_id.'"',NULL,FALSE);
         }
@@ -2770,11 +2865,7 @@ class Loans_m extends MY_Model{
             $this->dxa('interest_type'),
             $this->dxa('enable_reducing_balance_installment_recalculation')
         ));
-        if($group_id){
-            $this->db->where($this->dx('loans.group_id').'="'.$group_id.'"',NULL,FALSE);
-        }else{
-            $this->db->where($this->dx('loans.group_id').'="'.$this->group->id.'"',NULL,FALSE);
-        }
+      
         if($member_id){
             $this->db->where($this->dx('loans.member_id').'="'.$member_id.'"',NULL,FALSE);
         }
@@ -2831,11 +2922,7 @@ class Loans_m extends MY_Model{
 
     function count_loan_applications_by_loan_type($id=0,$group_id=0){
         $this->db->where($this->dx('loan_applications.loan_type_id'). ' = "'.$id.'"',NULL,FALSE);
-        if($group_id){
-            $this->db->where($this->dx('loan_applications.group_id'). ' = "'.$group_id.'"',NULL,FALSE);
-        }else{
-            $this->db->where($this->dx('loan_applications.group_id'). ' = "'.$this->group->id.'"',NULL,FALSE);
-        }
+      
         $counts = $this->db->count_all_results('loan_applications');
 
         $this->db->where($this->dx('loans.loan_type_id'). ' = "'.$id.'"',NULL,FALSE);
@@ -2855,11 +2942,7 @@ class Loans_m extends MY_Model{
             $this->dx('member_id').' as member_id',
         ));
         $this->db->where($this->dx('loans.active'). ' = "1"',NULL,FALSE);
-        if($group_id){
-            $this->db->where($this->dx('loans.group_id'). ' = "'.$group_id.'"',NULL,FALSE);
-        }else{
-            $this->db->where($this->dx('loans.group_id'). ' = "'.$this->group->id.'"',NULL,FALSE);
-        }
+       
         $this->db->group_by(array(
             'member_id',
         ));
@@ -2880,11 +2963,7 @@ class Loans_m extends MY_Model{
             $this->dx('loan_type_id').' as loan_type_id',
         ));
         $this->db->where($this->dx('loans.active'). ' = "1"',NULL,FALSE);
-        if($group_id){
-            $this->db->where($this->dx('loans.group_id'). ' = "'.$group_id.'"',NULL,FALSE);
-        }else{
-            $this->db->where($this->dx('loans.group_id'). ' = "'.$this->group->id.'"',NULL,FALSE);
-        }
+       
         $this->db->group_by(array(
             'loan_type_id',
         ));
@@ -2905,11 +2984,7 @@ class Loans_m extends MY_Model{
           "DATE_FORMAT(FROM_UNIXTIME(".$this->dx('disbursement_date')." ),'%c') as month "
         ));
         $this->db->where($this->dx('active'). ' = "1"',NULL,FALSE);
-        if($group_id){
-          $this->db->where($this->dx('group_id'). ' = "'.$group_id.'"',NULL,FALSE);
-        }else{
-          $this->db->where($this->dx('group_id'). ' = "'.$this->group->id.'"',NULL,FALSE);
-        }
+       
 
         if($from){
           $this->db->where($this->dx('disbursement_date'). ' >= "'.$from.'"',NULL,FALSE);
@@ -2935,11 +3010,7 @@ class Loans_m extends MY_Model{
           "DATE_FORMAT(FROM_UNIXTIME(".$this->dx('disbursement_date')." ),'%c') as month "
         ));
         $this->db->where($this->dx('active'). ' = "1"',NULL,FALSE);
-        if($group_id){
-          $this->db->where($this->dx('group_id'). ' = "'.$group_id.'"',NULL,FALSE);
-        }else{
-          $this->db->where($this->dx('group_id'). ' = "'.$this->group->id.'"',NULL,FALSE);
-        }
+      
 
         if($from){
           $this->db->where($this->dx('disbursement_date'). ' >= "'.$from.'"',NULL,FALSE);
@@ -2969,11 +3040,7 @@ class Loans_m extends MY_Model{
                 "DATE_FORMAT(FROM_UNIXTIME(".$this->dx('disbursement_date')." ),'%b') as month ",
             )
         );
-        if($group_id){
-            $this->db->where($this->dx('group_id').' = "'.$group_id.'" ',NULL,FALSE);
-        }else{
-            $this->db->where($this->dx('group_id').'="'.$this->group->id.'" ',NULL,FALSE);
-        }
+      
         $this->db->where($this->dx('active').'="1"',NULL,FALSE);
         $this->db->order_by($this->dx('disbursement_date'),'ASC',FALSE);
         $this->db->group_by(
@@ -3067,11 +3134,7 @@ class Loans_m extends MY_Model{
         ));
         $this->db->where($this->dx('loan_invoices.active').'="1"',NULL,FALSE);
         $this->db->where($this->dx('loan_invoices.loan_id').' IN('.$loan_ids.')',NULL,FALSE);
-        if($group_id){
-            $this->db->where($this->dx("loan_invoices.group_id").'="'.$group_id.'"',NULL,FALSE);
-        }else{
-            $this->db->where($this->dx("loan_invoices.group_id").'="'.$this->group->id.'"',NULL,FALSE);
-        }
+      
         $this->db->order_by($this->dx('loan_invoices.invoice_date'),'ASC',FALSE);
         $results = $this->db->get('loan_invoices')->result();
         $loan_invoices = array();

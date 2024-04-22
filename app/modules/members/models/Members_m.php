@@ -26,7 +26,15 @@
 					`modified_on` blob
 				)"
 			);
-
+			$this->db->query("
+			create table if not exists member_additional_fields(
+				id int not null auto_increment primary key,
+				group_id blob,
+				field_name blob,
+				`created_by` blob,
+				`created_on` blob
+			)
+		");
 			$this->db->query("
 				create table if not exists next_of_kin(
 					id int not null auto_increment primary key,
@@ -42,7 +50,17 @@
 					`created_on` blob
 				)"
 			);
-
+			$this->db->query("
+			create table if not exists member_additional_field_mapping(
+				id int not null auto_increment primary key,
+				group_id blob,
+				member_additional_field_id blob,
+				member_id blob,
+				value blob,
+				`created_by` blob,
+				`created_on` blob
+			)
+		");
 			$this->db->query("
 				create table if not exists member_deletion_data(
 					id int not null auto_increment primary key,
@@ -113,9 +131,43 @@
 		function update_group_member_deletion_data($id=0,$input=array()){
 			return $this->update_secure_data($id,'member_deletion_data',$input);
 		}
-
+		function get_member_additional_fields_mapping_data_using_field_slug($member_id=0,$additional_field_slug='',$group_id=0){
+			$member_additional_fields_options = $this->cache->file->get('additional_member_fields_mapping_'.($group_id ? $group_id : $this->group->id));
+			// if(isset($member_additional_fields_options->$member_id)){
+				$member_mapping_data = isset($member_additional_fields_options[$member_id]) ? $member_additional_fields_options[$member_id] : "";
+				$value = $member_mapping_data && isset($member_mapping_data[$additional_field_slug]) ? $member_mapping_data[$additional_field_slug] : "";
+				return $value;
+			// }else{
+				// $this->select_all_secure('member_additional_field_mapping');
+				// $this->db->where($this->dx('member_id').'="'.$member_id.'"',NULL,FALSE);
+				// $this->db->where($this->dx('member_additional_field_slug').'="'.$additional_field_slug.'"',NULL,FALSE);
+				// if($group_id){
+				// 	$this->db->where($this->dx('group_id').'="'.$group_id.'"',NULL,FALSE);
+				// } else {
+				// 	$this->db->where($this->dx('group_id').'="'.$this->group->id.'"',NULL,FALSE);
+				// }
+				// $result =  $this->db->get('member_additional_field_mapping')->row();
+				// if($result){
+				// 	return $result->value;
+				// }else{
+				// 	return '';
+				// }
+				// $arr = array();
+				// $arr[$result->member_id]
+				// $this->cache->redis->save('additional_member_fields_mapping_'.($group_id ? $group_id : $this->group->id),$result,(12*60*24));
+				// return $result;
+			
+		}
 		function update_group_membership_request($id=0,$input=array()){
 			return $this->update_secure_data($id,'group_membership_requests',$input);
+		}
+		function get_member_additional_fields_data($group_id=0,$include_hidden=FALSE){
+			$this->select_all_secure('member_additional_fields');
+			
+			if(!$include_hidden){
+				$this->db->where($this->dx('is_hidden').'=0',NULL,FALSE);
+			}
+			return $result =  $this->db->get('member_additional_fields')->result();
 		}
 
 		function get_member_group_deletion_data($group_deletion_id=0){
@@ -824,12 +876,7 @@
 				$this->dx('users.language_id').' as language_id',
 			)
 		);
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}
-		else{
-			
-		}
+		
 		$this->db->where($this->dx('members.is_deleted').' IS NULL ',NULL,FALSE);
 		$this->db->where($this->dx('user_id').' = "'.$user_id.'"',NULL,FALSE);
 		$this->db->join('users','users.id = '.$this->dx('members.user_id'));

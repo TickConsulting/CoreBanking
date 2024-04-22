@@ -258,11 +258,7 @@ class Loan_repayments_m extends MY_Model{
     function get_total_loan_paid($group_id=0){
         $this->db->select('sum('.$this->dx('loan_repayments.amount').') as amount');
         $this->db->where($this->dx("loan_repayments.active").'="1"',NULL,FALSE);
-        if($group_id){
-            $this->db->where($this->dx('group_id').'="'.$group_id.'"',NULL,FALSE);
-        }else{
-            $this->db->where($this->dx('group_id').'="'.$this->group->id.'"',NULL,FALSE);
-        }
+      
         $amount = $this->db->get('loan_repayments')->row();
         if($amount){
             return $amount->amount?:0;
