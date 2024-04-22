@@ -146,6 +146,7 @@ class Ajax extends Ajax_Controller{
             }
         }
     }
+    
 
     function _verify_guarantor_name(){
         $guarantors = $this->input->post('guarantor_id');
