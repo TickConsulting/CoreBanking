@@ -1523,7 +1523,14 @@
                             $('#repayment_period_details_holder').text(text_to_show);
                             $('#repayment_period_holder').slideDown();
                         }
-                        
+                        if( result.loan_repayment_period_type == "2" ) {
+                            var min_months = result.minimum_repayment_period;
+                            var max_months = result.maximum_repayment_period;
+                            var text_to_show = "Enter Repayment Period in months ( between " + min_months + " - " + max_months + " months )";
+
+                            $('#repayment_period_details_holder').text(text_to_show);
+                            $('#repayment_period_holder').slideDown();
+                        }
                         if( Number(result.enable_loan_guarantors) > 0 ){
                             $('#gurantors_period_holder').slideDown();
                         }
