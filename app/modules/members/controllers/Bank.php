@@ -269,7 +269,10 @@ class Bank extends Bank_Controller{
         $data['successes'] = $successes;
         $this->template->title(translate('Add Users'))->build('bank/add_members',$data);
     }
-
+    function ajax_active_group_member_options_using_name(){     
+        $result = $this->members_m->get_ajax_active_group_member_options_using_name();
+        return $result;
+    }
     public function ajax_add_members(){
         $group_role_options = $this->group_roles_m->get_group_role_options();
         $data = array();

@@ -27,18 +27,18 @@
                                 </div>
                                 <div class="form-group m-form__group pt-0">
                                     <label>
-                                        <?php echo translate('Select Member'); ?>
+                                        <?php echo translate('Select Applicant'); ?>
                                     </label>
                                     <?php echo form_dropdown('member_ids[]', array(), $this->input->get('member_ids') ? $this->input->get('member_ids') : '', 'id="member_id_options_list" class="form-control select2" multiple="multiple"'); ?>
                                 </div>
-                                <div class="form-group m-form__group pt-0">
+                                <!-- <div class="form-group m-form__group pt-0">
                                     <label>
-                                        Membership Number
+                                        A Number
                                     </label>
                                     <?php
                                     echo form_dropdown('member_ids[]', array(), $this->input->get('member_ids'), 'id="membership_no_options_list" class="form-control select2" multiple="multiple"');
                                     ?>
-                                </div>
+                                </div> -->
                                 <?php if ($additional_member_details && count($additional_member_details) > 0) : ?>
                                     <?php foreach ($additional_member_details as $additional_member_detail) : ?>
                                         <div class="form-group m-form__group pt-0">
@@ -134,7 +134,7 @@
                 text: "--Select option--",
             },
             ajax: {
-                url: '<?php echo site_url("group/members/ajax_active_group_member_options_using_name"); ?>',
+                url: '<?php echo site_url("bank/members/ajax_active_group_member_options_using_name"); ?>',
                 dataType: 'json',
                 delay: 250,
                 data: function(params) {
