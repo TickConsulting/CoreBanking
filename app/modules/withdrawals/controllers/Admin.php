@@ -226,6 +226,34 @@ class Admin extends Admin_Controller{
         }
         redirect('admin/withdrawals/pending_withdrawal_requests');
     }
+    function disburse_disbursement($id=0){
+        $id OR redirect('admin/withdrawals/pending_withdrawal_requests');
+        $post = $this->withdrawals_m->get_pending_withdrawal_request($id);
+        if(!$post){
+            $this->session->set_flashdata('error','Kindly select a pending withdrawal request to cancel');
+            redirect('admin/withdrawals/pending_withdrawal_requests');
+        }
+        $reason = $this->input->get('confirmation_code');
+        if($reason){
+            $update = array(
+                'is_disbursed' => 1,
+                'status'=>3,
+                'is_approved' => 1,
+                'active' => 1,
+                'disbursement_failed_error_message' => NULL,
+                'disbursed_on'=>time(),
+                'modified_on' => time(),
+            );
+            if($this->withdrawals_m->update_withdrawal_request($post->id,$update)){
+                $this->session->set_flashdata('success','Disbursement request successfully Disbursed');
+            }else{
+                $this->session->set_flashdata('error','Unable to Disburse disbursement request');
+            }
+        }else{
+            $this->session->set_flashdata('error','Kindly enter a valid reason to cancel a disbursement request');
+        }
+        redirect('admin/withdrawals/disbursed_withdrawal_requests');
+    }
 
     function admin_update_disburment(){
         $ids = [3,4];

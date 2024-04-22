@@ -38,9 +38,7 @@
                                         <th>
                                             Approved On
                                         </th>
-                                        <th width="30%">
-                                            Group/ Approvals
-                                        </th>
+                                     
                                         <th>
                                             Withdrawal For / Recipient
                                         </th>
@@ -58,29 +56,9 @@
                                         <tr>
                                             <td><?php echo $i+1;?></td>
                                             <td>
-                                                <?php echo timestamp_to_datetime($post->approved_on); ?>
+                                                <?php echo timestamp_to_datetime($post->created_on); ?>
                                             </td>
-                                            <td>
-                                                <p><?php echo $group_options[$post->group_id]; ?></p>
-                                                <p><?php
-                                                    $approval_requests = $withdrawal_approval_requests[$post->id];
-                                                    $key = 0; 
-                                                    foreach ($approval_requests as $approval_request) {
-                                                        $is_approved = $approval_request['is_approved'];
-                                                        $is_declined = $approval_request['is_declined'];
-                                                        $member_id = $approval_request['member_id'];
-                                                        $member = $this->members_m->get_group_member($member_id,$post->group_id);
-                                                        $status = '';
-                                                        if($is_declined){
-                                                            $status = '- Declined';
-                                                        }elseif ($is_approved) {
-                                                            $status = '- Approved';
-                                                        }
-                                                        echo '<p>'.($key+1).'. '.$member->first_name.' '.$member->last_name.'('.$member->phone.') '.$status.'</p>';
-                                                        ++$key;
-                                                    }
-                                                ?></p>
-                                            </td>
+                                          
                                             <td>
                                                 <p><?php echo $withdrawal_request_transaction_names[$post->withdrawal_for]; ?></p>
 
@@ -126,9 +104,14 @@
                                                 <?php if($post->status==1){ ?>
                                                     <span class="label label-info" style="margin-bottom:5px;"> Pending Disbursement </span>
                                                     <br/><br/>
+                                                    <a href="<?php echo site_url('admin/withdrawals/disburse_disbursement/'.$post->id)?>" class="btn btn-xs btn-success prompt_confirmation_message_link" data-title="Enter your password to confirm ."> <i class="fa fa-eject"></i> 
+                                                        Disburse
+                                                    </a>
+                                                    <br/><br/>
                                                     <a href="<?php echo site_url('admin/withdrawals/cancel_disbursement/'.$post->id)?>" class="btn btn-xs btn-danger prompt_confirmation_message_link" data-title="Enter the reason to cancel this withdrawal request."> <i class="fa fa-eject"></i> 
                                                         Cancel Disbursement
                                                     </a>
+                                                   
                                                 <?php } ?>
                                             </td>
                                         </tr>

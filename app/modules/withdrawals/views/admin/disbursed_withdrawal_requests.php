@@ -40,9 +40,7 @@
                                         <th>
                                             Disbursed On
                                         </th>
-                                        <th>
-                                            Group
-                                        </th>
+                                      
                                         
                                         <th class="text-left">
                                             Recipient
@@ -50,9 +48,9 @@
                                         <th class="text-right">
                                             Amount
                                         </th>
-                                        <th>
+                                        <!-- <th>
                                             Action
-                                        </th>
+                                        </th> -->
                                     </tr>
 
                                 </thead>
@@ -63,9 +61,6 @@
                                             <td><?php echo $i+1;?></td>
                                             <td>
                                                 <?php echo timestamp_to_datetime($post->disbursed_on); ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $group_options[$post->group_id]; ?>
                                             </td>
                                             <td>
                                                 <?php 
@@ -117,10 +112,10 @@
                                             <td class="text-right">
                                                 <?php echo number_to_currency($post->amount); ?>
                                             </td>
-                                            <td>
+                                            <!-- <td>
                                                 <a href="<?php echo site_url('admin/withdrawals/retry_disbursement/'.$post->id)?>" class="btn btn-xs btn-primary"> <i class="fa fa-refresh"></i> Retry Disbursement
                                                 </a>
-                                            </td>
+                                            </td> -->
                                         </tr>
                                     <?php $i++; endforeach; ?>
                                 </tbody>
