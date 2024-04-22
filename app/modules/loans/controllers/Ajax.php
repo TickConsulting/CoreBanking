@@ -1520,8 +1520,7 @@ class Ajax extends Ajax_Controller{
 
     function create_withdrawal_request(){
         $post = new StdClass();
-        print_r($_POST);
-        die;
+       
         $response = array();
         $this->_additional_validation_rules();
         $this->form_validation->set_rules($this->validation_rules);
