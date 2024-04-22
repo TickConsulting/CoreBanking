@@ -160,7 +160,7 @@
             templateResult: formatSettings,
             templateSelection: formatSettingsSelection,
             allowClear: true,
-            placeholder: "Search Group Member"
+            placeholder: "Search Loan Applicant Member"
         });
 
         // For Membership number search
