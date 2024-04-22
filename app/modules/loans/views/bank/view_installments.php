@@ -273,9 +273,9 @@
                                     <td>
                                         <?php if($post->type == 1){ ?>
                                             <?php if($post->disable_fines==1){?>
-                                                <a href="<?php echo site_url('group/loan_invoices/enable_invoice_penalties/'.$post->id)?>" class="confirmation_link btn btn-sm btn-default">Enable Penalties</a>
+                                                <a href="<?php echo site_url('bank/loan_invoices/enable_invoice_penalties/'.$post->id)?>" class="confirmation_link btn btn-sm btn-default">Enable Penalties</a>
                                             <?php }else{?>
-                                                <a href="<?php echo site_url('group/loan_invoices/disable_invoice_penalties/'.$post->id)?>" class="confirmation_link btn btn-sm btn-primary">Disable Penalties</a>
+                                                <a href="<?php echo site_url('bank/loan_invoices/disable_invoice_penalties/'.$post->id)?>" class="confirmation_link btn btn-sm btn-primary">Disable Penalties</a>
                                             <?php }?>
 
                                             <?php
