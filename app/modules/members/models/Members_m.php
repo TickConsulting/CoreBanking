@@ -384,11 +384,9 @@
 		 
 		$this->db->where($this->dx('members.is_deleted').' IS NULL ',NULL,FALSE);
 		$this->db->join('users','users.id ='.$this->dx('members.user_id'),'INNER');
-       	if(isset($this->group->id)){
-        	$this->db->order_by($this->dx($this->group->member_listing_order_by?:'first_name'), $this->group->order_members_by?:'ASC', FALSE);
-        }else{
+      
         	$this->db->order_by($this->dx('first_name'),'ASC',FALSE);
-        }
+        
 		$members = $this->db->get('members')->result();
 		$arr = array();
 		if($members)

@@ -8054,7 +8054,7 @@ class Loan{
     /*********************Loan Repayment*************************/
 
     function record_loan_repayment($group_id=0,$deposit_date=0,$member=array(),$loan_id,$account_id=0,$deposit_method='',$description='',$amount=0,$send_sms_notification=0,$send_email_notification=0,$created_by=array(),$member_user_id=0,$transaction_alert_id = 0,$is_a_back_dating_record = FALSE,$update_loan_invoices = 1){
-        if($amount && $group_id && $deposit_date && $member && $loan_id && $account_id){
+        if($amount  && $deposit_date && $member && $loan_id && $account_id){
             $loan = $this->ci->loans_m->get($loan_id);
             $deposited_amount = $amount;
             if($loan){
@@ -8117,7 +8117,6 @@ class Loan{
                         );
                         $deposit_id = $this->ci->deposits_m->insert($deposit_data);
                         if($deposit_id){
-                            if($this->ci->transactions->deposit($group_id,$deposit_id,$type,$deposit_date,$account_id,$amount,$member->id,'','','','','','','','','','','','',$loan_id,$repayment_id,$transaction_alert_id,$is_a_back_dating_record)){
                                 $statement_entry_id =$this->ci->loans_m->insert_loan_statement(array(
                                                 'member_id' =>  $member->id,
                                                 'group_id'  =>  $group_id,
@@ -8309,29 +8308,29 @@ class Loan{
                                         $group = $this->ci->groups_m->get($group_id);
 
                                         $this->group_currency = $this->ci->loans_m->get_this_group_currency($group_id);
+                                        $this->ci->session->set_flashdata('success','Invoices successfully repaid');
+                                        // if($send_sms_notification){
+                                        //     $this->ci->messaging->notify_loan_repayment_sms($member,$deposited_amount,$deposit_date,$deposit_method,$group_id,$loan_balance,$created_by);
+                                        // }
 
-                                        if($send_sms_notification){
-                                            $this->ci->messaging->notify_loan_repayment_sms($member,$deposited_amount,$deposit_date,$deposit_method,$group_id,$loan_balance,$created_by);
-                                        }
+                                        // if($send_email_notification){
+                                        //     $this->ci->messaging->notify_loan_repayment_email($member,$deposited_amount,$deposit_date,$deposit_method,$group,$loan_details,$this->group_currency,$created_by);
+                                        // }
 
-                                        if($send_email_notification){
-                                            $this->ci->messaging->notify_loan_repayment_email($member,$deposited_amount,$deposit_date,$deposit_method,$group,$loan_details,$this->group_currency,$created_by);
-                                        }
-
-                                        $this->ci->notifications->create(
-                                            'Loan repayment successfully repaid.',
-                                            'Your loan repayment of  '.$this->group_currency.' '.number_to_currency($deposited_amount).' paid on '.timestamp_to_date($deposit_date).' has been successfully recorded. Your loan installment reapyment balance is  '.$this->group_currency.' '.number_to_currency($loan_balance),
-                                            $this->ci->ion_auth->get_user($member->user_id),
-                                            $member->id,
-                                            $member->user_id,
-                                            $member->id,
-                                            $group_id,
-                                            'View Receipt',
-                                            'group/loans/view_receipt/'.$repayment_id,
-                                            9,
-                                            0,
-                                            $deposit_id,'','','','','','','','',$loan_id
-                                        );
+                                        // $this->ci->notifications->create(
+                                        //     'Loan repayment successfully repaid.',
+                                        //     'Your loan repayment of  '.$this->group_currency.' '.number_to_currency($deposited_amount).' paid on '.timestamp_to_date($deposit_date).' has been successfully recorded. Your loan installment reapyment balance is  '.$this->group_currency.' '.number_to_currency($loan_balance),
+                                        //     $this->ci->ion_auth->get_user($member->user_id),
+                                        //     $member->id,
+                                        //     $member->user_id,
+                                        //     $member->id,
+                                        //     $group_id,
+                                        //     'View Receipt',
+                                        //     'group/loans/view_receipt/'.$repayment_id,
+                                        //     9,
+                                        //     0,
+                                        //     $deposit_id,'','','','','','','','',$loan_id
+                                        // );
                                     }
                                     return TRUE;     
                                 }else{
@@ -8341,10 +8340,7 @@ class Loan{
                                     return FALSE; 
                                 }
 
-                            }else{
-                                $this->ci->session->set_flashdata('error','unable to create transaction statement');
-                                return FALSE;
-                            }
+                            
                         }else{
 
                             $this->ci->session->set_flashdata('error','Unable to create a deposit');

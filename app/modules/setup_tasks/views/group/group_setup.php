@@ -7,7 +7,8 @@
 			<div class="m-form__heading pb-3">
 				<div class="row">
 					<div class="col-lg-6 col-sm-12">
-						<h3 class="m-form__heading-title"><?php echo translate($this->application_settings->entity_name .' Member Details');?></h3>
+						<h3 class="m-form__heading-title"><?php echo translate($this->application_settings->entity_name .' Applicant Details
+');?></h3>
 					</div>
 					<div class="col-lg-6 col-sm-12">
 						<a href="#" class="btn btn-primary float-right btn-sm" id="add_member_form">

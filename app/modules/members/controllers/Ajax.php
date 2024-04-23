@@ -224,7 +224,8 @@ class Ajax extends Ajax_Controller
             if ($member_details) {
                 return TRUE;
             } else {
-                $this->form_validation->set_message('_is_group_member', 'The Member details is missing.');
+                $this->form_validation->set_message('_is_group_member', 'The Applicant Details
+ is missing.');
                 return FALSE;
             }
         } else {
@@ -1155,7 +1156,8 @@ class Ajax extends Ajax_Controller
                                         if ($unsuccessful_invitations_count == 1) {
                                             $response = array(
                                                 'status' => 1,
-                                                'message' => $unsuccessful_invitations_count . ' member details were updated.',
+                                                'message' => $unsuccessful_invitations_count . ' Applicant Details
+ were updated.',
                                             );
                                         } else {
                                             $response = array(
@@ -1616,7 +1618,8 @@ class Ajax extends Ajax_Controller
                     } else {
                         $response = array(
                             'status' => 0,
-                            'message' => 'Member details is missing'
+                            'message' => 'Applicant Details
+ is missing'
                         );
                     }
                 } else {

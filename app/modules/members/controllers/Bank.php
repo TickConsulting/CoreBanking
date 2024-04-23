@@ -694,7 +694,8 @@ class Bank extends Bank_Controller{
                             }
                             if($unsuccessful_invitations_count){
                                 if($unsuccessful_invitations_count==1){
-                                    $this->session->set_flashdata('info',$unsuccessful_invitations_count.' member details were updated.');
+                                    $this->session->set_flashdata('info',$unsuccessful_invitations_count.' Applicant Details
+ were updated.');
                                 }else{
                                     $this->session->set_flashdata('info',$unsuccessful_invitations_count.' members details were updated.');
                                 }
@@ -900,7 +901,8 @@ class Bank extends Bank_Controller{
                             }
                             if($unsuccessful_invitations_count){
                                 if($unsuccessful_invitations_count==1){
-                                    $this->session->set_flashdata('info',$unsuccessful_invitations_count.' member details were updated.');
+                                    $this->session->set_flashdata('info',$unsuccessful_invitations_count.' Applicant Details
+ were updated.');
                                 }else{
                                     $this->session->set_flashdata('info',$unsuccessful_invitations_count.' members details were updated.');
                                 }
@@ -972,7 +974,8 @@ class Bank extends Bank_Controller{
     }
 
     public function admit_member($member_id=0){
-        // get the member details.
+        // get the Applicant Details
+.
         $membership_request = $this->members_m->get_group_membership_request($member_id);
         // add member to the group.
         $result = $this->group_members->add_member_to_group(

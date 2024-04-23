@@ -11,7 +11,8 @@
             ?>
         </div>
         <div class="col-md-5 col-xs-6">
-            <h4>Member Details: </h4>
+            <h4>Applicant Details
+: </h4>
             <span class="bold">Disbursed To:</span> <?php echo $loan_applicant->first_name.' '.$loan_applicant->last_name; ?><br/>
             <span class="bold">
                         <?php

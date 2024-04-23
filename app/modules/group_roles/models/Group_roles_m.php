@@ -107,11 +107,7 @@ protected $_table = 'group_roles';
 	function get_group_role_options($group_id=0){
 		$arr = array();
 		$this->db->select(array('id',$this->dx('name').' as name '));
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+		
 		$this->db->order_by($this->dx('name'), 'ASC',FALSE);
 		$group_roles = $this->db->get('group_roles')->result();
 		foreach($group_roles as $group_role){

@@ -1150,7 +1150,7 @@ class Loans_m extends MY_Model{
     function get_active_member_loans_option($member_id=0){
         $this->select_all_secure('loans');
         $this->db->where($this->dx('member_id').'="'.$member_id.'"',NULL,FALSE);
-        $this->db->where($this->dx('group_id').'="'.$this->group->id.'"',NULL,FALSE);
+
         $this->db->where($this->dx('active').'="1"',NULL,FALSE);
         $this->db->where('('.$this->dx('is_fully_paid').'="" OR '.$this->dx('is_fully_paid').' IS NULL OR '.$this->dx('is_fully_paid').'="0")',NULL,FALSE);
         $loans = $this->db->get('loans')->result(); 

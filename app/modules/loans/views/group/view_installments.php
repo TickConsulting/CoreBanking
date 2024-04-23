@@ -120,7 +120,8 @@
             </div>
             <div class="col-md-5 text-right">
                 <div>
-                    <h5>Member Details:</h5>
+                    <h5>Applicant Details
+:</h5>
                     <strong><?php echo translate('Name');?>: </strong> <?php echo $loan->first_name.' '.$loan->last_name?>
                     <br>
                     <strong><?php echo translate('Phone');?>: </strong> <?php echo $loan->phone;?>

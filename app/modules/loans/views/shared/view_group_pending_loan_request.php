@@ -863,7 +863,8 @@
                                 <tr>
                                     <th class="invoice-title ">
                                         <?php
-                                            $default_message='Commitee Member Details';
+                                            $default_message='Commitee Applicant Details
+';
                                             $this->languages_m->translate('committee_member_details',$default_message);
                                         ?>
                                     </th>

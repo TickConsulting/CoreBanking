@@ -756,10 +756,10 @@ class Ajax extends Ajax_Controller
                                 $deposit_date = strtotime($posts['deposit_dates'][$i]);
                                 $send_sms_notification = isset($posts['send_sms_notification'][$i]) ? $posts['send_sms_notification'][$i] : 0;
                                 $send_email_notification = isset($posts['send_email_notification'][$i]) ? $posts['send_email_notification'][$i] : 0;
-                                $member = $this->members_m->get_group_member($posts['members'][$i], $this->group->id);
-                                $created_by = $this->members_m->get_group_member_by_user_id($this->group->id, $this->user->id);
+                                $member = $this->members_m->get_group_member($posts['members'][$i], '');
+                                $created_by = $this->members_m->get_group_member_by_user_id('', $this->user->id);
                                 $description = isset($posts['deposit_descriptions'][$i]) ? xss_clean_input($posts['deposit_descriptions'][$i]) : '';
-                                if ($this->loan->record_loan_repayment($this->group->id, $deposit_date, $member, $posts['loans'][$i], $posts['accounts'][$i], $posts['deposit_methods'][$i], $description, $amount, $send_sms_notification, $send_email_notification, $created_by)) {
+                                if ($this->loan->record_loan_repayment('', $deposit_date, $member, $posts['loans'][$i], $posts['accounts'][$i], $posts['deposit_methods'][$i], $description, $amount, $send_sms_notification, $send_email_notification, $created_by)) {
                                     $successful_contribution_payment_entry_count++;
                                 } else {
                                     $unsuccessful_contribution_payment_entry_count++;
@@ -772,13 +772,13 @@ class Ajax extends Ajax_Controller
                             $response = array(
                                 'status' => 1,
                                 'message' => $successful_contribution_payment_entry_count . ' loan repayment successfully recorded. ',
-                                'refer' => site_url('group/deposits/listing'),
+                                'refer' => site_url('bank/loans/listing'),
                             );
                         } else {
                             $response = array(
                                 'status' => 1,
                                 'message' => $successful_contribution_payment_entry_count . ' loan repayments successfully recorded. ',
-                                'refer' => site_url('group/deposits/listing'),
+                                'refer' => site_url('bank/loans/listing'),
                             );
                         }
                     }

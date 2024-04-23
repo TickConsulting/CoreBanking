@@ -3168,7 +3168,8 @@ class Messaging{
                         //return FALSE;
                     }                                       
                 }else{
-                    $this->ci->session->set_flashdata('error','Loan application failed: Cannot get guarantor member details');
+                    $this->ci->session->set_flashdata('error','Loan application failed: Cannot get guarantor Applicant Details
+');
                    // return FALSE;
                 }
 			}else{

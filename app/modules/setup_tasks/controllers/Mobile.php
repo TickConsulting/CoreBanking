@@ -198,7 +198,8 @@ class Mobile extends Mobile_Controller{
             if ($member_ids) {
                 foreach ($member_ids as $key => $member_id) {
                     if(!is_numeric($member_id)){
-                        $this->form_validation->set_message('_valid_member_id','Invalid member details');
+                        $this->form_validation->set_message('_valid_member_id','Invalid Applicant Details
+');
                         return FALSE;
                     }
                 }
@@ -366,7 +367,8 @@ class Mobile extends Mobile_Controller{
                     }else{
                         $response = array(
                             'status' => 6,
-                            'message' => 'Could not find member details',
+                            'message' => 'Could not find Applicant Details
+',
                             'time' => time(),
                         );
                     }
@@ -601,7 +603,8 @@ class Mobile extends Mobile_Controller{
                 }else{
                     $response = array(
                         'status' => 6,
-                        'message' => 'Could not find member details',
+                        'message' => 'Could not find Applicant Details
+',
                         'time' => time(),
                     );
                 }
@@ -827,7 +830,8 @@ class Mobile extends Mobile_Controller{
                 }else{
                     $response = array(
                         'status' => 6,
-                        'message' => 'Could not find member details',
+                        'message' => 'Could not find Applicant Details
+',
                         'time' => time(),
                     );
                 }
@@ -1088,7 +1092,8 @@ class Mobile extends Mobile_Controller{
                 }else{
                     $response = array(
                         'status' => 6,
-                        'message' => 'Could not find member details',
+                        'message' => 'Could not find Applicant Details
+',
                         'time' => time(),
                     );
                 }
@@ -1330,7 +1335,8 @@ class Mobile extends Mobile_Controller{
                 }else{
                     $response = array(
                         'status' => 6,
-                        'message' => 'Could not find member details',
+                        'message' => 'Could not find Applicant Details
+',
                         'time' => time(),
                     );
                 }
@@ -1430,7 +1436,8 @@ class Mobile extends Mobile_Controller{
                         }else{
                             $response = array(
                                 'status' => 6,
-                                'message' => 'Could not find member details',
+                                'message' => 'Could not find Applicant Details
+',
                                 'time' => time(),
                             );
                         }
@@ -1540,7 +1547,8 @@ class Mobile extends Mobile_Controller{
                         }else{
                             $response = array(
                                 'status' => 6,
-                                'message' => 'Could not find member details',
+                                'message' => 'Could not find Applicant Details
+',
                                 'time' => time(),
                             );
                         }
@@ -1663,7 +1671,8 @@ class Mobile extends Mobile_Controller{
                 }else{
                     $response = array(
                         'status' => 6,
-                        'message' => 'Could not find member details',
+                        'message' => 'Could not find Applicant Details
+',
                         'time' => time(),
                     );
                 }

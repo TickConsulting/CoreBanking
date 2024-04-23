@@ -201,9 +201,11 @@
             placeholder: "Search Group Member"
         });
 
-        // For additional member details search.
+        // For additional Applicant Details
+ search.
         if (additional_member_details.length > 0) {
-            // loop through the additional member details.
+            // loop through the additional Applicant Details
+.
             additional_member_details.forEach((element, index) => {
                 console.log(`slug ${element.slug}`);
                 $(`#${element.slug}`).select2({

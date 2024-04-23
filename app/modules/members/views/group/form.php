@@ -76,7 +76,8 @@
         </fieldset>
         <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x"></div>
         <fieldset class="m--margin-top-10 ">
-            <legend class="m-3 p-2"><?php echo translate('Additional Member Details');?></legend>
+            <legend class="m-3 p-2"><?php echo translate('Additional Applicant Details
+');?></legend>
             <div class="form-group m-form__group row pt-0 m--padding-10">
 
                 <div class="col-sm-6 m-form__group-sub m-input--air">

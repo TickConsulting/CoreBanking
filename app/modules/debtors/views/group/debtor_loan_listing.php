@@ -121,7 +121,8 @@
                                                 <span class="bold">Loan Processing Fee: </span> <span class="processing_fee"></span><br/></span>
                                         </div>
                                         <div class="col-md-5 col-xs-6" style="line-height: 2;font-size: 11px;">
-                                            <h5>Member Details: </h5>
+                                            <h5>Applicant Details
+: </h5>
                                            
                                             <span class="bold">Disbursed To:</span><span class="member_name"></span><br/>
                                             <span class="bold">

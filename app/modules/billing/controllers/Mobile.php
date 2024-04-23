@@ -99,7 +99,8 @@ class Mobile extends Mobile_Controller{
                 }else{
                     $response = array(
                         'status' => 6,
-                        'message' => 'Could not find member details',
+                        'message' => 'Could not find Applicant Details
+',
                         'time' => time(),
                     );
                 }
@@ -173,7 +174,8 @@ class Mobile extends Mobile_Controller{
                 }else{
                     $response = array(
                         'status' => 6,
-                        'message' => 'Could not find member details',
+                        'message' => 'Could not find Applicant Details
+',
                         'time' => time(),
                     );
                 }
@@ -217,7 +219,8 @@ class Mobile extends Mobile_Controller{
                 }else{
                     $response = array(
                         'status' => 6,
-                        'message' => 'Could not find member details',
+                        'message' => 'Could not find Applicant Details
+',
                         'time' => time(),
                     );
                 }

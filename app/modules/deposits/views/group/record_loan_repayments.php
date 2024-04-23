@@ -12,7 +12,7 @@
                         <span class='required'>*</span>
                     </th>
                     <th width="16%">
-                        <?php echo translate('Member');?>
+                        <?php echo translate('Applicant');?>
                         <span class='required'>*</span>
                     </th>
                     <th width="17%">
@@ -49,7 +49,7 @@
                     </td>
                     <td>
                         <span class="m-select2-sm m-input--air">
-                             <?php echo form_dropdown('members[0]',array(''=>translate('Select member'))+$this->active_group_member_options+array('0'=>"Add Member"),$this->input->get_post('member_id'),' class="form-control m-input m-select2 member" ');?>
+                             <?php echo form_dropdown('members[0]',array(''=>translate('Select member'))+$active_group_member_options+array('0'=>"Add Member"),$this->input->get_post('member_id'),' class="form-control m-input m-select2 member" ');?>
                          </span>
                     </td>
                     <td>
@@ -164,7 +164,7 @@
                 </td>
                 <td>
                     <span class="m-select2-sm m-input--air">
-                         <?php echo form_dropdown('members[0]',array(''=>translate('Select member'))+$this->active_group_member_options+array('0'=>"Add Member"),'',' class="form-control m-input m-select2-append member" ');?>
+                         <?php echo form_dropdown('members[0]',array(''=>translate('Select member'))+$active_group_member_options+array('0'=>"Add Member"),'',' class="form-control m-input m-select2-append member" ');?>
                      </span>
                 </td>
                 <td>
@@ -655,7 +655,7 @@
             var member_id = member.val();
             var attribute = member.attr('name');
             var loan_id = <?php echo $this->input->get_post('loan_id')?:0;?>;
-            var url = '<?php echo site_url('group/loans/ajax_get_active_member_loans')?>';
+            var url = '<?php echo site_url('bank/loans/ajax_get_active_member_loans')?>';
             if($(this).val()==''){
                 $(this).parent().parent().addClass('has-danger');
                 $(".table-multiple-items .loan").select2({
