@@ -22,6 +22,24 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label>Application Email<span class="required">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-shield"></i>
+                                </span>
+                                <?php echo form_input('application_email',$this->input->post('application_email')?$this->input->post('application_email'):$post->application_email,'class="form-control" placeholder="Application email"');?>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Application Phone<span class="required">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-shield"></i>
+                                </span>
+                                <?php echo form_input('application_phone',$this->input->post('application_phone')?$this->input->post('application_phone'):$post->application_phone,'class="form-control" placeholder="254*********"');?>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label>Sender ID<span class="required">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-addon">

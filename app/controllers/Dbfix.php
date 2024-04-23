@@ -693,7 +693,16 @@ $this->dbfix_m->add_column('payment_transactions',
                 'type' => 'blob'
             )
         ));
-
+        $this->dbfix_m->add_column('application_settings', array(
+            'application_phone' => array(
+                'type' => 'blob'
+            )
+        ));
+        $this->dbfix_m->add_column('application_settings', array(
+            'application_email' => array(
+                'type' => 'blob'
+            )
+        ));
         $this->dbfix_m->add_column('investment_groups', array(
             'theme' => array(
                 'type' => 'blob'
@@ -1278,7 +1287,16 @@ $this->dbfix_m->add_column('payment_transactions',
                 'type' => 'blob'
             )
         ));
-
+        $this->dbfix_m->add_column('settings', array(
+            'application_phone' => array(
+                'type' => 'blob'
+            )
+        ));
+        $this->dbfix_m->add_column('settings', array(
+            'application_email' => array(
+                'type' => 'blob'
+            )
+        ));
         $this->dbfix_m->add_column('withdrawal_approval_requests', array(
             'is_otp_verified' => array(
                 'type' => 'blob'

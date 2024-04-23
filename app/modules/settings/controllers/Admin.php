@@ -414,6 +414,8 @@ class Admin extends Admin_Controller
 
             $data = array(
                     'application_name'         =>  $this->input->post('application_name'),
+                    'application_email'         =>  $this->input->post('application_email'),
+                    'application_phone'         =>  $this->input->post('application_phone'),
                     'sender_id'         =>  $this->input->post('sender_id'),
                     'default_language_id'         =>  $this->input->post('default_language_id'),
                     'home_page_controller'         =>  $this->input->post('home_page_controller'),

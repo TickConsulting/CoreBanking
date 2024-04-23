@@ -41,11 +41,11 @@
             </div> 
             <div class="col-sm-6 text-right" >
                 <div class="company-address">
-                    <span class="bold uppercase"><?php echo $this->group->name; ?></span>
+                    <span class="bold uppercase"><?php echo isset($this->group->name)?$this->group->name:$this->application_settings->application_name; ?></span>
                     <?php echo nl2br($this->group->address); ?><br/>
-                    <span class="bold">Telephone: </span> <?php echo $this->group->phone; ?>
+                    <span class="bold">Telephone: </span> <?php echo isset($this->group->phone)?$this->group->phone:$this->application_settings->application_phone; ?>
                     <br/>
-                    <span class="bold">E-mail Address: </span> <?php echo $this->group->email; ?>
+                    <span class="bold">E-mail Address: </span> <?php echo isset($this->group->email)?$this->group->email:$this->application_settings->application_email; ?>
                     <br/>
                 </div>
             </div>

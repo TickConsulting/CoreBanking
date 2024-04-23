@@ -1833,11 +1833,11 @@ class Ajax extends Ajax_Controller{
                     </div>
                     <div class="col-md-5 col-xs-6 text-right">
                         <div class="company-address">
-                            <span class="bold uppercase">'.$this->group->name.'</span><br/>
+                            <span class="bold uppercase">'.$this->application_settings->application_name.'</span><br/>
                             '.nl2br($this->group->address).'<br/>
-                            <span class="bold">'.translate('Telephone').': </span>'.$this->group->phone.'
+                            <span class="bold">'.translate('Telephone').': </span>'.$this->application_settings->application_phone.'
                             <br/>
-                            <span class="bold">'.translate('Email Address').': </span> '.$this->group->email.'
+                            <span class="bold">'.translate('Email Address').': </span> '.$this->application_settings->application_email.'
                             <br/>
                         </div>
                     </div>
