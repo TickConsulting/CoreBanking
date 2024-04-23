@@ -21,7 +21,12 @@ class Mobile extends Mobile_Controller{
         array(
             'field' => 'id_number',
             'label' => 'Id  Number',
-            'rules' => 'xss_clean|trim|required',
+            'rules' => 'xss_clean|trim',
+        ),
+        array(
+            'field' => 'phone_number',
+            'label' => 'Phone Number',
+            'rules' => 'required|trim|valid_phone'
         ),
         array(
             'field' =>  'loan_amount',
@@ -2051,7 +2056,7 @@ class Mobile extends Mobile_Controller{
                 $_POST[$key] = $value;
             }
         }
-       
+        
         $post = new StdClass();
        
         $response = array();
@@ -2064,11 +2069,12 @@ class Mobile extends Mobile_Controller{
         if($this->form_validation->run()){ 
             $loan_details = new StdClass();
             $custom_loan_values = array();
-            
-            if(!$this->user=$this->users_m->get_user_by_id_number($this->input->post('id_number'))){
+            $user_id = $this->input->post('id_number')?:0;
+            $phone = $this->input->post('phone_number')?:0;
+            if(!$this->user=$this->users_m->get_user_by_phone_or_id_number($phone,$user_id)){
                 $response = array(
                     'status' => 0,
-                    'message' => 'We could not get the User with this Id Number in our records',
+                    'message' => 'We could not get the User with this Phone Number in our records',
                 );
                 echo json_encode($response);
                 die;

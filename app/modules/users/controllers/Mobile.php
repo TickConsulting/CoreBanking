@@ -24,16 +24,26 @@ class Mobile extends Mobile_Controller{
         array(
             'field' => 'id_number',
             'label' => 'ID number',
-            'rules' => 'required|trim'
+            'rules' => 'trim'
         ),
+        array(
+            'field' => 'phone_number',
+            'label' => 'Phone Number',
+            'rules' => 'required|trim|valid_phone'
+        )  
     );
     protected $validation_rules_check_limit = array(
   
         array(
             'field' => 'id_number',
             'label' => 'ID number',
-            'rules' => 'required|trim'
+            'rules' => 'trim'
         ),
+        array(
+            'field' => 'phone_number',
+            'label' => 'Phone Number',
+            'rules' => 'required|trim|valid_phone'
+        )  
     );
     protected $change_number_validation_rules =array(
         array(
@@ -273,8 +283,9 @@ class Mobile extends Mobile_Controller{
         }   
         $this->form_validation->set_rules($this->validation_rules_user_details);
         if($this->form_validation->run()){
-            $user_id = $this->input->post('id_number')?:$this->input->get('id_number');
-        if($this->user = $this->users_m->get_user_by_id_number($user_id)){
+            $user_id = $this->input->post('id_number')?:0;
+            $phone = $this->input->post('phone_number')?:0;
+        if($this->user = $this->users_m->get_user_by_phone_or_id_number($phone,$user_id)){
              
             $this->ion_auth->update_last_login($this->user->id);
             if($this->input->post('loan_limit') || $this->input->get('loan_limit')){
@@ -336,8 +347,8 @@ class Mobile extends Mobile_Controller{
         $this->form_validation->set_rules($this->validation_rules_check_limit);
         if($this->form_validation->run()){
             $user_id = $this->input->post('id_number')?:0;
-        if($this->user = $this->users_m->get_user_by_id_number($user_id)){
-           
+            $phone = $this->input->post('phone_number')?:0;
+        if($this->user = $this->users_m->get_user_by_phone_or_id_number($phone,$user_id)){         
             $this->ion_auth->update_last_login($this->user->id);  
             $response = array(
                 'status' => 0,
