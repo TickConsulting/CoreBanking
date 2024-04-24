@@ -975,7 +975,6 @@ class Bank extends Bank_Controller{
 
     public function admit_member($member_id=0){
         // get the Applicant Details
-.
         $membership_request = $this->members_m->get_group_membership_request($member_id);
         // add member to the group.
         $result = $this->group_members->add_member_to_group(

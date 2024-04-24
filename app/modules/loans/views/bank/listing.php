@@ -1,3 +1,5 @@
+
+
 <div id="loans_listing"></div>
 <div class="modal fade" id="deposit_receipt" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -51,8 +53,7 @@
                                                 <span class="bold">Loan Processing Fee: </span> <span class="processing_fee"></span><br/></span>
                                         </div>
                                         <div class="col-md-5 col-xs-6" style="line-height: 2;font-size: 11px;">
-                                            <h5>Applicant Details
-: </h5>
+                                            <h5>Member Details: </h5>
                                             <span class="bold">Loan Type:</span> <span class="loan_type"></span><br/>
                                             <span class="bold">Disbursed To:</span><span class="member_name"></span><br/>
                                             <span class="bold">

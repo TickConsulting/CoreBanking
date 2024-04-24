@@ -2900,8 +2900,31 @@ class Bank extends Bank_Controller{
     }
 
     function listing(){
-        $from = strtotime($this->input->get('from'))?:'';
-        $to = strtotime($this->input->get('to'))?:'';
+        $from = $this->input->get('from')?strtotime($this->input->get('from')):strtotime('-6 months');
+        $to = $this->input->get('to')?strtotime($this->input->get('to')):strtotime('-3 months');
+        // $aging_loan_applications = [];
+
+        // $loans = $this->loans_m->get_group_loans($this->group->id); // 10mins
+        $loan_type_options = $this->loan_types_m->get_options();
+        // foreach ($loans as $loan) {
+        //     if(!$loan->is_fully_paid){
+        //         $this->loan_repayments_m->last_loan_repayment_date($loan->id);
+        //         $loan->last_loan_repayment_date = $this->loan_repayments_m->last_loan_repayment_date($loan->id);
+        //         array_push($aging_loan_applications, $loan);
+        //     }
+        // }
+        // print_r($aging_loan_applications[1]);
+        // print_r( $this->loan_repayments_m->last_loan_repayment_date(46));
+        
+        // die;
+        
+     
+
+        // $this->data['aging_loan_applications'] = $aging_loan_applications;
+        $this->data['loan_type_options'] = $loan_type_options;
+        $this->data['from'] = $from;
+        $this->data['to'] = $to;
+        $this->data['additional_member_details'] =  $this->members_m->get_member_additional_fields_data();
         if($this->input->get('generate_excel') == 1){
             $filter_parameters = array(
                 'member_id' => $this->input->get('member_id')?:'',
@@ -2921,9 +2944,13 @@ class Bank extends Bank_Controller{
             print_r($this->curl_post_data->curl_post_json_excel($json_file,'https://excel.chamasoft.com/loans/listing',$this->group->name.' List of Member Loans'));
             die;
         }
+        $loan_type_options = $this->loan_types_m->get_options();
+         
         $this->data['repayment_status_options'] = $this->repayment_status_options;
         $this->data['account_options'] = $this->accounts_m->get_group_account_options(FALSE);
         $this->data['month_options'] = $this->month_options;
+        $this->data['loan_type_options'] = $loan_type_options;
+        $this->data['additional_member_details'] =  $this->members_m->get_member_additional_fields_data();
         $this->data['from'] = $from;
         $this->data['to'] = $to;
         $this->template->title(translate('List User Loans'))->build('bank/listing',$this->data);

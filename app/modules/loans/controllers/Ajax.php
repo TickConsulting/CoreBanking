@@ -86,16 +86,21 @@ class Ajax extends Ajax_Controller{
 
     function _valid_application_amount(){
         $this->loan_type = $this->loan_types_m->get($this->input->post('loan_type_id'));
+        $member=$this->members_m->get_group_member($this->input->post('member_id'));
         $loan_application_amount = currency($this->input->post('loan_amount'));
+        if($member->loan_limit < currency($this->input->post('loan_amount'))){
+            $this->form_validation->set_message('_valid_application_amount','Your loan limit is '.number_to_currency($member->loan_limit));
+            return FALSE;
+        }
         if($this->loan_type->loan_amount_type == 1){//range
             if($loan_application_amount < $this->loan_type->minimum_loan_amount){
-                $this->form_validation->set_message('_valid_loan_amount','Amount applied is below the allowed minimum amount');
+                $this->form_validation->set_message('_valid_application_amount','Amount applied is below the allowed minimum amount');
                 return FALSE;
             }elseif($loan_application_amount > $this->loan_type->maximum_loan_amount){
                 if($this->loan_type->enable_loan_guarantors){
                     return TRUE; //handled in guarantor callback
                 }else{
-                    $this->form_validation->set_message('_valid_loan_amount','Amount applied is above the allowed maximum amount');
+                    $this->form_validation->set_message('_valid_application_amount','Amount applied is above the allowed maximum amount');
                     return FALSE;
                 }
             }else{
@@ -103,14 +108,16 @@ class Ajax extends Ajax_Controller{
                     return TRUE; //handled in guarantor callback
                 }else{
                     if($loan_application_amount > $this->loan_type->maximum_loan_amount){
-                        $this->form_validation->set_message('_valid_loan_amount','Amount applied is above the allowed maximum amount');
+                        $this->form_validation->set_message('_valid_application_amount','Amount applied is above the allowed maximum amount');
                         return FALSE;
                     }else{
                         return TRUE;
                     }
                 }
             }
-        }else if($this->loan_type->loan_amount_type == 2){//member savings
+        }
+        
+        else if($this->loan_type->loan_amount_type == 2){//member savings
             $data['contribution_options'] = $this->contributions_m->get_group_savings_contribution_options();
             $member_savings = $this->reports_m->get_group_member_total_contributions($this->member->id,$data['contribution_options']); 
             $maximum_allowed_loan = $member_savings * ($this->loan_type->loan_times_number?$this->loan_type->loan_times_number:1);
@@ -118,16 +125,20 @@ class Ajax extends Ajax_Controller{
                 return TRUE; //handled in guarantor callback
             }else{
                 if($loan_application_amount > $maximum_allowed_loan){
-                    $this->form_validation->set_message('_valid_loan_amount','Loan applied is above '.$this->loan_type->loan_times_number.' times your savings');
+                    $this->form_validation->set_message('_valid_application_amount','Loan applied is above '.$this->loan_type->loan_times_number.' times your savings');
                     return FALSE;
                 }else{
                     return TRUE;
                 }
             }
-        }else{
-            $this->form_validation->set_message('_valid_loan_amount','Invalid loan type selected');
+        }
+        
+        else{
+            $this->form_validation->set_message('_valid_application_amount','Invalid loan type selected');
             return FALSE;
         }
+
+    
     }
 
     function _valid_repayment_period(){

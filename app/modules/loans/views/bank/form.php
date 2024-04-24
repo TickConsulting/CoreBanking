@@ -951,12 +951,23 @@
                                         window.location = res.refer;
                                     }else if(res.status == 0) {
                                         var error_msg = '';
+                                        
                                         $('#error_div').addClass('has-danger').append('<div class="form-control-feedback"><Label>Error: '+ res.message +'</Label></div>');
                                         $('#loan_btn_amortization').removeClass("m-loader m-loader--right m-loader--light").attr("disabled", false)
                                         $('#amortization-list').modal('hide'); // show bootstrap modal when complete loaded
+                                        if(res.validation_errors){
+                                            $.each(res.validation_errors, function( key, value ) {
+                                                console.log(key+" key "+value+" value");
+                                                var error_message ='<div class="form-control-feedback">'+value+'</div>';
+                                                $('#create_member_loan_form input[name="'+key+'"]').parent().parent().addClass('has-danger').append(error_message);
+                                                $('#create_member_loan_form select[name="'+key+'"]').parent().parent().addClass('has-danger').append(error_message);
+                                            });
+                                            $('.m-form__help').hide();
+                                        }  
                                         // $('#loan_amortization').html(res.message);                    
                                         mApp.unblock('#amortization-list');
                                     }else if(res.status == '202'){
+                                       
                                         Toastr.show("Session Expired",res.message,'error');
                                         window.location.href = res.refer;
                                     }else {

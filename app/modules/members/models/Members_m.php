@@ -279,6 +279,7 @@
 				$this->dx('users.middle_name').' as middle_name',
 				$this->dx('users.last_name').' as last_name',
 				$this->dx('users.phone').' as phone',
+				$this->dx('users.loan_limit').' as loan_limit',
 				$this->dx('users.email').' as email',
 				$this->dx('users.id_number').' as id_number',
 				$this->dx('users.language_id').' as language_id',
