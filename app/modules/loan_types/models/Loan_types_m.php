@@ -260,11 +260,6 @@ class Loan_types_m extends MY_Model{
 
     function safe_delete($id=0,$group_id=0){
 		$this->db->where('id',$id);
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
 		return $this->update_secure_data($id,'loan_types',array('is_deleted'=>1,'modified_on'=>time()));
 	}
    
