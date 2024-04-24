@@ -865,5 +865,21 @@ class Admin extends Admin_Controller{
         $this->data['group_options'] = $this->groups_m->get_options();
 		$this->template->title('Default loan types')->build('admin/match_groups',$this->data);
 	}
+    function delete($id = 0){
+    	$id OR redirect('admin/loan_types/listing');
+    	$post = $this->loan_types_m->get($id);
+    	if($post){
+    		if($this->loan_types_m->safe_delete($id,$this->group->id)){
+    			$this->session->set_flashdata('success','successfully deleted loan type');
+    			redirect('admin/loan_types/listing');
+    		}else{
+    			$this->session->set_flashdata('error','Could not delete loan type');
+    			redirect('admin/loan_types/listing');
+    		}
+    	}else{
+    		$this->session->set_flashdata('error','group loan type details do not exist');
+    		redirect('admin/loan_types/listing');
+    	}
+    }
 }
 ?>
