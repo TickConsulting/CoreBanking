@@ -237,6 +237,13 @@ class Dbfix extends CI_Controller
         )
     );
     $this->dbfix_m->add_column('safaricom_configurations',
+    array(
+        'encrypted_user_password'=>array(
+            'type'=> 'blob',
+        ),
+    )
+);
+    $this->dbfix_m->add_column('safaricom_configurations',
         array(
             'consumer_secret'=>array(
                 'type'=> 'blob',
@@ -257,6 +264,13 @@ class Dbfix extends CI_Controller
             ),
         )
     );
+    $this->dbfix_m->add_column('safaricomb2crequest',
+    array(
+        'withdrawal_request_id'=>array(
+            'type'=> 'blob',
+        ),
+    )
+);
     $this->dbfix_m->add_column('safaricomb2crequest',
     array(
         'test_environment'=>array(

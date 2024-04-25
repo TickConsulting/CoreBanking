@@ -387,4 +387,50 @@ class Endpoint extends CI_Controller{
         }
         echo json_encode($response);
     }
+     
+    function record_b2c_request($id='',$amount='',$shortcode='',$phone_number='',$reference_number=''){
+        $file = file_get_contents('php://input');
+        $json_data=json_decode($file);
+        $response=array(
+        "status"=>1,
+        "message"=>"received"
+        );
+        file_put_contents("logs/b2c_requests.txt","\n".date("d-M-Y h:i A").$file,FILE_APPEND);
+        $error_code = isset($json_data->errorCode)?$json_data->errorCode:'';
+        $error_message = isset($json_data->errorMessage)?$json_data->errorMessage:'';
+        $response_code = isset($json_data->ResponseCode)?$json_data->ResponseCode:'';
+        $response_description = isset($json_data->ResponseDescription)?$json_data->ResponseDescription:'';
+        $OriginatorConversationID = isset($json_data->OriginatorConversationID)?$json_data->OriginatorConversationID:'';
+        $ConversationID = isset($json_data->ConversationID)?$json_data->ConversationID:'';
+        $data = array(
+            'paybill'           =>  $shortcode,
+            'amount'            =>  $amount,
+            'withdrawal_request_id'=>  $id,
+            'request_status'    =>  1,
+            'result_code'      =>   $response_code,
+            'phone'             =>  $phone_number,
+            'originator_conversation_id' => $OriginatorConversationID,
+            'created_on'        =>  time(),
+            'request_time'      =>  date('YmdHis',time()),
+            'result_description'=>  $response_description?:$error_message,
+            'conversation_id'   =>  $ConversationID,
+            'user_id'           =>  1
+        );
+        if($req_id = $this->safaricom_m->insert_b2c($data)){
+            $response=array(
+                'status'=>1,
+                "statusMessage"=>"recorded and forwaded Successfully",
+                "data"=>$json_data,
+            );
+        }
+        else{
+            $response=array(
+                'status'=>1,
+                "statusMessage"=>"Forwaded Successfully",
+                "data"=>$json_data,
+            );  
+        }
+       
+        echo json_encode($response);
+    }
 }

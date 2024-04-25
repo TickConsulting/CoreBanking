@@ -801,6 +801,7 @@ class Admin extends Admin_Controller
             $input = array(
                 'username' => $username,
                 'password' => $password,
+                'encrypted_user_password' =>openssl_key_encrypt($password,FALSE,TRUE),
                 'shortcode' => $shortcode,
                 'consumer_secret' => $consumer_secret,
                 'consumer_key' => $consumer_key,
@@ -848,6 +849,7 @@ class Admin extends Admin_Controller
             $update = array(
                 'username' => $username,
                 'password' => $password,
+                'encrypted_user_password'=>openssl_key_encrypt($password,FALSE,TRUE),
                 'shortcode' => $shortcode,
                 'consumer_secret' => $consumer_secret,
                 'endpoint' => $endpoint,
