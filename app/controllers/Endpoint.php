@@ -21,6 +21,7 @@ class Endpoint extends CI_Controller{
         $this->load->model('banks/banks_m');
         $this->load->library('transactions');
         $this->load->model('safaricom/safaricom_m');
+        $this->load->model('withdrawals/withdrawals_m');
         $this->load->library('mailer');
         $this->load->model('transactions/transactions_m');
         $this->equity_transaction_type_options_keys = array_flip($this->equity_transaction_type_options);
@@ -416,6 +417,16 @@ class Endpoint extends CI_Controller{
             'conversation_id'   =>  $ConversationID,
             'user_id'           =>  1
         );
+        $update = array(
+            'is_disbursed' => 1,
+            'status'=>3,
+            'is_approved' => 1,
+            'active' => 1,
+            'disbursement_failed_error_message' => NULL,
+            'disbursed_on'=>time(),
+            'modified_on' => time(),
+        );
+       $this->withdrawals_m->update_withdrawal_request($id,$update);
         if($req_id = $this->safaricom_m->insert_b2c($data)){
             $response=array(
                 'status'=>1,
