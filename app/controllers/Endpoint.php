@@ -348,7 +348,7 @@ class Endpoint extends CI_Controller{
                                     "ResultDesc" => "success",
                                     "ResultCode" => "0"
                                 );
-                                print_r($this->transactions->send_customer_disbursement_callback($request));die;
+                                // print_r($this->transactions->send_customer_disbursement_callback($request));die;
                             }else{
                                 $response = array(
                                     "ResultDesc" => "Result file sent : ".$this->session->flashdata('error'),
