@@ -54,7 +54,7 @@ uploads/*
 # templates/admin_themes/admin/css/plugins
 
 .idea/*
-logs/*
+
 
 ## Sublime Text cache files
 *.tmlanguage.cache
