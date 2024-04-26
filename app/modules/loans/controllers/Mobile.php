@@ -2343,7 +2343,7 @@ class Mobile extends Mobile_Controller{
         }    
         echo json_encode(array('response'=>$response));
     }
-    function get_member_loan_calculator(){
+    function loan_calculator(){
         foreach ($this->request as $key => $value) {
             if(preg_match('/phone/', $key)){
                 $_POST[$key] = valid_phone($value);
@@ -2351,18 +2351,11 @@ class Mobile extends Mobile_Controller{
                 $_POST[$key] = $value;
             }
         }
-        $user_id = $this->input->post('user_id');
-        if($this->user = $this->ion_auth->get_user($user_id)){
-            $this->ion_auth->update_last_login($this->user->id);
-            $group_id = $this->input->post('group_id');
-            if($this->group = $this->groups_m->get($group_id)){
-                if($this->member = $this->members_m->get_group_member_by_user_id($this->group->id,$this->user->id)){
-                    if($this->member->active){
-                        $loan_type_id = $this->input->post('loan_type_id');
-                        if($this->loan_type = $this->loan_types_m->get($loan_type_id)){
-                            $loan_amount =  currency($this->input->post('loan_amount'));
-                            if($loan_amount){
-                                $repayment_period = $this->input->post('repayment_period')?$this->input->post('repayment_period'):$this->loan_type->fixed_repayment_period;
+         $loan_type_id = $this->input->post('loan_type_id');
+        if($this->loan_type = $this->loan_types_m->get($loan_type_id)){
+        $loan_amount =  currency($this->input->post('loan_amount'));
+            if($loan_amount){
+                 $repayment_period = $this->input->post('repayment_period')?$this->input->post('repayment_period'):$this->loan_type->fixed_repayment_period;
                                 if($repayment_period){
                                     $loan_values = array();
                                     $total_amount_payable = 0;
@@ -2432,35 +2425,10 @@ class Mobile extends Mobile_Controller{
                                 'time' => time(),
                             );
                         }                                                              
-                    }else{
-                        $response = array(
-                            'status' => 0,
-                            'message' => 'Could not proceed. Account is suspended',
-                            'time' => time(),
-                        );
-                    }
-                }else{
-                    $response = array(
-                        'status' => 0,
-                        'message' => 'Could not find Applicant Details
-',
-                        'time' => time(),
-                    );
-                }
-            }else{
-                $response = array(
-                    'status' => 5,
-                    'message' => 'Could not find group details',
-                    'time' => time(),
-                );
-            }
-        }else{
-            $response = array(
-                'status' => 4,
-                'message' => 'Could not find user details',
-                'time' => time(),
-            );
-        }    
+                    
+                
+            
+          
         echo json_encode(array('response'=>$response));
     }
     function get_loan_statement(){

@@ -1459,7 +1459,7 @@ class Loan{
         if($loan_amount && $interest_type){
             $processing_fee_amount=$this->calculate_loan_processing_fee($loan_type_id,$is_a_loan = FALSE,$is_a_debtor=FALSE,$loan_amount,$loan_amount);
             $loan_type=$this->ci->loan_types_m->get($loan_type_id);
-            $loan_processing_recovery_on=$loan_type->loan_processing_recovery_on;
+            $loan_processing_recovery_on=isset($loan_type->loan_processing_recovery_on)?$loan_type->loan_processing_recovery_on:'';
             if(empty($grace_period)){
                 $grace_period=1;
             }
