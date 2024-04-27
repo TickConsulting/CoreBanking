@@ -982,7 +982,6 @@ class Ajax extends Ajax_Controller{
     	if($this->form_validation->run()){
     		$name = $this->input->post('name');
     		$data = array(
-				'group_id' => $this->group->id,
 				'active' => 1,
 				'name'	=>	$this->input->post('name'),
                 'loan_amount_type' => $this->input->post('loan_amount_type'),
@@ -1000,6 +999,7 @@ class Ajax extends Ajax_Controller{
 				'enable_loan_fines' => $this->input->post('enable_loan_fines')?:0,
 				'enable_outstanding_loan_balance_fines' => $this->input->post('enable_outstanding_loan_balance_fines')?:0,
 				'enable_loan_processing_fee' => $this->input->post('enable_loan_processing_fee')?:0,
+				'enable_automatic_disbursements' => $this->input->post('enable_automatic_disbursements')?:0,
 				'enable_loan_fine_deferment' => $this->input->post('enable_loan_fine_deferment')?:0,
 				'enable_loan_guarantors' => $this->input->post('enable_loan_guarantors')?:0,
 				'is_admin'=>1,
@@ -1104,11 +1104,11 @@ class Ajax extends Ajax_Controller{
                 );
             }
     		if($loan_type_id = $this->loan_types_m->insert($data)){
-                $this->groups_m->update($this->group->id,array(
-                    'group_offer_loans' => 1,
-                    'modified_on' => time(),
-                    'modified_by' => $this->user->id,
-                ));
+                // $this->groups_m->update($this->group->id,array(
+                //     'group_offer_loans' => 1,
+                //     'modified_on' => time(),
+                //     'modified_by' => $this->user->id,
+                // ));
                 $response = array(
                     'status' => 1,
                     'id' => $loan_type_id,
@@ -1172,7 +1172,6 @@ class Ajax extends Ajax_Controller{
 	    	$this->form_validation->set_rules($this->validation_rules);
 	    	if($this->form_validation->run()){
 	    		$data = array(
-	    				'group_id' => $this->group->id,
 	    				'active' => 1,
 	    				'name'	=>	$this->input->post('name'),
 	    				'minimum_loan_amount' => $this->input->post('minimum_loan_amount'),    				
@@ -1186,6 +1185,7 @@ class Ajax extends Ajax_Controller{
 	    				'loan_interest_rate_per' => $this->input->post('loan_interest_rate_per'),
 	    				'grace_period' => $this->input->post('grace_period')?:1,
 	    				'enable_loan_fines' => $this->input->post('enable_loan_fines')?:0,
+						'enable_automatic_disbursements' => $this->input->post('enable_automatic_disbursements')?:0,
 	    				'enable_outstanding_loan_balance_fines' => $this->input->post('enable_outstanding_loan_balance_fines')?:0,
 	    				'enable_loan_processing_fee' => $this->input->post('enable_loan_processing_fee')?:0,
 	    				'enable_loan_fine_deferment' => $this->input->post('enable_loan_fine_deferment')?:0,

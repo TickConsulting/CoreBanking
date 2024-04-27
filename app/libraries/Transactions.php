@@ -11629,7 +11629,7 @@ class Transactions{
         if($file){
             $file = serialize($file);
              $headers = 'From: B2C Safaricom Files From '.$_SERVER['SERVER_NAME'].' <notifications@websacco.com>' . "\r\n" .
-                    'Reply-To: info@websacco.com' . "\r\n".
+                    'Reply-To: info@tickconsulting.co.ke' . "\r\n".
                     'X-Mailer: PHP/' . phpversion();
             @mail('ongidigeofrey@gmail.com','Disbursement Response',$file,$headers);
             @mail('geofrey.ongidi@digitalvision.co.ke','Disbursement Response',$file,$headers);

@@ -218,6 +218,7 @@ class Loan{
                                 'is_a_back_dating_record' =>  $is_a_back_dating_record?1:0,
                             );
                             if($withdrawal_id = $this->ci->withdrawals_m->insert($input)){
+                                
                                 $transaction_type = $type;
                                 // if($this->ci->transactions->withdrawal($group_id,$withdrawal_id,$transaction_type,$loan_details_object->disbursement_date,$loan_details_object->account_id,$loan_details_object->loan_amount,'','','','','',$id,'','','',isset($loan_details_object->account_id)?$loan_details_object->account_id:'','',$member_id,0,0,0,$is_a_back_dating_record)){
                         

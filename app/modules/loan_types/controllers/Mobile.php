@@ -919,7 +919,7 @@ class Mobile extends Mobile_Controller{
                     $records_per_page = $upper_limit - $lower_limit;
                     $total_rows = $this->loan_types_m->count_group_loan_types();
                     $pagination = create_custom_pagination('group',$total_rows,$records_per_page,$lower_limit,TRUE);
-                    $posts = $this->loan_types_m->limit($pagination['limit'])->get_group_loan_types();
+                    $posts = $this->loan_types_m->limit($pagination['limit'])->get_mobile_loan_types();
                     $loan_types = array();
                     $group_currency = "KES";
                     foreach ($posts as $post) {

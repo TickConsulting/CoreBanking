@@ -487,7 +487,39 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="m-form__group form-group row pt-0 m--padding-10">
+                     <!-- start for automatic disbursements -->
+                     <div class="col-lg-12 m-form__group-sub">
+                                <label class="form-control-label"><?php echo translate("Do you want to enable automatic disbursements"); ?>?:</label>
+                                <div class="m-radio-inline">
+                                    <?php
+                                    if ($this->input->post('enable_automatic_disbursements') ? $this->input->post('enable_automatic_disbursements') : $post->enable_automatic_disbursements == 1) {
+                                        $enable_automatic_disbursements = TRUE;
+                                        $disable_automatic_disbursements = FALSE;
+                                    } else if ($this->input->post('enable_automatic_disbursements') ? $this->input->post('enable_automatic_disbursements') : $post->enable_automatic_disbursements == 0) {
+                                        $enable_automatic_disbursements = FALSE;
+                                        $disable_automatic_disbursements = TRUE;
+                                    } else {
+                                        $enable_automatic_disbursements = TRUE;
+                                        $disable_automatic_disbursements = FALSE;
+                                    }
+                                    ?>
+                                    <label class="m-radio m-radio--solid m-radio--brand">
+                                        <?php echo form_radio('enable_automatic_disbursements', 1, $enable_automatic_disbursements, ""); ?>
+                                        <?php echo translate('Yes'); ?>
+                                        <span></span>
+                                    </label>
 
+                                    <label class="m-radio m-radio--solid m-radio--brand">
+                                        <?php echo form_radio('enable_automatic_disbursements', 0, $disable_automatic_disbursements, ""); ?>
+                                        <?php echo translate('No'); ?>
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- end of automatic disbursements -->
+                       
+                    </div>
                                         </fieldset>
                                     </div>
 

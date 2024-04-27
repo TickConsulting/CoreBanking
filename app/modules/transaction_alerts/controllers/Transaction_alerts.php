@@ -1097,12 +1097,11 @@ class Transaction_alerts extends Public_Controller{
     }
 
     function reconcile_online_banking_withdrawal(){
-        if(preg_match('/(23\.239\.27\.43)/',$_SERVER['REMOTE_ADDR'])){
             $file = file_get_contents('php://input');
             $response = array();
             if($file){
-                @mail('peter.kimutai@digitalvision.co.ke','Auto reconcile Withdrawal',$file,'From: Safaricom Files <notifications@chamasoft.com>' . "\r\n" .'Reply-To: billing@chamasoft.com' . "\r\n".'X-Mailer: PHP/' . phpversion());
-                @mail('ongidigeofrey@gmail.com','Auto reconcile Withdrawal',$file,'From: Safaricom Files <notifications@chamasoft.com>' . "\r\n" .'Reply-To: billing@chamasoft.com' . "\r\n".'X-Mailer: PHP/' . phpversion());
+                // @mail('geofrey.ongidi@digitalvision.co.ke','Auto reconcile Withdrawal',$file,'From: Safaricom Files <notifications@chamasoft.com>' . "\r\n" .'Reply-To: ongidigeofrey@gmail.com' . "\r\n".'X-Mailer: PHP/' . phpversion());
+                // @mail('ongidigeofrey@gmail.com','Auto reconcile Withdrawal',$file,'From: Safaricom Files <notifications@chamasoft.com>' . "\r\n" .'Reply-To: ongidigeofrey@gmail.com' . "\r\n".'X-Mailer: PHP/' . phpversion());
                 $result = json_decode($file);
                 if($result){
                     $code = isset($result->code)?$result->code:'';
@@ -1184,12 +1183,7 @@ class Transaction_alerts extends Public_Controller{
                     "response" => 'No message sent',
                 );
             }
-        }else{
-            $response = array(
-                'code' => "1",
-                "response" => 'Unknown host',
-            );
-        }
+        
         echo json_encode($response);
     }
 

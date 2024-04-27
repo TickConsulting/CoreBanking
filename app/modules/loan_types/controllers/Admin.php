@@ -16,6 +16,11 @@ class Admin extends Admin_Controller{
             'rules' => 'trim|currency'
         ),
 		array(
+			'field' => 'enable_automatic_disbursements',
+			'label' => 'Enable Automatic Disbursements',
+			'rules' => 'xss_clean|trim|numeric|required'
+		),
+		array(
 			'field' => 'interest_type',
 			'label' => 'Loan Interest Type',
 			'rules' => 'required|trim|currency'
@@ -482,6 +487,7 @@ class Admin extends Admin_Controller{
 				'fixed_repayment_period'=>$this->input->post('fixed_repayment_period'),
 				'minimum_repayment_period' => $this->input->post('minimum_repayment_period'),
 				'maximum_repayment_period' => $this->input->post('maximum_repayment_period'),
+				'enable_automatic_disbursements' => $this->input->post('enable_automatic_disbursements')?:0,
 				'interest_rate' => $this->input->post('interest_rate'),
 				'interest_type' => $this->input->post('interest_type'),
 				'loan_interest_rate_per' => $this->input->post('loan_interest_rate_per'),
@@ -710,6 +716,7 @@ class Admin extends Admin_Controller{
                     'loan_interest_rate_per' => $this->input->post('loan_interest_rate_per'),
                     'grace_period' => 1,
                     'enable_loan_fines' => $this->input->post('enable_loan_fines')?:0,
+					'enable_automatic_disbursements' => $this->input->post('enable_automatic_disbursements')?:0,
                     'enable_outstanding_loan_balance_fines' => $this->input->post('enable_outstanding_loan_balance_fines')?:0,
                     'enable_loan_processing_fee' => $this->input->post('enable_loan_processing_fee')?:0,
                     'enable_loan_fine_deferment' => $this->input->post('enable_loan_fine_deferment')?:0,

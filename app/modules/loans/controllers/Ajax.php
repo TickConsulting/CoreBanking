@@ -1537,7 +1537,7 @@ class Ajax extends Ajax_Controller{
         $this->_additional_validation_rules();
         $this->form_validation->set_rules($this->validation_rules);
         if($this->form_validation->run()){
-            $group_id  =  $this->group->id;  
+            $group_id  =  '';
             $loan_details = new StdClass();
             $custom_loan_values = array();
             $loan_type_id = $this->input->post('loan_type_id');
@@ -1561,11 +1561,13 @@ class Ajax extends Ajax_Controller{
                 }
             }
             $loan_type = $this->loan_types_m->get_group_loan_type($loan_type_id);
+           
             if($loan_type){
                 $loan_details->loan_type_id = $loan_type_id;
                 $loan_details->disbursement_date = $disbursement_date;
                 $loan_details->account_id = $account_id;
                 $loan_details->loan_amount = $loan_amount;
+                $loan_details->enable_automatic_disbursements = $loan_type->enable_automatic_disbursements;
                 $loan_details->created_by = $this->user->id;
                 $loan_details->created_on = time();
                 if($loan_type->loan_repayment_period_type == 1){
@@ -1581,7 +1583,7 @@ class Ajax extends Ajax_Controller{
                         }
                     }
                 }
-                $verified_bank_accounts = $this->bank_accounts_m->get_group_verified_partner_bank_account_options_ids($this->group->id);
+                $verified_bank_accounts = $this->bank_accounts_m->get_group_verified_partner_bank_account_options_ids('');
                 if(preg_match('/bank-/', $account_id) && array_key_exists(trim(preg_replace('/[^0-9]/', '', $account_id)), $verified_bank_accounts)){
                     //withdrawal request
                     $bank_account_id = trim(preg_replace('/[^0-9]/','', $account_id));
@@ -1633,6 +1635,7 @@ class Ajax extends Ajax_Controller{
                         $withdrawal->member_id = $member_id;
                         $withdrawal->disbursement_channel = $disbursement_option_id;
                         $this->member=$this->members_m->get($member_id);
+                        if($loan_type->enable_automatic_disbursements==1){    
                         if($this->transactions->process_batch_withdrawal_requests($withdrawal,"KES",$this->member,$this->group,$this->user)){
                             $response = array(
                                 'status' => 1,
@@ -1640,6 +1643,7 @@ class Ajax extends Ajax_Controller{
                                 'refer' => site_url('bank/withdrawals/withdrawal_requests'),
                             );
                         }
+                    }
                     $response = array(
                         'status' => 1,
                         'message' => 'Loan Successfully created',

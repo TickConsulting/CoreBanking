@@ -24,6 +24,11 @@ class Bank extends Bank_Controller{
 			'rules' => 'required|trim|currency'
 		),
 		array(
+			'field' => 'enable_automatic_disbursements',
+			'label' => 'Enable Automatic Disbursements',
+			'rules' => 'xss_clean|trim|numeric|required'
+		),
+		array(
 			'field' => 'interest_rate',
 			'label' => 'Loan Interest Rate',
 			'rules' => 'required|trim|currency'

@@ -207,6 +207,18 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="m--align-right" nowrap>
+                                                        <strong><?php echo translate('Automatic Disbursements');?> </strong>
+                                                    </td>
+                                                    <td>:
+                                                        <?php if($post->enable_automatic_disbursements):?>
+                                                            <span class="m-badge m-badge--primary m-badge--wide"><?php echo translate('Enabled');?></span><br/>
+                                                        <?php else:?>
+                                                            <span class="m-badge m-badge--success m-badge--wide"><?php echo translate('Disabled');?></span><br/>
+                                                        <?php endif;?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="m--align-right" nowrap>
                                                         <strong><?php echo translate('Guarantors'); ?> </strong>
                                                     </td>
                                                     <td>:

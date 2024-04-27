@@ -148,6 +148,14 @@
                                                     <span class="badge badge-success badge--wide"><?php echo translate('Disabled');?></span><br/>
                                                 <?php endif;?>
                                                 <br/>
+                                                <strong><?php echo translate('Automatic Disbursement');?> </strong>
+                                                <?php if($post->enable_automatic_disbursements):?>
+                                                    <span class="badge badge-primary badge--wide"><?php echo translate('Enabled');?></span><br/>
+                                                   
+                                                <?php else:?>
+                                                    <span class="badge badge-success badge--wide"><?php echo translate('Disabled');?></span><br/>
+                                                <?php endif;?>
+                                                <br/>
                                                 <strong><?php echo translate('Guarantors'); ?> </strong>
                                                 <?php if($post->enable_loan_guarantors == 1){
                                                     if($post->loan_guarantors_type == 1){
