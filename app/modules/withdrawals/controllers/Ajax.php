@@ -611,6 +611,7 @@ class Ajax extends Ajax_Controller{
                         'is_disbursed' => $withdrawal_request->is_disbursed,
                         'decline_reason' => $withdrawal_request->decline_reason,
                         'created_by' => $withdrawal_request->created_by,
+                        'reference_number' => $withdrawal_request->reference_number,
                         // 'group_id' => $withdrawal_request->group_id,
                         'description' => $description,
                         'withdrawal_for' => $withdrawal_request->withdrawal_for,

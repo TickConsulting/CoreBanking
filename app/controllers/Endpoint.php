@@ -283,10 +283,12 @@ class Endpoint extends CI_Controller{
                     $update= array(
                         'callback_result_description'   =>  $result_description,
                         'callback_result_code'          =>  $result_code,
+                        'originator_conversation_id'          =>  $originator_conversation_id,
                         'transaction_id'                =>  $transaction_id,
                         'modified_on'                   =>  time(),
                     );
                     if($result_code == '0'){
+                        
                         $result_params = isset($result_body->ResultParameters)?$result_body->ResultParameters:'';
                         if($result_params){
                             $result_parameter = $result_params->ResultParameter;
@@ -341,21 +343,37 @@ class Endpoint extends CI_Controller{
                             );
                         }
                     }
-                    if($request = $this->safaricom_m->get_b2c_request_by_originator_conversation_id($originator_conversation_id)){
-                        if($update_id = $this->safaricom_m->update_b2c_request($request->id,$update)){
-                            $request = $this->safaricom_m->get_b2c_request($request->id);
-                            if($this->transactions->reconcile_account_disbursement($request)){
-                                $response = array(
-                                    "ResultDesc" => "success",
-                                    "ResultCode" => "0"
-                                );
-                                // print_r($this->transactions->send_customer_disbursement_callback($request));die;
-                            }else{
-                                $response = array(
-                                    "ResultDesc" => "Result file sent : ".$this->session->flashdata('error'),
-                                    "ResultCode" => "1"
-                                );  
-                            }
+                    if($request = $this->withdrawals_m->get_request_by_reference_number($originator_conversation_id)){
+                        if($result_code== '0'){
+                            $data = array(
+                                'is_disbursed' => 1,
+                                'status'=>3,
+                                'is_approved' => 1,
+                                'active' => 1,
+                                'disbursement_failed_error_message' => NULL,
+                                'disbursed_on'=>time(),
+                                'modified_on' => time(),
+                            );
+                           $this->withdrawals_m->update_withdrawal_request($request->id,$data);
+                        }
+                        if($update_id = $this->safaricom_m->insert_b2c($update)){   
+                            // $request = $this->safaricom_m->get_b2c_request($request->id);
+                            $response = array(
+                                        "ResultDesc" => "success",
+                                        "ResultCode" => "0"
+                                    );
+                            // if($this->transactions->reconcile_account_disbursement($request)){
+                            //     $response = array(
+                            //         "ResultDesc" => "success",
+                            //         "ResultCode" => "0"
+                            //     );
+                            //     // print_r($this->transactions->send_customer_disbursement_callback($request));die;
+                            // }else{
+                            //     $response = array(
+                            //         "ResultDesc" => "Result file sent : ".$this->session->flashdata('error'),
+                            //         "ResultCode" => "1"
+                            //     );  
+                            // }
                         }else{
                             $response = array(
                                 "ResultDesc" => "Result file sent : Transaction not recorded",

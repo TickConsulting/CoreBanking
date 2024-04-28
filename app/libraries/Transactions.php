@@ -10310,6 +10310,7 @@ class Transactions{
                 'bank_account_id' => isset($withdrawal_request->bank_account_id)?$withdrawal_request->bank_account_id:'',
                 'account_to_id' => isset($withdrawal_request->account_to_id)?$withdrawal_request->account_to_id:'',
                 'request_date' => time(),
+                'reference_number' => time(),
                 'transfer_to' => isset($withdrawal_request->transfer_to)?$withdrawal_request->transfer_to:'',
                 'user_id' => $requesting_member->user_id,
                 'expiry_time' => strtotime('+12 hours',time()),

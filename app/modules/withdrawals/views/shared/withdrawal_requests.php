@@ -61,6 +61,12 @@
                         </tr>
                         <tr>
                             <th nowrap>
+                                <?php echo translate('Reference Number'); ?>
+                            </th>
+                            <td class="reference_number"></td>
+                        </tr>
+                        <tr>
+                            <th nowrap>
                                 <?php echo translate('Requested By'); ?>
                             </th>
                             <td class="requested_by"></td>
@@ -162,6 +168,7 @@ $(document).ready(function(){
                         $('#get_withdrawal_request_modal .transaction_type').html('<strong>:</strong> '+data.withdrawal_request.type);
                         $('#get_withdrawal_request_modal .request_date').html('<strong>:</strong> '+data.withdrawal_request.request_date);
                         $('#get_withdrawal_request_modal .requested_by').html('<strong>:</strong> '+data.withdrawal_request.requested_by);
+                        $('#get_withdrawal_request_modal .reference_number').html('<strong>:</strong> '+data.withdrawal_request.reference_number);
                         $('#get_withdrawal_request_modal .recipient').html('<strong>:</strong> '+data.withdrawal_request.recipient);
                         $('#get_withdrawal_request_modal .description').html('<strong>:</strong> '+data.withdrawal_request.description);
                         if(data.withdrawal_request.status == 'is_approved'){

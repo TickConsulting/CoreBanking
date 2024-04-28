@@ -69,14 +69,14 @@
                                             <td><?php echo ++$i;?></td>
                                             <td><?php echo $post->phone; ?></td>
                                             <td class="text-right">
-                                                <?php echo number_to_currency($post->amount); ?><br/>
-                                                <?php echo number_to_currency($post->disburse_charge); ?><br/>
+                                                <?php echo number_to_currency($post->transaction_amount); ?><br/>
+                                                <?php echo number_to_currency($post->b2c_charges_paid_account_available_funds); ?><br/>
                                                 <?php echo $post->transaction_receipt; ?><br/>
                                             </td>
                                             <td>
                                                 <?php echo $post->paybill; ?><br/>
                                                 <?php echo 'CID: '.$post->command_id;?><br/>
-                                                <?php echo 'REF NU: '.$post->reference_number;?><br/>
+                                                <?php echo 'REF NU: '.$post->originator_conversation_id;?><br/>
                                                 <br/>
                                                 <?php echo 'OCI: '. $post->originator_conversation_id;?><br/>
                                                 <?php echo 'CI: '. $post->conversation_id;?>
@@ -84,12 +84,12 @@
                                             </td>
                                             <td>
                                                 <!-- Group Name :<?php echo $post->group_name; ?><br/> -->
-                                                User ID :<?php echo $post->user_id; ?><br/>
+                                                Recipient :<?php echo $post->receiver_party_public_name; ?><br/>
                                                 Callback URL :<?php //echo $post->callback_url; ?><br/>
                                                 <?php echo $post->originator_conversation_id; ?><br/>
                                             </td>
-                                            <td><?php echo timestamp_to_datetime_from_timestamp($post->request_time); ?></td>
-                                            <td class="two-entry"><?php if(is_numeric($post->result_code) && $post->result_code==0){echo '<span class="label label-success label-xs">Success</span>';}else{echo '<span class="label label-warning label-xs">Failed</span>';} ?><br/><br/>
+                                            <td><?php echo timestamp_to_datetime_from_timestamp($post->transaction_completed_time); ?></td>
+                                            <td class="two-entry"><?php if(is_numeric($post->callback_result_code) && $post->callback_result_code==0){echo '<span class="label label-success label-xs">Success</span>';}else{echo '<span class="label label-warning label-xs">Failed</span>';} ?><br/><br/>
                                                 
                                             <?php if(is_numeric($post->callback_result_code) && $post->callback_result_code==0){echo '<span class="label label-success label-xs">Success</span>';}else{echo '<span class="label label-danger label-xs">No Result</span>';} ?>
                                             </td>

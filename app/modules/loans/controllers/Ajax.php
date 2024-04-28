@@ -1632,6 +1632,7 @@ class Ajax extends Ajax_Controller{
                         $withdrawal->transfer_to = $disbursement_option_id==1?1:3;
                         $withdrawal->recipient = $disbursement_option_id==1?$mobile_money_wallet_id:$equity_bank_account_id;
                         $withdrawal->loan_type_id = $loan_type_id;
+                        $withdrawal->reference_number = time();
                         $withdrawal->member_id = $member_id;
                         $withdrawal->disbursement_channel = $disbursement_option_id;
                         $this->member=$this->members_m->get($member_id);
