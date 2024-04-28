@@ -71,6 +71,7 @@
                             </th>
                             <td class="requested_by"></td>
                         </tr>
+                      
                         <tr>
                             <th nowrap>
                                 <?php echo translate('Recipient'); ?>
@@ -101,6 +102,7 @@
                             </th>
                             <td class="fail_reason"></td>
                         </tr>
+                        
                     </tbody>
                 </table>
                 <div class="row cancel-request" style="display: none;">
@@ -174,7 +176,12 @@ $(document).ready(function(){
                         if(data.withdrawal_request.status == 'is_approved'){
                             $('#get_withdrawal_request_modal .badge_holder').html('<span class="m-badge m-badge--success m-badge--wide">Approved</span>');
                             if(data.withdrawal_request.is_disbursed == 1){
-                                $('#get_withdrawal_request_modal .badge_holder').append('<span class="m-badge m-badge--primary m-badge--wide">Disbursed</span>');
+                                if(data.withdrawal_request.is_manually_disbursed == 1){
+                                    $('#get_withdrawal_request_modal .badge_holder').append('<span class="m-badge m-badge--primary m-badge--wide">Manually Disbursed</span>');
+                                }
+                                else{
+                                    $('#get_withdrawal_request_modal .badge_holder').append('<span class="m-badge m-badge--primary m-badge--wide">Disbursed</span>');
+                                }
                             }else if(data.withdrawal_request.is_disbursement_declined == 1){
                                 $('#get_withdrawal_request_modal .badge_holder').append('<span class="m-badge m-badge--danger m-badge--wide">Disbursement Failed</span>');
                                 $('#get_withdrawal_request_modal .fail_reason').html('<strong>:</strong> '+data.withdrawal_request.disbursement_failed_error_message).parent().show();

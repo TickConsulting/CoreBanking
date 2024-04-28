@@ -237,6 +237,7 @@ class Admin extends Admin_Controller{
         if($reason){
             $update = array(
                 'is_disbursed' => 1,
+                'is_manually_disbursed'=>1,
                 'status'=>3,
                 'is_approved' => 1,
                 'active' => 1,

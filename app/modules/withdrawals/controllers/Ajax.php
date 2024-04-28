@@ -378,6 +378,7 @@ class Ajax extends Ajax_Controller{
                                 <th>#</th>
                                 <th>'.translate('Requested on').'</th>
                                 <th>'.translate('Requested By').'</th>
+                                <th>'.translate('Mode Of Disbursement').'</th>
                                 <th class="text-right">'.translate('Amount').'('.$this->group_currency.')</th>
                                 <th>'.translate('Type').'</th>
                             </tr>
@@ -391,7 +392,9 @@ class Ajax extends Ajax_Controller{
                                     <tr data-toggle="modal" class="get_withdrawal_request" id="'.$post->id.'" data-target="#get_withdrawal_request_modal" style="cursor:pointer;">
                                         <th scope="row">'.($i++).'</th>
                                         <td>'.timestamp_to_date_and_time($post->request_date).'</td>
+                                       
                                         <td>'.(isset($this->active_group_member_options_by_user_id[$post->user_id])?($user?$user->first_name.' '.$user->last_name:''):($user?($this->ion_auth->is_admin($user->id)?'System Admin':'Deleted member'):'Deleted member')).'</td>
+                                        <td>'.(isset($post->is_manually_disbursed)?('Manual'):'Online').'</td>
                                         <td class="text-right">'.number_to_currency($post->amount).'</td>
                                         <td>
                                             '.$withdrawal_request_transaction_names[$post->withdrawal_for].'

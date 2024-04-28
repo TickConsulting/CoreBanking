@@ -1207,7 +1207,11 @@ $this->dbfix_m->add_column('payment_transactions',
                 'type' => 'blob'
             )
         ));
-
+        $this->dbfix_m->add_column('withdrawal_requests', array(
+            'is_manually_disbursed' => array(
+                'type' => 'blob'
+            )
+        ));
         $this->dbfix_m->add_column('withdrawal_requests', array(
             'transfer_to' => array(
                 'type' => 'blob'
