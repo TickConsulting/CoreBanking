@@ -19,7 +19,19 @@ class Withdrawals extends Public_Controller{
         error_reporting(-1);
        echo $this->transactions->process_bulk_withdrawal_disbursement_requests($limit).' requests';
     }
-
+    function fix_withdrawal_request(){
+       $requests=$this->withdrawals_m->get_undisbursed_approved_withdrawal_requests(100);
+       if($requests){
+       foreach($requests as $request){
+        $update=array(
+            "reference_number"=>time()
+        );
+        $this->withdrawals_m->update_withdrawal_request($request->id,$update);
+       }
+    }
+       print_r(count($requests).' Fixed');
+       die;
+    }
     function test_name_check($account_number=0){
         if($res = $this->curl->equityBankRequests->account_lookup($account_number)){
             print_r($res);
