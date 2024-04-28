@@ -32,6 +32,25 @@ class Withdrawals extends Public_Controller{
        print_r(count($requests).' Fixed');
        die;
     }
+    function mark_withdrawal_request_as_inactive(){
+        $requests=$this->withdrawals_m->get_undisbursed_approved_withdrawal_requests(100);
+        if($requests){
+        foreach($requests as $request){
+            $update = array(
+                'is_disbursed' => 0,
+                'status'=>2,
+                'is_approved' => 1,
+                'is_disbursement_declined'=>1,
+                'active' => 1,
+                'disbursement_failed_error_message' => "Cancelled by Admin",
+                'modified_on' => time()
+            );
+         $this->withdrawals_m->update_withdrawal_request($request->id,$update);
+        }
+     }
+        print_r(count($requests).' Fixed');
+        die;
+     }
     function test_name_check($account_number=0){
         if($res = $this->curl->equityBankRequests->account_lookup($account_number)){
             print_r($res);
