@@ -348,6 +348,32 @@ class Endpoint extends CI_Controller{
                                         "ResultDesc" => "success",
                                         "ResultCode" => "0"
                                     );
+                    if($request = $this->withdrawals_m->get_request_by_reference_number($originator_conversation_id)){
+                        if($result_code== '0'){
+                            $data = array(
+                                'is_disbursed' => 1,
+                                'status'=>3,
+                                'is_approved' => 1,
+                                'active' => 1,
+                                'disbursement_failed_error_message' => NULL,
+                                'disbursed_on'=>time(),
+                                'modified_on' => time(),
+                            );
+                          
+                        }
+                        else{
+                             $data = array(
+                            'is_disbursed' => 0,
+                            'status'=>2,
+                            'is_approved' => 1,
+                            'is_disbursement_declined'=>1,
+                            'active' => 1,
+                            'disbursement_failed_error_message' => $result_description,
+                            'modified_on' => time()
+                        );
+                        }
+                        $this->withdrawals_m->update_withdrawal_request($request->id,$data);
+                    }
                     }
                     // if($request = $this->withdrawals_m->get_request_by_reference_number($originator_conversation_id)){
                     //     if($result_code== '0'){
