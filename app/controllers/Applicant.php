@@ -1,5 +1,5 @@
 <?php if(!defined('BASEPATH')) exit('You are not allowed to view this script');
-class Member extends Member_Controller{
+class Applicant extends Member_Controller{
 	protected $data = array();
     function __construct(){
         parent::__construct();

@@ -82,7 +82,7 @@ class Authentication extends Authentication_Controller{
         if($group_id){
             $this->login_to_group($group_id);
         }else{
-            redirect('checkin');
+            redirect('dashboard');
         }
     }
 
@@ -90,7 +90,7 @@ class Authentication extends Authentication_Controller{
         if($this->application_settings->enable_two_factor_auth){
             $this->template->set_layout('authentication.html')->title('Verify Otp')->build('authentication/verify_otp');
         }else{
-            redirect('checkin');
+            redirect('dashboard');
         }
     }
 
@@ -99,7 +99,7 @@ class Authentication extends Authentication_Controller{
         $this->template->set_layout('authentication.html')->title('new_password')->build('authentication/new_password');
     }
 
-    function checkin(){
+    function checkin_old(){
         $data = array();
         // if($this->user->is_validated == 2){
         //     redirect('verify_otp','refresh');
@@ -114,7 +114,7 @@ class Authentication extends Authentication_Controller{
         //}
     }
     
-    function demo_login(){
+    function demo_login_old(){
         //remove_subdomain_from_url($this->application_settings->url,$this->application_settings->protocol);
         if($this->ion_auth->logged_in()){ 
             redirect('authentication');
