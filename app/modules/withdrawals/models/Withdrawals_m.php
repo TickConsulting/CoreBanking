@@ -2102,7 +2102,7 @@ class Withdrawals_m extends MY_Model{
 		$this->db->where($this->dx('status').' = "1"',NULL,FALSE);
 		$this->db->where($this->dx('is_approved').' ="1"',NULL,FALSE);
 		$this->db->where($this->dx('active').' ="1"',NULL,FALSE);
-		
+		$this->db->order_by($this->dx('created_on'),'DESC',FALSE);
 		return $this->db->get('withdrawal_requests')->result();
 	}
 
@@ -2113,11 +2113,7 @@ class Withdrawals_m extends MY_Model{
 		$this->db->where($this->dx('status').' = "2"',NULL,FALSE);
 		$this->db->where($this->dx('is_approved').' ="1"',NULL,FALSE);
 		$this->db->where($this->dx('active').' ="1"',NULL,FALSE);
-		if($group_id){
-    		$this->db->where($this->dx('group_id')." = '".$group_id."' ",NULL,FALSE);
-    	}else{
-    		$this->db->where($this->dx('group_id')." = '".$this->group->id."' ",NULL,FALSE);
-    	}
+		
     	$this->db->order_by($this->dx('created_on'),'DESC',FALSE);
 		return $this->db->get('withdrawal_requests')->result();
 	}
@@ -2128,6 +2124,7 @@ class Withdrawals_m extends MY_Model{
 		$this->db->where($this->dx('status').' = "3"',NULL,FALSE);
 		$this->db->where($this->dx('is_approved').' ="1"',NULL,FALSE);
 		$this->db->where($this->dx('active').' ="1"',NULL,FALSE);
+		$this->db->order_by($this->dx('created_on'),'DESC',FALSE);
 		return $this->db->get('withdrawal_requests')->result();
 	}
 
@@ -2137,6 +2134,7 @@ class Withdrawals_m extends MY_Model{
 		$this->db->where($this->dx('status').' = "1"',NULL,FALSE);
 		$this->db->where($this->dx('is_approved').' ="1"',NULL,FALSE);
 		$this->db->where($this->dx('active').' ="1"',NULL,FALSE);
+		$this->db->order_by($this->dx('created_on'),'DESC',FALSE);
 		$this->db->limit($limit);
 		return $this->db->get('withdrawal_requests')->result();
 	}
