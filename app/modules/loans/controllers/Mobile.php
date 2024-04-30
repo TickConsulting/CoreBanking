@@ -2100,7 +2100,7 @@ class Mobile extends Mobile_Controller{
                 echo json_encode($response);
                 die;
             }
-            $member=$this->members_m->phone_number($this->input->post('phone_number'));
+            $member=$this->members_m->get_applicant_by_phone_number($this->input->post('phone_number'));
              if(!$member){
                 $response = array(
                     'status' => 0,

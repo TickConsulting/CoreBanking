@@ -1900,7 +1900,7 @@
 		$this->db->limit(1);
 		return $this->db->get('members')->row();
 	}
-	function get_applicant_by_phone($phone=''){
+	function get_applicant_by_phone_number($phone=''){
 		$this->db->select(
 			array(
 				'members.id as id',

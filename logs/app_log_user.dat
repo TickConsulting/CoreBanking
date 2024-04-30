@@ -1670,3 +1670,31 @@
 
     "id_number":"36955148" 
 }";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=5pqahaakup2jthvlcb1v7hhhhpsmim4j";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"bc81a251-75bf-4b48-8842-b348696fa6a6";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"34";}
+
+30-Apr-2024 03:02 PM	http://api.risktick.local/mobile/loans/create_loan	a:1:{s:25:"/mobile/loans/create_loan";s:0:"";}	a:0:{}	s:121:"{
+    "loan_amount":"2000",
+    "loan_type_id":"2064",
+    "repayment_period":3,
+    "phone_number":"254748974488"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:84:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"642afcbd-d537-46c8-b94b-f495d7b21a50";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:3:"121";}
+
+30-Apr-2024 03:02 PM	http://api.risktick.local/mobile/loans/create_loan	a:1:{s:25:"/mobile/loans/create_loan";s:0:"";}	a:0:{}	s:121:"{
+    "loan_amount":"2000",
+    "loan_type_id":"2064",
+    "repayment_period":3,
+    "phone_number":"254748974489"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=1ve2lnpv15qg7pcb0iqkn8racf5cqd5b";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"9a64cb38-216e-4141-ab75-6edf173f23c6";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:3:"121";}
+
+30-Apr-2024 03:03 PM	http://api.risktick.local/mobile/loans/create_loan	a:1:{s:25:"/mobile/loans/create_loan";s:0:"";}	a:0:{}	s:121:"{
+    "loan_amount":"2000",
+    "loan_type_id":"2064",
+    "repayment_period":3,
+    "phone_number":"254748974489"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=2vhqvtk90vjt1t82247pmk6v0nrf9q5p";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"71d1d3d6-b7be-4c2d-8bb5-b393632c8477";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:3:"121";}
+
+30-Apr-2024 03:04 PM	http://api.risktick.local/mobile/loans/create_loan	a:1:{s:25:"/mobile/loans/create_loan";s:0:"";}	a:0:{}	s:121:"{
+    "loan_amount":"2000",
+    "loan_type_id":"2064",
+    "repayment_period":3,
+    "phone_number":"254748974489"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=n6ape973djjse789dq93kb2mr6tcofe1";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"9958c1ba-fddf-420c-8ad7-2f04df0aeaa5";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:3:"121";}
