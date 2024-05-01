@@ -1573,7 +1573,7 @@ class Mobile extends Mobile_Controller{
         echo json_encode(array('response'=>$response));
     }
 
-    function get_active_member_loans(){
+    function get_active_applicant_loans(){
         foreach ($this->request as $key => $value) {
             if(preg_match('/phone/', $key)){
                 $_POST[$key] = valid_phone($value);
@@ -1585,7 +1585,7 @@ class Mobile extends Mobile_Controller{
         $phone = $this->input->post('phone_number')?:0;
         if($this->user =$this->users_m->get_user_by_phone_or_id_number($phone,$user_id)){
             $this->ion_auth->update_last_login($this->user->id);
-                if($this->member = $this->members_m->get_group_member_by_user_id($this->group->id,$this->user->id)){
+                if($this->member = $this->members_m->get_group_member_by_user_id('',$this->user->id)){
                     if($this->member->active){
                         $today = time();
                         $outstanding_loan = 0;
@@ -1596,7 +1596,7 @@ class Mobile extends Mobile_Controller{
                         $matured_loans = array();
                         $not_matured_loans= array();
                         $ongoing_loan_amounts_payable = array();
-                        $ongoing_member_loans = $this->loans_m->get_member_loans($this->group->id,$this->member->id);
+                        $ongoing_member_loans = $this->loans_m->get_member_loans('',$this->member->id);
                         $loan_types = $this->loan_types_m->get_options();
                         foreach($ongoing_member_loans as $ongoing_member_loan):
                             $total_loan_borrowed += $ongoing_member_loan->loan_amount;
