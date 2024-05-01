@@ -1698,3 +1698,15 @@
     "repayment_period":3,
     "phone_number":"254748974489"
 }";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=n6ape973djjse789dq93kb2mr6tcofe1";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"9958c1ba-fddf-420c-8ad7-2f04df0aeaa5";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:3:"121";}
+
+01-May-2024 12:16 PM	http://api.risktick.local/mobile/bank_accounts/set_wallet_password	a:1:{s:41:"/mobile/bank_accounts/set_wallet_password";s:0:"";}	a:0:{}	s:63:"{
+    "account_number":"1234567",
+    "password":"1234567"
+}";	 Headers are:a:11:{s:12:"Content-Type";s:16:"application/json";s:13:"Authorization";s:39:"Bearer UslD8U2poM0DcVhCIoM6oOW4s60sqcJo";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"456445f5-085b-4dc3-9b25-c96efd7453f1";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"63";s:6:"Cookie";s:43:"ci_session=6lrc8c409amma3tkmlogs0mvj8usl24k";}
+
+01-May-2024 03:19 PM	http://api.risktick.local/mobile/loans/get_active_member_loans	a:1:{s:37:"/mobile/loans/get_active_member_loans";s:0:"";}	a:0:{}	s:121:"{
+    "loan_amount":"2910",
+    "loan_type_id":"2064",
+    "repayment_period":3,
+    "phone_number":"254748974489"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=pq8hrqjkadir4lcmujj6av05k49om0nv";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"0019088f-bd26-4fb9-8c2b-4672a8c618a8";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:3:"121";}

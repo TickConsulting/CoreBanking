@@ -1581,11 +1581,10 @@ class Mobile extends Mobile_Controller{
                 $_POST[$key] = $value;
             }
         }
-        $user_id = $this->input->post('user_id');
-        if($this->user = $this->ion_auth->get_user($user_id)){
+        $user_id = $this->input->post('id_number')?:0;
+        $phone = $this->input->post('phone_number')?:0;
+        if($this->user =$this->users_m->get_user_by_phone_or_id_number($phone,$user_id)){
             $this->ion_auth->update_last_login($this->user->id);
-            $group_id = $this->input->post('group_id');
-            if($this->group = $this->groups_m->get($group_id)){
                 if($this->member = $this->members_m->get_group_member_by_user_id($this->group->id,$this->user->id)){
                     if($this->member->active){
                         $today = time();
@@ -1667,13 +1666,7 @@ class Mobile extends Mobile_Controller{
                         'time' => time(),
                     );
                 }
-            }else{
-                $response = array(
-                    'status' => 5,
-                    'message' => 'Could not find group details',
-                    'time' => time(),
-                );
-            }
+            
         }else{
             $response = array(
                 'status' => 4,
