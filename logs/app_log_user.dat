@@ -1745,3 +1745,8 @@
     "repayment_period":3,
     "phone_number":"254748974489"
 }";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=i1v8l0004usv6qe2kmqjjmvr80i7kobh";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"d0f892f5-f063-45ad-9db5-69662ca05a01";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:3:"121";}
+
+02-May-2024 10:30 AM	http://api.risktick.local/mobile/loans/get_active_applicant_loans	a:1:{s:40:"/mobile/loans/get_active_applicant_loans";s:0:"";}	a:0:{}	s:41:"{
+   
+    "phone_number":"254748974489"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:217:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; CALLING_CODE=254; COUNTRY_CODE=KE; ci_session=821e48572ddd0e2bfa878f056635f5155ce27918; ci_session=ef0gip125gqbap1mc0oehir0374kn0n4";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"9a878ab0-7f44-4d4a-ae88-22b68db3e2b9";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"41";}

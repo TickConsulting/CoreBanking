@@ -1654,7 +1654,7 @@ class Mobile extends Mobile_Controller{
                     }else{
                         $response = array(
                             'status' => 0,
-                            'message' => 'Could not proceed. Account is suspended',
+                            'message' => 'Could not proceed. Account is suspended, Please contact support',
                             'time' => time(),
                         );
                     }
