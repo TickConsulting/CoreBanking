@@ -215,7 +215,8 @@ class Loan_types_m extends MY_Model{
 	function get_mobile_loan_types($group_id = 0){
     	$this->select_all_secure('loan_types');
     	$this->db->where($this->dx('is_deleted').' IS NULL',NULL,FALSE);
-		$this->db->where('('.$this->dx('enable_automatic_disbursements').'="" OR '.$this->dx('enable_automatic_disbursements').' IS NULL OR '.$this->dx('enable_automatic_disbursements').'="0")',NULL,FALSE);
+		// $this->db->where('('.$this->dx('enable_automatic_disbursements').'="" OR '.$this->dx('enable_automatic_disbursements').' IS NULL OR '.$this->dx('enable_automatic_disbursements').'="0")',NULL,FALSE);
+		$this->db->where($this->dx('enable_automatic_disbursements').'="1"',NULL,FALSE);	
     	return $this->db->get('loan_types')->result();
     }
     function get_admin_loan_types(){
