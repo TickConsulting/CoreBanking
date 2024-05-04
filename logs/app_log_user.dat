@@ -2162,3 +2162,249 @@
     "repayment_date":"19-04-2024",
     "deposit_method":2
 }";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=4lo9d1ljcmfvr8f6mpsp299a6k5r4grp";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"dc603175-71db-47e6-b41e-95d8ec048330";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:3:"111";}
+
+04-May-2024 04:00 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:86:"{
+    "loan_id": "14103",
+    "amount": "200",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=e9dgorkf572ad4sgeh4srbalv3b17tfo";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"c0519616-7222-40ba-9c62-f406ad909a10";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"86";}
+
+04-May-2024 04:01 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:86:"{
+    "loan_id": "14103",
+    "amount": "200",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=4f09jktbsgithejl4169ful2k264fi7o";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"9208aaf4-527f-46d3-9e1d-a81352e2f9db";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"86";}
+
+04-May-2024 04:02 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:86:"{
+    "loan_id": "14103",
+    "amount": "200",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=3rhn1d4eranfcfdp22es2v5bcnf9p4jd";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"6f0449db-e7d1-4009-8047-2c93d6b77925";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"86";}
+
+04-May-2024 04:03 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:86:"{
+    "loan_id": "14103",
+    "amount": "200",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=6hh5402mraun63grilfvvleq6cone8v7";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"47c42b75-50da-4720-a65b-4c34a3ff5ecf";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"86";}
+
+04-May-2024 04:04 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:86:"{
+    "loan_id": "14103",
+    "amount": "200",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=4ogruv8tm5mlvvae5447v1e9tc7oc5pq";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"7ee3bb23-83a0-409e-b25f-315a14d8595c";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"86";}
+
+04-May-2024 04:04 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:86:"{
+    "loan_id": "14103",
+    "amount": "200",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=ram3cl6rb7i62rpbsgg3b1uih9pbdm6e";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"9301a7e3-cd3d-4760-a910-bbacb2dfbbb8";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"86";}
+
+04-May-2024 04:04 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:86:"{
+    "loan_id": "14103",
+    "amount": "200",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=gb7plmq86kj2l2rifnt09lf0n6mv0mdp";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"87b6c730-f6ab-4f83-9eec-bc1d26be547b";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"86";}
+
+04-May-2024 04:05 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:86:"{
+    "loan_id": "14103",
+    "amount": "200",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=tn4h14qaqhkk8k3sl0usvcfbtj8rkpss";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"bf75d25c-5028-41f2-80ac-3b89b46e8c56";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"86";}
+
+04-May-2024 04:06 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:86:"{
+    "loan_id": "14113",
+    "amount": "200",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=9u8em5gfg5684c0csajv65rhiv7qhqos";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"1503c896-ce1a-4449-939b-5fdb041aaf4e";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"86";}
+
+04-May-2024 04:07 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:86:"{
+    "loan_id": "14113",
+    "amount": "200",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=tdhmlnm0i0r9dou7q8a876p4uvg9quag";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"1230cf27-b12d-4dbe-94c1-c8b76c57ca95";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"86";}
+
+04-May-2024 04:07 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:86:"{
+    "loan_id": "14103",
+    "amount": "200",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=46k5qakv0uoqpj1dri63dl11frs4n6kl";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"cdf2f13c-43df-4129-92f2-87d2479545ca";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"86";}
+
+04-May-2024 04:10 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:86:"{
+    "loan_id": "14113",
+    "amount": "200",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=1ecrqkt5ir958oulhvdp7c4r0pp177is";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"e7ed3267-14a6-468b-97b2-d7bc6739194c";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"86";}
+
+04-May-2024 04:11 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:86:"{
+    "loan_id": "14113",
+    "amount": "200",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=rn37u5eh2cgo0ms80pkt50nhvv9s2smi";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"79a11088-5d92-4efa-8108-f2b7ee99e681";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"86";}
+
+04-May-2024 04:12 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:86:"{
+    "loan_id": "14113",
+    "amount": "200",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=v5dfc015j3i0badojjhrdspu80mc9q3a";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"c17b5181-99b3-4bd7-8572-95811abca5d7";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"86";}
+
+04-May-2024 04:12 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:86:"{
+    "loan_id": "14113",
+    "amount": "200",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=td1eav5dohbnbfdj6m5j8v0jiqsateqe";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"3d919416-0aca-4670-ab45-5ace3fd7248d";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"86";}
+
+04-May-2024 04:14 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:86:"{
+    "loan_id": "14113",
+    "amount": "200",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=4tsqkvbn3d16fic69sulbau3bppt0t08";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"5ee3466e-5960-4c95-9893-91c2f72e3356";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"86";}
+
+04-May-2024 04:14 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:86:"{
+    "loan_id": "14113",
+    "amount": "200",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=agblq0hbv0as3fp7sqiohc0a04osa0t7";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"88001d56-92c6-48c6-89ef-1c203eaccd50";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"86";}
+
+04-May-2024 04:17 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:89:"{
+    "loan_id": "14103",
+    "amount": "200000",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=92nk45irk03tgfetn6usr20ulbktt1vp";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"ffeb54ac-e719-4c3e-ace8-72f96acd3859";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"89";}
+
+04-May-2024 04:18 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:89:"{
+    "loan_id": "14103",
+    "amount": "200000",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=gumherd4rj9rb56icsiqdm84har8dj0n";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"04054253-378a-4368-adf5-18387383499f";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"89";}
+
+04-May-2024 04:19 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:89:"{
+    "loan_id": "14103",
+    "amount": "200000",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=sock1qaig7a7boouu1idndiq7vhdikip";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"9a82b89f-511c-452e-b577-fa76001546f9";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"89";}
+
+04-May-2024 04:21 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:89:"{
+    "loan_id": "14113",
+    "amount": "200000",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=3fhd54n4fgj39f1jh7gaj8h9upqdf22f";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"e3b5bc9c-b5f7-42a1-9fa4-36767fd61e5d";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"89";}
+
+04-May-2024 04:22 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:84:"{
+    "loan_id": "14113",
+    "amount": "0",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=mlquhabvm87betl9mlsq294qr4nu1ee5";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"ad1999c1-7309-4d6f-90e5-9d3158a2bf20";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"84";}
+
+04-May-2024 04:23 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:84:"{
+    "loan_id": "14113",
+    "amount": "0",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=307asdk1j12cjavur3nrv9utit130f3p";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"37c29cf5-ce6c-45cf-b68c-ddfe906708ba";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"84";}
+
+04-May-2024 04:23 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:84:"{
+    "loan_id": "14113",
+    "amount": "0",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=erqt6cnr63eleekaic665q7mqdq3iubv";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"52146251-e95c-4027-9daf-0be119592f6d";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"84";}
+
+04-May-2024 04:24 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:84:"{
+    "loan_id": "14113",
+    "amount": "0",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=0f1f6dv06fg2b7qs8u6smt6s7chiqfes";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"c4bf810f-6988-45a0-817f-7f613c38a6ae";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"84";}
+
+04-May-2024 04:26 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:84:"{
+    "loan_id": "14113",
+    "amount": "0",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=s17lrlki28693c35b317sr8q9gsq31i4";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"f87b7726-9e32-47ea-88e4-29e753c730b3";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"84";}
+
+04-May-2024 04:27 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:86:"{
+    "loan_id": "14113",
+    "amount": "100",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=gfvrg6hp1fjvv9fdhf20rckupau5mgo0";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"3dd5eef5-c12e-46aa-a3eb-dd171d00a97d";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"86";}
+
+04-May-2024 04:29 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:88:"{
+    "loan_id": "14130",
+    "amount": "19251",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=4n73cs6f41as1n2nsssrg0gbcpcj388g";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"5b1324f9-5fa5-4d37-87a0-66dd18ead503";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"88";}
+
+04-May-2024 04:30 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:88:"{
+    "loan_id": "14130",
+    "amount": "19251",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=qp50a53s5uma48rk4d7v67mi5rvhshlj";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"7fa1c897-bdc1-4df7-ad09-bbd33c00c714";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"88";}
+
+04-May-2024 04:30 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:88:"{
+    "loan_id": "14130",
+    "amount": "19251",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=72cdbik8soavl6i7ueopvg8s8c1cltps";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"806345c3-1c7c-4782-bd47-7ade2502fdb4";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"88";}
+
+04-May-2024 04:30 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:88:"{
+    "loan_id": "14130",
+    "amount": "19251",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=72cdbik8soavl6i7ueopvg8s8c1cltps";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"cea3bc76-1f77-46a1-ad8f-563c2de7c5a8";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"88";}
+
+04-May-2024 04:30 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:88:"{
+    "loan_id": "14130",
+    "amount": "19251",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=5455qvje47pucuu9lecskko6gaqetuhi";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"2604763e-01e5-4c45-800a-06d05b37e2ff";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"88";}
+
+04-May-2024 04:30 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:88:"{
+    "loan_id": "14130",
+    "amount": "19251",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=5455qvje47pucuu9lecskko6gaqetuhi";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"2bb3a6a0-22cb-459d-a981-ba45f956945f";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"88";}
+
+04-May-2024 04:30 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:88:"{
+    "loan_id": "14130",
+    "amount": "19251",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=dd8vfcrqpg2cfk4d1dl5vcjifoc2ibc7";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"ae5b3b74-7da3-4eaf-9b59-2037efa3643c";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"88";}
+
+04-May-2024 04:30 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:88:"{
+    "loan_id": "14130",
+    "amount": "19251",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=dd8vfcrqpg2cfk4d1dl5vcjifoc2ibc7";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"b90f1f9f-3694-402f-8f2e-a48c5b16369f";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"88";}
+
+04-May-2024 04:30 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:88:"{
+    "loan_id": "14130",
+    "amount": "19251",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=ii7nhvq37q3he4sjhda9bsniefcbkimr";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"c33b8707-d4bb-4638-aeab-637a4f532500";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"88";}
+
+04-May-2024 04:30 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:88:"{
+    "loan_id": "14130",
+    "amount": "19251",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=ii7nhvq37q3he4sjhda9bsniefcbkimr";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"8070d904-8fe3-4317-9bcf-748eb29d8849";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"88";}
+
+04-May-2024 04:30 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:88:"{
+    "loan_id": "14130",
+    "amount": "19251",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=urd6c4k7hfnv3ssa70445kiv76qqurln";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"e6ecdc71-b573-408f-8593-e579a79ab684";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"88";}
+
+04-May-2024 04:30 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:88:"{
+    "loan_id": "14130",
+    "amount": "19251",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=urd6c4k7hfnv3ssa70445kiv76qqurln";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"70985000-db95-4196-a6d2-28657639483e";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"88";}
+
+04-May-2024 04:32 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:88:"{
+    "loan_id": "14130",
+    "amount": "19250",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=gcsfhoqi6u96270n3rbhtfsir9e05kfd";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"1238a9cb-9bfa-4c33-a759-42b80c35200e";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"88";}
+
+04-May-2024 04:32 PM	http://api.risktick.local/mobile/loans/record_loan_repayment	a:1:{s:35:"/mobile/loans/record_loan_repayment";s:0:"";}	a:0:{}	s:88:"{
+    "loan_id": "14130",
+    "amount": "19250",
+    "repayment_date":"19-04-2024"
+}";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:129:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; ci_session=2pub47q5c6g0vm7qvdired98r8dngd1l";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"925c219b-9d7b-429e-a03d-81cfe5f92f5b";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"88";}

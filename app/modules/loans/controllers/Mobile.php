@@ -2752,7 +2752,28 @@ class Mobile extends Mobile_Controller{
 								$send_email_notification =0;
 								$member = $this->members_m->get_group_member($loan->member_id,$loan->group_id);
 								$created_by = $this->members_m->get_group_member_by_user_id($loan->group_id,$member->user_id);
-                                
+                                $amount_payable=($this->loan_invoices_m->get_total_installment_loan_payable($loan->id));
+                                $amount_paid=($this->loan_repayments_m->get_loan_total_payments($loan->id));
+                                $balance= $amount_payable-$amount_paid;
+                                if($balance<=0 && $loan->is_fully_paid==1){
+                                    $response =array(
+										'status'=>0,
+										'message'=> "Sorry! This loan is fully Paid. Please Repay a different loan",
+										'info'=> "Please Show applicant  balances for pending loans only "
+                                    );  
+                                    echo json_encode(array('response'=>$response)); 
+                                    die; 
+                                }
+                                if(currency($amount)>round($balance)){
+                                    $response =array(
+										'status'=>0,
+										'message'=> "Sorry! Overpayments is not allowed due to compliance",
+										'maximum_amount_to_repay'=>round($balance),
+                                    );  
+                                    echo json_encode(array('response'=>$response)); 
+                                    die; 
+                                }
+
 								$description ="Mpesa Loan Repayment";
 								if($amount && $deposit_date && $member && $created_by){		
 								if($this->loan->record_loan_repayment($group_id,$deposit_date,$member,$loan->id,"mobile-",$deposit_method,$description,$amount,$send_sms_notification,$send_email_notification,$created_by)){
@@ -2770,7 +2791,7 @@ class Mobile extends Mobile_Controller{
 							else{
 								$response = array(
 									'status'=>0,
-									'message'=> "Missing Parameters"
+									'message'=> "Ensure loan_id,amount and repayment_date has valid values"
                                 );
 							}
 			}
@@ -2784,7 +2805,8 @@ class Mobile extends Mobile_Controller{
         else{
             $response = array(
                 'status'=>0,
-                'message'=> "Missing Parameters"
+                'message'=> "Ensure loan_id,amount and repayment_date has valid values",
+                'payload_sent'=>json_encode($_POST)
             ); 
         }
             
