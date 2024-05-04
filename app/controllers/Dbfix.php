@@ -1099,11 +1099,17 @@ $this->dbfix_m->add_column('payment_transactions',
                 'type' => 'blob'
             )
         ));
+        $this->dbfix_m->add_column('loan_types', array(
+            'limit_to_one_loan_application' => array(
+                'type' => 'blob'
+            )
+        ));
         $this->dbfix_m->add_column('loans', array(
             'enable_automatic_disbursements' => array(
                 'type' => 'blob'
             )
         ));
+        
         $this->dbfix_m->add_column('loan_types', array(
             'loan_processing_recovery_on' => array(
                 'type' => 'blob'

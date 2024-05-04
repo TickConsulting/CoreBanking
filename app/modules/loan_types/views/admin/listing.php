@@ -155,7 +155,15 @@
                                                 <?php else:?>
                                                     <span class="badge badge-success badge--wide"><?php echo translate('Disabled');?></span><br/>
                                                 <?php endif;?>
+
                                                 <br/>
+                                                <strong><?php echo translate('Allow borrowing  after repaying the existing loan');?> </strong>
+                                                <?php if($post->limit_to_one_loan_application):?>
+                                                    <span class="badge badge-success badge--wide"><?php echo translate('Enabled');?></span><br/>
+                                                   
+                                                <?php else:?>
+                                                    <span class="badge badge-success badge--wide"><?php echo translate('Disabled');?></span><br/>
+                                                <?php endif;?>
                                                 <strong><?php echo translate('Guarantors'); ?> </strong>
                                                 <?php if($post->enable_loan_guarantors == 1){
                                                     if($post->loan_guarantors_type == 1){

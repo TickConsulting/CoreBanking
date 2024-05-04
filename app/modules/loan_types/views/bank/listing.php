@@ -219,6 +219,18 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="m--align-right" nowrap>
+                                                        <strong><?php echo translate('Allow borrowing  after repaying the existing loan');?> </strong>
+                                                    </td>
+                                                    <td>:
+                                                        <?php if($post->limit_to_one_loan_application):?>
+                                                            <span class="m-badge m-badge--success m-badge--wide"><?php echo translate('Enabled');?></span><br/>
+                                                        <?php else:?>
+                                                            <span class="m-badge m-badge--success m-badge--wide"><?php echo translate('Disabled');?></span><br/>
+                                                        <?php endif;?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="m--align-right" nowrap>
                                                         <strong><?php echo translate('Guarantors'); ?> </strong>
                                                     </td>
                                                     <td>:

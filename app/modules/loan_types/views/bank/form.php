@@ -516,9 +516,44 @@
                                     </label>
                                 </div>
                             </div>
+                                </div>
                             <!-- end of automatic disbursements -->
+                         
+                     <!-- start for automatic disbursements -->
+                     <div class="col-lg-12 m-form__group-sub">
+                                <label class="form-control-label"><?php echo translate("Do you want to limit to one loan application for this product"); ?>?:</label>
+                                <div class="m-radio-inline">
+                                    <?php
+                                     if ($this->input->post('limit_to_one_loan_application') ? $this->input->post('limit_to_one_loan_application') : $post->limit_to_one_loan_application == 1) {
+                                        $limit_to_one_loan_application = TRUE;
+                                        $not_limit_to_one_loan_application = FALSE;
+                                    } else if ($this->input->post('limit_to_one_loan_application') ? $this->input->post('limit_to_one_loan_application') : $post->limit_to_one_loan_application == 0) {
+                                        $limit_to_one_loan_application = FALSE;
+                                        $not_limit_to_one_loan_application = TRUE;
+                                    } else {
+                                        $limit_to_one_loan_application = TRUE;
+                                        $not_limit_to_one_loan_application = FALSE;
+                                    }
+                                    ?>
+                                    <label class="m-radio m-radio--solid m-radio--brand">
+                                        <?php echo form_radio('limit_to_one_loan_application', 1, $limit_to_one_loan_application, ""); ?>
+                                        <?php echo translate('Yes'); ?>
+                                        <span></span>
+                                    </label>
+
+                                    <label class="m-radio m-radio--solid m-radio--brand">
+                                        <?php echo form_radio('limit_to_one_loan_application', 0, $not_limit_to_one_loan_application, ""); ?>
+                                        <?php echo translate('No'); ?>
+                                        <span></span>
+                                    </label>
+                                </div>
+                            
+                        
+                    </div>
                         </fieldset>
                     </div>
+                                </div>
+                    
                                 </div>
                     <?php echo form_hidden('loan_type_id',isset($post->id)?$post->id:'')?>
 

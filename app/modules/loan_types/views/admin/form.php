@@ -489,7 +489,7 @@
                                             </div>
                                             <div class="m-form__group form-group row pt-0 m--padding-10">
                      <!-- start for automatic disbursements -->
-                     <div class="col-lg-12 m-form__group-sub">
+                            <div class="col-lg-12 m-form__group-sub">
                                 <label class="form-control-label"><?php echo translate("Do you want to enable automatic disbursements"); ?>?:</label>
                                 <div class="m-radio-inline">
                                     <?php
@@ -517,9 +517,45 @@
                                     </label>
                                 </div>
                             </div>
+                                </div>
                             <!-- end of automatic disbursements -->
+                         <!-- start oflimit to one loan application -->
+                         <div class="m-form__group form-group row pt-0 m--padding-10">
+                         <div class="col-lg-12 m-form__group-sub">
+                                <label class="form-control-label"><?php echo translate("Do you want to limit applicants to one loan application at a time for this product"); ?>?:</label>
+                                <div class="m-radio-inline">
+                                    <?php
+                                    if ($this->input->post('limit_to_one_loan_application') ? $this->input->post('limit_to_one_loan_application') : $post->limit_to_one_loan_application == 1) {
+                                        $limit_to_one_loan_application = TRUE;
+                                        $not_limit_to_one_loan_application = FALSE;
+                                    } else if ($this->input->post('limit_to_one_loan_application') ? $this->input->post('limit_to_one_loan_application') : $post->limit_to_one_loan_application == 0) {
+                                        $limit_to_one_loan_application = FALSE;
+                                        $not_limit_to_one_loan_application = TRUE;
+                                    } else {
+                                        $limit_to_one_loan_application = TRUE;
+                                        $not_limit_to_one_loan_application = FALSE;
+                                    }
+                                    ?>
+                                    <label class="m-radio m-radio--solid m-radio--brand">
+                                        <?php echo form_radio('limit_to_one_loan_application', 1, $limit_to_one_loan_application, ""); ?>
+                                        <?php echo translate('Yes'); ?>
+                                        <span></span>
+                                    </label>
+
+                                    <label class="m-radio m-radio--solid m-radio--brand">
+                                        <?php echo form_radio('limit_to_one_loan_application', 0, $not_limit_to_one_loan_application, ""); ?>
+                                        <?php echo translate('No'); ?>
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                                
+                            <!-- end of limit to one  loan application -->
                        
+                
                     </div>
+                    
+                     
                                         </fieldset>
                                     </div>
 

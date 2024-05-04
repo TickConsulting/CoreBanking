@@ -55,7 +55,7 @@
  * NOTE: If you change these, also change the error_reporting() code below
  */
 
-	$ip_addresses = array(
+	$ip_addresses = array( 
 		"197.248.208.191",
 		"102.7.105.10"
 		// "105.163.0.64"
