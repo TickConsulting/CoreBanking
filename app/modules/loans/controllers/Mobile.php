@@ -180,6 +180,23 @@ class Mobile extends Mobile_Controller{
             'rules' => 'xss_clean|trim',
         ),
     );
+    public $loan_repayment_rules = array(
+        array(
+            'field' => 'loan_id',
+            'label' => 'Loan ID',
+            'rules' => 'required|xss_clean|trim|numeric|callback__loan_exists',
+        ),
+        array(
+            'field' => 'repayment_date',
+            'label' => 'Repayment Date',
+            'rules' => 'required|date|xss_clean|trim',
+        ),
+        array(
+            'field' => 'amount',
+            'label' => 'Amount',
+            'rules' => 'required|xss_clean|trim|currency',
+        )
+    );
 
     protected $loan_type;
 
@@ -193,7 +210,16 @@ class Mobile extends Mobile_Controller{
             return FALSE;
         }
     }
-
+    function _loan_exists(){
+        $loan_id = $this->input->post('loan_id');
+         
+        if($this->loans_m->get($loan_id)){
+            return TRUE;
+        }else{
+            $this->form_validation->set_message('_loan_exists','loan selected does not exist our records');
+            return FALSE;
+        }
+    }
     function _valid_account_id(){
         $account_id = $this->input->post('account_id');
         $group_id = $this->input->post('group_id');
@@ -2686,6 +2712,99 @@ class Mobile extends Mobile_Controller{
         }    
         echo json_encode(array('response'=>$response));
     }
+    function record_loan_repayment(){
+        foreach ($this->request as $key => $value) {
+            if(preg_match('/phone/', $key)){
+                $_POST[$key] = valid_phone($value);
+            }else{
+                $_POST[$key] = $value;
+            }
+        }
+        $post = new StdClass();
+       
+        $response = array();
+        $this->form_validation->set_rules($this->loan_repayment_rules);
+      
+        if($this->form_validation->run()){
 
-    
-}?>
+			$loan_id=($this->input->post("loan_id"));
+			$amount=valid_currency($this->input->post("amount"));
+			$repayment_date=strtotime($this->input->post("repayment_date"));
+			$deposit_method=1;
+			$description=($this->input->post("description"));
+			if($loan_id && $amount && $repayment_date && $deposit_method){	 
+				$successful=0;
+				$loans_found=0;
+				$loans_not_found=0;
+				$unsuccessful=0;
+				$successful_payment_entry_count=0;
+				$unsuccessful_payment_entry_count=0;
+				$parameters_missing=FALSE;
+				$loan=$this->loans_m->get($loan_id);
+				 
+				if($loan){	
+					$amount=currency($amount);
+						$loans_found++;
+								$group_id=$loan->group_id;
+								$deposit_date =$repayment_date ; 
+								$send_sms_notification =0;
+								$deposit_method =$deposit_method;
+								$send_email_notification =0;
+								$member = $this->members_m->get_group_member($loan->member_id,$loan->group_id);
+								$created_by = $this->members_m->get_group_member_by_user_id($loan->group_id,$member->user_id);
+                                
+								$description ="Mpesa Loan Repayment";
+								if($amount && $deposit_date && $member && $created_by){		
+								if($this->loan->record_loan_repayment($group_id,$deposit_date,$member,$loan->id,"mobile-",$deposit_method,$description,$amount,$send_sms_notification,$send_email_notification,$created_by)){
+									$response =array(
+										'status'=>1,
+										'message'=> "Recorded successfully"
+                                    );
+								}else{
+									$response = array(
+										'status'=>0,
+										'message'=> "Loan Not recorded"
+                                    );
+								}
+							}
+							else{
+								$response = array(
+									'status'=>0,
+									'message'=> "Missing Parameters"
+                                );
+							}
+			}
+			else{
+				$response = array(
+					'status'=>0,
+					'message'=> "Loan not found"
+                );
+			}
+        }
+        else{
+            $response = array(
+                'status'=>0,
+                'message'=> "Missing Parameters"
+            ); 
+        }
+            
+        }else{
+         
+            $post = array();
+            $form_errors = $this->form_validation->error_array();
+            
+            foreach ($form_errors as $key => $value) {
+                $post[$key] = $value;
+            }
+            $response = array(
+                'status' => 0,
+                'time' => time(),
+                'message' => 'Form validation failed',
+                'validation_errors' => $post
+            );
+		
+        }
+        echo json_encode(array('response'=>$response));
+    }
+  
+}

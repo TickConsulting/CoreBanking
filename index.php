@@ -56,7 +56,8 @@
  */
 
 	$ip_addresses = array(
-		"197.248.208.191"
+		"197.248.208.191",
+		"102.7.105.10"
 		// "105.163.0.64"
 	);
 
@@ -66,7 +67,7 @@
 	}else{
 		define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'production');	
 	}
-	// define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+	// define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'production');
 
 	define('IPADDESSES',$ip_addresses);
 /*

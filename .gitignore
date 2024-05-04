@@ -68,3 +68,4 @@ uploads/*
 
 #raw image files
 /raw
+logs/*
