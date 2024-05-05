@@ -758,6 +758,7 @@ class Bank extends Bank_Controller{
     function edit($id=0){
     	$id OR redirect('groups/loan_types/listing');
     	$post = $this->loan_types_m->get($id);
+		 
     	if(!$post){
     		$this->session->set_flashdata('error','Loan type not available');
     		redirect('groups/loan_types/listing');

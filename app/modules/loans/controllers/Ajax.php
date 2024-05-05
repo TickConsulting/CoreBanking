@@ -81,6 +81,7 @@ class Ajax extends Ajax_Controller{
         $this->load->model('accounts/accounts_m');
         $this->load->model('contributions/contributions_m');
         $this->load->model('reports/reports_m');
+        $this->load->model('loan_types/loan_types_m');
         $this->load->library('loan');
     }
 
@@ -1529,7 +1530,31 @@ class Ajax extends Ajax_Controller{
         }
         echo json_encode($response);
     }
-
+    function _member_has_ongoing_loans($member_id=0){
+        
+        //check ongoing member loans
+        $base_where = array('member_id'=>$member_id,'is_fully_paid'=>0);
+        $ongoing_member_loans = $this->loans_m->get_many_by($base_where);
+        $successful_checks=0;
+        if($ongoing_member_loans){
+            foreach($ongoing_member_loans as $ongoing_member_loan){
+                 $loan_type=$this->loan_types_m->get($ongoing_member_loan->loan_type_id);
+               if($loan_type && $loan_type->limit_to_one_loan_application){
+                $successful_checks++;
+               }
+            }   
+            if($successful_checks){
+                 
+                return TRUE;
+            }
+            else{
+                
+                return FALSE;
+            }
+        }else{
+            return FALSE;   
+        }
+    }
     function create_withdrawal_request(){
         $post = new StdClass();
        
@@ -1553,6 +1578,15 @@ class Ajax extends Ajax_Controller{
             $guaranteed_amount = $this->input->post('guaranteed_amounts');
             $guarantor_comment = $this->input->post('guarantor_comments');
             $guarantors= array();
+            if($this->_member_has_ongoing_loans($member_id)){
+                $response = array(
+                    'status' => 0,
+                    'message' => 'Applicant has an ongoing mobi loan',
+                );
+                echo json_encode($response); 
+                die;
+            }
+
             foreach ($guarantor_id as $key => $value) {
                 if($value){
                     $guarantors['guarantor_id'][] = $value;

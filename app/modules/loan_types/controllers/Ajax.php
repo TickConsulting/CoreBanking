@@ -1186,6 +1186,7 @@ class Ajax extends Ajax_Controller{
 	    				'grace_period' => $this->input->post('grace_period')?:1,
 	    				'enable_loan_fines' => $this->input->post('enable_loan_fines')?:0,
 						'enable_automatic_disbursements' => $this->input->post('enable_automatic_disbursements')?:0,
+						'limit_to_one_loan_application' => $this->input->post('limit_to_one_loan_application')?:0,
 	    				'enable_outstanding_loan_balance_fines' => $this->input->post('enable_outstanding_loan_balance_fines')?:0,
 	    				'enable_loan_processing_fee' => $this->input->post('enable_loan_processing_fee')?:0,
 	    				'enable_loan_fine_deferment' => $this->input->post('enable_loan_fine_deferment')?:0,

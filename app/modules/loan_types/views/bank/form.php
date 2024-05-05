@@ -191,7 +191,7 @@
 
                                         <div class="m-form__group-sub m-input--air col-sm-4 m-input--air">
                                             <label><?php echo translate('Fixed Amount Fine Frequecy On');?><span class="required">*</span></label>
-                                            <?php echo form_dropdown('fixed_amount_fine_frequency_on',array(''=>'--Select  the fine frequency On--')+translate($fixed_amount_fine_frequency_on),$this->input->post('fixed_amount_fine_frequency_on')?$this->input->post('fixed_amount_fine_frequency_on'):$post->fixed_amount_fine_frequency,'class="form-control m-select2 fixed_amount_fine_frequency_on" id = "fixed_amount_fine_frequency_on"  ') ?>
+                                            <?php echo form_dropdown('fixed_amount_fine_frequency_on',array(''=>'--Select  the fine frequency On--')+translate($fixed_amount_fine_frequency_on),$this->input->post('fixed_amount_fine_frequency_on')?$this->input->post('fixed_amount_fine_frequency_on'):$post->fixed_amount_fine_frequency_on,'class="form-control m-select2 fixed_amount_fine_frequency_on" id = "fixed_amount_fine_frequency_on"  ') ?>
                                         </div>
                                     </div>
                                 </div>
