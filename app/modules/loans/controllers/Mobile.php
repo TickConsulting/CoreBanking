@@ -2798,7 +2798,7 @@ class Mobile extends Mobile_Controller{
                                     echo json_encode(array('response'=>$response)); 
                                     die; 
                                 }
-                                if(currency($amount)>round($balance)){
+                                if(currency($amount)>($balance)){
                                     $response =array(
 										'status'=>0,
 										'message'=> "Sorry! Overpayments is not allowed due to compliance",

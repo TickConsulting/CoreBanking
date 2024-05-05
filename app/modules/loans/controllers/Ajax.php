@@ -82,6 +82,8 @@ class Ajax extends Ajax_Controller{
         $this->load->model('contributions/contributions_m');
         $this->load->model('reports/reports_m');
         $this->load->model('loan_types/loan_types_m');
+        $this->load->model('loan_invoices/loan_invoices_m');
+        $this->load->model('loan_repayments/loan_repayments_m');
         $this->load->model('members/members_m');
         $this->load->library('loan');
     }
@@ -198,7 +200,12 @@ class Ajax extends Ajax_Controller{
         }
     }
 
-    
+    function calculate_loan_balance($loan_id=0){
+        $amount_payable=($this->loan_invoices_m->get_total_installment_loan_payable($loan_id));
+        $amount_paid=($this->loan_repayments_m->get_loan_total_payments($loan_id));
+        $balance= ($amount_payable-$amount_paid);
+        return number_to_currency($balance);
+    }
 
     function get_loans_listing(){
         $from = strtotime($this->input->get('from'))?:'';
@@ -246,8 +253,11 @@ class Ajax extends Ajax_Controller{
                                     translate('Loan Type')
                                 .'</th>
                                 <th nowrap class=\'text-right\'>'.
-                                    translate('Amount').' ('.$this->group_currency.')
+                                    translate('Amount').' (KES)
                                 </th>  
+                                <th nowrap class=\'text-right\'>'.
+                                translate('Balance').' (KES)
+                            </th> 
                                 <th nowrap class="text-right">'.
                                     translate('Disbursement On')
                                 .'</th>
@@ -289,6 +299,9 @@ class Ajax extends Ajax_Controller{
                                         <td scope="row" class="text-right align-middle">'.
                                             number_to_currency($post->loan_amount).'
                                         </td>
+                                        <td scope="row" class="text-right align-middle">'.
+                                        calculate_loan_balance($post->id).'
+                                    </td>
                                         <td scope="row" class="text-right align-middle">'.
                                             timestamp_to_date($post->disbursement_date).'
                                         </td>
@@ -416,7 +429,10 @@ class Ajax extends Ajax_Controller{
                                     translate('Loan Product')
                                 .'</th>
                                 <th nowrap class=\'text-right\'>'.
-                                    translate('Amount').' ('.$this->group_currency.')
+                                    translate('Amount').' (KES)
+                                </th>  
+                                <th nowrap class=\'text-right\'>'.
+                                    translate('Balance').' (KES)
                                 </th>  
                                 <th nowrap class="text-right">'.
                                     translate('Disbursement On')
@@ -458,6 +474,9 @@ class Ajax extends Ajax_Controller{
                                         '</td>
                                         <td scope="row" class="text-right align-middle">'.
                                             number_to_currency($post->loan_amount).'
+                                        </td>
+                                        <td scope="row" class="text-right align-middle">'.
+                                            $this->calculate_loan_balance($post->id).'
                                         </td>
                                         <td scope="row" class="text-right align-middle">'.
                                             timestamp_to_date($post->disbursement_date).'

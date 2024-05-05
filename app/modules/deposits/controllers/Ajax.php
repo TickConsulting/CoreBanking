@@ -57,6 +57,8 @@ class Ajax extends Ajax_Controller
         $this->load->model('income_categories/income_categories_m');
         $this->load->model('stocks/stocks_m');
         $this->load->model('assets/assets_m');
+        $this->load->model('loan_invoices/loan_invoices_m');
+        $this->load->model('loan_repayments/loan_repayments_m');
         $this->load->model('money_market_investments/money_market_investments_m');
         $this->load->library('transactions');
         $this->load->library('loan');
@@ -623,6 +625,7 @@ class Ajax extends Ajax_Controller
         // if(isset($_GET) && !$this->input->post('submit') && $this->input->get('member_id')){
         //     $loans_options = $this->loans_m->get_active_member_loans_option($this->input->get('member_id'));
         // }
+        
         if ($posts) {
             if (empty($posts)) {
                 $response = array(
@@ -747,6 +750,7 @@ class Ajax extends Ajax_Controller
 
                 if ($entries_are_valid) {
                     $successful_contribution_payment_entry_count = 0;
+                    $overpayments = 0;
                     $unsuccessful_contribution_payment_entry_count = 0;
                     if (isset($posts['deposit_dates'])) {
                         $count = count($posts['deposit_dates']);
@@ -759,11 +763,21 @@ class Ajax extends Ajax_Controller
                                 $member = $this->members_m->get_group_member($posts['members'][$i], '');
                                 $created_by = $this->members_m->get_group_member_by_user_id('', $this->user->id);
                                 $description = isset($posts['deposit_descriptions'][$i]) ? xss_clean_input($posts['deposit_descriptions'][$i]) : '';
+                                $amount_payable=($this->loan_invoices_m->get_total_installment_loan_payable($posts['loans'][$i]));
+                                $amount_paid=($this->loan_repayments_m->get_loan_total_payments($posts['loans'][$i]));
+                                $balance= $amount_payable-$amount_paid;
+                  
+                                if(currency($amount)>($balance)){
+                                    $overpayments++;
+
+                                }
+                                else{
                                 if ($this->loan->record_loan_repayment('', $deposit_date, $member, $posts['loans'][$i], $posts['accounts'][$i], $posts['deposit_methods'][$i], $description, $amount, $send_sms_notification, $send_email_notification, $created_by)) {
                                     $successful_contribution_payment_entry_count++;
                                 } else {
                                     $unsuccessful_contribution_payment_entry_count++;
-                                }
+                                }   
+                            }
                             endif;
                         endfor;
                     }
@@ -784,16 +798,26 @@ class Ajax extends Ajax_Controller
                     }
                     if ($unsuccessful_contribution_payment_entry_count) {
                         if ($unsuccessful_contribution_payment_entry_count == 1) {
-                            $response = array(
-                                'status' => 0,
-                                'message' => $unsuccessful_contribution_payment_entry_count . ' loan repayment was not successfully recorded. ',
-                            );
+
+                            $response =array(
+                                'status'=>0,
+                                'message'=> "Overpayments is not allowed due to compliance",
+                                 
+                            );  
                         } else {
                             $response = array(
                                 'status' => 0,
                                 'message' => $unsuccessful_contribution_payment_entry_count . ' loan repayments were not successfully recorded. ',
                             );
                         }
+                    }
+                    if($overpayments){
+                        $this->session->set_flashdata('error', 'Overpayments is not allowed due to compliance');
+                        $response =array(
+                            'status'=>0,
+                            'message'=> "Overpayments is not allowed due to compliance",
+                             
+                        );  
                     }
                 } else {
                     $response = array(
