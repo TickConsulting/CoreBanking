@@ -82,6 +82,7 @@ class Ajax extends Ajax_Controller{
         $this->load->model('contributions/contributions_m');
         $this->load->model('reports/reports_m');
         $this->load->model('loan_types/loan_types_m');
+        $this->load->model('members/members_m');
         $this->load->library('loan');
     }
 
@@ -1579,9 +1580,10 @@ class Ajax extends Ajax_Controller{
             $guarantor_comment = $this->input->post('guarantor_comments');
             $guarantors= array();
             if($this->_member_has_ongoing_loans($member_id)){
+                $member=$this->members_m->get_group_member($member_id);
                 $response = array(
                     'status' => 0,
-                    'message' => 'Applicant has an ongoing mobi loan',
+                    'message' => $member->first_name.' '.$member->last_name.' has an ongoing mobi loan',
                 );
                 echo json_encode($response); 
                 die;
