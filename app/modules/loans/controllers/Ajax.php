@@ -395,7 +395,7 @@ class Ajax extends Ajax_Controller{
         );
         $account_options = $this->accounts_m->get_group_account_options(FALSE);
         $total_rows = $this->loans_m->count_all_group_loans($filter_parameters);
-        $pagination = create_pagination('bank/loans/listing/pages', $total_rows,50,5,TRUE);
+        $pagination = create_pagination('bank/loans/listing/pages', $total_rows,10,5,TRUE);
         $loan_type_options = $this->loan_types_m->get_options();
         $posts = $this->loans_m->limit($pagination['limit'])->get_group_loans($filter_parameters);
         if(!empty($posts)){
