@@ -1068,7 +1068,7 @@ class Safaricom extends Public_Controller{
                                 }
                             }else{
                                 $response=array(
-                                    "ResultCode"=>0,
+                                    "ResultCode"=>1,
                                     "ResultDesc"=>"Duplicate entry"
                                 );
                                 file_put_contents('logs/c2b_validation_response_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
