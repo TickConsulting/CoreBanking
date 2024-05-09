@@ -204,6 +204,7 @@ class Ajax extends Ajax_Controller{
         $amount_payable=($this->loan_invoices_m->get_total_installment_loan_payable($loan_id));
         $amount_paid=($this->loan_repayments_m->get_loan_total_payments($loan_id));
         $balance= ($amount_payable-$amount_paid);
+        $balance=isset($balance) && $balance>=0?$balance:0;
         return number_to_currency($balance);
     }
 
