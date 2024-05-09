@@ -996,40 +996,29 @@ class Safaricom extends Public_Controller{
         if(isset($_REQUEST))
         {
             $file = file_get_contents('php://input');
-            $headers = 'From: C2B Safaricom Validation Files <notifications@chamasoft.com>' . "\r\n" .
-                    'Reply-To: billing@chamasoft.com' . "\r\n".
-                    'X-Mailer: PHP/' . phpversion();
+            $body = json_decode($file);
+           
             file_put_contents('logs/c2b_validation_file.txt',"\n".date("d-M-Y h:i A").$file,FILE_APPEND);
-            @mail('edwin.njoroge@digitalvision.co.ke','C2B Validation File',$file,$headers);
+         
             $server_ip = $_SERVER['REMOTE_ADDR'];
            if($file){
-                if($_SERVER['SERVER_PORT']=='4043'){
-                    $response = preg_replace("/(<\/?)(\w+):([^>]*>)/", "$1$2$3", $file);
-                    $xml = new SimpleXMLElement($response);
-                    $body = $xml->soapenvBody->ns1C2BPaymentValidationRequest;
+                   
                     if($body->TransID && $body->TransAmount){
                         $transaction_id = trim($body->TransID);
                         $reference_number = trim($body->BillRefNumber);
                         $transaction_date = trim($body->TransTime);
                         $transaction_amount = trim($body->TransAmount);
                         $transaction_currency = 'KES';
-                        $transaction_type = trim($body->TransType);
+                        $transaction_type = trim($body->TransactionType);
                         $transaction_particulars = 'MPESA Transaction';
                         $phone = trim($body->MSISDN);
                         $debit_account = trim($body->InvoiceNumber)?:trim($body->BillRefNumber);
-                        $customer_info = $body->KYCInfo;
+                        $customer_info = $body->FirstName.' '.$body->MiddleName.' '.$body->LastName ;
                         $shortcode = $body->BusinessShortCode;
-
-                        if($customer_info){
-                            $customer_name = '';
-                            foreach ($customer_info as $customer) {
-                                $customer_name.=$customer->KYCValue.' ';
-                            }
-                        }
-                        $debit_customer = $customer_name;
+                        $debit_customer = $customer_info;
                         if($transaction_id && $debit_account && $transaction_amount && $transaction_date && $transaction_currency){
                             if(!$this->safaricom_m->is_transaction_dublicate($transaction_id)){
-                                if($this->safaricom_m->is_account_number_recognized($debit_account)){
+                                if($this->safaricom_m->is_loan_number_recognized($debit_account)){
                                     $transaction_date = strtotime($transaction_date);
                                     $input_data = array(
                                             'transaction_id' => $transaction_id,
@@ -1047,57 +1036,44 @@ class Safaricom extends Public_Controller{
                                             'created_on' => time(),
                                         );
                                     $id = $this->safaricom_m->insert_c2b($input_data);
+                                   
                                     if($id){
-                                        header("Content-type: text/xml");
-                                        echo '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:c2b="http://cps.huawei.com/cpsinterface/c2bpayment">
-                                            <soapenv:Header/>
-                                                <soapenv:Body>
-                                                    <c2b:C2BPaymentValidationResult>
-                                                        <ResultCode>0</ResultCode>
-                                                        <ResultDesc>Service processing successful. Awaiting Confirmation</ResultDesc>
-                                                        <ThirdPartyTransID>'.$transaction_id.'</ThirdPartyTransID>
-                                                    </c2b:C2BPaymentValidationResult>
-                                                </soapenv:Body>
-                                            </soapenv:Envelope>';
+                                        $response=array(
+                                            "ResultCode"=>0,
+                                            "ResultDesc"=>"Service processing successful. Awaiting Confirmation"
+                                        );
+                                 file_put_contents('logs/c2b_validation_response_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+
+                                       echo json_encode($response);
                                     }else{
-                                        $status = 5;
-                                        header("Content-type: text/xml");
-                                        echo '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:c2b="http://cps.huawei.com/cpsinterface/c2bpayment">
-                                            <soapenv:Header/>
-                                                <soapenv:Body>
-                                                    <c2b:C2BPaymentValidationResult>
-                                                        <ResultCode>1</ResultCode>
-                                                        <ResultDesc>Error processing the entry</ResultDesc>
-                                                        <ThirdPartyTransID>123123</ThirdPartyTransID>
-                                                    </c2b:C2BPaymentValidationResult>
-                                                </soapenv:Body>
-                                            </soapenv:Envelope>';
+                                        
+                                         $response=array(
+                                            "ResultCode"=>1,
+                                            "ResultDesc"=>"Error processing-insert the entry"
+                                        );
+                                    file_put_contents('logs/c2b_validation_response_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+
+                                       echo json_encode($response);
+
                                     }
-                                }else{
-                                    header("Content-type: text/xml");
-                                    echo '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:c2b="http://cps.huawei.com/cpsinterface/c2bpayment">
-                                        <soapenv:Header/>
-                                            <soapenv:Body>
-                                                <c2b:C2BPaymentValidationResult>
-                                                    <ResultCode>1</ResultCode>
-                                                    <ResultDesc>Account Number Not Recognized</ResultDesc>
-                                                    <ThirdPartyTransID>'.$debit_account.'</ThirdPartyTransID>
-                                                </c2b:C2BPaymentValidationResult>
-                                            </soapenv:Body>
-                                        </soapenv:Envelope>';
+                                }else{  
+
+                                    $response=array(
+                                            "ResultCode"=>1,
+                                            "ResultDesc"=>"This loan is not recognized"
+                                        );
+                                 file_put_contents('logs/c2b_validation_response_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+
+                                       echo json_encode($response);
                                 }
                             }else{
-                                header("Content-type: text/xml");
-                                echo '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:c2b="http://cps.huawei.com/cpsinterface/c2bpayment">
-                                    <soapenv:Header/>
-                                        <soapenv:Body>
-                                            <c2b:C2BPaymentValidationResult>
-                                                <ResultCode>1</ResultCode>
-                                                <ResultDesc>Duplicate entry</ResultDesc>
-                                                <ThirdPartyTransID>'.$transaction_id.'</ThirdPartyTransID>
-                                            </c2b:C2BPaymentValidationResult>
-                                        </soapenv:Body>
-                                    </soapenv:Envelope>';
+                                $response=array(
+                                    "ResultCode"=>0,
+                                    "ResultDesc"=>"Duplicate entry"
+                                );
+                                file_put_contents('logs/c2b_validation_response_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+
+                               echo json_encode($response);
                             }
                         }
                         else{
@@ -1114,55 +1090,30 @@ class Safaricom extends Public_Controller{
                             if(!$transaction_date){
                                 $mail.=' Date empty '.$transaction_amount;
                             }
-                            header("Content-type: text/xml");
-                            echo '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:c2b="http://cps.huawei.com/cpsinterface/c2bpayment">
-                                <soapenv:Header/>
-                                    <soapenv:Body>
-                                        <c2b:C2BPaymentValidationResult>
-                                            <ResultCode>1</ResultCode>
-                                            <ResultDesc>Some parameter are missing</ResultDesc>
-                                            <ThirdPartyTransID>123123</ThirdPartyTransID>
-                                        </c2b:C2BPaymentValidationResult>
-                                    </soapenv:Body>
-                                </soapenv:Envelope>';
+                            $response=array(
+                                "ResultCode"=>1,
+                                "ResultDesc"=>"Some parameter are missing"
+                            );
+                            file_put_contents('logs/c2b_validation_response_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+
+                           echo json_encode($response);
                         }
                     }else{
-                        $mail = ' REMOTE_ADDR '.$server_ip.' Server Address '.$_SERVER['SERVER_ADDR'].' Unable to decode';
-                        header("Content-type: text/xml");
-                        echo '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:c2b="http://cps.huawei.com/cpsinterface/c2bpayment">
-                            <soapenv:Header/>
-                                <soapenv:Body>
-                                    <c2b:C2BPaymentValidationResult>
-                                        <ResultCode>1</ResultCode>
-                                        <ResultDesc>Parameters missing</ResultDesc>
-                                    </c2b:C2BPaymentValidationResult>
-                                </soapenv:Body>
-                            </soapenv:Envelope>';
+                        $response=array(
+                            "ResultCode"=>1,
+                            "ResultDesc"=>"Some parameter are missing"
+                        );
+                        file_put_contents('logs/c2b_validation_response_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+
+                       echo json_encode($response);
                     }
-               }else{
-                header("Content-type: text/xml");
-                    echo '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:c2b="http://cps.huawei.com/cpsinterface/c2bpayment">
-                            <soapenv:Header/>
-                                <soapenv:Body>
-                                    <c2b:C2BPaymentValidationResult>
-                                        <ResultCode>1</ResultCode>
-                                        <ResultDesc>Wrong Port '.$_SERVER['SERVER_PORT'].'</ResultDesc>
-                                        <ThirdPartyTransID>123123</ThirdPartyTransID>
-                                    </c2b:C2BPaymentValidationResult>
-                                </soapenv:Body>
-                            </soapenv:Envelope>';
-               }
+               
             }else{
-                header("Content-type: text/xml");
-                echo '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:c2b="http://cps.huawei.com/cpsinterface/c2bpayment">
-                        <soapenv:Header/>
-                            <soapenv:Body>
-                                c2b:C2BPaymentValidationResult>
-                                        <ResultCode>1</ResultCode>
-                                        <ResultDesc>No file sent</ResultDesc>
-                                    </c2b:C2BPaymentValidationResult>
-                            </soapenv:Body>
-                        </soapenv:Envelope>';
+                $response=array(
+                    "ResultCode"=>0,
+                    "ResultDesc"=>"Some parameter are missing"
+                );
+               echo json_encode($response);
             }
         }
     }
@@ -1170,13 +1121,14 @@ class Safaricom extends Public_Controller{
     function confirmation(){
         if($_REQUEST){
             $file = file_get_contents('php://input');
+            file_put_contents('logs/c2b_confirmation_file.txt',"\n".date("d-M-Y h:i A").$file,FILE_APPEND);
             $headers = 'From: C2B Safaricom Validation Files <notifications@chamasoft.com>' . "\r\n" .
                     'Reply-To: billing@chamasoft.com' . "\r\n".
                     'X-Mailer: PHP/' . phpversion();
-            file_put_contents('logs/c2b_confirmation_file.txt',"\n".date("d-M-Y h:i A").$file,FILE_APPEND);
+            
             @mail('edwin.njoroge@digitalvision.co.ke','C2B Confirmation File',$file,$headers);
             if($file){
-                if($_SERVER['SERVER_PORT']=='4043'){
+               
                     $response = preg_replace("/(<\/?)(\w+):([^>]*>)/", "$1$2$3", $file);
                     $xml = new SimpleXMLElement($response);
                     $body = $xml->soapenvBody->ns1C2BPaymentConfirmationRequest;
@@ -1193,7 +1145,7 @@ class Safaricom extends Public_Controller{
                                   <c2b:C2BPaymentConfirmationResult>0 Success</c2b:C2BPaymentConfirmationResult>
                                </soapenv:Body>
                             </soapenv:Envelope>';
-                            $this->send_c2b_notifications();
+                            // $this->send_c2b_notifications();
                         }else{
                             header("Content-type: text/xml");
                              echo '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:c2b="http://cps.huawei.com/cpsinterface/c2bpayment">
@@ -1212,15 +1164,7 @@ class Safaricom extends Public_Controller{
                            </soapenv:Body>
                         </soapenv:Envelope>';
                     }
-                }else{
-                    header("Content-type: text/xml");
-                    echo '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:c2b="http://cps.huawei.com/cpsinterface/c2bpayment">
-                           <soapenv:Header/>
-                           <soapenv:Body>
-                              <c2b:C2BPaymentConfirmationResult>C2B Port Error '.$_SERVER['SERVER_PORT'].'</c2b:C2BPaymentConfirmationResult>
-                           </soapenv:Body>
-                        </soapenv:Envelope>';
-                }
+                
             }else{
                 header("Content-type: text/xml");
                 echo '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:c2b="http://cps.huawei.com/cpsinterface/c2bpayment">
@@ -2733,12 +2677,12 @@ class Safaricom extends Public_Controller{
 
     function c2b_payment_validation(){
         $file = file_get_contents('php://input');
-        @mail('geoffrey.githaiga@digitalvision.co.ke','C2B Payment validation URL',$file,$this->headers);
+        file_put_contents('logs/c2b_validation_file.txt',"\n".date("d-M-Y h:i A").$file,FILE_APPEND);
+        @mail('geofrey.ongidi@digitalvision.co.ke','C2B Payment validation URL',$file,$this->headers);
         header("Content-type:text/xml");
         if ($file){
-            $response = preg_replace("/(<\/?)(\w+):([^>]*>)/", "$1$2$3", $file);
-            $xml = new SimpleXMLElement($response);
-            $body = $xml->soapenvBody->ns1C2BPaymentValidationRequest;
+            $response =  json_decode($file);
+            
             if($body){
                 $transaction_id = trim($body->TransID);
                 $reference_number = trim($body->BillRefNumber);
@@ -3183,6 +3127,8 @@ class Safaricom extends Public_Controller{
     function record_direct_account_payment(){ // check record_direct_account_payment
         $response = array();
         $file = file_get_contents('php://input');
+        file_put_contents('logs/c2b_confirmation_file.txt',"\n".date("d-M-Y h:i A").$file,FILE_APPEND);
+
         if($file){
             $result = json_decode($file);
             if($result){
@@ -3195,19 +3141,12 @@ class Safaricom extends Public_Controller{
                 }
                 $update_id = $this->safaricom_m->update_c2b_by_transaction_id($transaction_id,$organization_balance,$transaction_type,$transaction_date);
                 if($update_id){
-                    if($this->transactions->record_direct_payment($update_id)){
-                        $response = array(
-                            "ResultDesc" => "successful : ".$transaction_id,
-                            "ResultCode" => "0"
-                        );
-                    }else{
-                       $response = array(
-                            "ResultDesc" => "Cound not reconcile transaction",
-                            "ResultCode" => "1"
-                        ); 
-                    }
+
+                    $response = array(
+                        "ResultDesc" => "successful : ".$transaction_id,
+                        "ResultCode" => "0"
+                    );
                 }else{
-                    $this->mailer->send_via_sendgrid('geoffrey.githaiga@digitalvision.co.ke','E-Wallet Deposit - Failed Didnt check account',$file,'E-Wallet','notifications@chamasoft.com','info@chamasoft.com');
                     $response = array(
                         "ResultDesc" => "Unable to receive payment",
                         "ResultCode" => "1"
@@ -3225,6 +3164,8 @@ class Safaricom extends Public_Controller{
                 "ResultCode" => "1"
             );
         }
+        file_put_contents('logs/c2b_confirmation_response_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+
         echo json_encode($response);
     }
 

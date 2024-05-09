@@ -10,3 +10,275 @@
 19-Apr-2024 02:41 PM	http://api.risktick.local/safaricom/record_disbursement	a:1:{s:30:"/safaricom/record_disbursement";s:0:"";}	a:0:{}	s:450:"	{"Result":{"ResultType":0,"ResultCode":2040,"ResultDesc":"Credit Party customer type (Unregistered or Registered Customer) can't be supported by the service .","OriginatorConversationID":"c0d2-4b9a-a71a-12bae346ef6e1570182","ConversationID":"AG_20240418_201023b1f2f3c9de2b1a","TransactionID":"SDI0000000","ReferenceData":{"ReferenceItem":{"Key":"QueueTimeoutURL","Value":"https:\/\/internalsandbox.safaricom.co.ke\/mpesa\/b2cresults\/v1\/submit"}}}}";	 Headers are: 
 
 19-Apr-2024 02:41 PM	http://api.risktick.local/safaricom/record_disbursement	a:1:{s:30:"/safaricom/record_disbursement";s:0:"";}	a:0:{}	s:450:"	{"Result":{"ResultType":0,"ResultCode":2040,"ResultDesc":"Credit Party customer type (Unregistered or Registered Customer) can't be supported by the service .","OriginatorConversationID":"c0d2-4b9a-a71a-12bae346ef6e1570182","ConversationID":"AG_20240418_201023b1f2f3c9de2b1a","TransactionID":"SDI0000000","ReferenceData":{"ReferenceItem":{"Key":"QueueTimeoutURL","Value":"https:\/\/internalsandbox.safaricom.co.ke\/mpesa\/b2cresults\/v1\/submit"}}}}";	 Headers are: 
+
+09-May-2024 07:19 PM	http://api.risktick.local/safaricom/validation	a:1:{s:21:"/safaricom/validation";s:0:"";}	a:0:{}	s:386:"{
+    "TransactionType": "",
+    "TransID": "LHG31AA5TX",
+    "TransTime": "20170816190243",
+    "TransAmount": "200.00",
+    "BusinessShortCode": "601426",
+    "BillRefNumber": "account",
+    "InvoiceNumber": "",
+    "OrgAccountBalance": "",
+    "ThirdPartyTransID": "",
+    "MSISDN": "254708374149",
+    "FirstName": "John",
+    "MiddleName": "",
+    "LastName": "Doe"
+}";	 Headers are: 
+
+09-May-2024 07:27 PM	http://api.risktick.local/safaricom/c2b_payment_validation	a:1:{s:33:"/safaricom/c2b_payment_validation";s:0:"";}	a:0:{}	s:386:"{
+    "TransactionType": "",
+    "TransID": "LHG31AA5TX",
+    "TransTime": "20170816190243",
+    "TransAmount": "200.00",
+    "BusinessShortCode": "601426",
+    "BillRefNumber": "account",
+    "InvoiceNumber": "",
+    "OrgAccountBalance": "",
+    "ThirdPartyTransID": "",
+    "MSISDN": "254708374149",
+    "FirstName": "John",
+    "MiddleName": "",
+    "LastName": "Doe"
+}";	 Headers are: 
+
+09-May-2024 07:28 PM	http://api.risktick.local/safaricom/c2b_payment_validation	a:1:{s:33:"/safaricom/c2b_payment_validation";s:0:"";}	a:0:{}	s:386:"{
+    "TransactionType": "",
+    "TransID": "LHG31AA5TX",
+    "TransTime": "20170816190243",
+    "TransAmount": "200.00",
+    "BusinessShortCode": "601426",
+    "BillRefNumber": "account",
+    "InvoiceNumber": "",
+    "OrgAccountBalance": "",
+    "ThirdPartyTransID": "",
+    "MSISDN": "254708374149",
+    "FirstName": "John",
+    "MiddleName": "",
+    "LastName": "Doe"
+}";	 Headers are: 
+
+09-May-2024 07:29 PM	http://api.risktick.local/safaricom/c2b_payment_validation	a:1:{s:33:"/safaricom/c2b_payment_validation";s:0:"";}	a:0:{}	s:385:"{
+    "TransactionType": "",
+    "TransID": "LHG31AA5TX",
+    "TransTime": "20170816190243",
+    "TransAmount": "200.00",
+    "BusinessShortCode": "601426",
+    "BillRefNumber": "234646",
+    "InvoiceNumber": "",
+    "OrgAccountBalance": "",
+    "ThirdPartyTransID": "",
+    "MSISDN": "254708374149",
+    "FirstName": "John",
+    "MiddleName": "",
+    "LastName": "Doe"
+}";	 Headers are: 
+
+09-May-2024 07:30 PM	http://api.risktick.local/safaricom/c2b_payment_validation	a:1:{s:33:"/safaricom/c2b_payment_validation";s:0:"";}	a:0:{}	s:385:"{
+    "TransactionType": "",
+    "TransID": "LHG31AA5TX",
+    "TransTime": "20170816190243",
+    "TransAmount": "200.00",
+    "BusinessShortCode": "601426",
+    "BillRefNumber": "234646",
+    "InvoiceNumber": "",
+    "OrgAccountBalance": "",
+    "ThirdPartyTransID": "",
+    "MSISDN": "254708374149",
+    "FirstName": "John",
+    "MiddleName": "",
+    "LastName": "Doe"
+}";	 Headers are: 
+
+09-May-2024 07:36 PM	http://api.risktick.local/safaricom/c2b_payment_validation	a:1:{s:33:"/safaricom/c2b_payment_validation";s:0:"";}	a:0:{}	s:385:"{
+    "TransactionType": "",
+    "TransID": "LHG31AA5TX",
+    "TransTime": "20170816190243",
+    "TransAmount": "200.00",
+    "BusinessShortCode": "601426",
+    "BillRefNumber": "234646",
+    "InvoiceNumber": "",
+    "OrgAccountBalance": "",
+    "ThirdPartyTransID": "",
+    "MSISDN": "254708374149",
+    "FirstName": "John",
+    "MiddleName": "",
+    "LastName": "Doe"
+}";	 Headers are: 
+
+09-May-2024 07:36 PM	http://api.risktick.local/safaricom/validation	a:1:{s:21:"/safaricom/validation";s:0:"";}	a:0:{}	s:385:"{
+    "TransactionType": "",
+    "TransID": "LHG31AA5TX",
+    "TransTime": "20170816190243",
+    "TransAmount": "200.00",
+    "BusinessShortCode": "601426",
+    "BillRefNumber": "234646",
+    "InvoiceNumber": "",
+    "OrgAccountBalance": "",
+    "ThirdPartyTransID": "",
+    "MSISDN": "254708374149",
+    "FirstName": "John",
+    "MiddleName": "",
+    "LastName": "Doe"
+}";	 Headers are: 
+
+09-May-2024 07:37 PM	http://api.risktick.local/safaricom/validation	a:1:{s:21:"/safaricom/validation";s:0:"";}	a:0:{}	s:385:"{
+    "TransactionType": "",
+    "TransID": "LHG31AA5TX",
+    "TransTime": "20170816190243",
+    "TransAmount": "200.00",
+    "BusinessShortCode": "601426",
+    "BillRefNumber": "234646",
+    "InvoiceNumber": "",
+    "OrgAccountBalance": "",
+    "ThirdPartyTransID": "",
+    "MSISDN": "254708374149",
+    "FirstName": "John",
+    "MiddleName": "",
+    "LastName": "Doe"
+}";	 Headers are: 
+
+09-May-2024 07:37 PM	http://api.risktick.local/safaricom/validation	a:1:{s:21:"/safaricom/validation";s:0:"";}	a:0:{}	s:385:"{
+    "TransactionType": "",
+    "TransID": "LHG31AA5TX",
+    "TransTime": "20170816190243",
+    "TransAmount": "200.00",
+    "BusinessShortCode": "601426",
+    "BillRefNumber": "234646",
+    "InvoiceNumber": "",
+    "OrgAccountBalance": "",
+    "ThirdPartyTransID": "",
+    "MSISDN": "254708374149",
+    "FirstName": "John",
+    "MiddleName": "",
+    "LastName": "Doe"
+}";	 Headers are: 
+
+09-May-2024 07:38 PM	http://api.risktick.local/safaricom/validation	a:1:{s:21:"/safaricom/validation";s:0:"";}	a:0:{}	s:385:"{
+    "TransactionType": "",
+    "TransID": "LHG31AA5TX",
+    "TransTime": "20170816190243",
+    "TransAmount": "200.00",
+    "BusinessShortCode": "601426",
+    "BillRefNumber": "234646",
+    "InvoiceNumber": "",
+    "OrgAccountBalance": "",
+    "ThirdPartyTransID": "",
+    "MSISDN": "254708374149",
+    "FirstName": "John",
+    "MiddleName": "",
+    "LastName": "Doe"
+}";	 Headers are: 
+
+09-May-2024 07:38 PM	http://api.risktick.local/safaricom/validation	a:1:{s:21:"/safaricom/validation";s:0:"";}	a:0:{}	s:385:"{
+    "TransactionType": "",
+    "TransID": "LHG31AA5TX",
+    "TransTime": "20170816190243",
+    "TransAmount": "200.00",
+    "BusinessShortCode": "601426",
+    "BillRefNumber": "234646",
+    "InvoiceNumber": "",
+    "OrgAccountBalance": "",
+    "ThirdPartyTransID": "",
+    "MSISDN": "254708374149",
+    "FirstName": "John",
+    "MiddleName": "",
+    "LastName": "Doe"
+}";	 Headers are: 
+
+09-May-2024 07:39 PM	http://api.risktick.local/safaricom/validation	a:1:{s:21:"/safaricom/validation";s:0:"";}	a:0:{}	s:385:"{
+    "TransactionType": "",
+    "TransID": "LHG31AA5TX",
+    "TransTime": "20170816190243",
+    "TransAmount": "200.00",
+    "BusinessShortCode": "601426",
+    "BillRefNumber": "234646",
+    "InvoiceNumber": "",
+    "OrgAccountBalance": "",
+    "ThirdPartyTransID": "",
+    "MSISDN": "254708374149",
+    "FirstName": "John",
+    "MiddleName": "",
+    "LastName": "Doe"
+}";	 Headers are: 
+
+09-May-2024 07:47 PM	http://api.risktick.local/safaricom/validation	a:1:{s:21:"/safaricom/validation";s:0:"";}	a:0:{}	s:374:"{    
+   "TransactionType": "Pay Bill",
+   "TransID":"RKTQDM7W6S",
+   "TransTime":"20191122063845",
+   "TransAmount":"10",
+   "BusinessShortCode": "600638",
+   "BillRefNumber":"invoice008",
+   "InvoiceNumber":"",
+   "OrgAccountBalance":"",
+   "ThirdPartyTransID": "",
+   "MSISDN":"25470****149",
+   "FirstName":"John",
+   "MiddleName":"",
+   "LastName":"Doe"
+}";	 Headers are: 
+
+09-May-2024 07:47 PM	http://api.risktick.local/safaricom/validation	a:1:{s:21:"/safaricom/validation";s:0:"";}	a:0:{}	s:374:"{    
+   "TransactionType": "Pay Bill",
+   "TransID":"RKTQDM7W6S",
+   "TransTime":"20191122063845",
+   "TransAmount":"10",
+   "BusinessShortCode": "600638",
+   "BillRefNumber":"invoice008",
+   "InvoiceNumber":"",
+   "OrgAccountBalance":"",
+   "ThirdPartyTransID": "",
+   "MSISDN":"25470****149",
+   "FirstName":"John",
+   "MiddleName":"",
+   "LastName":"Doe"
+}";	 Headers are: 
+
+09-May-2024 07:48 PM	http://api.risktick.local/safaricom/validation	a:1:{s:21:"/safaricom/validation";s:0:"";}	a:0:{}	s:374:"{    
+   "TransactionType": "Pay Bill",
+   "TransID":"RKTQDM7W6S",
+   "TransTime":"20191122063845",
+   "TransAmount":"10",
+   "BusinessShortCode": "600638",
+   "BillRefNumber":"invoice008",
+   "InvoiceNumber":"",
+   "OrgAccountBalance":"",
+   "ThirdPartyTransID": "",
+   "MSISDN":"25470****149",
+   "FirstName":"John",
+   "MiddleName":"",
+   "LastName":"Doe"
+}";	 Headers are: 
+
+09-May-2024 07:55 PM	http://api.risktick.local/safaricom/validation	a:1:{s:21:"/safaricom/validation";s:0:"";}	a:0:{}	s:369:"{    
+   "TransactionType": "Pay Bill",
+   "TransID":"RKTQDM7W6S",
+   "TransTime":"20191122063845",
+   "TransAmount":"10",
+   "BusinessShortCode": "600638",
+   "BillRefNumber":"14134",
+   "InvoiceNumber":"",
+   "OrgAccountBalance":"",
+   "ThirdPartyTransID": "",
+   "MSISDN":"25470****149",
+   "FirstName":"John",
+   "MiddleName":"",
+   "LastName":"Doe"
+}";	 Headers are: 
+
+09-May-2024 08:01 PM	http://api.risktick.local/safaricom/record_direct_account_payment	a:1:{s:40:"/safaricom/record_direct_account_payment";s:0:"";}	a:0:{}	s:369:"{    
+   "TransactionType": "Pay Bill",
+   "TransID":"RKTQDM7W6S",
+   "TransTime":"20191122063845",
+   "TransAmount":"10",
+   "BusinessShortCode": "600638",
+   "BillRefNumber":"14134",
+   "InvoiceNumber":"",
+   "OrgAccountBalance":"",
+   "ThirdPartyTransID": "",
+   "MSISDN":"25470****149",
+   "FirstName":"John",
+   "MiddleName":"",
+   "LastName":"Doe"
+}";	 Headers are: 

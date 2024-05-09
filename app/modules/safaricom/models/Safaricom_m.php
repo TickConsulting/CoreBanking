@@ -363,9 +363,10 @@ class Safaricom_m extends MY_Model {
 		return $this->db->count_all_results('safaricomc2bpayments')?:0;
 	}
 
-	function is_account_number_recognized($account=0)
+	function is_loan_number_recognized($loan_id=0)
 	{
-		if($account ==102224){
+		$loan_id=$this->loans_m->get($loan_id);
+		if($loan_id){
 			return TRUE;
 		}else{
 			return FALSE;
