@@ -1667,7 +1667,7 @@ class Mobile extends Mobile_Controller{
 
                         $loan_limit = $this->_get_member_loan_limit($this->group->id,$this->member->id);
                         $loan_details = array(
-                            'loan_balance'=>isset($outstanding_loan>=0)?$outstanding_loan:0,
+                            'loan_balance'=>isset($outstanding_loan) && $outstanding_loan>=0?$outstanding_loan:0,
                             'total_amount_borrowed'=>$total_loan_borrowed,
                             'total_amount_paid'=>$total_amount_paid,                          
                         );
