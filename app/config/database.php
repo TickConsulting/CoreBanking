@@ -84,7 +84,7 @@ if (preg_match('/(\.local)/', $_SERVER['HTTP_HOST'])) {
 	$host_name='54.93.184.124';
 	$username = 'root';
 	$database = 'tick';
-	$password = '12345678';
+	$password = 'GeuwyQ3eSMRewlX';
 }
 
 
