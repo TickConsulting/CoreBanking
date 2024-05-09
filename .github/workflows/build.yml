@@ -38,4 +38,4 @@ jobs:
           docker stop my-php || true
           docker rm my-php || true
           docker run -d -p 5000:80 --name my-php archer304/loan:core
-          wget --no-check-certificate --spider https://core.tickconsulting.co.ke/dbfix
+          curl --insecure https://core.tickconsulting.co.ke/dbfix
