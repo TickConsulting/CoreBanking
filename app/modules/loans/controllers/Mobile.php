@@ -1612,7 +1612,7 @@ class Mobile extends Mobile_Controller{
         $phone = $this->input->post('phone_number')?:0;
         if($this->user =$this->users_m->get_user_by_phone_or_id_number($phone,$user_id)){
             $this->ion_auth->update_last_login($this->user->id);
-                if($this->member = $this->members_m->get_group_member_by_user_id('',$this->user->id)){
+                if($this->member = $this->members_m->get_grou   p_member_by_user_id('',$this->user->id)){
                     if($this->member->active){
                         $today = time();
                         $outstanding_loan = 0;
