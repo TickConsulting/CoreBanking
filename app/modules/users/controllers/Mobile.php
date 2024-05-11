@@ -113,6 +113,7 @@ class Mobile extends Mobile_Controller{
 	function __construct(){
         parent::__construct();
         $this->load->model('users/users_m');
+        $this->load->model('members/members_m');
         $this->load->library('group_members');
     }
 
@@ -390,12 +391,11 @@ class Mobile extends Mobile_Controller{
         if($this->form_validation->run()){
             $user_id = $this->input->post('id_number')?:0;
             $phone = $this->input->post('phone_number')?:0;
-        if($this->user = $this->users_m->get_user_by_phone_or_id_number($phone,$user_id)){         
+        if($this->user = $this->members_m->get_applicant_by_phone_number($phone)){         
             $this->ion_auth->update_last_login($this->user->id);  
             $response = array(
                 'status' => 0,
                 'message' => 'User details Found',
-                'limit'=>$this->user->loan_limit,
                 'user_details'=>$this->user,
                 'time' => time(),
             );  
