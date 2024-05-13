@@ -2291,7 +2291,13 @@ class Loans_m extends MY_Model{
                 }elseif($column_name=='to'){
                     $this->db->where($this->dx('disbursement_date').'<="'.$value.'"',NULL,FALSE);
                 }
-            }else{
+            }elseif($column_name == 'is_fully_paid'){
+                if($value=='0'){
+                     
+                    $this->db->where('('.$this->dx('is_fully_paid').' = "" OR '.$this->dx('is_fully_paid').' IS NULL OR '.$this->dx('is_fully_paid').' = "0" )',NULL,FALSE);
+                }   
+            }
+            else{
                 if($value){
                     if(is_array($value)){
                         $list = '';
