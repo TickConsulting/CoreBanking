@@ -1769,7 +1769,7 @@ class Mobile extends Mobile_Controller{
         $base_where = array('member_id'=>$member_id,'is_fully_paid'=>0);
         $ongoing_member_loans = $this->loans_m->get_many_by($base_where);
         $successful_checks=0;
-        if($ongoing_member_loans){
+        if(count($ongoing_member_loans)>=1){
             foreach($ongoing_member_loans as $ongoing_member_loan){
                  $loan_type=$this->loan_types_m->get($ongoing_member_loan->loan_type_id);
                if($loan_type && $loan_type->limit_to_one_loan_application){
