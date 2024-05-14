@@ -68,6 +68,8 @@
                 </span>
                 <br>
                 <a class="m-card-profile__email"><?php echo $post->phone; ?></a>
+                <br>
+                <a class="m-card-profile__email"><?php echo $post->id_number; ?></a>
                 <?php if($post->email){
                     
                     echo '<br><a href="" class="m-card-profile__email m-link">'.$post->email.'</a>';
