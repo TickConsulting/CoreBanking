@@ -69,7 +69,12 @@
                 <br>
                 <a class="m-card-profile__email"><?php echo $post->phone; ?></a>
                 <?php if($post->email){
+                    
                     echo '<br><a href="" class="m-card-profile__email m-link">'.$post->email.'</a>';
+                } ?>
+                  <?php if($post->loan_limit){
+                    
+                    echo '<br><a href="" class="m-card-profile__email m-link">Limit : KES'.number_to_currency($post->loan_limit).'</a>';
                 } ?>
             </div>
         </div>  
