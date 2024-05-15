@@ -22,7 +22,9 @@ class Endpoint extends CI_Controller{
         $this->load->library('transactions');
         $this->load->model('safaricom/safaricom_m');
         $this->load->model('withdrawals/withdrawals_m');
+        $this->load->model('members/members_m');
         $this->load->library('mailer');
+        $this->load->library('loan');
         
         $this->load->model('transactions/transactions_m');
         $this->equity_transaction_type_options_keys = array_flip($this->equity_transaction_type_options);
@@ -205,40 +207,62 @@ class Endpoint extends CI_Controller{
                             );
                           
                             if($id = $this->safaricom_m->insert_stk_push_request($update)){
-                                // $update = array(
-                                //     'result_code' => $result_code,
-                                //     'result_description' => $result_description,
-                                //     'merchant_request_id' => $merchant_request_id,
-                                //     'checkout_request_id' => $CheckoutRequestID,
-                                //     'transaction_id' => $transaction_id,
-                                //     'status' => ($result_code=='0')?4:3,
-                                //     'transaction_date' => $transaction_date,
-                                // );
-                                $response = array(
-                                    "ResultDesc" => "Received",
-                                    "ResultCode" => "0"
-                                );
-                          
+                                $loan=$this->loans_m->get($loan_id);
                                 
-                                // if($result_code == '0'){
-                                //     if($this->transactions->record_transaction($request)){
-                                //         $response = array(
-                                //             "ResultDesc" => "successful: ".$transaction_id,
-                                //             "ResultCode" => "0"
-                                //         );
-                                //     }else{
-                                //         $response = array(
-                                //             "ResultDesc" => "Failed reconcillation",
-                                //             "ResultCode" => "1"
-                                //         );
-                                //     }
-                                // }
+                                if($loan){
+                                    $deposit_date =$transaction_date ; 
+                                    $send_sms_notification =0;
+                                    $deposit_method =1;
+                                    $send_email_notification =0;
+                                    $description='Payment via STK Push';
+                                    $member = $this->members_m->get_group_member($loan->member_id,$loan->group_id);
+                                   
+                                    $created_by = $this->members_m->get_group_member_by_user_id($loan->group_id,$member->user_id);
+                                     
+                                    if($amount && $deposit_date && $member && $created_by){
+                                        if($this->loan->record_loan_repayment($loan->group_id,$deposit_date,$member,$loan->id,"mobile-",$deposit_method,$description,$amount,$send_sms_notification,$send_email_notification,$created_by)){
+                                            $response = array(
+                                                "ResultDesc" => "Received and Reconciled",
+                                                "ResultCode" => "0"
+                                            );
+                                            file_put_contents("logs/stk_push_callback_response.txt","\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+                                            
+                                        }else{
+                                            $response = array(
+                                                "ResultDesc" => "Received and Not reconciled",
+                                                "ResultCode" => "0"
+                                            );
+                                            file_put_contents("logs/stk_push_callback_response.txt","\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+
+                                            
+                                        }
+                                        
+                                    } else {
+                                        $response = array(
+                                            "ResultDesc" => "Received ,Missing Params",
+                                            "ResultCode" => "0",
+                                            "missingParams"=>true
+                                        );
+                                        file_put_contents("logs/stk_push_callback_response.txt","\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+                                        
+                                    }
+                                    }
+                                    else{
+                                        $response = array(
+                                            "ResultDesc" => "Received. Transaction Not found",
+                                            "ResultCode" => "0"
+                                        );
+                                        file_put_contents("logs/stk_push_callback_response.txt","\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+                                    }
+                                   
                                 // $this->transactions->send_customer_callback($request);
                             }else{
                                 $response = array(
-                                    "ResultDesc" => "Could not update payment",
-                                    "ResultCode" => "1"
+                                    "ResultDesc" => "Could not insert payment.",
+                                    "ResultCode" => "1",
+                                    "MerchantRequestId"=>$merchant_request_id
                                 );
+                                file_put_contents("logs/stk_push_callback_response.txt","\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
                             }
                         
                     }else{
@@ -246,24 +270,30 @@ class Endpoint extends CI_Controller{
                             "ResultDesc" => "Empty Callback",
                             "ResultCode" => "1"
                         );
+                        file_put_contents("logs/stk_push_callback_response.txt","\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
                     }
                 }else{
                     $response = array(
                         "ResultDesc" => "Empty Body",
                         "ResultCode" => "1"
                     );
+                    file_put_contents("logs/stk_push_callback_response.txt","\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
                 }
             }else{
                 $response = array(
                     "ResultDesc" => "Result file sent : file format error",
                     "ResultCode" => "1"
                 );
+                file_put_contents("logs/stk_push_callback_response.txt","\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+
             }
         }else{
             $response = array(
                 "ResultDesc" => "Empty File",
                 "ResultCode" => "1"
             );
+            file_put_contents("logs/stk_push_callback_response.txt","\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+
         }
         echo json_encode($response);
     }

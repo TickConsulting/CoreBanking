@@ -975,7 +975,7 @@ class Admin extends Admin_Controller
             $loan=$this->loans_m->get($request->loan_id);
             $amount=$request->amount;
             if($loan){
-                $deposit_date =$request->modified_on ; 
+            $deposit_date =$request->modified_on ; 
             $send_sms_notification =0;
             $deposit_method =1;
             $send_email_notification =0;
