@@ -153,11 +153,7 @@ class Contributions_m extends MY_Model{
 
 	function safe_delete($id=0,$group_id=0){
 		$this->db->where('id',$id);
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+		
 		return $this->update_secure_data($id,'contributions',array('is_deleted'=>1,'modified_on'=>time()));
 	}
 
@@ -170,11 +166,7 @@ class Contributions_m extends MY_Model{
 
 	function contribution_exists_in_group($id=0,$group_id=0){
 		$this->db->where('id',$id);
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+		
 		$this->db->where($this->dx('is_deleted').' IS NULL',NULL,FALSE);
 		return $this->db->count_all_results('contributions')?:0;
 	}
@@ -182,7 +174,7 @@ class Contributions_m extends MY_Model{
 	function get_contribution_fine_settings($contribution_id = 0){
 		$this->select_all_secure('contribution_fine_settings');
 		$this->db->where($this->dx('contribution_id').' = "'.$contribution_id.'"',NULL,FALSE);
-		$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+		
 		$this->db->where($this->dx('is_deleted').' IS NULL',NULL,FALSE);
 		return $this->db->get('contribution_fine_settings')->result();
 	}
@@ -198,11 +190,7 @@ class Contributions_m extends MY_Model{
 				$this->dx('name').' as name '
 			)
 		);
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+		
 		$this->db->where($this->dx('is_hidden').' != "1"',NULL,FALSE);
 		$this->db->where($this->dx('active').' = "1"',NULL,FALSE);
 		$this->db->where($this->dx('enable_checkoff').' = "1"',NULL,FALSE);
@@ -217,7 +205,7 @@ class Contributions_m extends MY_Model{
 	function get_group_member_checkoff_contribution_amount_pairings_array(){
 		$arr = array();
 		$this->select_all_secure('member_checkoff_contribution_amount_pairings');
-		$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+		
 		$result = $this->db->get('member_checkoff_contribution_amount_pairings')->result();
 		foreach($result as $row):
 			$arr[$row->contribution_id][$row->member_id] = $row->amount;
@@ -229,7 +217,7 @@ class Contributions_m extends MY_Model{
 		$this->db->select(array(
 			'SUM('.$this->dx('amount').') as total_amount',
 		));
-		$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+		
 		$this->db->where($this->dx('active').' = "1"',NULL,FALSE);
 		$result = $this->db->get('member_checkoff_contribution_amount_pairings')->row();
 		if($result){
@@ -243,7 +231,7 @@ class Contributions_m extends MY_Model{
 		$this->db->select(array(
 			'DISTINCT('.$this->dx('member_id').') as member_id'
 		));
-		$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+		
 		$counts = $this->db->get('member_checkoff_contribution_amount_pairings')->result();
 		return count($counts);
 	}
@@ -251,18 +239,14 @@ class Contributions_m extends MY_Model{
 	function delete_member_checkoff_contribution_amount_pairing($member_id = 0,$contribution_id = 0){
 		$this->db->where($this->dx('member_id').' = "'.$member_id.'"',NULL,FALSE);
 		$this->db->where($this->dx('contribution_id').' = "'.$contribution_id.'"',NULL,FALSE);
-		$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+		
 		return $this->db->delete('member_checkoff_contribution_amount_pairings');
 	}
 
 	function get_all_contribution_fine_settings_array($group_id=0){
 		$arr = array();
 		$this->select_all_secure('contribution_fine_settings');
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+		 
 		$this->db->where($this->dx('is_deleted').' IS NULL',NULL,FALSE);
 		$contribution_fine_settings = $this->db->get('contribution_fine_settings')->result();
 		foreach($contribution_fine_settings as $contribution_fine_setting){
@@ -279,7 +263,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		return $this->db->delete('contribution_fine_settings');
 		**/ 
@@ -320,11 +304,7 @@ class Contributions_m extends MY_Model{
     	$arr = array();
     	$this->db->select(array($this->dx('member_id').' as member_id '));
 		$this->db->where($this->dx('contribution_id').' = "'.$contribution_id.'"',NULL,FALSE);
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+		 
 		$this->db->where($this->dx('is_deleted').' IS NULL',NULL,FALSE);
 		$contribution_member_pairings = $this->db->get('contribution_member_pairings')->result();
 		foreach($contribution_member_pairings as $contribution_member_pairing){
@@ -336,11 +316,7 @@ class Contributions_m extends MY_Model{
     function get_all_contribution_member_pairings_array($group_id=0){
     	$arr = array();
     	$this->db->select(array($this->dx('member_id').' as member_id ',$this->dx('contribution_id').' as contribution_id '));
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+		 
 		$this->db->where($this->dx('is_deleted').' IS NULL',NULL,FALSE);
 		$contribution_member_pairings = $this->db->get('contribution_member_pairings')->result();
 		foreach($contribution_member_pairings as $contribution_member_pairing){
@@ -355,7 +331,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		return $this->db->delete('contribution_member_pairings'); 
 		*/
@@ -378,7 +354,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where('id',$id);
 		$this->db->where("(".$this->dx('is_deleted').' IS NULL OR '.$this->dx('is_deleted')." = '' )",NULL,FALSE);
@@ -389,7 +365,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where('id',$id);
 		$this->db->where("(".$this->dx('is_deleted').' IS NULL OR '.$this->dx('is_deleted')." = '' )",NULL,FALSE);
@@ -403,7 +379,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where($this->dx('is_deleted').' IS NULL',NULL,FALSE);
 		$this->db->where($this->dx('display_contribution_arrears_cumulatively').' = "1"',NULL,FALSE);
@@ -426,7 +402,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where($this->dx('is_deleted').' IS NULL',NULL,FALSE);
 		$this->db->where(" ( ".$this->dx('display_contribution_arrears_cumulatively').' IS NULL OR '.$this->dx('display_contribution_arrears_cumulatively').' = "0" ) ',NULL,FALSE);
@@ -454,7 +430,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->order_by($this->dx('name'),'ASC',FALSE);
 		$this->db->where("(".$this->dx('is_deleted').' IS NULL OR '.$this->dx('is_deleted').' = "")',NULL,FALSE);
@@ -471,7 +447,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->order_by($this->dx('name'),'ASC',FALSE);
 		$this->db->where("(".$this->dx('is_deleted').' IS NULL OR '.$this->dx('is_deleted').' = "")',NULL,FALSE);
@@ -492,7 +468,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where($this->dx('contributions.is_non_refundable').' = "1" ',NULL,FALSE);
 		$this->db->order_by($this->dx('name'),'ASC',FALSE);
@@ -513,7 +489,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where($this->dx('contributions.is_non_refundable').' = "1" ',NULL,FALSE);
 		$this->db->where($this->dx('contributions.is_equity').' = "1" ',NULL,FALSE);
@@ -554,7 +530,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->order_by($this->dx('name'),'ASC',FALSE);
 		$this->db->where("( ".$this->dx('is_non_refundable').' IS NULL OR '.$this->dx('is_non_refundable').' = "" OR '.$this->dx('is_non_refundable').' = "0" )',NULL,FALSE);
@@ -576,7 +552,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->order_by($this->dx('name'),'ASC',FALSE);
 		$this->db->where($this->dx('is_deleted').' IS NULL',NULL,FALSE);
@@ -598,7 +574,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where($this->dx('is_deleted').' = "" or is_deleted IS NULL ',NULL,FALSE);
 		$contributions = $this->db->get('contributions')->result();
@@ -620,7 +596,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where($this->dx('is_hidden').' != "1"',NULL,FALSE);
 		$this->db->where($this->dx('active').' = "1"',NULL,FALSE);
@@ -662,7 +638,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where($this->dx('is_hidden').' != "1"',NULL,FALSE);
 		$this->db->where($this->dx('active').' = "1"',NULL,FALSE);
@@ -680,7 +656,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where($this->dx('is_deleted').' IS NULL',NULL,FALSE);
 		return $this->db->get('regular_contribution_settings')->row();
@@ -699,7 +675,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where($this->dx('is_deleted').' IS NULL',NULL,FALSE);
 		return $this->db->get('one_time_contribution_settings')->row();
@@ -711,7 +687,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where($this->dx('is_deleted').' IS NULL',NULL,FALSE);
 		$regular_contribution_settings = $this->db->get('regular_contribution_settings')->result();
@@ -727,7 +703,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where($this->dx('is_deleted').' IS NULL',NULL,FALSE);
 		$one_time_contribution_settings = $this->db->get('one_time_contribution_settings')->result();
@@ -743,7 +719,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where($this->dx('is_deleted').' IS NULL',NULL,FALSE);
 		$this->db->order_by($this->dx('name'),'ASC',FALSE);
@@ -760,7 +736,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		if($filter_params){
 			foreach ($filter_params as $key => $value) {
@@ -781,7 +757,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where($this->dx('regular_invoicing_active').' = "1"',NULL,FALSE);
 		if($filter_params){
@@ -806,7 +782,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		if($filter_params){
 			foreach ($filter_params as $key => $value) {
@@ -828,7 +804,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where("(".$this->dx('is_deleted').' IS NULL OR '.$this->dx('is_deleted').' = "" )',NULL,FALSE);
 		$this->db->where($this->dx('category').' IN(1,2)',NULL,FALSE);
@@ -867,7 +843,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where("(".$this->dx('is_deleted').' IS NULL OR '.$this->dx('is_deleted').' = "" )',NULL,FALSE);
 		$this->db->where('('.$this->dx('category').' IN(1,2) OR '.$this->dx('enable_deposit_statement_display').' ="1")',NULL,FALSE);
@@ -886,7 +862,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where("(".$this->dx('is_deleted').' IS NULL OR '.$this->dx('is_deleted').' = "" )',NULL,FALSE);
 		$this->db->where('('.$this->dx('category').' IS NULL OR '.$this->dx('category').' = "")',NULL,FALSE);
@@ -899,7 +875,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		if($filter_params){
 			foreach ($filter_params as $key => $value) {
@@ -1258,7 +1234,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->order_by($this->dx('contribution_date'),'ASC',FALSE);
 		$this->db->limit('1');
@@ -1276,7 +1252,7 @@ class Contributions_m extends MY_Model{
 			if($group_id){
 				$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 			}else{
-				$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+				
 			}
 			$this->db->order_by($this->dx('contribution_date'),'ASC',FALSE);
 			$this->db->limit('1');
@@ -1299,7 +1275,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->order_by($this->dx('contribution_date'),'ASC',FALSE);
 		$this->db->limit('1');
@@ -1316,7 +1292,7 @@ class Contributions_m extends MY_Model{
 			if($group_id){
 				$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 			}else{
-				$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+				
 			}
 			$this->db->order_by($this->dx('contribution_date'),'ASC',FALSE);
 			$this->db->limit('1');
@@ -1338,7 +1314,7 @@ class Contributions_m extends MY_Model{
         if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where("(".$this->dx('is_deleted').' IS NULL OR '.$this->dx('is_deleted').' = "")',NULL,FALSE);
         return $this->db->get('contributions')->result();
@@ -1352,7 +1328,7 @@ class Contributions_m extends MY_Model{
         if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where("(".$this->dx('is_deleted').' IS NULL OR '.$this->dx('is_deleted').' = "")',NULL,FALSE);
         return $this->db->get('contributions')->result();
@@ -1390,7 +1366,7 @@ class Contributions_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where($this->dx('is_deleted').' IS NULL',NULL,FALSE);
 		$this->db->order_by($this->dx('name'),'ASC',FALSE);

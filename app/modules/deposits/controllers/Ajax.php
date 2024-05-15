@@ -185,7 +185,7 @@ class Ajax extends Ajax_Controller
         } else {
             $controller_starter = 'member';
         }
-        $controller = $member_only ? $controller_starter . '/deposits/your_deposits/pages' : 'group/deposits/listing/pages';
+        $controller = $member_only ? $controller_starter . '/deposits/your_deposits/pages' : 'bank/deposits/listing/pages';
         $filter_parameters = array(
             'transaction_alert_id' => $transaction_alert_id,
             'member_id' => ($member_only ? array($this->member->id) : ($this->input->get('member_id') ?: '')),
@@ -227,7 +227,7 @@ class Ajax extends Ajax_Controller
                     }
                 }
             }
-            echo form_open('group/deposits/action', ' id="form"  class="form-horizontal"');
+            echo form_open('bank/deposits/action', ' id="form"  class="form-horizontal"');
             if ($pagination) {
                 echo '
                     <div class="search-pagination">';
@@ -328,7 +328,8 @@ class Ajax extends Ajax_Controller
                 } else if ($post->type == 49 || $post->type == 50 || $post->type == 51 || $post->type == 52) {
                     echo ' - ';
                 } else {
-                    echo $this->group_member_options[$post->member_id];
+                    
+                    echo $this->members_m->get_group_member($post->member_id)->first_name.' '.$this->members_m->get_group_member($post->member_id)->last_name;
                 }
                 echo '
                                                 </td><td class="text-right">' .
@@ -348,7 +349,7 @@ class Ajax extends Ajax_Controller
                                                             </span>
                                                         </span>
                                                     </a>
-                                                    <a href="' . site_url('group/deposits/void/' . $post->id) . '" class="btn btn-sm confirmation_link btn-danger m-btn m-btn--icon action_button" data-message="Are you sure you want to void deposit?">
+                                                    <a href="' . site_url('bank/deposits/void/' . $post->id) . '" class="btn btn-sm confirmation_link btn-danger m-btn m-btn--icon action_button" data-message="Are you sure you want to void deposit?">
                                                         <span>
                                                             <i class="la la-trash"></i>
                                                             <span>
@@ -424,13 +425,13 @@ class Ajax extends Ajax_Controller
                 'member_to_id' => $this->input->get('member_to_id'),
             );
             $total_rows = $this->deposits_m->count_group_contribution_transfers($filter_parameters);
-            $pagination = create_pagination('group/deposits/contribution_transfers/pages', $total_rows, 50, 5, TRUE);
+            $pagination = create_pagination('bank/deposits/contribution_transfers/pages', $total_rows, 50, 5, TRUE);
             $transfer_to_options = $this->transfer_to_options;
             $contribution_options = $this->contributions_m->get_group_contribution_options();
             $fine_category_options = $this->fine_categories_m->get_group_options(FALSE);
             $posts = $this->deposits_m->get_group_contribution_transfers($filter_parameters);
             if (!empty($posts)) {
-                echo form_open('group/deposits/action', ' id="form"  class="form-horizontal"');
+                echo form_open('bank/deposits/action', ' id="form"  class="form-horizontal"');
                 if (!empty($pagination['links'])) :
                     echo '
                         <div class="row col-md-12">
@@ -563,7 +564,7 @@ class Ajax extends Ajax_Controller
                                         ' . number_to_currency($post->amount) . '
                                     </td>  
                                     <td>
-                                        <a href="' . site_url('group/deposits/void_contribution_transfer/' . $post->id) . '" class="btn btn-sm confirm_link btn-danger m-btn m-btn--icon action_button" data-message="Are you sure you want to void transfer?">
+                                        <a href="' . site_url('bank/deposits/void_contribution_transfer/' . $post->id) . '" class="btn btn-sm confirm_link btn-danger m-btn m-btn--icon action_button" data-message="Are you sure you want to void transfer?">
                                         <span>
                                         <i class="la la-trash"></i>
                                             <span>
@@ -1006,13 +1007,13 @@ class Ajax extends Ajax_Controller
                             $response = array(
                                 'status' => 1,
                                 'message' => $successful_contribution_payment_entry_count . ' loan repayment successfully recorded. ',
-                                'refer' => site_url('group/deposits/listing'),
+                                'refer' => site_url('bank/deposits/listing'),
                             );
                         } else {
                             $response = array(
                                 'status' => 1,
                                 'message' => $successful_contribution_payment_entry_count . ' loan repayments successfully recorded. ',
-                                'refer' => site_url('group/deposits/listing'),
+                                'refer' => site_url('bank/deposits/listing'),
                             );
                         }
                     }
@@ -1197,13 +1198,13 @@ class Ajax extends Ajax_Controller
                             $response = array(
                                 'status' => 1,
                                 'message' => 'Contributions recorded successfully.',
-                                'refer' => site_url('group/deposits/listing'),
+                                'refer' => site_url('bank/deposits/listing'),
                             );
                         } else {
                             $response = array(
                                 'status' => 1,
                                 'message' => 'Something went wrong while recording the contribution payments.',
-                                'refer' => site_url('group/deposits/listing'),
+                                'refer' => site_url('bank/deposits/listing'),
                             );
                         }
                     }
@@ -1212,13 +1213,13 @@ class Ajax extends Ajax_Controller
                             $response = array(
                                 'status' => 1,
                                 'message' => $successful_contribution_payment_entry_count . ' contribution payment successfully recorded.',
-                                'refer' => site_url('group/deposits/listing'),
+                                'refer' => site_url('bank/deposits/listing'),
                             );
                         } else {
                             $response = array(
                                 'status' => 1,
                                 'message' => $successful_contribution_payment_entry_count . ' contribution payments successfully recorded.',
-                                'refer' => site_url('group/deposits/listing'),
+                                'refer' => site_url('bank/deposits/listing'),
                             );
                         }
                     }
@@ -1372,13 +1373,13 @@ class Ajax extends Ajax_Controller
                             $response = array(
                                 'status' => 1,
                                 'message' => $successful_fine_payment_entry_count . ' fine payment successfully recorded.',
-                                'refer' => site_url('group/deposits/listing'),
+                                'refer' => site_url('bank/deposits/listing'),
                             );
                         } else {
                             $response = array(
                                 'status' => 1,
                                 'message' => $successful_fine_payment_entry_count . ' fine payments successfully recorded.',
-                                'refer' => site_url('group/deposits/listing'),
+                                'refer' => site_url('bank/deposits/listing'),
                             );
                         }
                     }
@@ -1530,13 +1531,13 @@ class Ajax extends Ajax_Controller
                             $response = array(
                                 'status' => 1,
                                 'message' => $successful_income_entry_count . ' income payment successfully recorded.',
-                                'refer' => site_url('group/deposits/listing'),
+                                'refer' => site_url('bank/deposits/listing'),
                             );
                         } else {
                             $response = array(
                                 'status' => 1,
                                 'message' => $successful_income_entry_count . ' income payments successfully recorded.',
-                                'refer' => site_url('group/deposits/listing'),
+                                'refer' => site_url('bank/deposits/listing'),
                             );
                         }
                     }
@@ -1698,13 +1699,13 @@ class Ajax extends Ajax_Controller
                             $response = array(
                                 'status' => 1,
                                 'message' => $successful_miscellaneous_payment_entry_count . ' miscellaneous payment successfully recorded.',
-                                'refer' => site_url('group/deposits/listing'),
+                                'refer' => site_url('bank/deposits/listing'),
                             );
                         } else {
                             $response = array(
                                 'status' => 1,
                                 'message' => $successful_miscellaneous_payment_entry_count . ' miscellaneous payments successfully recorded.',
-                                'refer' => site_url('group/deposits/listing'),
+                                'refer' => site_url('bank/deposits/listing'),
                             );
                         }
                     }
@@ -2030,7 +2031,7 @@ class Ajax extends Ajax_Controller
             $response = array(
                 'status' => 1,
                 'message' => 'Contribution transfer recorded successfully',
-                'refer' => site_url('group/deposits/contribution_transfers'),
+                'refer' => site_url('bank/deposits/contribution_transfers'),
             );
         } else {
             $post = array();
@@ -2234,7 +2235,7 @@ class Ajax extends Ajax_Controller
                                     $response = array(
                                         'status' => 1,
                                         'message' => $successes . ' Contributions recorded successfully',
-                                        'refer' => site_url('group/deposits/listing')
+                                        'refer' => site_url('bank/deposits/listing')
                                     );
                                 } else {
                                     $response = array(

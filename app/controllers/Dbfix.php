@@ -1104,6 +1104,31 @@ $this->dbfix_m->add_column('payment_transactions',
                 'type' => 'blob'
             )
         ));
+        $this->dbfix_m->add_column('safaricomstkpushrequests', array(
+            'loan_id' => array(
+                'type' => 'blob'
+            )
+        ));
+        $this->dbfix_m->add_column('safaricomstkpushrequests', array(
+            'transaction_id' => array(
+                'type' => 'blob'
+            )
+        ));
+        $this->dbfix_m->add_column('safaricomstkpushrequests', array(
+            'merchant_request_id' => array(
+                'type' => 'blob'
+            )
+        ));
+        $this->dbfix_m->add_column('safaricomstkpushrequests', array(
+            'organization_balance' => array(
+                'type' => 'blob'
+            )
+        ));
+        $this->dbfix_m->add_column('safaricomstkpushrequests', array(
+            'transaction_date' => array(
+                'type' => 'blob'
+            )
+        ));
         $this->dbfix_m->add_column('loans', array(
             'enable_automatic_disbursements' => array(
                 'type' => 'blob'

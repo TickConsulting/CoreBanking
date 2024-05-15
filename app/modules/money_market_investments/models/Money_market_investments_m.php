@@ -77,11 +77,7 @@ class Money_market_investments_m extends MY_Model {
 				$this->dx('investment_date').' as investment_date ',
 			)
 		);
-		if($group_id){
-			$this->db->where($this->dx('group_id').'="'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').'="'.$this->group->id.'"',NULL,FALSE);
-		}
+		 
 		$this->db->where($this->dx('active').'="1"',NULL,FALSE);
 		$money_market_investments = $this->db->get('money_market_investments')->result();
 		foreach($money_market_investments as $money_market_investment){

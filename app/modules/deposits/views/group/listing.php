@@ -40,7 +40,7 @@
                                         <label>
                                             <?php echo translate('Member');?>
                                         </label>
-                                        <?php echo form_dropdown('member_id[]',array()+$this->group_member_options,$this->input->get('member_id'),'class="form-control m-select2" multiple="multiple"'); ?>
+                                        <?php echo form_dropdown('member_id[]',array()+$group_member_options,$this->input->get('member_id'),'class="form-control m-select2" multiple="multiple"'); ?>
                                     </div>
 
                                     <div class="form-group m-form__group pt-0">
@@ -102,7 +102,7 @@
 
             <?php $query = $_SERVER['QUERY_STRING']?'?generate_excel=1&'.$_SERVER['QUERY_STRING']:'?generate_excel=1'; ?>
             <div class="btn-group margin-bottom-20 search-button">
-                <a href="<?php echo site_url('group/deposits/listing').$query; ?>" class="btn btn-sm btn-primary m-btn m-btn--icon">
+                <a href="<?php echo site_url('bank/deposits/listing').$query; ?>" class="btn btn-sm btn-primary m-btn m-btn--icon">
                     <span>
                         <i class="la la-file-excel-o"></i>
                         <span>
@@ -339,7 +339,7 @@
                                 $('#deposit_receipt .reconciled_badge').html('');
                             }
                             $('#deposit_receipt .generate_pdf_link').attr('id',data.id);
-                            $('#deposit_receipt .generate_pdf_link').attr('href',window.location.origin+'/group/deposits/generate_pdf_deposit_receipt/'+data.id);
+                            $('#deposit_receipt .generate_pdf_link').attr('href',window.location.origin+'/bank/deposits/generate_pdf_deposit_receipt/'+data.id);
                             if(data.type==17||data.type==18||data.type==19||data.type==20||data.type==41||data.type==42||data.type==43||data.type==44){
                                 $('#deposit_receipt .view_loan_statement_link').attr('href',window.location.origin+'/group/loans/loan_statement/'+data.loan_id).slideDown();
                                  $('#deposit_receipt .more_actions_toggle').slideDown();

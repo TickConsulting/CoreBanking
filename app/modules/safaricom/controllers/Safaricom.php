@@ -3182,7 +3182,7 @@ class Safaricom extends Public_Controller{
         
     }
 
-    function record_stk_push_account_payment(){
+    function record_stk_push_account_payment($loan_id=0){
         $file = file_get_contents('php://input');
         $response = array();
         if($file){
@@ -3194,7 +3194,6 @@ class Safaricom extends Public_Controller{
                     if($callback){
                         $merchant_request_id = $callback->MerchantRequestID;
                         $CheckoutRequestID = $callback->CheckoutRequestID;
-                        if($request = $this->safaricom_m->get_stk_request_by_merchant_request_id_and_checkout_request_id($CheckoutRequestID,$merchant_request_id)){
                             $result_code = trim($callback->ResultCode);
                             $result_description = trim($callback->ResultDesc);
                             $amount = '';
@@ -3204,14 +3203,15 @@ class Safaricom extends Public_Controller{
                             $transaction_date= '';
                             if($result_code == '0'){
                                 $callback_metadatas = $callback->CallbackMetadata;
+                                
                                 if($callback_metadatas){        
-                                    for ($i=0; $i < 4; $i++) { 
+                                    for ($i=0; $i <=4; $i++) { 
                                         $value_data = $callback_metadatas->Item[$i];
                                         $name = isset($value_data->Name)?$value_data->Name:'';
                                         $value = isset($value_data->Value)?$value_data->Value:'';
                                         if(preg_match('/Amount/', $name)){
                                             $amount = trim($value);
-                                        }elseif (preg_match('/PhoneNumber/', $name)) {
+                                        }elseif (preg_match('/PhoneNumber/', $name)) {  
                                             $phone = trim($value);
                                         }elseif (preg_match('/MpesaReceiptNumber/', $name)) {
                                             $transaction_id = trim($value);
@@ -3225,53 +3225,59 @@ class Safaricom extends Public_Controller{
                             }
                             $update = array(
                                 'result_code' => $result_code,
+                                'response_code' => $result_code,
+                                'amount' => $amount,
+                                'loan_id'=>$loan_id,
+                                'phone' => $phone,
+                                'shortcode' => "4135763",
+                                'customer_message'=>$result_description,
+                                'checkout_request_id'=>$CheckoutRequestID,
+                                'customer_message'=>$result_description,
+                                'customer_message'=>$result_description,
                                 'result_description' => $result_description,
                                 'transaction_id' => $transaction_id,
                                 'organization_balance' => $balance,
                                 'transaction_date' => $transaction_date,
                                 'modified_on' => time(),
                             );
-                            if($this->safaricom_m->update_stkpushrequest($request->id,$update)){
-                                $update = array(
-                                    'result_code' => $result_code,
-                                    'result_description' => $result_description,
-                                    'merchant_request_id' => $merchant_request_id,
-                                    'checkout_request_id' => $CheckoutRequestID,
-                                    'transaction_id' => $transaction_id,
-                                    'status' => ($result_code=='0')?4:3,
-                                    'transaction_date' => $transaction_date,
+                          
+                            if($id = $this->safaricom_m->insert_stk_push_request($update)){
+                                // $update = array(
+                                //     'result_code' => $result_code,
+                                //     'result_description' => $result_description,
+                                //     'merchant_request_id' => $merchant_request_id,
+                                //     'checkout_request_id' => $CheckoutRequestID,
+                                //     'transaction_id' => $transaction_id,
+                                //     'status' => ($result_code=='0')?4:3,
+                                //     'transaction_date' => $transaction_date,
+                                // );
+                                $response = array(
+                                    "ResultDesc" => "Received",
+                                    "ResultCode" => "0"
                                 );
-                                if($payment_transaction = $this->transactions_m->get_payment_transaction($request->reference_number,$request->account_id)){
-                                     $this->transactions_m->update_payment($payment_transaction->id,$update);
-                                }
-                                $request = $this->safaricom_m->get_stk_request($request->id);
+                          
                                 
-                                if($result_code == '0'){
-                                    if($this->transactions->record_transaction($request)){
-                                        $response = array(
-                                            "ResultDesc" => "successful: ".$transaction_id,
-                                            "ResultCode" => "0"
-                                        );
-                                    }else{
-                                        $response = array(
-                                            "ResultDesc" => "Failed reconcillation",
-                                            "ResultCode" => "1"
-                                        );
-                                    }
-                                }
-                                $this->transactions->send_customer_callback($request);
+                                // if($result_code == '0'){
+                                //     if($this->transactions->record_transaction($request)){
+                                //         $response = array(
+                                //             "ResultDesc" => "successful: ".$transaction_id,
+                                //             "ResultCode" => "0"
+                                //         );
+                                //     }else{
+                                //         $response = array(
+                                //             "ResultDesc" => "Failed reconcillation",
+                                //             "ResultCode" => "1"
+                                //         );
+                                //     }
+                                // }
+                                // $this->transactions->send_customer_callback($request);
                             }else{
                                 $response = array(
                                     "ResultDesc" => "Could not update payment",
                                     "ResultCode" => "1"
                                 );
                             }
-                        }else{
-                            $response = array(
-                                "ResultDesc" => "No Initial request",
-                                "ResultCode" => "1"
-                            );
-                        }
+                        
                     }else{
                         $response = array(
                             "ResultDesc" => "Empty Callback",
@@ -3295,8 +3301,6 @@ class Safaricom extends Public_Controller{
                 "ResultDesc" => "Empty File",
                 "ResultCode" => "1"
             );
-        }if($file){
-            $this->curl->post($file,'https://api-test.chamasoft.com/safaricom/record_stk_push_account_payment');
         }
         echo json_encode($response);
     }

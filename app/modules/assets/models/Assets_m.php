@@ -57,11 +57,7 @@ class Assets_m extends MY_Model {
 				$this->dx('name').' as name ',
 			)
 		);
-		if($group_id){
-			$this->db->where($this->dx('group_id').'="'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').'="'.$this->group->id.'"',NULL,FALSE);
-		}
+		 
 		
 		$this->db->where($this->dx('active').' = "1"',NULL,FALSE);
 		$assets = $this->db->get('assets')->result();

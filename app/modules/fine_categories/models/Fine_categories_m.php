@@ -90,7 +90,7 @@ class Fine_categories_m extends MY_Model {
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where($this->dx('is_deleted').' IS NULL',NULL,FALSE);
 		$this->db->limit(1);
@@ -102,7 +102,7 @@ class Fine_categories_m extends MY_Model {
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where($this->dx('is_deleted').' IS NULL',NULL,FALSE);
 		return $this->db->count_all_results('fine_categories')?:0;
@@ -117,7 +117,7 @@ class Fine_categories_m extends MY_Model {
 		if($group_id){
 			$this->db->where($this->dx('group_id').'="'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->where($this->dx('is_deleted').' IS NULL',NULL,FALSE);
 		return $this->db->get('fine_categories')->row();
@@ -131,11 +131,7 @@ class Fine_categories_m extends MY_Model {
 			$this->dx('amount').' as amount',
 			)
 		);
-		if($group_id){
-			$this->db->where($this->dx('group_id').'="'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').'="'.$this->group->id.'"',NULL,FALSE);
-		}
+	 
 		$this->db->where($this->dx('is_deleted').' IS NULL',NULL,FALSE);
 		$fine_categories = $this->db->get('fine_categories')->result();
 		foreach($fine_categories as $fine_category){
@@ -205,7 +201,7 @@ class Fine_categories_m extends MY_Model {
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		return $this->update_secure_data($id,'fine_categories',array('is_deleted'=>1,'modified_on'=>time()));
 	}
@@ -258,7 +254,7 @@ class Fine_categories_m extends MY_Model {
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->order_by($this->dx('name'),'ASC',FALSE);
 		$this->db->where($this->dx('is_deleted').' IS NULL',NULL,FALSE);
@@ -282,7 +278,7 @@ class Fine_categories_m extends MY_Model {
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->order_by($this->dx('name'),'ASC',FALSE);
 		$this->db->where($this->dx('is_deleted').' IS NULL',NULL,FALSE);
@@ -311,7 +307,7 @@ class Fine_categories_m extends MY_Model {
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
+			
 		}
 		$this->db->order_by($this->dx('name'),'ASC',FALSE);
 		$this->db->where($this->dx('is_deleted').' IS NULL',NULL,FALSE);

@@ -2667,3 +2667,8 @@
     "repayment_period": "1",
     "phone_number": "254720862220"
 }";	 Headers are:a:13:{s:6:"Secret";s:16:"abcdefghhgfedcba";s:13:"Authorization";s:16:"abcdefghhgfedcba";s:11:"VersionCode";s:2:"75";s:12:"Content-Type";s:16:"application/json";s:6:"Cookie";s:217:"CALLING_CODE=254; COUNTRY_CODE=KE; csrf_cookie_name=bb57d5ed33f07f3dc3645fddd49a16cc; CALLING_CODE=254; COUNTRY_CODE=KE; ci_session=088f158436a5d33e4b07d336e1e6fb7adae49598; ci_session=ickl5j9o0dutskq2390isd2n3t40cn6a";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"e9fe6d3e-015e-472f-b06f-af46a10f9211";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:3:"122";}
+
+14-May-2024 05:48 PM	http://api.risktick.local/mobile/loans/get_member_loan_summary	a:1:{s:37:"/mobile/loans/get_member_loan_summary";s:0:"";}	a:0:{}	s:53:"{
+    "user_id": "30278",
+    "group_id": "8006"
+}";	 Headers are:a:13:{s:11:"VersionCode";s:2:"75";s:6:"Secret";s:16:"abcdefghhgfedcba";s:12:"Content-Type";s:16:"application/json";s:13:"Authorization";s:39:"Bearer UslD8U2poM0DcVhCIoM6oOW4s60sqcJo";s:10:"User-Agent";s:21:"PostmanRuntime/7.37.3";s:6:"Accept";s:3:"*/*";s:13:"Cache-Control";s:8:"no-cache";s:13:"Postman-Token";s:36:"d4744ee5-1812-4876-8bd2-3b0b06582c2c";s:4:"Host";s:18:"api.risktick.local";s:15:"Accept-Encoding";s:17:"gzip, deflate, br";s:10:"Connection";s:10:"keep-alive";s:14:"Content-Length";s:2:"53";s:6:"Cookie";s:43:"ci_session=ek4vj9s0ghs4l8fp3v9t5tccfiq7gaoe";}

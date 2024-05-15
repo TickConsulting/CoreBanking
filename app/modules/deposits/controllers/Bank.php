@@ -241,13 +241,14 @@ class Bank extends Bank_Controller{
         $data['contribution_options'] = $this->contributions_m->get_group_contribution_options();
         $data['from'] = strtotime($this->input->get('from'))?:'';
         $data['to'] = strtotime($this->input->get('to'))?:'';
+        $data['group_member_options'] = $this->members_m->get_group_member_options();
         $data['deposit_type_options'] = $this->transactions->deposit_type_options;
         $data['fine_category_options'] = $this->fine_categories_m->get_group_options(FALSE);
         $data['account_options'] = $this->accounts_m->get_group_account_options(FALSE);
         $data['income_category_options'] = $this->income_categories_m->get_group_income_category_options();
         $data['stock_options'] = $this->stocks_m->get_group_stock_options();
         $data['asset_options'] = $this->assets_m->get_group_asset_options();
-        $data['money_market_investment_options'] = $this->money_market_investments_m->get_group_money_market_investment_options($this->group->id,$this->group_currency);
+        $data['money_market_investment_options'] = $this->money_market_investments_m->get_group_money_market_investment_options('',$this->group_currency);
         if($this->input->get_post('generate_excel')==1){
             $transaction_alert_id = $this->input->get('transaction_alert');
             $from = strtotime($this->input->get('from'))?:'';
@@ -280,7 +281,7 @@ class Bank extends Bank_Controller{
             $data['posts'] = $this->deposits_m->get_group_deposits($this->group->id,$filter_parameters);
             $data['from'] = $from;
             $data['to'] = $to;
-            $data['group_member_options'] = $this->group_member_options;
+            $data['group_member_options'] = $this->members_m->get_group_member_options();
             $data['group_debtor_options'] = $this->group_debtor_options;
             $data['filters'] = $filter_parameters;
             $data['group'] = $this->group;
@@ -2424,15 +2425,16 @@ class Bank extends Bank_Controller{
     }
 
     function void($id = 0,$redirect = TRUE){
-        $id OR redirect('group/deposits/listing');
+        $id OR redirect('bank/deposits/listing');
         $post = $this->deposits_m->get_group_deposit($id);
-        $post OR redirect('group/deposits/listing');
+         
+        $post OR redirect('bank/deposits/listing');
         $this->transactions->void_group_deposit($post->id,$post,TRUE,$this->group->id,$this->user);
         if($redirect){
             if($this->agent->referrer()){
                 redirect($this->agent->referrer());
             }else{
-                redirect('group/deposits/listing');
+                redirect('bank/deposits/listing');
             }
         }
     }

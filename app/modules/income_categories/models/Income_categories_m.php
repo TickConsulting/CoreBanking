@@ -143,11 +143,7 @@ class Income_categories_m extends MY_Model {
 			)
 		);
 		$this->db->where($this->dx('is_deleted').' IS NULL',NULL,FALSE);
-		if($group_id){
-			$this->db->where($this->dx('group_id').'="'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').'="'.$this->group->id.'"',NULL,FALSE);
-		}
+		 
 		$income_categories = $this->db->get('income_categories')->result();
 		foreach($income_categories as $income_category){
 			$arr[$income_category->id] = $income_category->name;

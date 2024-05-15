@@ -282,3 +282,479 @@
    "MiddleName":"",
    "LastName":"Doe"
 }";	 Headers are: 
+
+15-May-2024 07:44 PM	http://api.risktick.local/safaricom/record_stk_push_account_payment/14106	a:1:{s:48:"/safaricom/record_stk_push_account_payment/14106";s:0:"";}	a:0:{}	s:1065:"{
+    "Body": {
+        "stkCallback": {
+            "MerchantRequestID": "53e3-4aa8-9fe0-8fb5e4092cdd2431267",
+            "CheckoutRequestID": "ws_CO_14052024183641898720862220",
+            "ResultCode": 0,
+            "ResultDesc": "The service request is processed successfully.",
+            "CallbackMetadata": {
+                "Item": [
+                    {
+                        "Name": "Amount",
+                        "Value": 1.00
+                    },
+                    {
+                        "Name": "MpesaReceiptNumber",
+                        "Value": "SEE999KFRJ"
+                    },
+                    {
+                        "Name": "Balance"
+                    },
+                    {
+                        "Name": "TransactionDate",
+                        "Value": 20240514184231
+                    },
+                    {
+                        "Name": "PhoneNumber",
+                        "Value": 254720862220
+                    }
+                ]
+            }
+        }
+    }
+}";	 Headers are: 
+
+15-May-2024 07:56 PM	http://api.risktick.local/safaricom/record_stk_push_account_payment/14106	a:1:{s:48:"/safaricom/record_stk_push_account_payment/14106";s:0:"";}	a:0:{}	s:1065:"{
+    "Body": {
+        "stkCallback": {
+            "MerchantRequestID": "53e3-4aa8-9fe0-8fb5e4092cdd2431267",
+            "CheckoutRequestID": "ws_CO_14052024183641898720862220",
+            "ResultCode": 0,
+            "ResultDesc": "The service request is processed successfully.",
+            "CallbackMetadata": {
+                "Item": [
+                    {
+                        "Name": "Amount",
+                        "Value": 1.00
+                    },
+                    {
+                        "Name": "MpesaReceiptNumber",
+                        "Value": "SEE999KFRJ"
+                    },
+                    {
+                        "Name": "Balance"
+                    },
+                    {
+                        "Name": "TransactionDate",
+                        "Value": 20240514184231
+                    },
+                    {
+                        "Name": "PhoneNumber",
+                        "Value": 254720862220
+                    }
+                ]
+            }
+        }
+    }
+}";	 Headers are: 
+
+15-May-2024 07:57 PM	http://api.risktick.local/safaricom/record_stk_push_account_payment/14106	a:1:{s:48:"/safaricom/record_stk_push_account_payment/14106";s:0:"";}	a:0:{}	s:1065:"{
+    "Body": {
+        "stkCallback": {
+            "MerchantRequestID": "53e3-4aa8-9fe0-8fb5e4092cdd2431267",
+            "CheckoutRequestID": "ws_CO_14052024183641898720862220",
+            "ResultCode": 0,
+            "ResultDesc": "The service request is processed successfully.",
+            "CallbackMetadata": {
+                "Item": [
+                    {
+                        "Name": "Amount",
+                        "Value": 1.00
+                    },
+                    {
+                        "Name": "MpesaReceiptNumber",
+                        "Value": "SEE999KFRJ"
+                    },
+                    {
+                        "Name": "Balance"
+                    },
+                    {
+                        "Name": "TransactionDate",
+                        "Value": 20240514184231
+                    },
+                    {
+                        "Name": "PhoneNumber",
+                        "Value": 254720862220
+                    }
+                ]
+            }
+        }
+    }
+}";	 Headers are: 
+
+15-May-2024 07:58 PM	http://api.risktick.local/safaricom/record_stk_push_account_payment/14106	a:1:{s:48:"/safaricom/record_stk_push_account_payment/14106";s:0:"";}	a:0:{}	s:1065:"{
+    "Body": {
+        "stkCallback": {
+            "MerchantRequestID": "53e3-4aa8-9fe0-8fb5e4092cdd2431267",
+            "CheckoutRequestID": "ws_CO_14052024183641898720862220",
+            "ResultCode": 0,
+            "ResultDesc": "The service request is processed successfully.",
+            "CallbackMetadata": {
+                "Item": [
+                    {
+                        "Name": "Amount",
+                        "Value": 1.00
+                    },
+                    {
+                        "Name": "MpesaReceiptNumber",
+                        "Value": "SEE999KFRJ"
+                    },
+                    {
+                        "Name": "Balance"
+                    },
+                    {
+                        "Name": "TransactionDate",
+                        "Value": 20240514184231
+                    },
+                    {
+                        "Name": "PhoneNumber",
+                        "Value": 254720862220
+                    }
+                ]
+            }
+        }
+    }
+}";	 Headers are: 
+
+15-May-2024 07:59 PM	http://api.risktick.local/safaricom/record_stk_push_account_payment/14106	a:1:{s:48:"/safaricom/record_stk_push_account_payment/14106";s:0:"";}	a:0:{}	s:1065:"{
+    "Body": {
+        "stkCallback": {
+            "MerchantRequestID": "53e3-4aa8-9fe0-8fb5e4092cdd2431267",
+            "CheckoutRequestID": "ws_CO_14052024183641898720862220",
+            "ResultCode": 0,
+            "ResultDesc": "The service request is processed successfully.",
+            "CallbackMetadata": {
+                "Item": [
+                    {
+                        "Name": "Amount",
+                        "Value": 1.00
+                    },
+                    {
+                        "Name": "MpesaReceiptNumber",
+                        "Value": "SEE999KFRJ"
+                    },
+                    {
+                        "Name": "Balance"
+                    },
+                    {
+                        "Name": "TransactionDate",
+                        "Value": 20240514184231
+                    },
+                    {
+                        "Name": "PhoneNumber",
+                        "Value": 254720862220
+                    }
+                ]
+            }
+        }
+    }
+}";	 Headers are: 
+
+15-May-2024 07:59 PM	http://api.risktick.local/safaricom/record_stk_push_account_payment/14106	a:1:{s:48:"/safaricom/record_stk_push_account_payment/14106";s:0:"";}	a:0:{}	s:1065:"{
+    "Body": {
+        "stkCallback": {
+            "MerchantRequestID": "53e3-4aa8-9fe0-8fb5e4092cdd2431267",
+            "CheckoutRequestID": "ws_CO_14052024183641898720862220",
+            "ResultCode": 0,
+            "ResultDesc": "The service request is processed successfully.",
+            "CallbackMetadata": {
+                "Item": [
+                    {
+                        "Name": "Amount",
+                        "Value": 1.00
+                    },
+                    {
+                        "Name": "MpesaReceiptNumber",
+                        "Value": "SEE999KFRJ"
+                    },
+                    {
+                        "Name": "Balance"
+                    },
+                    {
+                        "Name": "TransactionDate",
+                        "Value": 20240514184231
+                    },
+                    {
+                        "Name": "PhoneNumber",
+                        "Value": 254720862220
+                    }
+                ]
+            }
+        }
+    }
+}";	 Headers are: 
+
+15-May-2024 08:03 PM	http://api.risktick.local/safaricom/record_stk_push_account_payment/14106	a:1:{s:48:"/safaricom/record_stk_push_account_payment/14106";s:0:"";}	a:0:{}	s:1065:"{
+    "Body": {
+        "stkCallback": {
+            "MerchantRequestID": "53e3-4aa8-9fe0-8fb5e4092cdd2431267",
+            "CheckoutRequestID": "ws_CO_14052024183641898720862220",
+            "ResultCode": 0,
+            "ResultDesc": "The service request is processed successfully.",
+            "CallbackMetadata": {
+                "Item": [
+                    {
+                        "Name": "Amount",
+                        "Value": 1.00
+                    },
+                    {
+                        "Name": "MpesaReceiptNumber",
+                        "Value": "SEE999KFRJ"
+                    },
+                    {
+                        "Name": "Balance"
+                    },
+                    {
+                        "Name": "TransactionDate",
+                        "Value": 20240514184231
+                    },
+                    {
+                        "Name": "PhoneNumber",
+                        "Value": 254720862220
+                    }
+                ]
+            }
+        }
+    }
+}";	 Headers are: 
+
+15-May-2024 08:04 PM	http://api.risktick.local/safaricom/record_stk_push_account_payment/14106	a:1:{s:48:"/safaricom/record_stk_push_account_payment/14106";s:0:"";}	a:0:{}	s:1065:"{
+    "Body": {
+        "stkCallback": {
+            "MerchantRequestID": "53e3-4aa8-9fe0-8fb5e4092cdd2431267",
+            "CheckoutRequestID": "ws_CO_14052024183641898720862220",
+            "ResultCode": 0,
+            "ResultDesc": "The service request is processed successfully.",
+            "CallbackMetadata": {
+                "Item": [
+                    {
+                        "Name": "Amount",
+                        "Value": 1.00
+                    },
+                    {
+                        "Name": "MpesaReceiptNumber",
+                        "Value": "SEE999KFRJ"
+                    },
+                    {
+                        "Name": "Balance"
+                    },
+                    {
+                        "Name": "TransactionDate",
+                        "Value": 20240514184231
+                    },
+                    {
+                        "Name": "PhoneNumber",
+                        "Value": 254720862220
+                    }
+                ]
+            }
+        }
+    }
+}";	 Headers are: 
+
+15-May-2024 08:05 PM	http://api.risktick.local/safaricom/record_stk_push_account_payment/14106	a:1:{s:48:"/safaricom/record_stk_push_account_payment/14106";s:0:"";}	a:0:{}	s:1065:"{
+    "Body": {
+        "stkCallback": {
+            "MerchantRequestID": "53e3-4aa8-9fe0-8fb5e4092cdd2431267",
+            "CheckoutRequestID": "ws_CO_14052024183641898720862220",
+            "ResultCode": 0,
+            "ResultDesc": "The service request is processed successfully.",
+            "CallbackMetadata": {
+                "Item": [
+                    {
+                        "Name": "Amount",
+                        "Value": 1.00
+                    },
+                    {
+                        "Name": "MpesaReceiptNumber",
+                        "Value": "SEE999KFRJ"
+                    },
+                    {
+                        "Name": "Balance"
+                    },
+                    {
+                        "Name": "TransactionDate",
+                        "Value": 20240514184231
+                    },
+                    {
+                        "Name": "PhoneNumber",
+                        "Value": 254720862220
+                    }
+                ]
+            }
+        }
+    }
+}";	 Headers are: 
+
+15-May-2024 08:06 PM	http://api.risktick.local/safaricom/record_stk_push_account_payment/14106	a:1:{s:48:"/safaricom/record_stk_push_account_payment/14106";s:0:"";}	a:0:{}	s:1065:"{
+    "Body": {
+        "stkCallback": {
+            "MerchantRequestID": "53e3-4aa8-9fe0-8fb5e4092cdd2431267",
+            "CheckoutRequestID": "ws_CO_14052024183641898720862220",
+            "ResultCode": 0,
+            "ResultDesc": "The service request is processed successfully.",
+            "CallbackMetadata": {
+                "Item": [
+                    {
+                        "Name": "Amount",
+                        "Value": 1.00
+                    },
+                    {
+                        "Name": "MpesaReceiptNumber",
+                        "Value": "SEE999KFRJ"
+                    },
+                    {
+                        "Name": "Balance"
+                    },
+                    {
+                        "Name": "TransactionDate",
+                        "Value": 20240514184231
+                    },
+                    {
+                        "Name": "PhoneNumber",
+                        "Value": 254720862220
+                    }
+                ]
+            }
+        }
+    }
+}";	 Headers are: 
+
+15-May-2024 08:06 PM	http://api.risktick.local/safaricom/record_stk_push_account_payment/14106	a:1:{s:48:"/safaricom/record_stk_push_account_payment/14106";s:0:"";}	a:0:{}	s:1065:"{
+    "Body": {
+        "stkCallback": {
+            "MerchantRequestID": "53e3-4aa8-9fe0-8fb5e4092cdd2431267",
+            "CheckoutRequestID": "ws_CO_14052024183641898720862220",
+            "ResultCode": 0,
+            "ResultDesc": "The service request is processed successfully.",
+            "CallbackMetadata": {
+                "Item": [
+                    {
+                        "Name": "Amount",
+                        "Value": 1.00
+                    },
+                    {
+                        "Name": "MpesaReceiptNumber",
+                        "Value": "SEE999KFRJ"
+                    },
+                    {
+                        "Name": "Balance"
+                    },
+                    {
+                        "Name": "TransactionDate",
+                        "Value": 20240514184231
+                    },
+                    {
+                        "Name": "PhoneNumber",
+                        "Value": 254720862220
+                    }
+                ]
+            }
+        }
+    }
+}";	 Headers are: 
+
+15-May-2024 08:09 PM	http://api.risktick.local/safaricom/record_stk_push_account_payment/14106	a:1:{s:48:"/safaricom/record_stk_push_account_payment/14106";s:0:"";}	a:0:{}	s:1065:"{
+    "Body": {
+        "stkCallback": {
+            "MerchantRequestID": "53e3-4aa8-9fe0-8fb5e4092cdd2431267",
+            "CheckoutRequestID": "ws_CO_14052024183641898720862220",
+            "ResultCode": 0,
+            "ResultDesc": "The service request is processed successfully.",
+            "CallbackMetadata": {
+                "Item": [
+                    {
+                        "Name": "Amount",
+                        "Value": 1.00
+                    },
+                    {
+                        "Name": "MpesaReceiptNumber",
+                        "Value": "SEE999KFRJ"
+                    },
+                    {
+                        "Name": "Balance"
+                    },
+                    {
+                        "Name": "TransactionDate",
+                        "Value": 20240514184231
+                    },
+                    {
+                        "Name": "PhoneNumber",
+                        "Value": 254720862220
+                    }
+                ]
+            }
+        }
+    }
+}";	 Headers are: 
+
+15-May-2024 08:10 PM	http://api.risktick.local/safaricom/record_stk_push_account_payment/14106	a:1:{s:48:"/safaricom/record_stk_push_account_payment/14106";s:0:"";}	a:0:{}	s:1065:"{
+    "Body": {
+        "stkCallback": {
+            "MerchantRequestID": "53e3-4aa8-9fe0-8fb5e4092cdd2431267",
+            "CheckoutRequestID": "ws_CO_14052024183641898720862220",
+            "ResultCode": 0,
+            "ResultDesc": "The service request is processed successfully.",
+            "CallbackMetadata": {
+                "Item": [
+                    {
+                        "Name": "Amount",
+                        "Value": 1.00
+                    },
+                    {
+                        "Name": "MpesaReceiptNumber",
+                        "Value": "SEE999KFRJ"
+                    },
+                    {
+                        "Name": "Balance"
+                    },
+                    {
+                        "Name": "TransactionDate",
+                        "Value": 20240514184231
+                    },
+                    {
+                        "Name": "PhoneNumber",
+                        "Value": 254720862220
+                    }
+                ]
+            }
+        }
+    }
+}";	 Headers are: 
+
+15-May-2024 08:14 PM	http://api.risktick.local/safaricom/record_stk_push_account_payment/14106	a:1:{s:48:"/safaricom/record_stk_push_account_payment/14106";s:0:"";}	a:0:{}	s:1065:"{
+    "Body": {
+        "stkCallback": {
+            "MerchantRequestID": "53e3-4aa8-9fe0-8fb5e4092cdd2431267",
+            "CheckoutRequestID": "ws_CO_14052024183641898720862220",
+            "ResultCode": 0,
+            "ResultDesc": "The service request is processed successfully.",
+            "CallbackMetadata": {
+                "Item": [
+                    {
+                        "Name": "Amount",
+                        "Value": 1.00
+                    },
+                    {
+                        "Name": "MpesaReceiptNumber",
+                        "Value": "SEE999KFRJ"
+                    },
+                    {
+                        "Name": "Balance"
+                    },
+                    {
+                        "Name": "TransactionDate",
+                        "Value": 20240514184231
+                    },
+                    {
+                        "Name": "PhoneNumber",
+                        "Value": 254720862220
+                    }
+                ]
+            }
+        }
+    }
+}";	 Headers are: 
