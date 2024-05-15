@@ -85,6 +85,7 @@ class Admin extends Admin_Controller
         $this->load->library('transactions');
         $this->load->model('safaricom_m');
         $this->load->model('accounts/accounts_m');
+        $this->load->model('loans/loans_m');
         // $this->load->model('tariffs/tariffs_m');
     }
     function index()
@@ -969,18 +970,36 @@ class Admin extends Admin_Controller
     function forward_request($id = 0)
     {
         $request = $this->safaricom_m->get_stk_request($id);
+         
         if ($request) {
-            $res = $this->transactions->send_customer_callback($request);
-            if ($res) {
-                // $response = json_decode($res);
-                // $description = '';
-                // if($response){
-                //     $description = $response->response;
-                // }
-                $this->session->set_flashdata('success', 'Request forwaded : ' . $res);
+            $loan=$this->loans_m->get($request->loan_id);
+            $amount=$request->amount;
+            if($loan){
+                $deposit_date =$request->modified_on ; 
+            $send_sms_notification =0;
+            $deposit_method =1;
+            $send_email_notification =0;
+            $description='Payment via STK Push';
+            $member = $this->members_m->get_group_member($loan->member_id,$loan->group_id);
+            $created_by = $this->members_m->get_group_member_by_user_id($loan->group_id,$member->user_id);
+            if($amount && $deposit_date && $member && $created_by){
+                if($this->loan->record_loan_repayment($loan->group_id,$deposit_date,$member,$loan->id,"mobile-",$deposit_method,$description,$amount,$send_sms_notification,$send_email_notification,$created_by)){
+                $this->session->set_flashdata('success', 'Request forwaded : ');
+                    
+                }else{
+                $this->session->set_flashdata('error', 'Repayment failed ');
+                    
+                }
+                
             } else {
-                $this->session->set_flashdata('error', $this->session->flashdata('error'));
+                $this->session->set_flashdata('error', 'Missing parameters');
             }
+            }
+            else{
+                $this->session->set_flashdata('error', 'loan not found : ');
+
+            }
+            
         } else {
             $this->session->set_flashdata('error', 'Could not find request to forward');
         }
