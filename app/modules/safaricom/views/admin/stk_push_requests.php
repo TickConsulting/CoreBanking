@@ -45,6 +45,9 @@
                                     <th class="text-right">
                                         Amount
                                     </th>
+                                    <th class="text-right">
+                                        Loan Number
+                                    </th>
                                     <th>
                                         Status
                                     </th>
@@ -84,6 +87,12 @@
                                             <?php 
                                                 echo number_to_currency($post->amount).'<br/><br/>';
                                                 echo number_to_currency($post->charge).'<br/><br/>';
+                                             ?>
+                                        </td>
+                                        <td class="text-right">
+                                            <?php 
+                                                echo number_to_currency($post->loan_id).'<br/><br/>';
+                                      
                                              ?>
                                         </td>
                                         <td class="two-entry">

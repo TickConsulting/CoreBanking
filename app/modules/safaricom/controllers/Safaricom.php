@@ -3232,6 +3232,7 @@ class Safaricom extends Public_Controller{
                                 'shortcode' => "4135763",
                                 'customer_message'=>$result_description,
                                 'checkout_request_id'=>$CheckoutRequestID,
+                                'merchant_request_id'=>$merchant_request_id,
                                 'customer_message'=>$result_description,
                                 'customer_message'=>$result_description,
                                 'result_description' => $result_description,
