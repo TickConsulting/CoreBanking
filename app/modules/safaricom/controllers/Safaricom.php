@@ -3184,6 +3184,7 @@ class Safaricom extends Public_Controller{
 
     function record_stk_push_account_payment($loan_id=0){
         $file = file_get_contents('php://input');
+        file_put_contents("logs/stk_push_callback.txt","\n".date("d-M-Y h:i A").$file,FILE_APPEND);
         $response = array();
         if($file){
             $result = json_decode($file);
