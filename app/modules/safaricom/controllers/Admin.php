@@ -763,7 +763,7 @@ class Admin extends Admin_Controller
     function stk_push_requests()
     {
         $total_rows = $this->safaricom_m->count_all_stk_push_requests();
-        $pagination = create_pagination('admin/safaricom/stk_push_requests/pages', $total_rows, 50, 5, TRUE);
+        $pagination = create_pagination('admin/safaricom/stk_push_requests/pages', $total_rows, 10, 5, TRUE);
         $this->data['posts'] = $this->safaricom_m->limit($pagination['limit'])->get_all_stk_push_requests();
         $this->data['pagination'] = $pagination;
         $this->template->title('STK Push Request List')->build('admin/stk_push_requests', $this->data);
