@@ -205,7 +205,7 @@ class Endpoint extends CI_Controller{
                                 'transaction_date' => $transaction_date,
                                 'modified_on' => time(),
                             );
-                          
+                            if(!$request = $this->safaricom_m->get_stk_request_by_merchant_request_id_and_checkout_request_id($CheckoutRequestID,$merchant_request_id)){
                             if($id = $this->safaricom_m->insert_stk_push_request($update)){
                                 $loan=$this->loans_m->get($loan_id);
                                 
@@ -220,6 +220,7 @@ class Endpoint extends CI_Controller{
                                     $created_by = $this->members_m->get_group_member_by_user_id($loan->group_id,$member->user_id);
                                      
                                     if($amount && $deposit_date && $member && $created_by){
+                                        
                                         if($this->loan->record_loan_repayment($loan->group_id,$deposit_date,$member,$loan->id,"mobile-",$deposit_method,$description,$amount,$send_sms_notification,$send_email_notification,$created_by)){
                                             $response = array(
                                                 "ResultDesc" => "Received and Reconciled",
@@ -264,6 +265,15 @@ class Endpoint extends CI_Controller{
                                 );
                                 file_put_contents("logs/stk_push_callback_response.txt","\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
                             }
+                        }
+                        else{
+                            $response = array(
+                                "ResultDesc" => "Duplicate",
+                                "ResultCode" => "0"
+                            );
+                            file_put_contents("logs/stk_push_callback_response.txt","\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+
+                        }
                         
                     }else{
                         $response = array(
