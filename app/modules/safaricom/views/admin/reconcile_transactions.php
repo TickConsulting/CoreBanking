@@ -105,7 +105,9 @@
                         if(response.status=='1'){
                             console.log('success');
                             $('#'+response.id).html('<i class="fa fa-check" style="color:green"></i>');
+
                         }else{
+                        
                             $('#'+response.id).html('<i class="fa fa-close" style="color:red"></i>');
                         }
                     }

@@ -363,11 +363,13 @@ class Admin extends Admin_Controller
             }
         }
         $this->data['transactions'] = $transactions;
+        //  print_r($transactions);
+        //  die;
         $this->data['post'] = $post;
         if ($transactions) {
-            if ($this->data['shortcode'] == 546448) {
+            if ($this->data['shortcode'] == 4135763) {
                 $this->template->title('Upload Transactions')->build('admin/reconcile_transactions', $this->data);
-            } elseif ($this->data['shortcode'] = 546866) {
+            } elseif ($this->data['shortcode'] = 4135763) {
                 $this->template->title('Upload Transactions')->build('admin/reconcile_disbursements', $this->data);
             }
         } else {
@@ -878,7 +880,7 @@ class Admin extends Admin_Controller
         $this->data['post'] = $post;
         $this->template->title('Edit Safaricom Configurations')->build('admin/configurations_form', $this->data);
     }
-
+   
     function configuration_listing()
     {
         $posts = $this->safaricom_m->get_configurations();
