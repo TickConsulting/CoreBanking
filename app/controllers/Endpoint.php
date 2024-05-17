@@ -356,12 +356,12 @@ class Endpoint extends CI_Controller{
         {
             $file = file_get_contents('php://input');
             $body = json_decode($file);
-           
+             
             file_put_contents('logs/c2b_validation_file.txt',"\n".date("d-M-Y h:i A").$file,FILE_APPEND);
          
             $server_ip = $_SERVER['REMOTE_ADDR'];
            if($file){
-                   
+                
                     if($body->TransID && $body->TransAmount){
                         $transaction_id = trim($body->TransID);
                         $reference_number = trim($body->BillRefNumber);
