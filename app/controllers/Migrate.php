@@ -24,8 +24,10 @@ class Migrate extends Public_Controller{
             $member_id = str_replace('member-', '', $transaction->recipient_id);
             $member = $this->members_m->get_group_member($member_id,$transaction->group_id);
             //change this when going live
-            // $transaction->recipient=$member->phone;
-            $transaction->recipient="254728762287";
+            $transaction->recipient=$member->phone;
+
+             //change to this  when on test environment
+            // $transaction->recipient="254728762287";
         }
         $response=array();
         if($configuration && $transactions){
