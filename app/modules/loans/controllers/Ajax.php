@@ -521,7 +521,15 @@ class Ajax extends Ajax_Controller{
                                                     </span>
                                                 </a>&nbsp;&nbsp;';
                                             }
-                                        echo '
+                                            echo '
+                                            <a href="'.site_url('bank/loans/void/'.$post->id).'" class="btn btn-sm btn-primary m-btn m-btn--icon action_button confirmation_link mt-1" id="'.$post->id.'">
+                                                <span>
+                                                    <i class="la la-trash-o"></i>
+                                                    <span>
+                                                        '.translate('Void').' &nbsp;&nbsp; 
+                                                    </span>
+                                                </span>
+                                            </a>&nbsp;&nbsp;
                                             
                                         </td>
                                     </tr>
@@ -539,7 +547,10 @@ class Ajax extends Ajax_Controller{
             echo '
             </div>
             <div class="clearfix"></div>';
-            
+            if($posts):
+                echo '
+                <button class="btn btn-sm btn-danger confirmation_bulk_action" name=\'btnAction\' value=\'bulk_void\' data-toggle="confirmation" type="button" data-placement="top"> <i class=\'fa fa-trash-o\'></i> '.translate('Bulk Void').'</button>';
+            endif;
             echo '
             <div class="clearfix"></div>';
         echo form_close();

@@ -3448,8 +3448,11 @@ class Bank extends Bank_Controller{
 
     function void($id=0,$redirect=TRUE)
     {
+        
         $withdrawal = $this->withdrawals_m->get_group_withdrawal_by_loan_id($id,$this->group->id);
+        
         if($withdrawal&&$id){
+            
             if($this->transactions->void_group_withdrawal($withdrawal->id,$withdrawal,TRUE,$this->group->id)){
                 if($redirect){
                     redirect('bank/loans/listing');

@@ -7532,8 +7532,9 @@ class Transactions{
     }
 
     public function void_group_withdrawal($id = 0,$post = array(),$get_withdrawal_siblings = TRUE,$group_id = 0){
-        if($id&&$post&&$group_id){
+        if($id&&$post){
             $result = TRUE;
+          
             // if($post->account_id){
             //     $account_id = $post->account_id;
             //     if(preg_match('/bank-/', $account_id)){
@@ -7562,6 +7563,7 @@ class Transactions{
                     $result = FALSE;
                 }
             }else if($post->type==9||$post->type==10||$post->type==11||$post->type==12){
+                
                 if($this->ci->loan->void_loan($post->loan_id,$this->ci->ion_auth->get_user($post->created_by?:1),TRUE)){
                     $this->ci->session->set_flashdata('success','Loan successfully voided.');
                 }else{

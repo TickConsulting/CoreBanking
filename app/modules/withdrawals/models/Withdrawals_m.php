@@ -868,11 +868,7 @@ class Withdrawals_m extends MY_Model{
 
 	function get_group_withdrawal_by_loan_id($loan_id = 0,$group_id = 0){
 		$this->select_all_secure('withdrawals');
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+		 
 		$this->db->where($this->dx('loan_id').' = "'.$loan_id.'"',NULL,FALSE);
 		$this->db->where($this->dx('active').' = "1"',NULL,FALSE);
 		$this->db->where($this->dx('type').' IN (9,10,11,12) ',NULL,FALSE);
@@ -883,11 +879,7 @@ class Withdrawals_m extends MY_Model{
 
 	function get_group_withdrawal_by_debtor_loan_id($debtor_loan_id = 0,$group_id = 0){
 		$this->select_all_secure('withdrawals');
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+		 
 		$this->db->where($this->dx('debtor_loan_id').' = "'.$debtor_loan_id.'"',NULL,FALSE);
 		$this->db->where($this->dx('active').' = "1"',NULL,FALSE);
 		$this->db->where($this->dx('type').' IN (33,34,35,36) ',NULL,FALSE);
@@ -907,11 +899,7 @@ class Withdrawals_m extends MY_Model{
 				$this->dx('member_id').' as member_id',
 				)
 		);
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+		 
 		if($date_from&&$date_to){
 			$this->db->where($this->dx('withdrawal_date').'>="'.$date_from.'"',NULL,FALSE);
 			$this->db->where($this->dx('withdrawal_date').'<="'.$date_to.'"',NULL,FALSE);
@@ -934,11 +922,7 @@ class Withdrawals_m extends MY_Model{
 				'sum('.$this->dx('amount').') as amount',
 				)
 		);
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+		 
 		if($member_id){
 			$this->db->where($this->dx('member_id').' = "'.$member_id.'"',NULL,FALSE);
 		}else{
@@ -957,11 +941,7 @@ class Withdrawals_m extends MY_Model{
 				'sum('.$this->dx('amount').') as amount',
 				)
 		);
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+	 
 		if($contribution_id_list){
 			$this->db->where($this->dx('contribution_id').' IN ('.$contribution_id_list.') ',NULL,FALSE);
 			
@@ -986,11 +966,7 @@ class Withdrawals_m extends MY_Model{
 				"DATE_FORMAT(FROM_UNIXTIME(".$this->dx('withdrawal_date')." ),'%Y') as year ",
 			)
 		);
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+	 
 		if($contribution_id_list){
 			$this->db->where($this->dx('contribution_id').' IN ('.$contribution_id_list.') ',NULL,FALSE);
 			
@@ -1033,11 +1009,7 @@ class Withdrawals_m extends MY_Model{
 				$this->dx('contribution_id').' as contribution_id',
 				)
 		);
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+		 
 		if($group_member_id){
 			$this->db->where($this->dx('member_id').' = "'.$group_member_id.'"',NULL,FALSE);
 		}
@@ -1071,11 +1043,7 @@ class Withdrawals_m extends MY_Model{
 				$this->dx('contribution_id').' as contribution_id',
 			)
 		);
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+		 
 
 		$this->db->where($this->dx('type').' IN (21,22,23,24) ',NULL,FALSE);
 		//$this->db->where('('.$this->dx('type').' = "21" OR '.$this->dx('type').' = "22" OR '.$this->dx('type').' = "23" OR '.$this->dx('type').' = "24" )',NULL,FALSE);
@@ -1114,11 +1082,7 @@ class Withdrawals_m extends MY_Model{
 				$this->dx('contribution_id').' as contribution_id',
 			)
 		);
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+		 
 
 		$this->db->where($this->dx('type').' IN (21,22,23,24) ',NULL,FALSE);
 		//$this->db->where('('.$this->dx('type').' = "21" OR '.$this->dx('type').' = "22" OR '.$this->dx('type').' = "23" OR '.$this->dx('type').' = "24" )',NULL,FALSE);
@@ -1153,11 +1117,7 @@ class Withdrawals_m extends MY_Model{
 				$this->dx('member_id').' as member_id',
 			)
 		);
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+		 
 		if($group_member_id){
 			$this->db->where($this->dx('member_id').' = "'.$group_member_id.'"',NULL,FALSE);
 		}
@@ -1184,11 +1144,7 @@ class Withdrawals_m extends MY_Model{
 		$amount=array();
 		foreach($members as $member_id => $member_name){
 				$this->db->select('sum('.$this->dx('amount').') as amount_paid');
-				if($group_id){
-					$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-				}else{
-					$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-				}
+				 
 				$this->db->where($this->dx('active').' = "1"',NULL,FALSE);
 				$this->db->where($this->dx('member_id').' = "'.$member_id.'"',NULL,FALSE);
 				if($date_from&&$date_to){
@@ -1205,11 +1161,7 @@ class Withdrawals_m extends MY_Model{
 
 	function get_group_total_loan_disbursed_amount($group_id=0,$date_from=0,$date_to=0){
 		$this->db->select('sum('.$this->dx('amount').') as amount_paid');
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+		 
 		$this->db->where($this->dx('active').' = "1"',NULL,FALSE);
 		$this->db->where($this->dx('member_id').' >= "1"',NULL,FALSE);
 		if($date_from&&$date_to){
@@ -1223,11 +1175,7 @@ class Withdrawals_m extends MY_Model{
 
 	function get_group_total_debtor_loan_disbursed_amount($group_id=0,$date_from=0,$date_to=0){
 		$this->db->select('sum('.$this->dx('amount').') as amount_paid');
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+	 
 		$this->db->where($this->dx('active').' = "1"',NULL,FALSE);
 		$this->db->where($this->dx('debtor_id').' >= "1"',NULL,FALSE);
 		if($date_from&&$date_to){
@@ -1245,11 +1193,7 @@ class Withdrawals_m extends MY_Model{
 			'sum('.$this->dx('amount').') as amount_paid',
 			$this->dx('debtor_id').' as debtor_id',
 		));
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+		 
 		$this->db->where($this->dx('active').' = "1"',NULL,FALSE);
 		$this->db->where($this->dx('debtor_id').' >= "1"',NULL,FALSE);
 		if($date_from&&$date_to){
@@ -1330,11 +1274,7 @@ class Withdrawals_m extends MY_Model{
 				$this->dx('contribution_id').' as contribution_id',
 				)
 		);
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+		 
 		$this->db->where($this->dx('type').' IN (21,22,23,24) ',NULL,FALSE);
 		$this->db->where($this->dx('is_a_back_dating_record').' = "1" ',NULL,FALSE);
 		//$this->db->where('('.$this->dx('type').' = "1" OR '.$this->dx('type').' = "2" OR '.$this->dx('type').' = "3" OR '.$this->dx('type').' = "7" )',NULL,FALSE);
@@ -1432,11 +1372,7 @@ class Withdrawals_m extends MY_Model{
 	function get_group_withdrawal_by_transaction_alert_id($transaction_alert_id = 0,$group_id = 0){
 		$this->select_all_secure('withdrawals');
 		$this->db->where($this->dx('transaction_alert_id').' = "'.$transaction_alert_id.'"',NULL,FALSE);
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+		 
 		$this->db->where($this->dx('active').' = "1"',NULL,FALSE);
 		$this->db->limit(1);
 		return $this->db->get('withdrawals')->row();
@@ -1493,11 +1429,7 @@ class Withdrawals_m extends MY_Model{
 
 	function get_group_back_dating_asset_purchase_objects_array($group_id = 0){
 		$this->select_all_secure('withdrawals');
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+		 
 		$this->db->where($this->dx('type').' IN (5,6,7,8) ',NULL,FALSE);
 		$this->db->where($this->dx('active').' = "1" ',NULL,FALSE);
 		$this->db->where($this->dx('is_a_back_dating_record').' = "1" ',NULL,FALSE);
@@ -1524,11 +1456,7 @@ class Withdrawals_m extends MY_Model{
 				$this->dx('account_id')." as account_id",
 			)
 		);
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+		 
 		$this->db->where($this->dx('active').' = "1"',NULL,FALSE);
 		$this->db->where($this->dx('type').' IN (29,30,31,32) ',NULL,FALSE);
 		$this->db->where($this->dx('is_a_back_dating_record').' = "1" ',NULL,FALSE);
@@ -1696,11 +1624,7 @@ class Withdrawals_m extends MY_Model{
     	$this->select_all_secure('withdrawal_requests');
     	$this->db->where('id',$id);
     	$this->db->where($this->dx('active')." = '1' ",NULL,FALSE);
-		if($group_id){
-			$this->db->where($this->dx('group_id')." = '".$group_id."' ",NULL,FALSE);
-		}else{
-		$this->db->where($this->dx('group_id')." = '".$this->group->id."' ",NULL,FALSE);
-		}
+		 
     	$this->db->limit(1);
     	return $this->db->get('withdrawal_requests')->row();
     }
@@ -1721,11 +1645,7 @@ class Withdrawals_m extends MY_Model{
     	$this->select_all_secure('withdrawal_approval_requests');
     	$this->db->where('id',$id);
     	$this->db->where($this->dx('active')." = '1' ",NULL,FALSE);
-    	if($group_id){
-    		$this->db->where($this->dx('group_id')." = '".$group_id."' ",NULL,FALSE);
-    	}else{
-    		$this->db->where($this->dx('group_id')." = '".$this->group->id."' ",NULL,FALSE);
-    	}
+    	 
 		return $this->db->get('withdrawal_approval_requests')->row();
     }
 
@@ -1824,11 +1744,7 @@ class Withdrawals_m extends MY_Model{
     	if($member_list){
     		$this->db->where($this->dx('member_id').' IN('.$member_list.')',NULL,FALSE);
     	}
-    	if($group_id){
-			$this->db->where($this->dx('group_id')." = '".$group_id."' ",NULL,FALSE);
-    	}else{
-    		$this->db->where($this->dx('group_id')." = '".$this->group->id."' ",NULL,FALSE);
-    	}
+    	 
     	$this->db->where($this->dx('active')." = '1' ",NULL,FALSE);
     	return $this->db->count_all_results('withdrawal_requests');
     }
