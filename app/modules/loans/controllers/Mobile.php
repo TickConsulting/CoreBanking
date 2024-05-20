@@ -1637,7 +1637,8 @@ class Mobile extends Mobile_Controller{
                             $total_installment_payable = $this->loan_invoices_m->get_total_installment_loan_payable($ongoing_member_loan->id);
                             $percentage_paid = 0;
                             $percentage_paid = ($total_paid?($total_paid/$total_installment_payable) * 100:0);
-                            $loan_balance = $total_installment_payable - $total_paid;                        
+                            $loan_balance = $total_installment_payable - $total_paid; 
+                            $last_loan_repayment=$this->loan_repayments_m->last_loan_repayment_date($ongoing_member_loan->id);                       
                             $matured_loans[] = array(
                                 'loan_id'=>$ongoing_member_loan->id,
                                 'total_loan_amount_payable'=>$total_installment_payable,
@@ -1652,6 +1653,8 @@ class Mobile extends Mobile_Controller{
                                 'loan_from'=>date('M Y',$ongoing_member_loan->disbursement_date),
                                 'loan_to'=>date('M Y',$ongoing_member_loan->loan_end_date),
                                 'timestamp_from'=>$ongoing_member_loan->disbursement_date,
+                                'last_loan_repayment_date'=>$last_loan_repayment,
+                                // 'time_taken_to_last_repayment'=>$last_loan_repayment,
                                 'timestamp_to'=>$ongoing_member_loan->loan_end_date,
                                 'amount_paid'=>$total_paid,
                                 'is_fully_paid'=>$ongoing_member_loan->is_fully_paid
