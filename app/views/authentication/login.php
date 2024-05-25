@@ -109,9 +109,9 @@
 			</div>
 			<!--end::Body-->
 		</div>
-		<div class="col-md-7 pt-5 pb-5 d-block d-lg-none">
+		<!-- <div class="col-md-7 pt-5 pb-5 d-block d-lg-none">
 			<img src="<?php echo base_url('/templates/admin_themes/groups/img/auth/'); ?><?php if(preg_match('/swahili/i', $this->selected_language_name)){ echo 'all_sw.png'; } else { echo 'all_en.png'; } ?>" draggable="false" width="100%" alt="group contributions">
-		</div>
+		</div> -->
 		<?php if(preg_match('/eazzychama/',$_SERVER['HTTP_HOST'])) { ?>
           <div class="text-left" style="margin-top:-20px;">
               <p>
