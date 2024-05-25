@@ -91,7 +91,7 @@ $config['admin_email']                = "info@chamasoft.com"; // Admin Email, ad
 $config['default_group']              = 'members';           // Default group, use name
 $config['group_member']              = 'member';           // Default group, use name
 $config['admin_group']                = 'admin';             // Default administrators group, use name
-$config['bank_admin_group']                = 'bank';             // Default administrators group, use name
+$config['bank_admin_group']                = 'banker';             // Default administrators group, use name
 $config['group_account_manager']                = 'group-account-manager';             // Default administrators group, use name
 
 

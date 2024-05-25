@@ -570,10 +570,18 @@ class Ion_auth{
 	public function is_bank_admin($id=false)
 	{
 		$this->ion_auth_model->trigger_events('is_admin');
-
+		$users_groups = $this->ion_auth_model->get_users_groups($this->user->id)->result();
+		$groups_array=array();
+		foreach ($users_groups as $group)
+			{
+				$groups_array[$group->id] = strtolower($group->name);
+			}
 		$admin_group = $this->config->item('bank_admin_group', 'ion_auth');
-
-		return $this->in_group($admin_group, $id);
+			$check_all=false;
+		if(in_array($admin_group,$groups_array)){
+			 $check_all=true;
+		}
+		return $check_all;
 	}
 
 	public function is_group_member($id=FALSE){
