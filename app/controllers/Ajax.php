@@ -414,7 +414,7 @@ class Ajax extends Ajax_Controller{
                         $response = array(
                             'status' => 1,
                             'message' => 'Password successfully set',
-                            'refer' => site_url('checkin'),
+                            'refer' => site_url('dashboard'),
                         );
                     }else{
                         $response = array(
