@@ -523,8 +523,7 @@ class Endpoint extends CI_Controller{
                                     $id = $this->safaricom_m->insert_c2b($input_data);
                                     if($id){
                                         $loan=$this->loans_m->get($debit_account);
-                                        if($loan){
-                                            
+                                        if($loan){   
                                             $deposit_date =$transaction_date ; 
                                             $send_sms_notification =0;
                                             $deposit_method =1;
