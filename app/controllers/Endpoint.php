@@ -527,7 +527,7 @@ class Endpoint extends CI_Controller{
                                             "ResultCode"=>0,
                                             "ResultDesc"=>"Service request successful. Reconciling ..."
                                         );
-                                 file_put_contents('logs/c2b_confirmation_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+                                 file_put_contents('logs/c2b_confirmation_response_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
 
                                        echo json_encode($response);
                                     }else{
@@ -536,7 +536,7 @@ class Endpoint extends CI_Controller{
                                             "ResultCode"=>1,
                                             "ResultDesc"=>"Error processing-insert the entry"
                                         );
-                                    file_put_contents('logs/c2b_confirmation_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+                                    file_put_contents('logs/c2b_confirmation_response_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
 
                                        echo json_encode($response);
 
@@ -547,7 +547,7 @@ class Endpoint extends CI_Controller{
                                             "ResultCode"=>1,
                                             "ResultDesc"=>"This loan is not recognized ".$debit_account
                                         );
-                                 file_put_contents('logs/c2b_confirmation_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+                                 file_put_contents('logs/c2b_confirmation_response_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
 
                                        echo json_encode($response);
                                 }
@@ -556,7 +556,7 @@ class Endpoint extends CI_Controller{
                                     "ResultCode"=>1,
                                     "ResultDesc"=>"Duplicate entry"
                                 );
-                                file_put_contents('logs/c2b_confirmation_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+                                file_put_contents('logs/c2b_confirmation_response_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
 
                                echo json_encode($response);
                             }
@@ -579,7 +579,7 @@ class Endpoint extends CI_Controller{
                                 "ResultCode"=>1,
                                 "ResultDesc"=>"Some parameter are missing"
                             );
-                            file_put_contents('logs/c2b_confirmation_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+                            file_put_contents('logs/c2b_confirmation_response_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
 
                            echo json_encode($response);
                         }
@@ -588,7 +588,7 @@ class Endpoint extends CI_Controller{
                             "ResultCode"=>1,
                             "ResultDesc"=>"Some parameter are missing"
                         );
-                        file_put_contents('logs/c2b_confirmation_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+                        file_put_contents('logs/c2b_confirmation_response_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
 
                        echo json_encode($response);
                     }
@@ -598,6 +598,8 @@ class Endpoint extends CI_Controller{
                     "ResultCode"=>0,
                     "ResultDesc"=>"Some parameter are missing"
                 );
+                file_put_contents('logs/c2b_confirmation_response_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+
                echo json_encode($response);
             }
         }
