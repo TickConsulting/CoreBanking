@@ -497,12 +497,12 @@ class Endpoint extends CI_Controller{
                         $transaction_particulars = 'MPESA Transaction';
                         $phone = trim($body->MSISDN);
                         $debit_account = trim($body->InvoiceNumber)?:trim($body->BillRefNumber);
-                        $customer_info = $body->FirstName.' '.$body->MiddleName.' '.$body->LastName ;
+                        $customer_info = $body->FirstName ;
                         $shortcode = $body->BusinessShortCode;
                         $debit_customer = $customer_info;
                         if($transaction_id && $debit_account && $transaction_amount && $transaction_date && $transaction_currency){
                             if(!$this->safaricom_m->is_transaction_dublicate($transaction_id) && !$this->safaricom_m->get_c2b_payment_by_transaaction_id($transaction_id)){
-                                if($this->safaricom_m->is_loan_number_recognized($debit_account)){
+                                if($this->members_m->get_applicant_by_phone_number(valid_phone($debit_account))){
                                     $transaction_date = strtotime($transaction_date);
                                     $input_data = array(
                                             'transaction_id' => $transaction_id,
@@ -522,7 +522,8 @@ class Endpoint extends CI_Controller{
                                         );
                                     $id = $this->safaricom_m->insert_c2b($input_data);
                                     if($id){
-                                        $loan=$this->loans_m->get($debit_account);
+                                        $loan=$this->loans_m->get_applicant_loan_by_phone($debit_account);
+                                        
                                         if($loan){   
                                             $deposit_date =$transaction_date ; 
                                             $send_sms_notification =0;

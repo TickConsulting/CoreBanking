@@ -2081,7 +2081,15 @@ class Loans_m extends MY_Model{
         $this->db->join('users',$this->dx('members.user_id').' = users.id');
         return $this->db->get('loan_signatory_requests')->result();
     }
-
+    function get_applicant_loan_by_phone($phone=''){
+        $member=$this->members_m->get_applicant_by_phone_number(valid_phone($phone));
+        $this->select_all_secure('loans');
+        $this->db->where($this->dx('active')." = '1' ",NULL,FALSE);
+        $this->db->where($this->dx('member_id')." = '".$member->id."' ",NULL,FALSE);
+        $this->db->where('('.$this->dx('is_fully_paid').'="" OR '.$this->dx('is_fully_paid').' IS NULL OR '.$this->dx('is_fully_paid').'="0")',NULL,FALSE);
+        $this->db->limit(1);
+        return $this->db->get('loans')->row();
+    }
     function get_loan_application_signatory_request($loan_application_id = 0,$signatory_member_id = 0){
         $this->select_all_secure('loan_signatory_requests');
         $this->db->where($this->dx('loan_application_id').'="'.$loan_application_id.'"',NULL,FALSE);
@@ -2757,6 +2765,15 @@ class Loans_m extends MY_Model{
         $this->db->where($this->dx('loan_amount')." = '".$amount."' ",NULL,FALSE);
         $this->db->where("DATE_FORMAT(FROM_UNIXTIME(".$this->dx('disbursement_date')."),'%Y%m%d') ='" . date('Ymd',$disbursement_date) . "'", NULL, FALSE);
         return $this->db->get('loans')->result();
+    }
+    function get_member_unpaid_loan($member_id=0){
+        $this->select_all_secure('loans');
+        $this->db->where($this->dx('active')." = '1' ",NULL,FALSE);
+        $this->db->where($this->dx('member_id')." = '".$member_id."' ",NULL,FALSE);
+        $this->db->where($this->dx('loan_amount')." = '".$amount."' ",NULL,FALSE);
+        $this->db->where('('.$this->dx('is_fully_paid').'="" OR '.$this->dx('is_fully_paid').' IS NULL OR '.$this->dx('is_fully_paid').'="0")',NULL,FALSE);
+        $this->db->limit(1);
+        return $this->db->get('loans')->row();
     }
 
     function get_voided_loan($id=0,$group_id=0){
