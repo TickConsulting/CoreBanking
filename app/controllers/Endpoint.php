@@ -521,14 +521,50 @@ class Endpoint extends CI_Controller{
                                             'created_on' => time(),
                                         );
                                     $id = $this->safaricom_m->insert_c2b($input_data);
-                                   
                                     if($id){
-                                        $response=array(
-                                            "ResultCode"=>0,
-                                            "ResultDesc"=>"Service request successful. Reconciling ..."
-                                        );
-                                 file_put_contents('logs/c2b_confirmation_response_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
-
+                                        $loan=$this->loans_m->get($debit_account);
+                                        if($loan){
+                                            
+                                            $deposit_date =$transaction_date ; 
+                                            $send_sms_notification =0;
+                                            $deposit_method =1;
+                                            $send_email_notification =0;
+                                            $description='Payment via STK Push';
+                                            $member = $this->members_m->get_group_member($loan->member_id,$loan->group_id);
+                                            $created_by = $this->members_m->get_group_member_by_user_id($loan->group_id,$member->user_id);
+                                            if($transaction_amount && $deposit_date && $member && $created_by){ 
+                                                if($this->loan->record_loan_repayment($loan->group_id,$deposit_date,$member,$loan->id,"mobile-",$deposit_method,$description,$transaction_amount,$send_sms_notification,$send_email_notification,$created_by)){
+                                                    $response = array(
+                                                        "ResultDesc" => "Received and Reconciled",
+                                                        "ResultCode" => "0"
+                                                    );
+                                                    file_put_contents("logs/c2b_confirmation_response_file.txt","\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+                                                    
+                                                }else{
+                                                    $response = array(
+                                                        "ResultDesc" => "Received and Not reconciled",
+                                                        "ResultCode" => "0"
+                                                    );
+                                                    file_put_contents("logs/c2b_confirmation_response_file.txt","\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND); 
+                                                }
+                                                
+                                            } else {
+                                                $response = array(
+                                                    "ResultDesc" => "Received ,Missing Params",
+                                                    "ResultCode" => "0",
+                                                    "missingParams"=>true
+                                                );
+                                                file_put_contents("logs/c2b_confirmation_response_file.txt","\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+                                                
+                                            }
+                                            }
+                                            else{
+                                                $response = array(
+                                                    "ResultDesc" => "Received. Transaction Not found",
+                                                    "ResultCode" => "0"
+                                                );
+                                                file_put_contents("logs/c2b_confirmation_response_file.txt","\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+                                            }
                                        echo json_encode($response);
                                     }else{
                                         
