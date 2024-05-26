@@ -307,7 +307,7 @@ class Endpoint extends CI_Controller{
         }
         echo json_encode($response);
     }
-    function record_direct_account_payment(){ // check record_direct_account_payment
+    function record_direct_account_payment_old(){ // check record_direct_account_payment
         $response = array();
         $file = file_get_contents('php://input');
         file_put_contents('logs/c2b_confirmation_file.txt',"\n".date("d-M-Y h:i A").$file,FILE_APPEND);
@@ -419,7 +419,7 @@ class Endpoint extends CI_Controller{
 
                                     $response=array(
                                             "ResultCode"=>1,
-                                            "ResultDesc"=>"This loan is not recognized"
+                                            "ResultDesc"=>"This loan is not recognized ".$debit_account
                                         );
                                  file_put_contents('logs/c2b_validation_response_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
 
@@ -463,6 +463,132 @@ class Endpoint extends CI_Controller{
                             "ResultDesc"=>"Some parameter are missing"
                         );
                         file_put_contents('logs/c2b_validation_response_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+
+                       echo json_encode($response);
+                    }
+               
+            }else{
+                $response=array(
+                    "ResultCode"=>0,
+                    "ResultDesc"=>"Some parameter are missing"
+                );
+               echo json_encode($response);
+            }
+        }
+    }
+    function record_direct_account_payment(){
+        if(isset($_REQUEST))
+        {
+            $file = file_get_contents('php://input');
+            $body = json_decode($file);
+             
+            file_put_contents('logs/c2b_confirmation_file.txt',"\n".date("d-M-Y h:i A").$file,FILE_APPEND);
+         
+            $server_ip = $_SERVER['REMOTE_ADDR'];
+           if($file){
+                
+                    if($body->TransID && $body->TransAmount){
+                        $transaction_id = trim($body->TransID);
+                        $reference_number = trim($body->BillRefNumber);
+                        $transaction_date = trim($body->TransTime);
+                        $transaction_amount = trim($body->TransAmount);
+                        $transaction_currency = 'KES';
+                        $transaction_type = trim($body->TransactionType);
+                        $transaction_particulars = 'MPESA Transaction';
+                        $phone = trim($body->MSISDN);
+                        $debit_account = trim($body->InvoiceNumber)?:trim($body->BillRefNumber);
+                        $customer_info = $body->FirstName.' '.$body->MiddleName.' '.$body->LastName ;
+                        $shortcode = $body->BusinessShortCode;
+                        $debit_customer = $customer_info;
+                        if($transaction_id && $debit_account && $transaction_amount && $transaction_date && $transaction_currency){
+                            if(!$this->safaricom_m->is_transaction_dublicate($transaction_id) && !$this->safaricom_m->get_c2b_payment_by_transaaction_id($transaction_id)){
+                                if($this->safaricom_m->is_loan_number_recognized($debit_account)){
+                                    $transaction_date = strtotime($transaction_date);
+                                    $input_data = array(
+                                            'transaction_id' => $transaction_id,
+                                            'reference_number' => $reference_number,
+                                            'transaction_date' => $transaction_date,
+                                            'amount' => $transaction_amount,
+                                            'active' => 1,
+                                            'status'=>1,
+                                            'currency' => $transaction_currency,
+                                            'transaction_type' => $transaction_type,
+                                            'transaction_particulars' => $transaction_particulars,
+                                            'phone' => $phone,
+                                            'account' => $debit_account,
+                                            'shortcode' => $shortcode,
+                                            'customer_name' => $debit_customer,
+                                            'created_on' => time(),
+                                        );
+                                    $id = $this->safaricom_m->insert_c2b($input_data);
+                                   
+                                    if($id){
+                                        $response=array(
+                                            "ResultCode"=>0,
+                                            "ResultDesc"=>"Service request successful. Reconciling ..."
+                                        );
+                                 file_put_contents('logs/c2b_confirmation_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+
+                                       echo json_encode($response);
+                                    }else{
+                                        
+                                         $response=array(
+                                            "ResultCode"=>1,
+                                            "ResultDesc"=>"Error processing-insert the entry"
+                                        );
+                                    file_put_contents('logs/c2b_confirmation_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+
+                                       echo json_encode($response);
+
+                                    }
+                                }else{  
+
+                                    $response=array(
+                                            "ResultCode"=>1,
+                                            "ResultDesc"=>"This loan is not recognized ".$debit_account
+                                        );
+                                 file_put_contents('logs/c2b_confirmation_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+
+                                       echo json_encode($response);
+                                }
+                            }else{
+                                $response=array(
+                                    "ResultCode"=>1,
+                                    "ResultDesc"=>"Duplicate entry"
+                                );
+                                file_put_contents('logs/c2b_confirmation_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+
+                               echo json_encode($response);
+                            }
+                        }
+                        else{
+                            $mail = ' REMOTE_ADDR '.$server_ip.' Server Address '.$_SERVER['SERVER_ADDR'].' Some parameters are missing';
+                            if(!$transaction_id){
+                                $mail.=' Transaction id empty '.$transaction_id;
+                            }
+                            if(!$debit_account){
+                                $mail.=' Debit account empty '.$debit_account;
+                            }
+                            if(!$transaction_amount){
+                                $mail.=' Amount empty '.$transaction_amount;
+                            }
+                            if(!$transaction_date){
+                                $mail.=' Date empty '.$transaction_amount;
+                            }
+                            $response=array(
+                                "ResultCode"=>1,
+                                "ResultDesc"=>"Some parameter are missing"
+                            );
+                            file_put_contents('logs/c2b_confirmation_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+
+                           echo json_encode($response);
+                        }
+                    }else{
+                        $response=array(
+                            "ResultCode"=>1,
+                            "ResultDesc"=>"Some parameter are missing"
+                        );
+                        file_put_contents('logs/c2b_confirmation_file.txt',"\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
 
                        echo json_encode($response);
                     }
