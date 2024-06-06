@@ -140,6 +140,13 @@ class Dbfix extends CI_Controller
 				),
 			)
 		);
+        $this->dbfix_m->add_column('safaricomc2bpayments',
+			array(
+				'loan_id'=>array(
+					'type'=> 'blob',
+				),
+			)
+		);
 
 		$this->dbfix_m->add_column('safaricomc2bpayments',
 			array(

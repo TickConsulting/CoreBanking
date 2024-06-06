@@ -29,7 +29,7 @@
                                         <label>
                                             <?php echo translate('Select Member');?>
                                         </label>
-                                        <?php echo form_dropdown('member_ids[]',array()+translate($this->group_member_options),$this->input->get('member_ids')?$this->input->get('member_ids'):'','class="form-control m-select2-search" multiple="multiple"'); ?>
+                                        <?php echo form_dropdown('member_ids[]',array()+translate($group_member_options),$this->input->get('member_ids')?$this->input->get('member_ids'):'','class="form-control m-select2-search" multiple="multiple"'); ?>
                                     </div>
                                     <div class="form-group m-form__group pt-0">
                                         <label>

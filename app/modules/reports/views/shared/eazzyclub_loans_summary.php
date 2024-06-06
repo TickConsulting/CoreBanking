@@ -25,9 +25,9 @@
                                 ?>
 
                             </label>
-                            <div class="input-group col-md-12 col-sm-12 col-xs-12 ">
-                                <?php echo form_dropdown('member_ids[]',array(''=>'All')+$this->group_member_options,$this->input->get('member_ids')?$this->input->get('member_ids'):'','class="form-control select2" multiple="multiple" id = "type"  ') ?>
-                            </div>
+                           <div class="input-group col-md-12 col-sm-12 col-xs-12 ">
+                                <?php echo form_dropdown('member_ids[]',array(''=>'All')+$group_member_options,$this->input->get('member_ids')?$this->input->get('member_ids'):'','class="form-control select2" multiple="multiple" id = "type"  ') ?>
+                            </div> 
                         </div>
                     </div>
                     <div class="form-actions">
@@ -76,7 +76,7 @@
 
 
     function load_loan_summary(){
-        App.blockUI({
+        mApp.blockUI({
             target: '#loans_summary',
             overlayColor: 'white',
             animate: true
@@ -90,7 +90,7 @@
                     $('input[type=checkbox]').uniform();
                     $('.select2').select2({width:"100%"});
                     $('.date-picker').datepicker({autoclose:true});
-                    App.unblockUI('#loans_summary');
+                    mApp.unblockUI('#loans_summary');
                     $('.tooltips').tooltip();
                 }
             }

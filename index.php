@@ -60,9 +60,11 @@
 		"102.7.105.10"
 		// "105.163.0.64"
 	);
-
+ 
 	if(in_array($_SERVER['REMOTE_ADDR'], $ip_addresses) || preg_match('/local/', $_SERVER['HTTP_HOST'])){
+		 
 		define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+		
 		
 	}else{
 		define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'production');	

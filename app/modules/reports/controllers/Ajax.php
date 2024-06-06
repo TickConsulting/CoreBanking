@@ -404,6 +404,7 @@ class Ajax extends Ajax_Controller{
         $from = $this->input->get('from')?strtotime($this->input->get('from')):strtotime('-10 year');
         $to = $this->input->get('to')?strtotime($this->input->get('to')):strtotime('tomorrow');
         $member_ids = $this->input->get_post('member_ids')?:0;
+        $this->group_member_options = $this->members_m->get_group_member_options();
         $loan_type_ids = $this->input->get_post('loan_type_ids')?:0;
         $total_loan_out = $this->loans_m->get_total_loaned_amount();
         $total_loan_paid = $this->loan_repayments_m->get_total_loan_paid();
@@ -454,11 +455,11 @@ class Ajax extends Ajax_Controller{
                     </div>
                     <div class="col-md-5 col-xs-6 text-right">
                         <div class="company-address">
-                            <span class="bold uppercase">'.$this->group->name.'</span><br/>
-                            '.nl2br($this->group->address).'<br/>
-                            <span class="bold">'.translate('Telephone').': </span>'.$this->group->phone.'
+                            <span class="bold uppercase">'.$this->application_settings->application_name.'</span><br/>
+                            '.nl2br($this->application_settings->application_address).'<br/>
+                            <span class="bold">'.translate('Telephone').': </span>'.$this->application_settings->application_phone.'
                             <br/>
-                            <span class="bold">'.translate('Email Address').': </span> '.$this->group->email.'
+                            <span class="bold">'.translate('Email Address').': </span> '.$this->application_settings->application_email.'
                             <br/>
                         </div>
                     </div>
@@ -480,7 +481,7 @@ class Ajax extends Ajax_Controller{
                                 <thead>
                                     <tr>
                                         <th class="invoice-title ">#</th>
-                                        <th class="invoice-title">'.translate('Member').'</th>
+                                        <th class="invoice-title">'.translate('Applicant').'</th>
                                         <th class="invoice-title">'.translate('Loan Type').'</th>
                                         <th class="invoice-title">'.translate('Loan Duration').'</th>
                                         <th class="invoice-title  text-right">'.translate('Amount Loaned').'</th>
@@ -570,7 +571,11 @@ class Ajax extends Ajax_Controller{
                                                 ';
                                                     if($post->is_a_bad_loan){
                                                         $html.='<span class="m-badge m-badge--warning m-badge--wide">'.translate('Bad Loan').'</span>';
-                                                    }else{
+                                                    }
+                                                    else if($post->is_fully_paid){
+                                                        $html.='<span class="m-badge m-badge--primary m-badge--wide">'.translate('Fully Paid').'</span>';
+                                                    }
+                                                    else{
                                                         $html.='<span class="m-badge m-badge--info m-badge--wide">'.translate('Active').'</span>';
                                                     }
                                                 $html.= '</small>
@@ -11220,10 +11225,12 @@ class Ajax extends Ajax_Controller{
     }
 
     function get_eazzyclub_loans_summary(){
-
+       
         $member_ids = $this->input->get_post('member_ids')?:0;
         $from = $this->input->get('from')?strtotime($this->input->get('from')):strtotime('-10 year');
         $to = $this->input->get('to')?strtotime($this->input->get('to')):strtotime('tomorrow');
+        $this->group_member_options = $this->members_m->get_group_members();
+         
         $filter_parameters = array(
             'member_id' => $member_ids?:'',
             'is_fully_paid' => $this->input->get('is_fully_paid')?:'',

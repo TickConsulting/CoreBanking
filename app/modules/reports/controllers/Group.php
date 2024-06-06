@@ -266,7 +266,7 @@ class Group extends Group_Controller{
     }
 
 
-    public function eazzyclub_loans_summary($generate_pdf=FALSE,$generate_excel=FALSE){
+    public function cbs_loans_summary($generate_pdf=FALSE,$generate_excel=FALSE){
         $member_ids = $this->input->get_post('member_ids')?:0;
         $from = $this->input->get('from')?strtotime($this->input->get('from')):strtotime('-10 year');
         $to = $this->input->get('to')?strtotime($this->input->get('to')):strtotime('tomorrow');

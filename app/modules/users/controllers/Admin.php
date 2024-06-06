@@ -374,7 +374,7 @@ class Admin extends Admin_Controller
                 'middle_name'   => $this->input->post('middle_name'),
                 'phone'         => valid_phone($this->input->post('phone')),
                 'email'         => $this->input->post('email'),
-                'first_time_login_status'         => 1,
+                'first_time_login_status'         => 0,
                 'ussd_pin'      => $this->input->post('ussd_pin'),
                 'modified_on'   => time(),
                 'modified_by'   => $this->ion_auth->get_user()->id,
