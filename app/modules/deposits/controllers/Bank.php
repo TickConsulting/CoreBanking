@@ -288,7 +288,7 @@ class Bank extends Bank_Controller{
             $data['group_currency'] = $this->group_currency;
             $json_file = json_encode($data);
             $this->excel_library->generate_deposits_listing($json_file);
-           print_r($json_file); die();
+             print_r($json_file); die();
             // print_r($this->curl_post_data->curl_post_json_excel($json_file,'https://excel.chamasoft.com/deposits/listing',$this->group->name.' List of Deposits'));
             // die;
         }

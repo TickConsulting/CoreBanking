@@ -2382,7 +2382,7 @@ class Excel_library{
                         'Payment For',
                         'Amount ('.$group_currency.')',
                         'Depositor',
-                        'Group Account',
+                        'Account',
                         'Description',
                         'Recorded On',
                     );
