@@ -1618,6 +1618,12 @@ class Withdrawals_m extends MY_Model{
     	$this->db->limit(1);
     	return $this->db->get('withdrawal_requests')->row();
     }
+	function get_total_disbursed_withdrawal_request(){
+		$this->db->select('sum('.$this->dx('amount').') as amount');
+    	$this->db->where($this->dx('active')." = '1' ",NULL,FALSE);
+    	$this->db->limit(1);
+    	return $this->db->get('withdrawal_requests')->row();
+    }
 
 
     function get_group_withdrawal_request($id = 0,$group_id = 0){
@@ -1977,6 +1983,19 @@ class Withdrawals_m extends MY_Model{
     		$this->db->limit($limit);
     	}
     	return $this->db->get('withdrawal_requests')->result();
+    }
+	function get_disbursed_withdrawal_requests_total_amount($limit = 0){
+		$this->db->select('sum('.$this->dx('amount').') as amount');
+    	$this->db->where($this->dx('status')." = '3' ",NULL,FALSE);
+    	$this->db->where($this->dx('is_approved')." = '1' ",NULL,FALSE);
+    	$this->db->where($this->dx('active')." = '1' ",NULL,FALSE);
+    	$this->db->where($this->dx('is_disbursed')." = '1' ",NULL,FALSE);
+    	$this->db->order_by($this->dx('disbursed_on'),'DESC',FALSE);
+    	$result = $this->db->get('withdrawal_requests')->row();
+		if($result){
+			$amount = $result->amount;
+		}
+		return $amount;
     }
 
     function count_group_member_pending_withdrawal_approval_requests($member_id = 0){

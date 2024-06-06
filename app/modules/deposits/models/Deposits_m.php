@@ -213,17 +213,18 @@ class Deposits_m extends MY_Model{
 				' SUM('.$this->dx('amount').') as amount '
 			)
 		);
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
+		  $filter_parameters = array(
+            'type' => "17,18,19,20"
+			);
 		$this->db->where($this->dx('active').' = "1" ',NULL,FALSE);
 		if($from){
 			$this->db->where($this->dx('deposit_date').' >="'.$from.'"',NULL,FALSE);
 		}
 		if($to){
 			$this->db->where($this->dx('deposit_date').' <="'.$to.'"',NULL,FALSE);
+		}
+		if(isset($filter_parameters['type']) && $filter_parameters['type']){
+			$this->db->where($this->dx('type')." IN (".$filter_parameters['type'].")",NULL,FALSE);
 		}
 		$this->db->limit(1);
 		$result = $this->db->get('deposits')->row();
@@ -2333,6 +2334,7 @@ class Deposits_m extends MY_Model{
 		if($group_id){
 			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
 		}else{
+			 
 			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
 		}
 		if($date_from && $date_to){
@@ -2340,13 +2342,13 @@ class Deposits_m extends MY_Model{
 			$this->db->where($this->dx('deposit_date').'<="'.$date_to.'"',NULL,FALSE);
 		}
 		$this->db->where($this->dx('active').' = "1"',NULL,FALSE);
-		$this->db->where($this->dx('member_id').' >= "1"',NULL,FALSE);
+		// $this->db->where($this->dx('member_id').' >= "1"',NULL,FALSE);
 		if($list){
 			
 			$this->db->where($this->dx('loan_id').' IN('.$list.')',NULL,FALSE);
 		}
 		$this->db->where($this->dx('type').' IN (17,18,19,20) ',NULL,FALSE);
-		$this->db->limit(1);
+		// $this->db->limit(1);
 		$result = $this->db->get('deposits')->row();
 		if($result){
 			$amount = $result->amount_paid;
@@ -3899,11 +3901,11 @@ class Deposits_m extends MY_Model{
 		$this->db->select(array(
 			'SUM('.$this->dx('amount').') as amount',
 		));
-		if(empty($group_ids)){
-    		$this->db->where($this->dx('group_id').' IN (0)',NULL,FALSE);
-		}else{
-    		$this->db->where($this->dx('group_id').' IN ('.implode(',',$group_ids).')',NULL,FALSE);
-		}
+		// if(empty($group_ids)){
+    	// 	$this->db->where($this->dx('group_id').' IN (0)',NULL,FALSE);
+		// }else{
+    	// 	$this->db->where($this->dx('group_id').' IN ('.implode(',',$group_ids).')',NULL,FALSE);
+		// }
 		$result = $this->db->get('deposits')->row();		
 		return $result->amount?$result->amount:0;
 	}

@@ -9,6 +9,7 @@ class Dashboard extends Bank_Controller{
         $this->load->model('bank_accounts/bank_accounts_m');
         $this->load->model('bank_branches/bank_branches_m');
         $this->load->model('banks/banks_m');
+        $this->load->model('loans/loans_m');
         $this->load->model('transaction_alerts/transaction_alerts_m');
 	}
 
@@ -16,12 +17,14 @@ class Dashboard extends Bank_Controller{
     //print_r($this->current_country->currency_code);
     //print_r($this->group_currency); die();
     //$groups_count = $this->groups_m->count_current_bank_staff_groups($this->user->id);
-    $group_ids = $this->groups_m->get_current_bank_staff_groups_ids($this->user->id);
-    $this->data['total_members'] = $this->members_m->count_members_in_groups($group_ids);
-    $this->data['groups_count'] = count($group_ids);
-
-    $this->data['total_deposits'] = $this->deposits_m->get_total_deposit_amount_from_group_ids($group_ids);
-    $this->data['total_withdrawals'] = $this->withdrawals_m->get_total_withdrawals_amount_from_group_ids($group_ids);
+    $filter_parameters = array(
+      'member_id' => $this->input->get('member_id'),
+  );
+ 
+    $this->data['total_members'] = $this->members_m->count_group_members($this->group->id, $filter_parameters);
+    $this->data['groups_count'] = $this->loans_m->count_all_group_loans();
+    $this->data['total_deposits'] = $this->deposits_m->get_group_loan_repayments_total_amount();
+    $this->data['total_withdrawals'] = $this->withdrawals_m->get_disbursed_withdrawal_requests_total_amount();
     $this->template->set_layout('dashboard.html')->title('DashBoard')->build('bank/index',$this->data);
   }
 

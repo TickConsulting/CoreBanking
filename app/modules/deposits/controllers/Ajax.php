@@ -200,7 +200,7 @@ class Ajax extends Ajax_Controller
             'from' => $from,
             'to' => $to,
         );
-
+      
         $deposit_transaction_names = $this->transactions->deposit_transaction_names;
         $deposit_type_options = $this->transactions->deposit_type_options;
         $contribution_options = $this->contributions_m->get_group_contribution_options();
@@ -308,6 +308,7 @@ class Ajax extends Ajax_Controller
                 }
                 echo '</td><td>';
                 if ($post->type == 13 || $post->type == 14 || $post->type == 15 || $post->type == 16) {
+                     
                     echo isset($depositor_options[$post->depositor_id]) ? $depositor_options[$post->depositor_id] : '';
                 } else if ($post->type == 17 || $post->type == 18 || $post->type == 19 || $post->type == 20) {
                     echo $this->group_member_options[$post->member_id];
