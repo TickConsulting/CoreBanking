@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Bank extends Bank_controller
+class Bank extends Bank_Controller
 {
     protected $data= array();
     protected $members;
@@ -32,7 +32,7 @@ class Bank extends Bank_controller
         $this->load->library('messaging');
 
         $this->data['send_to_list'] = $this->send_to_list;
-        
+
         $this->members = $this->members_m->get_group_member_options_for_messaging();
     }
     
