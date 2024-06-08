@@ -360,13 +360,10 @@ class Loan_invoices_m extends MY_Model{
                 "DATE_FORMAT(FROM_UNIXTIME(".$this->dx('loan_invoices.invoice_date')." ),'%Y %D %M') as invoice_date2 ",
             ));
         $this->db->where($this->dx('loan_invoices.active').'="1"',NULL,FALSE);
-        if($group_id){
-        }else{
-            $this->db->where($this->dx('loans.group_id').'="'.$this->group->id.'"',NULL,FALSE);
-        }
         $this->db->where($this->dx('loan_invoices.is_sent').' IN('.$is_sent_list.')',NULL,FALSE);
         $this->db->where($this->dx('loan_invoices.type').'="1"',NULL,FALSE);
         $this->db->where("DATE_FORMAT(FROM_UNIXTIME(".$this->dx('loan_invoices.invoice_date')."),'%Y %D %M') = '" . date('Y jS F',$date) . "'", NULL, FALSE);
+        $this->db->join('loans', 'loans.id = '.$this->dx('loan_invoices.loan_id'));
         $this->db->limit($limit);
         return $this->db->get('loan_invoices')->result();
     }
