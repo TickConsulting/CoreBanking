@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-md-2">
             <div class="inbox-sidebar">
-                <?php if($this->group->enable_compose_email || preg_match('/eazzykikundi/i',$this->application_settings->application_name)): ?>
+                <?php if($this->application_settings->enable_compose_email || preg_match('/tick/i',$this->application_settings->application_name)): ?>
                     <a href="javascript:;" data-title="Compose" class="btn btn-primary m-btn--pill mb-4 compose-btn">
                         <i class="fa fa-edit"></i> 
                         <?php echo translate('compose');
@@ -84,7 +84,7 @@
     if(preg_match('/member/',$this->uri->segment(1))){
         $url_code = 'member';
     }else{
-      $url_code = 'group';
+      $url_code = 'bank';
     }
 ?>
 

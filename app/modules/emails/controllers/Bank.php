@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Group extends Group_Controller
+class Bank extends Bank_Controller
 {
 
     protected $message_template;
@@ -41,7 +41,7 @@ class Group extends Group_Controller
                 $this->members += array($this->group->email => 'Group Email');
             }
         }else{
-            $this->members = array('all'=>'All Members')+$this->members_m->get_group_member_options_for_emailing()+array('info@chamasoft.com'=>$this->application_settings->application_name.' Team');
+            $this->members = array('all'=>'All Applicants')+$this->members_m->get_group_member_options_for_emailing()+array('customer@tickconsulting.co.ke'=>$this->application_settings->application_name.' Team');
 
         }
         $this->message_template = '<br/>Dear [NAME],<br/><br/><br/><br/>Regards,<br/>'.$this->user->first_name.' '.$this->user->last_name.'.';
@@ -87,7 +87,7 @@ class Group extends Group_Controller
             }else{
                 foreach($member_id_to as $key => $value) 
                 {
-                    if(preg_match('/info\@chamasoft\.com/', $value)){
+                    if(preg_match('/customer\@tickconsulting\.co\.ke/', $value)){
                         $member[] = 'chamasoft-team';
                     }elseif($value == $this->group->email){
                         $member[] = 'group-email';
@@ -99,10 +99,10 @@ class Group extends Group_Controller
                 if(is_array($member_id_cc)){
                     foreach ($member_id_cc as $key => $value) {
                         if(!in_array($value, $member)){
-                            if(preg_match('/info\@chamasoft\.com/', $value)){
-                                $cc[] = 'chamasoft-team';
+                            if(preg_match('/customer\@tickconsulting\.co\.ke/', $value)){
+                                $cc[] = 'Credit-Risk-Tick-team';
                             }elseif($value == $this->group->email){
-                                $cc[] = 'group-email';
+                                $cc[] = 'tick-email';
                             }else{
                                 $cc[] = $this->members_m->get_group_member($value);
                             }
@@ -113,10 +113,10 @@ class Group extends Group_Controller
                     foreach($member_id_bcc as $key => $value) {
                         if(!in_array($value, $member) && !in_array($value, $cc))
                         {
-                            if(preg_match('/info\@chamasoft\.com/', $value)){
-                                $bcc[] = 'chamasoft-team';
+                            if(preg_match('/customer\@tickconsulting\.co\.ke/', $value)){
+                                $bcc[] = 'Credit-Risk-Tick-team';
                             }elseif($value == $this->group->email){
-                                $bcc[] = 'group-email';
+                                $bcc[] = 'tick-email';
                             }else{
                                 $bcc[] = $this->members_m->get_group_member($value);
                             }
@@ -143,7 +143,7 @@ class Group extends Group_Controller
             } 
         }
 
-        redirect('group/emails/');
+        redirect('bank/emails/');
         
     }
 
@@ -406,7 +406,7 @@ class Group extends Group_Controller
             if($posts):
             $html.= '<thead>
                         <tr>';
-                            $html.=form_open(site_url('group/emails/action'));
+                            $html.=form_open(site_url('bank/emails/action'));
                             $html.='<th colspan="3">
                                 <label class="m-checkbox m-checkbox--bold">
                                     <input type="checkbox" class="mail-checkbox mail-group-checkbox">
@@ -506,7 +506,7 @@ class Group extends Group_Controller
 
 
     function compose(){
-        $html= form_open_multipart(site_url('group/emails/create'),'class="inbox-compose form-horizontal form_submit" id="fileupload"');
+        $html= form_open_multipart(site_url('bank/emails/create'),'class="inbox-compose form-horizontal form_submit" id="fileupload"');
         $html.='<div class="inbox-compose-btn mb-2">
                     <button style="" type="submit" name="send" value="send" class="btn btn-sm btn-primary submit_form_button mr-2">
                         <i class="fa fa-check" style="margin-top:-4px;"></i> Send
@@ -1010,7 +1010,7 @@ class Group extends Group_Controller
         $post = $this->emails_m->get($id);
         $member_email_from = $this->members_m->get_group_member_by_email($post->email_from);
         if($post){
-            $html= form_open_multipart(site_url('group/emails/create'),'class="inbox-compose form-horizontal form_submit" id="fileupload"');
+            $html= form_open_multipart(site_url('bank/emails/create'),'class="inbox-compose form-horizontal form_submit" id="fileupload"');
             $html.='<div class="inbox-compose-btn">
                     <button type="submit" name="send" value="send" class="btn green submit_form_button">
                         <i class="fa fa-check"></i>Send</button>
@@ -1024,10 +1024,10 @@ class Group extends Group_Controller
                     <label class="control-label">To:</label>
                     <div class="controls controls-to">';
                     if($member_email_from){
-                        $html.=form_dropdown('member_id_to[]',array('all'=>'All Members')+$this->members,$member_email_from->id,'class="form-control member_id_to select2-multiple" multiple id="multiple"');
+                        $html.=form_dropdown('member_id_to[]',array('all'=>'All Applicants')+$this->members,$member_email_from->id,'class="form-control member_id_to select2-multiple" multiple id="multiple"');
                     }
                     else{
-                        $html.=form_dropdown('member_id_to[]',array('info@chamasoft.com'=>$this->application_settings->application_name.' Team')+$this->members,'info@chamasoft.com','class="form-control member_id_to select2-multiple" multiple id="multiple"');
+                        $html.=form_dropdown('member_id_to[]',array('customer@tickconsulting.co.ke'=>$this->application_settings->application_name.' Team')+$this->members,'info@chamasoft.com','class="form-control member_id_to select2-multiple" multiple id="multiple"');
                     }
                     
                     $html.='<span class="inbox-cc-bcc">

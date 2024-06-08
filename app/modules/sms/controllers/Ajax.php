@@ -5,9 +5,9 @@ class Ajax extends Ajax_Controller{
 
 	protected $data = array();
     protected $send_to_list = array(
-        ' ' => '--Select members to message--',
-        '1' => 'All Members',
-        '2' => 'Individual Members',
+        ' ' => '--Select Applicants to message--',
+        '1' => 'All Applicants',
+        '2' => 'Individual Applicants',
     );
     protected $members = array();
     protected $validation_rules = array(
@@ -33,6 +33,7 @@ class Ajax extends Ajax_Controller{
     function get_queued_sms_listing(){
         $from = strtotime($this->input->get('from'))?:'';
         $to = strtotime($this->input->get('to'))?:'';
+        $this->group_member_options=$this->members_m->get_group_member_options();
         $filter_parameters = array(
             'from' => $from,
             'to' => $to,
@@ -297,6 +298,7 @@ class Ajax extends Ajax_Controller{
         $data = array();
         $response = array();
         $posts = $_POST;
+         
         if($this->input->post('send_to')==2){
             $this->validation_rules[] = array(
                 'field' =>  'member_id[]',
@@ -308,7 +310,7 @@ class Ajax extends Ajax_Controller{
         if($this->form_validation->run()){
             if($this->input->post('send_to')==1){
                 //all members of the group
-                foreach($this->group_member_options as $key => $value) {
+                foreach($this->members_m->get_group_member_options() as $key => $value) {
                     $member[] = $this->members_m->get_group_member($key);
                 }
             }else{
@@ -319,7 +321,7 @@ class Ajax extends Ajax_Controller{
                 }
             }
             $message = $this->input->post('message');
-            $message_id = $this->messaging->create_and_queue_sms($member,$message,$this->user,$this->group->id,$this->group->name);
+            $message_id = $this->messaging->create_and_queue_sms($member,$message,$this->user,$this->group->id,$this->application_settings->application_name);
             if($message_id){
                 $response = array(
                     'status' => 1,

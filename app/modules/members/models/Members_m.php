@@ -807,6 +807,7 @@
 		$this->db->where($this->dx('members.active').'="1"',NULL,FALSE);
 		$this->db->join('users','users.id ='.$this->dx('members.user_id'),'INNER');
 		$members = $this->db->get('members')->result();
+		 
 
 		$arr = array();
 
@@ -815,12 +816,12 @@
 			foreach ($members as $key => $member) 
 			{
 				if($member->email){
-					if($member->membership_number){
+					if($member->email){
 
 					}else{
-						$member->membership_number = 'membership number not set';
+						$member->email = 'Email Not Set';
 					}
-					$arr[$member->id] = $member->first_name.' '.$member->last_name.' - ('.$member->membership_number.')';
+					$arr[$member->id] = $member->first_name.' '.$member->last_name.' - ('.$member->email.')';
 				}
 			}
 		}

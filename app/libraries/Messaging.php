@@ -1565,8 +1565,10 @@ class Messaging{
 
 	function create_and_queue_sms($send_to_member=array(),$message='',$message_from=array(),$group_id=0,$group_name=''){
 
-		if(is_array($send_to_member)&&$message&&is_object($message_from)&&$group_id)
+		 
+		if(is_array($send_to_member)&&$message&&is_object($message_from))
 		{
+			 
 			$success = 0;
 			$failed = 0;
 			$sms_data = array(
@@ -1611,20 +1613,20 @@ class Messaging{
 	}
 
 	function create_and_queue_email($send_member=array(),$message='',$sending_user = array(),$group_id=0,$subject='',$attachments=array(),$ccs=array(),$bccs=array(),$embeded_attachments=array(),$send=1){
-		if(is_array($send_member)&&$message&&is_object($sending_user)&&$group_id&&$subject){
+		if(is_array($send_member)&&$message&&is_object($sending_user)&&$subject){
 			if(!empty($send_member)){
 				$success = 0;
 				$fails = 0;
-				$chamasoft_team = 'ongidigeofrey@gmail.com';
+				$chamasoft_team = 'geofrey.ongidi@tickconsulting.co.ke';
 				$group = $this->ci->groups_m->get_group_owner($group_id);
 				foreach ($send_member as $member) {
-					if($member=='chamasoft-team'){
+					if($member=='tick-team'){
 						$email = $chamasoft_team;
 						$cc = '';
 						$bcc = '';
 						foreach ($ccs as $value) {
 							if($cc){
-								if($value=='chamasoft-team')
+								if($value=='tick-team')
 								{
 									$cc = $cc.','.$chamasoft_team;
 								}elseif($value=='group-email'){
@@ -1645,7 +1647,7 @@ class Messaging{
 						}
 						foreach ($bccs as $value) {
 							if($bcc){
-								if($value=='chamasoft-team')
+								if($value=='tick-team')
 								{
 									$bcc = $bcc.','.$chamasoft_team;
 								}elseif($value=='group-email'){
@@ -1654,7 +1656,7 @@ class Messaging{
 									$bcc = $bcc.','.$value->email;
 								}
 							}else{
-								if($value=='chamasoft-team')
+								if($value=='tick-team')
 								{
 									$bcc = $chamasoft_team;
 								}elseif($value=='group-email'){
