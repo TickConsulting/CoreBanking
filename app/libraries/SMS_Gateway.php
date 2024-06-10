@@ -132,7 +132,27 @@ class SMS_Gateway {
         return FALSE;
       }
     }
-
+    public function send_sms_via_vaspro($messageData,$timestamp){
+      $post_fields = json_encode(array(
+        "apiKey" => "e7b4250b0b54c0723d7f952b52c0e7be",
+        "shortCode"=>"VasPro",
+        "uniqueId"=>$timestamp,
+        "messageData"=>array(
+        array("recipient"=>"254748974489","message"=>"Testing if I can send Bulk smses via Vaspro in one API call","uniqueId"=>$timestamp),
+        // array("recipient"=>"254748974489","message"=>"Testing if I can send Bulk smses via Vaspro in one API call","uniqueId"=>$timestamp)
+      ),
+      "callbackURL"=>"http://vaspro.co.ke/dlr"
+    ));
+      $result= $this->ci->curl->post_json($post_fields,'https://api.vaspro.co.ke/v3/BulkSMS/bulk/nested');
+      $result=json_decode($result);
+      
+      if($result->code=="Success"){
+        return TRUE;
+      }
+      else{
+        return FALSE;
+      }
+    }
     public function get_africas_talking_balance(){
       // Initialize the SDK
       $username = "eazzyclub";

@@ -378,16 +378,9 @@ class Sms extends Public_Controller{
         $this->sms_m->delete_old_queued_smses();
     }
 
-    function test($phone = "254728747061"){
-        $reference_number = rand(100000000,999999999);
-        $from = isset($this->application_settings->sender_id)?$this->application_settings->sender_id:'Eazzykikundi';
-        $message = "This is a simple test from {FirstName} on ".$from." portal";
-        $user = (object)array(
-            'id' => 1,
-            'first_name' => 'Geoffrey',
-            'last_name' => 'Githaiga',
-        );
-        $result = $this->sms_gateway->send_sms_via_africas_talking(valid_phone($phone),$message,$from,$reference_number,$user);
+    function test($phone = "254748974489"){
+         $messageData='';
+        $result = $this->sms_gateway->send_sms_via_vaspro($messageData,time());
         print_r($result);
     }
 
