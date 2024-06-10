@@ -304,7 +304,10 @@ class Authentication extends Authentication_Controller{
              $this->data['password'] = $demo_password;
            
             }
+        $manifest_path = site_url('manifest.json'); // Replace with your manifest location
+        $this->data['manifest_link'] = $manifest_path;
         $this->data['avatar'] = $avatar;
+         
         $this->template->set_layout('authentication.html')->title($title)->build('authentication/login',$this->data);
     }
 

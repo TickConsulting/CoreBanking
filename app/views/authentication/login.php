@@ -1,4 +1,9 @@
 <!--Navbar -->
+<head>
+<link rel="manifest" href="<?php site_url("manifest.json")?>">
+ 
+  </head>
+<body>
 <nav class="mb-1 navbar navbar-expand-lg navbar-light pt-1">
 	<div class="container">
 		<a class="navbar-brand font-bold" href="<?php echo site_url('') ?>"><img src="<?php echo $this->application_settings?site_url('uploads/logos/'.$this->application_settings->logo):base_url('/templates/admin_themes/groups/img/').'logo_contrast.png'; ?>" draggable="false" height="60px" alt="Logo"></a>
