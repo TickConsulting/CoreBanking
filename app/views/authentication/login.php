@@ -1,7 +1,6 @@
 <!--Navbar -->
 <head>
-<link rel="manifest" href="<?php site_url("manifest.json")?>">
- 
+<link rel="manifest" href="<?php echo site_url("templates\admin_themes\admin\js\global\scripts\manifest.json")?>">
   </head>
 <body>
 <nav class="mb-1 navbar navbar-expand-lg navbar-light pt-1">

@@ -1,6 +1,6 @@
 {
 	"author": "OngidiGeofrey",
-	"name": "CBS",
+	"name": "CoreBanking",
 	"short_name": "CBS",
 	"description": "Lending platform",
 	"orientation": "portrait",
@@ -16,11 +16,11 @@
 			"type": "image/png"
 		}
 	],
-	"manifest_version": 3,
+	"manifest_version": 2,
 	"version": "0.1",
 	"applications": {
 		"gecko": {
-			"id": "OngidiGeofrey@gmail.com"
+			"id": "supercoders.tech@gmail.com"
 		}
 	}
 }
