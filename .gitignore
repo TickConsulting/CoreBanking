@@ -37,7 +37,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /tests/results/
 
 /nbproject/
-uploads/*
+
 
 # templates/admin_themes/admin/css/apps
 # templates/admin_themes/admin/css/custom
