@@ -1,6 +1,9 @@
 <?php
       //die('Dear customer. Sorry for the uprubt update that is going on. Kindly try again in about 15 minutes. Thank you');
-	//   $manifest_path = 'manifest.json'; // Replace with your manifest location
+	  
+
+	    
+	//   $manifest_path = ('manifest.json'); // Replace with your manifest location
 
 	//   echo "<!DOCTYPE html>";
 	//   echo "<html>";
@@ -11,8 +14,7 @@
 	//   echo "<body>";
 	//   // ... your page content
 	//   echo "</body>";
-	//   echo "</html>";	  
-
+	//   echo "</html>";
 /**
  * CodeIgniter
  *
