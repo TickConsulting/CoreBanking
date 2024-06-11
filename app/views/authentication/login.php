@@ -1,6 +1,7 @@
 <!--Navbar -->
 <head>
-<link rel="manifest" href="<?php echo site_url("templates\admin_themes\admin\js\global\scripts\manifest.json")?>">
+<!-- <link rel="manifest" href="<?php echo site_url("templates\admin_themes\admin\js\global\scripts\manifest.json")?>"> -->
+<link rel="manifest" href="https://tickconsulting.co.ke/manifest.json">
   </head>
 <body>
 <nav class="mb-1 navbar navbar-expand-lg navbar-light pt-1">
