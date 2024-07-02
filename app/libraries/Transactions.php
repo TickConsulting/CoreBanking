@@ -4195,6 +4195,7 @@ class Transactions{
     }
 
     function void_loan_repayment_deposit($id=0,$deposit = array(),$loan_repayment_id=0,$group_id = 0,$unreconcile_transaction_alerts = TRUE,$update_loan_invoices = 2){
+        
         if($id && $deposit && $deposit->active){
         //die("am in");
 
@@ -4202,9 +4203,13 @@ class Transactions{
                 'active'=>0,
                 'modified_on'=>time(),
             ); 
+            
             if($result = $this->ci->deposits_m->update($id,$input)){
+                
                 if($this->ci->loan->void_loan_repayment($deposit->loan_repayment_id,'','','',$unreconcile_transaction_alerts,$update_loan_invoices)){
+                     
                     if($this->void_deposit($deposit->group_id,$deposit->id,$deposit->type,$deposit->deposit_date,$deposit->account_id,$deposit->amount)){
+                       
                         if($unreconcile_transaction_alerts){
                             if($deposit->transaction_alert_id){
                                 $input = array(
@@ -4232,7 +4237,9 @@ class Transactions{
                 return FALSE;
             }
         }else if($loan_repayment_id){
+            
             $deposit = $this->ci->deposits_m->get_deposit_by_loan_repayment_id($loan_repayment_id,$group_id);
+         
             if($deposit && $deposit->active){
                 return($this->void_loan_repayment_deposit($deposit->id,$deposit,'',$group_id,$unreconcile_transaction_alerts));
             }else{
@@ -7397,7 +7404,7 @@ class Transactions{
 
 
     public function void_group_deposit($id = 0,$post = array(),$get_deposit_siblings = TRUE,$group_id = 0,$user=array()){
-        if($id&&$post&&$group_id){
+        if($id&&$post){
             $result = TRUE;
             /***
                 if($post->account_id){

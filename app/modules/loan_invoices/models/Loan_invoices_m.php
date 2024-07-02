@@ -186,10 +186,6 @@ class Loan_invoices_m extends MY_Model{
         $this->db->where($this->dx('loan_invoices.loan_id').'="'.$id.'"',NULL,FALSE);
         $this->db->where('('.$this->dx('loan_invoices.is_sent').'="0" OR '.$this->dx('loan_invoices.is_sent').'IS NULL)',NULL,FALSE);
         $this->db->where($this->dx('loans.active').'="1"',NULL,FALSE);
-        if($group_id){
-        }else{
-            $this->db->where($this->dx('loans.group_id').'="'.$this->group->id.'"',NULL,FALSE);
-        }
         $this->db->where('('.$this->dx('loans.is_fully_paid').'="0" OR '.$this->dx('loans.is_fully_paid').' is NULL OR '.$this->dx('loans.is_fully_paid').' = "")',NULL,FALSE);
         $this->db->where($this->dx('loan_invoices.invoice_date').'<',time());
         $this->db->join('loans', 'loans.id = '.$this->dx('loan_invoices.loan_id'));
@@ -1343,11 +1339,6 @@ class Loan_invoices_m extends MY_Model{
         $this->select_all_secure('loan_invoices');
         $this->db->where($this->dx('loan_invoices.active').' = "1" ',NULL,FALSE);
         $this->db->where($this->dx('loan_invoices.loan_id').' = "'.$loan_id.'" ',NULL,FALSE);
-        if($group_id){
-            $this->db->where($this->dx('loan_invoices.group_id').' = "'.$group_id.'"',NULL,FALSE);
-        }else{
-            $this->db->where($this->dx('loan_invoices.group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-        }
         $this->db->where($this->dx('loan_invoices.type').' = "1" ',NULL,FALSE);
         return $this->db->get('loan_invoices')->result();
     }

@@ -121,11 +121,6 @@ class Deposits_m extends MY_Model{
 	function get_group_deposit($id=0,$group_id=0){
 		$this->select_all_secure('deposits');
 		$this->db->where('id',$id);
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
 		$this->db->where('('.$this->dx('is_admin').'= "0" OR '.$this->dx('is_admin').'is NULL )',NULL,FALSE);
 		$this->db->limit(1);
 		return $this->db->get('deposits')->row();
@@ -2153,12 +2148,6 @@ class Deposits_m extends MY_Model{
 	}
 
 	function get_deposit_by_loan_repayment_id($loan_repayment_id = 0,$group_id = 0){
-		$this->select_all_secure('deposits');
-		if($group_id){
-			$this->db->where($this->dx('group_id').' = "'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' = "'.$this->group->id.'"',NULL,FALSE);
-		}
 		$this->db->where($this->dx('loan_repayment_id').' = "'.$loan_repayment_id.'"',NULL,FALSE);
 		$this->db->where($this->dx('active').' = "1"',NULL,FALSE);
 		$this->db->where($this->dx('type').' IN (17,18,19,20) ',NULL,FALSE);

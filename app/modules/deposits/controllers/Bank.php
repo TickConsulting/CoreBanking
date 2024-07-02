@@ -2425,11 +2425,11 @@ class Bank extends Bank_Controller{
     }
 
     function void($id = 0,$redirect = TRUE){
+         
         $id OR redirect('bank/deposits/listing');
         $post = $this->deposits_m->get_group_deposit($id);
-         
         $post OR redirect('bank/deposits/listing');
-        $this->transactions->void_group_deposit($post->id,$post,TRUE,$this->group->id,$this->user);
+        $this->transactions->void_group_deposit($post->id,$post,TRUE,'',$this->user);
         if($redirect){
             if($this->agent->referrer()){
                 redirect($this->agent->referrer());
