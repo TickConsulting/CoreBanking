@@ -741,8 +741,8 @@ class Excel_library{
 			$result = json_decode($loans_summary);
 			if($result){
 				$this->group = $result->group;
-				$filename = $this->group->name.' Loans Summary';
-				$title = $this->group->name.' Loans Summary';
+				$filename = $this->application_settings->application_name.' Loans Summary';
+				$title = $this->application_settings->application_name.' Loans Summary';
 				$group_currency = $result->group_currency;
 
 				//print_r($result);die;
@@ -791,7 +791,7 @@ class Excel_library{
 
 
 				$headers = array(
-					'Member Name',
+					'Applicant Name',
 					'Loan Duration',
                   	'Loan Start Date',
                   	'Loan End Date',
@@ -984,7 +984,7 @@ class Excel_library{
 
 				endif;
 
-				//print_r($this->data);die;
+		
 
 				$filter_parameters = array(
 					

@@ -252,11 +252,6 @@ class Debtors_m extends MY_Model{
 	function get_options($group_id=0){
 		$this->select_all_secure('debtors');
 		$this->db->order_by($this->dx('name'),'ASC',FALSE);
-		if($group_id){
-			$this->db->where($this->dx('group_id').' ="'.$group_id.'"',NULL,FALSE);
-		}else{
-			$this->db->where($this->dx('group_id').' ="'.$this->group->id.'"',NULL,FALSE);
-		}
 		$debtors = $this->db->get('debtors')->result();
 
 		$arr = array();
@@ -544,7 +539,7 @@ class Debtors_m extends MY_Model{
                 }
             }
         } 
-        $this->db->where($this->dx('group_id').'="'.$this->group->id.'"',NULL,FALSE);
+        // $this->db->where($this->dx('group_id').'="'.$this->group->id.'"',NULL,FALSE);
         $this->db->where($this->dx('active').' ="1"',NULL,FALSE);
         $this->db->order_by($this->dx('disbursement_date'),'DESC',FALSE);
         return $this->db->get('debtor_loans')->result();

@@ -12,6 +12,7 @@ class Bank extends Bank_Controller{
         $this->load->model('groups/groups_m');
         $this->load->model('bank_accounts/bank_accounts_m');
         $this->load->model('bank_branches/bank_branches_m');
+        $this->load->library('excel_library');
         $this->load->model('transaction_alerts/transaction_alerts_m');
     }
 
@@ -157,18 +158,19 @@ class Bank extends Bank_Controller{
             $this->data['external_lending_amount_payable_to_date'] = $external_lending_amount_payable_to_date;
             $this->data['members'] = $this->members_m->get_group_member_options();
             $this->data['group_member_options'] = $this->members_m->get_group_member_options();
-            $this->data['debtors'] = $this->group_debtor_options;
+            $this->data['debtors'] = $this->debtors_m->get_options();
             $this->data['posts'] = $posts;
             $this->data['external_lending_post'] = $external_lending_post;
             $this->data['group'] = $this->group;
-            $this->data['group_currency'] = $this->group_currency;
+            $this->data['group_currency'] = "KES";
 
             $json_file = json_encode($this->data);
             
             if($this->input->get_post('generate_excel')){
+              
                 $this->excel_library->generate_loans_summary($json_file);
                 print_r($json_file); die();
-                $response = $this->curl_post_data->curl_post_json_excel($json_file,'https://excel.chamasoft.com/loans_summary',$this->group->name.' Loans Summary');
+                $response = $this->curl_post_data->curl_post_json_excel($json_file,'https://excel.chamasoft.com/loans_summary',$this->application_settings->application_name.' Loans Summary');
                 print_r($response);die;
             }else if($this->input->get_post('generate_pdf')){
                 if(preg_match('/local/', $_SERVER['HTTP_HOST'])){
