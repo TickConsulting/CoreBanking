@@ -110,11 +110,7 @@ class Bank extends Bank_Controller{
         $from = $this->input->get('from')?strtotime($this->input->get('from')):strtotime('-10 year');
         $to = $this->input->get('to')?strtotime($this->input->get('to')):strtotime('tomorrow');
         $member_ids = $this->input->get_post('member_ids')?:0;
-        if(is_file(FCPATH.'uploads/groups/'.$this->group->avatar)){
-            $this->data['group_logo'] = site_url('uploads/groups/'.$this->group->avatar);
-        }else{
-            $this->data['group_logo'] = site_url('uploads/logos/'.$this->application_settings->paper_header_logo);
-        }
+        $this->data['group_logo'] = site_url('uploads/logos/'.$this->application_settings->paper_header_logo);
         $this->data['from'] = $from;
         $this->data['to'] = $to;
         $this->data['member_ids'] = $member_ids;
