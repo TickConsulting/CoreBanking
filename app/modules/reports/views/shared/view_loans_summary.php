@@ -19,11 +19,11 @@
                             </div>
                             <div class="col-xs-7 text-right" style="font-size: 12px;">
                                 <div class="company-address">
-                                    <span class="bold uppercase group-name"><?php echo $group->name; ?></span><br/>
+                                    <span class="bold uppercase group-name"><?php echo $group->application_name; ?></span><br/>
                                     <?php echo nl2br($group->address); ?>
-                                    <span class="bold">Telephone: </span> <?php echo $group->phone; ?>
+                                    <span class="bold">Telephone: </span> <?php echo $group->application_phone; ?>
                                     <br/>
-                                    <span class="bold">E-mail Address: </span> <?php echo $group->email; ?>
+                                    <span class="bold">E-mail Address: </span> <?php echo $group->application_email; ?>
                                     <br/>
                                 </div>
                             </div>
@@ -44,7 +44,7 @@
                                         <thead>
                                             <tr>
                                                 <th class="invoice-title" width="2%">#</th>
-                                                <th class="invoice-title  text-left" width="15%">Member</th>
+                                                <th class="invoice-title  text-left" width="15%">Applicant</th>
                                                 <th class="invoice-title  text-left" width="13%">Loan Duration</th>
                                                 <th class="invoice-title  text-right" width="10%">Amount Loaned</th>
                                                 <th class="invoice-title  text-right" width="10%">Interest</th>

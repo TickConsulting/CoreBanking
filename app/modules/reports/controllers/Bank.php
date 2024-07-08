@@ -13,6 +13,7 @@ class Bank extends Bank_Controller{
         $this->load->model('bank_accounts/bank_accounts_m');
         $this->load->model('bank_branches/bank_branches_m');
         $this->load->library('excel_library');
+        $this->load->library('pdf_library');
         $this->load->model('transaction_alerts/transaction_alerts_m');
     }
 
@@ -109,7 +110,11 @@ class Bank extends Bank_Controller{
         $from = $this->input->get('from')?strtotime($this->input->get('from')):strtotime('-10 year');
         $to = $this->input->get('to')?strtotime($this->input->get('to')):strtotime('tomorrow');
         $member_ids = $this->input->get_post('member_ids')?:0;
-
+        if(is_file(FCPATH.'uploads/groups/'.$this->group->avatar)){
+            $this->data['group_logo'] = site_url('uploads/groups/'.$this->group->avatar);
+        }else{
+            $this->data['group_logo'] = site_url('uploads/logos/'.$this->application_settings->paper_header_logo);
+        }
         $this->data['from'] = $from;
         $this->data['to'] = $to;
         $this->data['member_ids'] = $member_ids;
@@ -161,7 +166,7 @@ class Bank extends Bank_Controller{
             $this->data['debtors'] = $this->debtors_m->get_options();
             $this->data['posts'] = $posts;
             $this->data['external_lending_post'] = $external_lending_post;
-            $this->data['group'] = $this->group;
+            $this->data['group'] = $this->application_settings;
             $this->data['group_currency'] = "KES";
 
             $json_file = json_encode($this->data);
@@ -173,16 +178,10 @@ class Bank extends Bank_Controller{
                 $response = $this->curl_post_data->curl_post_json_excel($json_file,'https://excel.chamasoft.com/loans_summary',$this->application_settings->application_name.' Loans Summary');
                 print_r($response);die;
             }else if($this->input->get_post('generate_pdf')){
-                if(preg_match('/local/', $_SERVER['HTTP_HOST'])){
                     $this->data['pdf_true'] = TRUE;
                     $html = $this->load->view('shared/view_loans_summary',$this->data,TRUE);
                     $this->pdf_library->generate_loans_summary($html);
                     die;
-                    
-                }else{
-                    $response = $this->curl_post_data->curl_post_json($json_file,'https://pdf.chamasoft.com/loans_summary',$this->group->name.' Loans Summary');
-                    print_r($response);die;
-                }
             }
         }
         $this->template->title(translate('Loans Summary'))->build('shared/loans_summary',$this->data);
