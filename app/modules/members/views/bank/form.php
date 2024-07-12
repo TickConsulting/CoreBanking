@@ -21,15 +21,20 @@
                 </div>
             </div>
             <div class="form-group m-form__group row pt-0 m--padding-10">
-                <div class="col-sm-6 m-form__group-sub m-input--air">
+                <div class="col-sm-4 m-form__group-sub m-input--air">
                     <label><?php echo translate('Phone Number');?><span class="required">*</span></label>
                     <?php echo form_input('phone',$this->input->post('phone')?$this->input->post('phone'):$post->phone,'class="form-control phone m-input--air" placeholder="Phone"'); ?>
                      
                 </div>
-                <div class="col-sm-6 m-form__group-sub m-input--air">
+                <div class="col-sm-4 m-form__group-sub m-input--air">
                     <label><?php echo translate('Email Address');?><span class="required">*</span></label>
 
                     <?php echo form_input('email',$this->input->post('email')?$this->input->post('email'):$post->email,'class="form-control m-input--air" placeholder="Email Address"'); ?>
+                </div>
+                <div class="col-sm-4 m-form__group-sub m-input--air">
+                    <label><?php echo translate('Loan Limit');?><span class="required">*</span></label>
+                    <?php echo form_input('loan_limit',$this->input->post('loan_limit')?$this->input->post('loan_limit'):$post->loan_limit,'class="form-control currency m-input--air" placeholder="loan_limit"'); ?>
+                     
                 </div>
             </div>
 

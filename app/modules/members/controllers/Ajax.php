@@ -1508,6 +1508,7 @@ class Ajax extends Ajax_Controller
                         if ($this->form_validation->run()) {
                             $user_input = array(
                                 'first_name' => $this->input->post('first_name'),
+                                'loan_limit' => currency($this->input->post('loan_limit')),
                                 'last_name' => $this->input->post('last_name'),
                                 'email' => $this->input->post('email'),
                                 'phone' => valid_phone($this->input->post('phone')),
