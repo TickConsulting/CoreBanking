@@ -1447,7 +1447,7 @@ class Deposits_m extends MY_Model{
 		if($sort_by && $sort_order){
 			$this->db->order_by($this->dx($sort_by).'+0',$sort_order,FALSE);
 		}else{
-			$this->db->order_by($this->dx('deposit_date'),'DESC',FALSE);
+			$this->db->order_by($this->dx('created_on'),'DESC',FALSE);
 		}
 		return $this->db->get('deposits')->result();
 	}
