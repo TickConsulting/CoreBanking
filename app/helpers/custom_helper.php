@@ -226,6 +226,21 @@ function remove_zero($number = 0)
         return $number;
     }
 }
+function calculate_days_in_arrears($disbursement_date=0, $repayment_period=0) {
+    // Calculate the expected repayment date
+    $expected_repayment_date = strtotime("+" . $repayment_period . " months", $disbursement_date);
+    // Get the current date
+    $current_date = time();
+    // Calculate the number of days in arrears if the repayment date has passed
+    if ($current_date > $expected_repayment_date) {
+        $days_in_arrears = ($current_date - $expected_repayment_date) / (60 * 60 * 24); // Convert seconds to days
+        return floor($days_in_arrears); // Return the number of days as an integer
+    } else {
+        return 0; // No arrears if the repayment date has not passed
+    }
+}
+
+
 
 
 function valid_phone($phone = 0, $strlen = TRUE, $set_calling_code_prefix = FALSE)
