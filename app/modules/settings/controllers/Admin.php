@@ -431,6 +431,7 @@ class Admin extends Admin_Controller
                     'url'                   =>  $this->input->post('url'),
                     'protocol'              =>  $this->input->post('protocol'),
                     'enable_two_factor_auth' =>  $this->input->post('enable_two_factor_auth')?1:0,
+                    'enable_staff_to_create_loans' =>  $this->input->post('enable_staff_to_create_loans')?1:0,
                     'enable_referrers'      =>  $this->input->post('enable_referrers')?1:0,
                     'enforce_default_country'      =>  $this->input->post('enforce_default_country')?1:0,
                     'display_group_information'      =>  $this->input->post('display_group_information')?1:0,

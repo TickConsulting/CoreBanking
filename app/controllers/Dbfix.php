@@ -1621,7 +1621,11 @@ $this->dbfix_m->add_column('payment_transactions',
                 'type' => 'blob'
             )
         ));
-
+        $this->dbfix_m->add_column('settings', array(
+            'enable_staff_to_create_loans' => array(
+                'type' => 'blob'
+            )
+        ));
         $this->dbfix_m->add_column('settings', array(
             'activate_billing' => array(
                 'type' => 'blob'

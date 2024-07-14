@@ -1205,6 +1205,9 @@ class Bank extends Bank_Controller{
         }
     }
     function create(){
+        if(!$this->ion_auth->is_admin() && !$this->application_settings->enable_staff_to_create_loans){
+            redirect('bank/loans/listing');
+        }
         $post = new stdClass();
         if($this->input->post('sms_notifications_enabled')){
             $this->validation_rules[] = array(

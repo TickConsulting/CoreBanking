@@ -344,7 +344,45 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class='row'>
+                            <div class="col-md-12">
+                                <div class="form-group enable_two_factor_auth">
+                                    <label>Enable Staffs to create loans<span class='required'>*</span></label>
+                                    <div class="margin-left-30">
+                                        <?php 
+                                            if($this->input->post('enable_staff_to_create_loans')==1){
+                                                $enable_enable_staff_to_create_loans_yes_enabled = TRUE;
+                                                $enable_enable_staff_to_create_loans_no_enabled = FALSE;
+                                            }else if($post->enable_staff_to_create_loans ==1){
+                                                $enable_enable_staff_to_create_loans_yes_enabled = TRUE;
+                                                $enable_enable_staff_to_create_loans_no_enabled = FALSE;
+                                            }else if($this->input->post('enable_staff_to_create_loans')==0){
+                                                $enable_enable_staff_to_create_loans_yes_enabled = FALSE;
+                                                $enable_enable_staff_to_create_loans_no_enabled = TRUE;
+                                            }else if($post->$enable_staff_to_create_loans==0){
+                                                $enable_enable_staff_to_create_loans_yes_enabled = FALSE;
+                                                $enable_enable_staff_to_create_loans_no_enabled = TRUE;
+                                            }else{
+                                                $enable_enable_staff_to_create_loans_yes_enabled = TRUE;
+                                                $enable_enable_staff_to_create_loans_no_enabled = FALSE;
+                                            }
+                                        ?>
+                                        <label class="radio-inline">
+                                            <div class="radio" id="">
+                                                <span class="">
+                                                    <?php echo form_radio('enable_staff_to_create_loans',1,$enable_enable_staff_to_create_loans_yes_enabled,""); ?>
+                                                </span>
+                                            </div> Yes </label>
+                                        <label class="radio-inline">
+                                            <div class="radio" id="">
+                                                <span class="">
+                                                    <?php echo form_radio('enable_staff_to_create_loans',0,$enable_enable_staff_to_create_loans_no_enabled,""); ?>
+                                                </span>
+                                            </div> No </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class='row'>
                             <div class="col-md-12">
                                 <div class="form-group enable_referrers">
