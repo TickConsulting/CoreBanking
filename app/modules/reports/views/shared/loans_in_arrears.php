@@ -37,6 +37,12 @@
                                         </label>
                                         <?php echo form_dropdown('loan_type_ids[]',array()+translate($loan_type_options),$this->input->get('loan_type_ids')?$this->input->get('loan_type_ids'):'','class="form-control m-select2-search" multiple="multiple"'); ?>
                                     </div>
+                                    <div class="form-group m-form__group pt-0">
+                                        <label>
+                                            <?php echo translate('Select Status');?>
+                                        </label>
+                                        <?php echo form_dropdown('status',array("1"=>"Active", "2"=>"In arrears"),$this->input->get('status')?$this->input->get('status'):'','class="form-control m-select2-search" multiple="multiple"'); ?>
+                                    </div>
                                     <div class="m-form__actions m--align-right p-0">
                                         <button name="filter" value="filter" type="submit"  class="btn btn-primary btn-sm">
                                             <i class="fa fa-filter"></i>

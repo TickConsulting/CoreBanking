@@ -185,6 +185,8 @@ class Bank extends Bank_Controller{
     public function loans_in_arrears($generate_pdf=FALSE,$generate_excel=FALSE){
         $from = $this->input->get('from')?strtotime($this->input->get('from')):strtotime('-10 year');
         $to = $this->input->get('to')?strtotime($this->input->get('to')):strtotime('tomorrow');
+        $status = $this->input->get('status')?($this->input->get('status')):'';
+        
         $member_ids = $this->input->get_post('member_ids')?:0;
         $this->data['group_logo'] = site_url('uploads/logos/'.$this->application_settings->paper_header_logo);
         $this->data['from'] = $from;
@@ -228,6 +230,7 @@ class Bank extends Bank_Controller{
                 $external_lending_amount_payable_to_date[$loan->id] = $this->debtors_m->loan_payable_and_principle_todate($loan->id);
                 $external_lending_projected_profit[$loan->id] = $this->debtors_m->get_projected_interest($loan->id,$external_lending_amount_paid[$loan->id]);
             }
+  
             $this->data['external_lending_amount_paid'] = $external_lending_amount_paid;
             $this->data['projected_profit'] = $projected_profit;
             $this->data['external_lending_projected_profit'] = $external_lending_projected_profit;
@@ -236,6 +239,26 @@ class Bank extends Bank_Controller{
             $this->data['members'] = $this->members_m->get_group_member_options();
             $this->data['group_member_options'] = $this->members_m->get_group_member_options();
             $this->data['debtors'] = $this->debtors_m->get_options();
+            if($status){
+              $new_posts=array();
+            foreach($posts as $post){
+                if($status==1){
+                    if(calculate_days_in_arrears($post->disbursement_date, $post->repayment_period)==0){
+                        $new_posts[]=$post;
+                    }
+                }
+                if($status==2){
+                   
+                    if(calculate_days_in_arrears($post->disbursement_date, $post->repayment_period)>0){
+                        $new_posts[]=$post;
+                    } 
+                     
+                }
+             }
+             
+             
+            }
+             
             $this->data['posts'] = $posts;
             $this->data['external_lending_post'] = $external_lending_post;
             $this->data['group'] = $this->application_settings;
