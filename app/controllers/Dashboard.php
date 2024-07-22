@@ -23,8 +23,8 @@ class Dashboard extends Bank_Controller{
  
     $this->data['total_members'] = $this->members_m->count_group_members($this->group->id, $filter_parameters);
     $this->data['groups_count'] = $this->loans_m->count_all_group_loans();
-    $this->data['total_deposits'] = $this->deposits_m->get_group_loan_repayments_total_amount();
-    $this->data['total_withdrawals'] = $this->withdrawals_m->get_disbursed_withdrawal_requests_total_amount();
+    $this->data['total_deposits'] =$this->deposits_m->get_group_loan_repayments_total_amount();
+    $this->data['total_withdrawals'] =$this->loans_m->get_total_loaned_amount(); //$this->withdrawals_m->get_disbursed_withdrawal_requests_total_amount();
     $this->template->set_layout('dashboard.html')->title('DashBoard')->build('bank/index',$this->data);
   }
 

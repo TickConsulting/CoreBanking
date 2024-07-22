@@ -554,7 +554,7 @@ class Ajax extends Ajax_Controller{
                                                     '</span></small>
                                                 </td>
                                                 <td class="text-right"><small>';
-                                                    $profit = isset($projected_profit[$post->id])?$projected_profit[$post->id]:0;
+                                                    $profit = isset($paid)?$projected_profit[$post->id]:0;
                                                     $html.=number_to_currency($profit);
                                                 $html.='</small>
                                                 </td>
@@ -595,6 +595,7 @@ class Ajax extends Ajax_Controller{
                                 <tfoot>
                                     <tr>
                                         <td colspan="3">Totals</td>
+                                        <td class="text-right"></td>
                                         <td class="text-right">'.number_to_currency($total_loan).'</td>
                                         <td class="text-right">'.number_to_currency($total_interest).'</td>
                                         <td class="text-right">'.number_to_currency($total_paid).'</td>
