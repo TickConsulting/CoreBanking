@@ -269,7 +269,7 @@ class Group extends Group_Controller{
         $data['successes'] = $successes;
         $this->template->title(translate('Add Members'))->build('group/add_members',$data);
     }
-
+   
     public function ajax_add_members(){
         $group_role_options = $this->group_roles_m->get_group_role_options();
         $data = array();

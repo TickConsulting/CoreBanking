@@ -2248,8 +2248,8 @@ class Excel_library{
             $result = json_decode($member_list);
             if($result){
                 $this->group = $result->group;
-                $filename = $this->group->name.' List of Members';
-                $title = $this->group->name.' List of Members';
+                $filename = $this->group->application_name.' List of Members';
+                $title = $this->group->application_name.' List of Members';
 
                 $group_role_options = array();
                 foreach ($result->group_role_options as $key => $value) {
@@ -2257,11 +2257,10 @@ class Excel_library{
                 }
 
                 $headers = array(
-                    'Membership Number',
-                    'Member Name',
+                    'Full Name',
                     'Phone Number',
+                    'Id Number',
                     'Email',
-                    'Role',
                     'Date of Birth',
                     'Last Login',
                     'Status',
@@ -2273,11 +2272,11 @@ class Excel_library{
                 foreach ($result->posts as $key=>$member) {
                     $this->data[] = array(
                         $key+1,
-                        isset($member->membership_number)?$member->membership_number:'',
+                       
                         $member->first_name.' '.$member->last_name,
                         $member->phone,
+						$member->id_number?$member->id_number:'Not set',
                         $member->email,
-                        isset($group_role_options[$member->group_role_id])?$group_role_options[$member->group_role_id]:'Member',
                         $member->date_of_birth?timestamp_to_report_time($member->date_of_birth):'',
                         ($member->last_login)?timestamp_to_report_time($member->last_login):'-',
                         $member->active?'Active':'Suspended',

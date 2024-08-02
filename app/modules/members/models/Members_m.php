@@ -255,6 +255,44 @@
 		$result->items = $members;
 		echo json_encode($result);
 	}
+	function get_ajax_active_group_member_options(){
+		$result = new stdClass();
+		$query = $this->input->get('q');
+		$this->select_all_secure('members');		
+		$this->db->select(array(
+				$this->dx('users.first_name').' as first_name',
+				$this->dx('users.last_name').' as last_name',
+				$this->dx('users.language_id').' as language_id',
+		));
+		
+		$this->db->where($this->dx('members.is_deleted').' IS NULL ',NULL,FALSE);
+		$this->db->where($this->dx('members.active').'="1"',NULL,FALSE);
+		$search_query = '';
+		$search_query.=" ( ";
+		$search_query .= " CONVERT(" . $this->dx('first_name') . " USING 'latin1') LIKE '%" . $query . "%' 
+                   OR CONVERT(" . $this->dx('last_name') . " USING 'latin1') LIKE '%" . $query . "%' 
+				   OR CONVERT(" . $this->dx('phone') . " USING 'latin1') LIKE '%" . $this->escape_str($query) . "%' 
+				   OR CONVERT(" . $this->dx('id_number') . " USING 'latin1') LIKE '%" . $this->escape_str($query) . "%' ";
+		$search_query.=" ) ";
+		$this->db->where($search_query,NULL,FALSE);
+		$this->db->join('users','users.id ='.$this->dx('members.user_id'));
+		if(isset($this->group->id)){
+			$this->db->order_by($this->dx($this->group->member_listing_order_by?:'first_name'), $this->group->order_members_by?:'ASC', FALSE);
+		}else{
+			$this->db->order_by($this->dx('first_name'),'ASC',FALSE);
+		}
+		$members = $this->db->get('members')->result();
+		// $arr = array();
+		// if($members)
+		// {
+		// 	foreach ($members as $key => $member) 
+		// 	{
+		// 		$arr[$member->id] = $member->first_name.' '.$member->last_name;
+		// 	}
+		// }
+		$result->items = $members;
+		echo json_encode($result);
+	}
 	function get_group_member($id = 0,$group_id = 0){
 		$this->db->select(
 			array(

@@ -273,6 +273,10 @@ class Bank extends Bank_Controller{
         $result = $this->members_m->get_ajax_active_group_member_options_using_name();
         return $result;
     }
+    function ajax_active_group_member_options(){     
+        $result = $this->members_m->get_ajax_active_group_member_options();
+        return $result;
+    }
     public function ajax_add_members(){
         $group_role_options = $this->group_roles_m->get_group_role_options();
         $data = array();
@@ -955,13 +959,13 @@ class Bank extends Bank_Controller{
             $total_rows = $this->members_m->count_group_members($this->group->id,$filter_parameters);
             $pagination = create_pagination('bank/members/listing/pages', $total_rows,50,5,TRUE);
             $data['posts'] = $this->members_m->get_group_members($this->group->id,$filter_parameters);
-            $data['group'] = $this->group;
-            $data['group_currency'] = $this->group_currency;
+            $data['group'] = $this->application_settings;
+            $data['group_currency'] ="KES";
             $json_file = json_encode($data); 
             $this->excel_library->generate_member_list($json_file);
             print_r($json_file); die();           
-            print_r($this->curl_post_data->curl_post_json_excel($json_file,'https://excel.chamasoft.com/members/listing',$this->group->name.' List of Members'));
-            die;
+            // print_r($this->curl_post_data->curl_post_json_excel($json_file,'https://excel.chamasoft.com/members/listing',$this->application_settings->application_name.' List of Users'));
+            // die;
         }
         $data['group_member_options'] = $this->members_m->get_group_member_with_membership_number_options();
         $this->template->title(translate('List Users'))->build('bank/listing',$data);

@@ -39,7 +39,7 @@
             $query = $_SERVER['QUERY_STRING']?'?generate_excel=1&'.$_SERVER['QUERY_STRING']:'?generate_excel=1';
             echo '
             <div class="btn-group margin-bottom-20 search-button">
-                <a href="'.site_url('group/members/listing').$query.'" class="btn btn-sm btn-primary m-btn m-btn--icon">
+                <a href="'.site_url('bank/members/listing').$query.'" class="btn btn-sm btn-primary m-btn m-btn--icon">
                     <span>
                         <i class="la la-file-excel-o"></i>
                         <span>'.
