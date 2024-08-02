@@ -2248,8 +2248,8 @@ class Excel_library{
             $result = json_decode($member_list);
             if($result){
                 $this->group = $result->group;
-                $filename = $this->group->application_name.' List of Members';
-                $title = $this->group->application_name.' List of Members';
+                $filename = $this->group->application_name.' List of Users';
+                $title = $this->group->application_name.' List of Users';
 
                 $group_role_options = array();
                 foreach ($result->group_role_options as $key => $value) {
@@ -2279,7 +2279,7 @@ class Excel_library{
                         $member->email,
                         $member->date_of_birth?timestamp_to_report_time($member->date_of_birth):'',
                         ($member->last_login)?timestamp_to_report_time($member->last_login):'-',
-                        $member->active?'Active':'Suspended',
+                        $member->active?'Active':'Disabled',
                         isset($member->physical_address)?$member->physical_address:'',
                         isset($member->postal_address)?$member->postal_address:'',
                         // isset($member->place_of_work)?$member->place_of_work:'',
