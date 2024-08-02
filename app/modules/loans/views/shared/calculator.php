@@ -42,7 +42,7 @@
         <div class="col-lg-12 col-md-12">
             <span class="float-lg-right float-md-left float-sm-left float-xl-right">
                 <button class="btn btn-primary m-btn m-btn--custom m-btn--icon btn-sm" id="calculate_installments" type="button">
-                    <?php echo translate('Save Changes');?>
+                    <?php echo translate('Generate');?>
                 </button>
                 &nbsp;&nbsp;
                 <button class="btn btn-metal m-btn m-btn--custom m-btn--icon btn-sm cancel_form"  type="button" id="cancel_calculator">
