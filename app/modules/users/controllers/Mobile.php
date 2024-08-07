@@ -102,7 +102,7 @@ class Mobile extends Mobile_Controller{
         array(
             'field' => 'loan_limit',
             'label' => 'Loan  Limit',
-            'rules' => 'trim|required|valid_currency'
+            'rules' => 'trim|required'
         ),
         /*array(
             'field' => 'password',

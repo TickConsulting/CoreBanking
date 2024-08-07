@@ -561,7 +561,17 @@
 
                                 </fieldset>
                             </div>
+                            <div class="row">
+        <div class="col-xs-12">
+            <a class="btn btn-sm blue hidden-print uppercase print-btn" onclick="javascript:window.print();"><i class='fa fa-print'></i> 
 
+                <?php
+                    $default_message='Print';
+                    $this->languages_m->translate('print',$default_message);
+                ?>
+            </a>
+        </div>
+    </div>
                             <div class="m--margin-top-50">
                                 <div class="col-lg-12 col-md-12">
                                     <span class="float-lg-right float-md-left float-sm-left float-xl-right">
