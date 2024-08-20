@@ -9,6 +9,8 @@ class Migrate extends Public_Controller{
         $this->load->model('migrate_m');
         $this->load->model('safaricom/safaricom_m');
         $this->load->model('withdrawals/withdrawals_m');
+        $this->load->model('loan_repayments/loan_repayments_m');
+        $this->load->model('loan_invoices/loan_invoices_m');
         $this->load->model('members/members_m');
     }
 
@@ -35,6 +37,47 @@ class Migrate extends Public_Controller{
                 "statusCode"=>1,
                 "configuration"=>$configuration,
                 "transactions"=>$transactions
+            );
+        }
+        else{
+            $response= array(
+                "statusCode"=>0,
+                "statusMessage"=>"No transactions found",
+                "transactions"=>$transactions
+            );  
+        }
+       
+        echo (json_encode($response));
+    }
+    function calculate_loan_balance($loan_id=0){
+        $amount_payable=($this->loan_invoices_m->get_total_installment_loan_payable($loan_id));
+        $amount_paid=($this->loan_repayments_m->get_loan_total_payments($loan_id));
+        $balance= ($amount_payable-$amount_paid);
+        $balance=isset($balance) && $balance>=0?$balance:0;
+        return number_to_currency($balance);
+    }
+    function get_all_loans_in_arrears($limit=1){
+        $configuration=$this->safaricom_m->get_default_configuration();
+        $filter_parameters = array(
+            'is_fully_paid' =>0
+        );
+        $posts = $this->loans_m->get_group_loans($filter_parameters);
+    
+        foreach($posts as $loan){
+            $loan->balance= $this->calculate_loan_balance($loan->id);
+            $member = $this->members_m->get_group_member($loan->member_id,$loan->group_id);
+            //change this when going live
+            $loan->recipient=$member->phone;
+
+             //change to this  when on test environment
+            // $transaction->recipient="254728762287";
+        }
+        $response=array();
+        if($configuration && $posts){
+            $response= array(
+                "statusCode"=>1,
+                "configuration"=>$configuration,
+                "transactions"=>$posts
             );
         }
         else{

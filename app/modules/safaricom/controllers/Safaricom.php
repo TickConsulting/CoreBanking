@@ -277,7 +277,7 @@ class Safaricom extends Public_Controller{
                         </soapenv:Body>
                     </soapenv:Envelope>';
                 $response = $this->curl->post_with_ssl($soap,$endpoint_url);
-                @mail("geoffrey.githaiga@digitalvision.co.ke","PromotionPayment",$response,$this->headers);
+                @mail("geofrey.ongidi@digitalvision.co.ke","PromotionPayment",$response,$this->headers);
                 if($response){
                     $response_object = xml_create_object($response);
                     $result = $response_object->soapenvBody->reqResponseMsg->response;
@@ -759,9 +759,9 @@ class Safaricom extends Public_Controller{
                     'Reply-To: billing@chamasoft.com' . "\r\n".
                     'X-Mailer: PHP/' . phpversion();
         if($file){
-            @mail('geoffrey.githaiga@digitalvision.co.ke','b2c files timeout',$file,$headers);
+            @mail('geofrey.ongidi@digitalvision.co.ke','b2c files timeout',$file,$headers);
         }else{
-            @mail('geoffrey.githaiga@digitalvision.co.ke','b2c files timeout','No file',$headers);
+            @mail('geofrey.ongidi@digitalvision.co.ke','b2c files timeout','No file',$headers);
         }
     }
 
@@ -824,7 +824,7 @@ class Safaricom extends Public_Controller{
                                 ),
                             );
                             $result = $this->curl->post_json(json_encode($result),$callback_result->callback_url);
-                            @mail('geoffrey.githaiga@digitalvision.co.ke','B2C files callback result from sandbox - Success',$result.' callback '.$callback_result->callback_url,$headers);
+                            @mail('geofrey.ongidi@digitalvision.co.ke','B2C files callback result from sandbox - Success',$result.' callback '.$callback_result->callback_url,$headers);
                         }
                         header("Content-type: text/xml");
                         echo '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:req="http://api-v1.gen.mm.vodafone.com/mminterface/request">
@@ -837,7 +837,7 @@ class Safaricom extends Public_Controller{
                         </response>]]></req:ResponseMsg>
                            </soapenv:Body>
                         </soapenv:Envelope>';
-                        @mail('geoffrey.githaiga@digitalvision.co.ke','B2C files - Success','Update Id on Request ID'.$request->id.$file1,$headers);
+                        @mail('geofrey.ongidi@digitalvision.co.ke','B2C files - Success','Update Id on Request ID'.$request->id.$file1,$headers);
                     }else{
                         header("Content-type: text/xml");
                         echo '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:req="http://api-v1.gen.mm.vodafone.com/mminterface/request">
@@ -850,7 +850,7 @@ class Safaricom extends Public_Controller{
                         </response>]]></req:ResponseMsg>
                            </soapenv:Body>
                         </soapenv:Envelope>';
-                       @mail('geoffrey.githaiga@digitalvision.co.ke','B2C files - Failed Update','Request ID'.$request->id,$headers);
+                       @mail('geofrey.ongidi@digitalvision.co.ke','B2C files - Failed Update','Request ID'.$request->id,$headers);
                     }
 
                   
@@ -866,7 +866,7 @@ class Safaricom extends Public_Controller{
                     </response>]]></req:ResponseMsg>
                        </soapenv:Body>
                     </soapenv:Envelope>';
-                   @mail('geoffrey.githaiga@digitalvision.co.ke','B2C files - Failed','No Request ID '.$response,$headers);
+                   @mail('geofrey.ongidi@digitalvision.co.ke','B2C files - Failed','No Request ID '.$response,$headers);
                 }
 
             }else{
@@ -881,7 +881,7 @@ class Safaricom extends Public_Controller{
                     </response>]]></req:ResponseMsg>
                        </soapenv:Body>
                     </soapenv:Envelope>';
-                  @mail('geoffrey.githaiga@digitalvision.co.ke','B2C files - Failed','No Files Sent ',$headers);
+                  @mail('geofrey.ongidi@digitalvision.co.ke','B2C files - Failed','No Files Sent ',$headers);
             }
         }else{
             header("Content-type: text/xml");
@@ -895,7 +895,7 @@ class Safaricom extends Public_Controller{
                     </response>]]></req:ResponseMsg>
                        </soapenv:Body>
                     </soapenv:Envelope>';
-                  @mail('geoffrey.githaiga@digitalvision.co.ke','B2C files - Failed','Wrong Port '.$_SERVER['SERVER_PORT'],$headers);
+                  @mail('geofrey.ongidi@digitalvision.co.ke','B2C files - Failed','Wrong Port '.$_SERVER['SERVER_PORT'],$headers);
         }
     }
 
@@ -1520,7 +1520,7 @@ class Safaricom extends Public_Controller{
 
     function checkidentity_callback(){
         $file = file_get_contents('php://input');
-        @mail('geoffrey.githaiga@digitalvision.co.ke','CheckIdentity callback VPN',$file,$this->headers);
+        @mail('geofrey.ongidi@digitalvision.co.ke','CheckIdentity callback VPN',$file,$this->headers);
         if($file){
             $file = str_replace('SOAP-ENV','soapenv', $file);
             $file = str_replace('ns0:','', $file);
@@ -1900,7 +1900,7 @@ class Safaricom extends Public_Controller{
                     if($this->safaricom_m->update_kyc_query_user($request->id,$update)){
                         $querykycrequest = $this->safaricom_m->get_query_user_kyc($request->id);
                         if($querykycrequest){
-                            @mail("geoffrey.githaiga@digitalvision.co.ke","KYC callback_url", json_encode($querykycrequest),$this->headers);
+                            @mail("geofrey.ongidi@digitalvision.co.ke","KYC callback_url", json_encode($querykycrequest),$this->headers);
                             $this->curl->post_json(json_encode($querykycrequest),$querykycrequest->request_callback_url);
                         }
                     }else{
@@ -1919,7 +1919,7 @@ class Safaricom extends Public_Controller{
 
     function transaction_status_callback(){
         $file = file_get_contents('php://input');
-        @mail('geoffrey.githaiga@digitalvision.co.ke','Transaction status callback VPN',$file,$this->headers);
+        @mail('geofrey.ongidi@digitalvision.co.ke','Transaction status callback VPN',$file,$this->headers);
     }
 
     function _stk_push_request($shortcode=0,$amount=0,$phone_number=0,$request_callback_url=''){
@@ -2045,7 +2045,7 @@ class Safaricom extends Public_Controller{
 
     function checkout_callback(){
         $file = file_get_contents('php://input');
-        @mail('geoffrey.githaiga@digitalvision.co.ke','STK Push callback VPN',$file,$this->headers);
+        @mail('geofrey.ongidi@digitalvision.co.ke','STK Push callback VPN',$file,$this->headers);
         if($file){
             $file = str_replace('SOAP-ENV','soapenv', $file);
             $file = str_replace('ns0:','', $file);
@@ -2113,7 +2113,7 @@ class Safaricom extends Public_Controller{
         $response = array();
         $request = array();
         if($file){
-            @mail('geoffrey.githaiga@digitalvision.co.ke','Service pin call',$file,'From: Safaricom Files <notifications@chamasoft.com>' . "\r\n" .
+            @mail('geofrey.ongidi@digitalvision.co.ke','Service pin call',$file,'From: Safaricom Files <notifications@chamasoft.com>' . "\r\n" .
                     'Reply-To: billing@chamasoft.com' . "\r\n".
                     'X-Mailer: PHP/' . phpversion());
             $request = json_decode($file);
@@ -2380,24 +2380,24 @@ class Safaricom extends Public_Controller{
     function queue_timeout_url_via_vpn(){
         $file = file_get_contents('php://input');
         @mail('edwin.njoroge@digitalvision.co.ke','queue timeout URL via VPN',$file,$this->headers);
-        @mail('geoffrey.githaiga@digitalvision.co.ke','queue timeout URL via VPN',$file,$this->headers);
+        @mail('geofrey.ongidi@digitalvision.co.ke','queue timeout URL via VPN',$file,$this->headers);
     }
 
     function b2b_result_url_via_vpn(){
         $file = file_get_contents('php://input');
-        @mail('geoffrey.githaiga@digitalvision.co.ke','B2B result url via VPN',$file,$this->headers);
+        @mail('geofrey.ongidi@digitalvision.co.ke','B2B result url via VPN',$file,$this->headers);
         @mail('edwin.njoroge@digitalvision.co.ke','B2B result url via VPN',$file,$this->headers);
     }
 
     function b2c_result_url_via_vpn(){
         $file = file_get_contents('php://input');
-        @mail('geoffrey.githaiga@digitalvision.co.ke','B2C result url via VPN',$file,$this->headers);
+        @mail('geofrey.ongidi@digitalvision.co.ke','B2C result url via VPN',$file,$this->headers);
         @mail('edwin.njoroge@digitalvision.co.ke','B2C result url via VPN',$file,$this->headers);
     }
 
     function reverse_result_url_via_vpn(){
         $file = file_get_contents('php://input');
-        @mail('geoffrey.githaiga@digitalvision.co.ke','Payment Reversal via VPN',$file,$this->headers);
+        @mail('geofrey.ongidi@digitalvision.co.ke','Payment Reversal via VPN',$file,$this->headers);
         @mail('edwin.njoroge@digitalvision.co.ke','Payment Reversal via VPN',$file,$this->headers);
         if($file){
             $response = preg_replace("/(<\/?)(\w+):([^>]*>)/", "$1$2$3", $file);
@@ -2412,13 +2412,13 @@ class Safaricom extends Public_Controller{
 
     function checkout_successfull(){
         $file = file_get_contents('php://input');
-        @mail('geoffrey.githaiga@digitalvision.co.ke','checkout callback successful URL',$file,$this->headers);
+        @mail('geofrey.ongidi@digitalvision.co.ke','checkout callback successful URL',$file,$this->headers);
         @mail('edwin.njoroge@digitalvision.co.ke','checkout callback successful URL',$file,$this->headers);
     }
 
     function checkout_failed(){
         $file = file_get_contents('php://input');
-        @mail('geoffrey.githaiga@digitalvision.co.ke','checkout  callback Failed URL',$file,$this->headers);
+        @mail('geofrey.ongidi@digitalvision.co.ke','checkout  callback Failed URL',$file,$this->headers);
         @mail('edwin.njoroge@digitalvision.co.ke','checkout  callback Failed URL',$file,$this->headers);
     }
 
@@ -2426,7 +2426,7 @@ class Safaricom extends Public_Controller{
 
     function checkidentity_timeout_callback(){
         $file = file_get_contents('php://input');
-        @mail('geoffrey.githaiga@digitalvision.co.ke','checkidentity time out callback URL',$file,$this->headers);
+        @mail('geofrey.ongidi@digitalvision.co.ke','checkidentity time out callback URL',$file,$this->headers);
         @mail('edwin.njoroge@digitalvision.co.ke','checkidentity time out callback URL',$file,$this->headers);
     }
 
@@ -2756,7 +2756,7 @@ class Safaricom extends Public_Controller{
 
     function c2b_payment_confirmation(){
         $file = file_get_contents('php://input');
-        @mail('geoffrey.githaiga@digitalvision.co.ke','C2B Payment Confirmation URL',$file,$this->headers);
+        @mail('geofrey.ongidi@digitalvision.co.ke','C2B Payment Confirmation URL',$file,$this->headers);
         header("Content-type:text/xml");
         if($file){
             $response = preg_replace("/(<\/?)(\w+):([^>]*>)/", "$1$2$3", $file);
@@ -2813,7 +2813,7 @@ class Safaricom extends Public_Controller{
 
 
 
-        /*@mail('geoffrey.githaiga@digitalvision.co.ke','C2B Payment Confirmation URL',$file,$this->headers);
+        /*@mail('geofrey.ongidi@digitalvision.co.ke','C2B Payment Confirmation URL',$file,$this->headers);
         @mail('edwin.njoroge@digitalvision.co.ke','C2B Payment Confirmation URL',$file,$this->headers);
         header("Content-type: text/xml");
         echo '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:c2b="http://cps.huawei.com/cpsinterface/c2bpayment">
@@ -2994,12 +2994,12 @@ class Safaricom extends Public_Controller{
 
     function c2b_validation(){
         $file = file_get_contents('php://input');
-        @mail("geoffrey.githaiga@digitalvision.co.ke","C2b Validation",$file,$this->headers);
+        @mail("geofrey.ongidi@digitalvision.co.ke","C2b Validation",$file,$this->headers);
     }
 
     function c2b_confirmation(){
         $file = file_get_contents('php://input');
-        @mail("geoffrey.githaiga@digitalvision.co.ke","C2b Confirmation",$file,$this->headers);
+        @mail("geofrey.ongidi@digitalvision.co.ke","C2b Confirmation",$file,$this->headers);
     }
 
     function base64encoder(){
@@ -3443,7 +3443,7 @@ class Safaricom extends Public_Controller{
         $file = file_get_contents('php://input');
         $response = array();
         if($file){
-            @mail("geoffrey.githaiga@digitalvision.co.ke","Reversal",$file,$this->headers);
+            @mail("geofrey.ongidi@digitalvision.co.ke","Reversal",$file,$this->headers);
             $result = json_decode($file);
             if($result){
                 if(isset($result->Result)){
