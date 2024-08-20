@@ -206,6 +206,7 @@ class Ajax extends Ajax_Controller{
         $balance= ($amount_payable-$amount_paid);
         $balance=isset($balance) && $balance>=0?$balance:0;
         return number_to_currency($balance);
+        
     }
 
     function get_loans_listing(){
