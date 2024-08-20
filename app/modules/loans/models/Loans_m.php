@@ -1329,7 +1329,7 @@ class Loans_m extends MY_Model{
 
     function get_group_loans($filter_parameters = array(),$group_id = 0){
         $this->select_all_secure('loans');
-
+         
         if(isset($filter_parameters['from']) && isset($filter_parameters['to'])){
             if($filter_parameters['from'] && $filter_parameters['to']){
                 $this->db->where($this->dx('disbursement_date').' >= "'.$filter_parameters['from'].'"',NULL,FALSE);
