@@ -68,10 +68,10 @@ class Migrate extends Public_Controller{
                 $post->balance= currency_convert($this->calculate_loan_balance($post->id));
                 $member = $this->members_m->get_group_member($post->member_id,$post->group_id);
                 $post->recipient=$member->phone;
-                // if($post->balance>0){
-                    
-                // }
-                $arrears_loans[]=$post;
+                if($post->balance>0){
+                    $arrears_loans[]=$post;
+                }
+               
             }
         }
         $response=array();
