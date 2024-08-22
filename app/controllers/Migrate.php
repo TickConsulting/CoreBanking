@@ -62,29 +62,32 @@ class Migrate extends Public_Controller{
             'is_fully_paid' =>0
         );
         $posts = $this->loans_m->get_group_loans($filter_parameters);
-    
-        foreach($posts as $loan){
-            $loan->balance= $this->calculate_loan_balance($loan->id);
-            $member = $this->members_m->get_group_member($loan->member_id,$loan->group_id);
-            //change this when going live
-            $loan->recipient=$member->phone;
-
-             //change to this  when on test environment
-            // $transaction->recipient="254728762287";
+        $arrears_loans=array();
+        foreach($posts as $post){
+            if(calculate_days_in_arrears($post->disbursement_date,$post->repayment_period)>=1){
+                $post->balance= currency_convert($this->calculate_loan_balance($post->id));
+                $member = $this->members_m->get_group_member($post->member_id,$post->group_id);
+                $post->recipient=$member->phone;
+                // if($post->balance>0){
+                    
+                // }
+                $arrears_loans[]=$post;
+            }
         }
         $response=array();
-        if($configuration && $posts){
+        if($configuration && $arrears_loans){
             $response= array(
                 "statusCode"=>1,
                 "configuration"=>$configuration,
-                "transactions"=>$posts
+                "transactions"=>$arrears_loans,
+                "totalCount"=>count($arrears_loans)
             );
         }
         else{
             $response= array(
-                "statusCode"=>0,
+                "statusCode"=>1,
                 "statusMessage"=>"No transactions found",
-                "transactions"=>$transactions
+                "transactions"=>$arrears_loans
             );  
         }
        

@@ -545,6 +545,19 @@ function currency($str)
         return FALSE;
     }
 }
+function currency_convert($str)
+{
+    if (preg_match('/^[0-9,.]+$/', $str)) {
+        $amount = floatval(str_replace(',', '', $str));
+        if ($amount > 0) {
+            return $amount;
+        } else {
+            return 0;
+        }
+    } else {
+        return 0;
+    }
+}
 
 
 

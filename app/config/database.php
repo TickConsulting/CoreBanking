@@ -78,7 +78,9 @@ $host_name="localhost";
 $password = '';
 
 if (preg_match('/(\.local)/', $_SERVER['HTTP_HOST'])) {
+	$active_group = 'local';
 	$password = '';
+	// $password = '';
 }  else {
 	$active_group = 'live';
 	$host_name='54.93.184.124';
