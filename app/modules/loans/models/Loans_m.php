@@ -1328,6 +1328,7 @@ class Loans_m extends MY_Model{
     }
 
     function get_group_loans($filter_parameters = array(),$group_id = 0){
+     
         $this->select_all_secure('loans');
          
         if(isset($filter_parameters['from']) && isset($filter_parameters['to'])){
@@ -1379,11 +1380,13 @@ class Loans_m extends MY_Model{
             }
         }
 
-        if(isset($filter_parameters['is_fully_paid']) && $filter_parameters['is_fully_paid']){
+        if(isset($filter_parameters['is_fully_paid'])){
             if($filter_parameters['is_fully_paid']==1){
                 $this->db->where($this->dx('is_fully_paid').' = "1" ',NULL,FALSE);
             }else if($filter_parameters['is_fully_paid']==0){
-                $this->db->where($this->dx('is_fully_paid').' = "0" ',NULL,FALSE);
+             
+                $this->db->where("(".$this->dx('is_fully_paid').' = "0" OR '.$this->dx('is_fully_paid').' IS NULL OR '.$this->dx('is_fully_paid').' = "" )',NULL,FALSE);
+
             }
         }
         // if($group_id){
