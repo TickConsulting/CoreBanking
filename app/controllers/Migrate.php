@@ -64,7 +64,7 @@ class Migrate extends Public_Controller{
         $posts = $this->loans_m->get_group_loans($filter_parameters);
         $arrears_loans=array();
         foreach($posts as $post){
-            if(calculate_days_in_arrears($post->disbursement_date,$post->repayment_period)>=1){
+            if(calculate_days_in_arrears($post->disbursement_date,$post->repayment_period)==1){
                 $post->balance= currency_convert($this->calculate_loan_balance($post->id));
                 $member = $this->members_m->get_group_member($post->member_id,$post->group_id);
                 $post->recipient=$member->phone;
