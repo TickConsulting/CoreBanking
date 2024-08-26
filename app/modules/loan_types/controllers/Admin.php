@@ -255,7 +255,14 @@ class Admin extends Admin_Controller{
 	function index(){
 
 	}
-
+	function _is_greater_than_minimum_repayment_period(){
+		if(currency($this->input->post('minimum_repayment_period'))>currency($this->input->post('maximum_repayment_period'))){
+			$this->form_validation->set_message('_is_greater_than_minimum_repayment_period','Maximum Repayment Period must be greater than Minimum Repayment Period');
+			return FALSE;
+		}else{
+			return TRUE;
+		}
+	}
 	function _additional_validation_rules(){
     	if($this->input->post('enable_loan_guarantors')){
     		$this->validation_rules[] = array(
