@@ -71,7 +71,7 @@
                                                     <div class="row">
                                                         <div class="col-sm-6 m-form__group-sub">
                                                             <label><?php echo translate('Loan Interest Rate');?><span class="required">*</span></label>
-                                                            <?php echo form_input('interest_rate',$this->input->post('interest_rate')?$this->input->post('interest_rate'):$post->interest_rate,'  class="form-control numeric m-input--air" placeholder="Loan Interest Rate"'); ?>
+                                                            <?php echo form_input('interest_rate',$this->input->post('interest_rate')?$this->input->post('interest_rate'):$post->interest_rate,'  class="form-control currency m-input--air" placeholder="Loan Interest Rate"'); ?>
                                                         </div>
                                                         <div class="col-sm-6 m-form__group-sub m-input--air">
                                                             <label ><?php echo translate('Loan Interest Rate Per');?><span class="required">*</span></label>   
