@@ -1054,11 +1054,10 @@ class Excel_library{
 						$debtors[$key] = $value;
 					}
 				}
-				
-
-
 				$headers = array(
 					'Applicant Name',
+					'ID Number',
+					'Phone Number',
 					'Loan Duration',
                   	'Loan Start Date',
                   	'Loan End Date',
@@ -1066,10 +1065,7 @@ class Excel_library{
                     'Interest Amount ('.$group_currency.')',
                     'Amount Paid ('.$group_currency.')',
                     'Amount Arrears ('.$group_currency.')',
-                    'Days In Arrears',
-                    'Profit Amount ('.$group_currency.')',
-                    'Outstanding Profit Amount ('.$group_currency.')',
-                    'Projected Profit Amount ('.$group_currency.')',
+                    'Days In Arrears'
 				);
 
 				$total_loan=0;
@@ -1106,10 +1102,12 @@ class Excel_library{
                         $profit = $projected_profit[$post->id];
 	                    $outstanding_profit = round(($post->total_interest_payable+$penalty)-$profit);
 	                    $projected_profits = $post->total_interest_payable+$penalty;
-
+						$this->ci->load->model('members/members_m');
 						$this->data[] = array(
 							$i,
 							$members[$post->member_id],
+							$this->ci->members_m->get_group_member($post->member_id)->id_number,
+							$this->ci->members_m->get_group_member($post->member_id)->phone,
 							$post->repayment_period.' Months',
 	                        timestamp_to_mobile_time($post->disbursement_date),
 	                        timestamp_to_mobile_time($post->loan_end_date),
@@ -1118,17 +1116,12 @@ class Excel_library{
 	                        number_to_currency($paid = $amount_paid[$post->id]),
 	                        number_to_currency($balance = $post->total_amount_payable - $paid),
 	                         $post->days_in_arrears ,
-	                        number_to_currency($profit),
-	                        number_to_currency($outstanding_profit),
-	                        number_to_currency($projected_profits),
 						);
 						$total_loan+=$loan; 
 		                $total_interest+=$interest;
 		                $total_paid+=$paid;
 		                $total_balance+=$balance; 
-		                $total_profits+=$profit; 
-		                $total_projected+=$projected_profits; 
-		                $total_outstanding_profit+=$outstanding_profit;
+		               
 		                ++$i;
                 	endif;
 				}
@@ -1140,6 +1133,8 @@ class Excel_library{
 						'',
 						'',
 	                  	'',
+						'',
+						'',
 	                  	'Totals',
 	                    number_to_currency($total_loan),
 	                    number_to_currency($total_interest),
