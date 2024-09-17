@@ -260,7 +260,12 @@ class Ajax extends Ajax_Controller
                                     <th nowrap>
                                        ' . translate('Deposited By') . '
                                     </th>
-                                    
+                                    <th nowrap>
+                                       ' . translate('ID Number') . '
+                                    </th>
+                                    <th nowrap>
+                                       ' . translate('Phone Number') . '
+                                    </th>
                                     <th class=\'text-right\' nowrap>
                                        ' . translate('Amount') . ' (' . $this->group_currency . ')
                                     </th>
@@ -311,7 +316,9 @@ class Ajax extends Ajax_Controller
                 if ($post->type == 13 || $post->type == 14 || $post->type == 15 || $post->type == 16) {
                     echo isset($depositor_options[$post->depositor_id]) ? $depositor_options[$post->depositor_id] : '';
                 } else if ($post->type == 17 || $post->type == 18 || $post->type == 19 || $post->type == 20) {
+                    
                     echo $this->members_m->get_group_member($post->member_id)->first_name.' '.$this->members_m->get_group_member($post->member_id)->last_name;
+             
                 } else if ($post->type == 25 || $post->type == 26 || $post->type == 27 || $post->type == 28) {
                     echo ' - ';
                 } else if ($post->type == 29 || $post->type == 30 || $post->type == 31 || $post->type == 32) {
@@ -332,6 +339,8 @@ class Ajax extends Ajax_Controller
                     
                     echo $this->members_m->get_group_member($post->member_id)->first_name.' '.$this->members_m->get_group_member($post->member_id)->last_name;
                 }
+                echo '</td><td class="text-center">'.$this->members_m->get_group_member($post->member_id)->id_number;
+                echo '</td><td class="text-center">'.$this->members_m->get_group_member($post->member_id)->phone;
                 echo '
                                                 </td><td class="text-right">' .
                     number_to_currency($post->amount) .

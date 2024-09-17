@@ -482,6 +482,8 @@ class Ajax extends Ajax_Controller{
                                     <tr>
                                         <th class="invoice-title ">#</th>
                                         <th class="invoice-title">'.translate('Applicant').'</th>
+                                        <th class="invoice-title">'.translate('Id Number').'</th>
+                                        <th class="invoice-title">'.translate('Phone Number').'</th>
                                         <th class="invoice-title">'.translate('Loan Type').'</th>
                                         <th class="invoice-title">'.translate('Loan Duration').'</th>
                                         <th class="invoice-title  text-right">'.translate('Amount Loaned').'</th>
@@ -533,12 +535,15 @@ class Ajax extends Ajax_Controller{
                                             <tr>
                                                 <td> <small>'.++$i.'</small></td>
                                                 <td nowrap> <small>'.$this->group_member_options[$post->member_id].'</small></td>
+                                                <td nowrap> <small>'.$this->members_m->get_group_member($post->member_id)->id_number.'</small></td>
+                                                <td nowrap> <small>'.$this->members_m->get_group_member($post->member_id)->phone.'</small></td>
                                                 <td nowrap> <small>'.(isset($loan_type_options[$post->loan_type_id])?$loan_type_options[$post->loan_type_id]:'---').'</small></td>
                                                 <td nowrap> <small>'.timestamp_to_date($post->disbursement_date).' - '.timestamp_to_date(strtotime("+".$post->repayment_period." months", $post->disbursement_date)).'</small></td>
                                                 <td class="text-right"> <small>';
                                                     $loan = $post->loan_amount;
                                                     $html.=number_to_currency($loan).
                                                 '</small></td>
+                                                
                                                 <td class="text-right"><small>';
                                                     $html.=number_to_currency($total_interest_payable).
                                                 '</small></td>
@@ -594,7 +599,7 @@ class Ajax extends Ajax_Controller{
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="3">Totals</td>
+                                        <td colspan="5">Totals</td>
                                         <td class="text-right"></td>
                                         <td class="text-right">'.number_to_currency($total_loan).'</td>
                                         <td class="text-right">'.number_to_currency($total_interest).'</td>
@@ -2261,6 +2266,8 @@ class Ajax extends Ajax_Controller{
                                        
                                         $html.='
                                         <th class="invoice-title">'.translate('Applicant  Name').'</th>
+                                        <th class="invoice-title">'.translate('ID  Number').'</th>
+                                        <th class="invoice-title">'.translate('Phone  Number').'</th>
                                         <th class="invoice-title">'.translate('Loan Type').'</th>
                                         <th class="invoice-title">'.translate('Disbursement Date').'</th>
                                         <th class="invoice-title">'.translate('Period').'</th>
@@ -2319,6 +2326,9 @@ class Ajax extends Ajax_Controller{
                                              
                                                 $html.='
                                                 <td style="text-align:center;" nowrap> <small>'.(isset($members_details)?$members_details->first_name.' '.$members_details->last_name:'---').'</small></td>
+                                                <td style="text-align:center;" nowrap> <small>'.(isset($members_details)?$this->members_m->get_group_member($post->member_id)->id_number:'---').'</small></td>
+                                                <td style="text-align:center;" nowrap> <small>'.(isset($members_details)?$this->members_m->get_group_member($post->member_id)->phone:'---').'</small></td>
+                              
                                                 <td nowrap style="text-align:center;"> <small>'.(isset($loan_type_options[$post->loan_type_id])?$loan_type_options[$post->loan_type_id]:'---').'</small></td>
                                                 <td nowrap style="text-align:center;"> <small>'.timestamp_to_date($post->disbursement_date).'</small></td>
                                                 <td nowrap style="text-align:center;"> <small>'.$post->repayment_period.'</small></td>
