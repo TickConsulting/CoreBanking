@@ -20,6 +20,7 @@ class Endpoint extends CI_Controller{
         $this->load->model('transaction_alerts/transaction_alerts_m');
         $this->load->model('banks/banks_m');
         $this->load->library('transactions');
+        $this->load->library('curl');
         $this->load->model('safaricom/safaricom_m');
         $this->load->model('withdrawals/withdrawals_m');
         $this->load->model('members/members_m');
@@ -555,7 +556,9 @@ class Endpoint extends CI_Controller{
                                                     "missingParams"=>true
                                                 );
                                                 file_put_contents("logs/c2b_confirmation_response_file.txt","\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
-                                                
+                                                $response=  $this->curl->post_json(($file),"https://ussd.tickconsulting.co.ke/api/mpesa/c2bPayment");
+                                                file_put_contents("logs/alert_forwarders.dat","\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+
                                             }
                                             }
                                             else{
