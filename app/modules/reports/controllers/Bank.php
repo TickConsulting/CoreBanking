@@ -239,9 +239,9 @@ class Bank extends Bank_Controller{
             $this->data['members'] = $this->members_m->get_group_member_options();
             $this->data['group_member_options'] = $this->members_m->get_group_member_options();
             $this->data['debtors'] = $this->debtors_m->get_options();
-            if($status){
-              $new_posts=array();
+            $new_posts=array();
             foreach($posts as $post){
+                $post->days_in_arrears=calculate_days_in_arrears($post->disbursement_date, $post->repayment_period);
                 if($status==1){
                     if(calculate_days_in_arrears($post->disbursement_date, $post->repayment_period)==0){
                         $new_posts[]=$post;
@@ -253,25 +253,26 @@ class Bank extends Bank_Controller{
                         $new_posts[]=$post;
                     } 
                      
+                }else{
+                    
+                    $new_posts[]=$post;
                 }
              }
-             
-             
-            }
-             
-            $this->data['posts'] = $posts;
+
+            $this->data['posts'] = $new_posts;
+
             $this->data['external_lending_post'] = $external_lending_post;
             $this->data['group'] = $this->application_settings;
             $this->data['group_currency'] = "KES";
 
             $json_file = json_encode($this->data);
-            
+             
             if($this->input->get_post('generate_excel')){
               
-                $this->excel_library->generate_loans_summary($json_file);
+                $this->excel_library->generate_loans_in_arrears_summary($json_file);
                 print_r($json_file); die();
-                $response = $this->curl_post_data->curl_post_json_excel($json_file,'https://excel.chamasoft.com/loans_summary',$this->application_settings->application_name.' Loans Summary');
-                print_r($response);die;
+                // $response = $this->curl_post_data->curl_post_json_excel($json_file,'https://excel.chamasoft.com/loans_summary',$this->application_settings->application_name.' Loans Summary');
+                // print_r($response);die;
             }else if($this->input->get_post('generate_pdf')){
                     $this->data['pdf_true'] = TRUE;
                     $html = $this->load->view('shared/view_loans_summary',$this->data,TRUE);

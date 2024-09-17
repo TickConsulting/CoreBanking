@@ -741,8 +741,8 @@ class Excel_library{
 			$result = json_decode($loans_summary);
 			if($result){
 				$this->group = $result->group;
-				$filename = $this->application_settings->application_name.' Loans Summary';
-				$title = $this->application_settings->application_name.' Loans Summary';
+				$filename = $this->application_settings->application_name.' Loans in Arrears';
+				$title = $this->application_settings->application_name.'Loans in Arrears';
 				$group_currency = $result->group_currency;
 
 				//print_r($result);die;
@@ -1003,7 +1003,275 @@ class Excel_library{
 			echo 'No file Sent';
 		}
     }
+	function generate_loans_in_arrears_summary($loans_summary = ''){
+    	if($loans_summary){
+			$result = json_decode($loans_summary);
+			if($result){
+				$this->group = $result->group;
+				$filename = 'Loans in Arrears';
+				$title = 'Loans in Arrears';
+				$group_currency = $result->group_currency;
 
+				//print_r($result);die;
+				$amount_paid = array();
+				foreach ($result->amount_paid as $key => $value) {
+					$amount_paid[$key] = $value;
+				}
+
+				$external_lending_amount_paid = array();
+				foreach ($result->external_lending_amount_paid as $key => $value) {
+					$external_lending_amount_paid[$key] = $value;
+				}
+
+				$projected_profit = array();
+				foreach ($result->projected_profit as $key => $value) {
+					$projected_profit[$key] = $value;
+				}
+
+				$external_lending_projected_profit = array();
+				foreach ($result->external_lending_projected_profit as $key => $value) {
+					$external_lending_projected_profit[$key] = $value;
+				}
+
+				$amount_payable_to_date = array();
+				foreach ($result->amount_payable_to_date as $key => $value) {
+					$amount_payable_to_date[$key] = $value;
+				}
+
+				$external_lending_amount_payable_to_date = array();
+				foreach ($result->external_lending_amount_payable_to_date as $key => $value) {
+					$external_lending_amount_payable_to_date[$key] = $value;
+				}
+
+				$members = array();
+				foreach ($result->members as $key => $value) {
+					$members[$key] = $value;
+				}
+
+				$debtors= array();
+				if(isset($result->debtors)){
+					foreach ($result->debtors as $key => $value) {
+						$debtors[$key] = $value;
+					}
+				}
+				
+
+
+				$headers = array(
+					'Applicant Name',
+					'Loan Duration',
+                  	'Loan Start Date',
+                  	'Loan End Date',
+                    'Amount Loaned ('.$group_currency.')',
+                    'Interest Amount ('.$group_currency.')',
+                    'Amount Paid ('.$group_currency.')',
+                    'Amount Arrears ('.$group_currency.')',
+                    'Days In Arrears',
+                    'Profit Amount ('.$group_currency.')',
+                    'Outstanding Profit Amount ('.$group_currency.')',
+                    'Projected Profit Amount ('.$group_currency.')',
+				);
+
+				$total_loan=0;
+                $total_interest=0;
+                $total_paid=0;
+                $total_balance=0;
+                $total_projected=0;
+                $total_outstanding_profit=0;
+                $total_profits=0;
+                $i=1;
+				foreach ($result->posts as $key => $post) {
+					if(isset($post->id)):
+                        $total_amount_payable_to_date=$amount_payable_to_date[$post->id]->todate_amount_payable?:0;
+                        $principle_payable_todate = $amount_payable_to_date[$post->id]->todate_principle_payable?:0;
+                        if((round($total_amount_payable_to_date-$amount_paid[$post->id])) <= 0){
+                            $intere = $total_amount_payable_to_date - $principle_payable_todate;
+                            $overpayments = $amount_paid[$post->id] - $total_amount_payable_to_date;
+                            if($overpayments<0) {
+                                $overpayments = '';
+                            }
+                            $due_inter = '';
+                            $pen = ($post->total_amount_payable) - ($post->total_interest_payable+$post->total_principle_payable);
+                            if($pen>0) {
+                                $penalty = $pen;
+                            }
+                            else {
+                                $penalty = 0;
+                            }
+                        }else {
+                            $intere = '';
+                            $overpayments = '';
+                            $penalty = ($post->total_amount_payable) - ($post->total_interest_payable+$post->total_principle_payable);
+                        }
+                        $profit = $projected_profit[$post->id];
+	                    $outstanding_profit = round(($post->total_interest_payable+$penalty)-$profit);
+	                    $projected_profits = $post->total_interest_payable+$penalty;
+
+						$this->data[] = array(
+							$i,
+							$members[$post->member_id],
+							$post->repayment_period.' Months',
+	                        timestamp_to_mobile_time($post->disbursement_date),
+	                        timestamp_to_mobile_time($post->loan_end_date),
+	                        number_to_currency($loan = $post->loan_amount),
+	                        number_to_currency($interest = $post->total_interest_payable),
+	                        number_to_currency($paid = $amount_paid[$post->id]),
+	                        number_to_currency($balance = $post->total_amount_payable - $paid),
+	                         $post->days_in_arrears ,
+	                        number_to_currency($profit),
+	                        number_to_currency($outstanding_profit),
+	                        number_to_currency($projected_profits),
+						);
+						$total_loan+=$loan; 
+		                $total_interest+=$interest;
+		                $total_paid+=$paid;
+		                $total_balance+=$balance; 
+		                $total_profits+=$profit; 
+		                $total_projected+=$projected_profits; 
+		                $total_outstanding_profit+=$outstanding_profit;
+		                ++$i;
+                	endif;
+				}
+	 
+
+				$totals = array(
+					array(
+						'',
+						'',
+						'',
+	                  	'',
+	                  	'Totals',
+	                    number_to_currency($total_loan),
+	                    number_to_currency($total_interest),
+						number_to_currency($total_paid),
+						number_to_currency($total_balance),
+						number_to_currency($total_profits),
+						number_to_currency($total_outstanding_profit),
+						number_to_currency($total_projected),
+					),
+				);
+
+				$this->data = array_merge($this->data,$totals);
+
+				if($result->external_lending_post):
+					$this->data = array_merge($this->data,array(array(),array(),array(),array(),array(
+						'',
+						'Debtor Name',
+						'Loan Duration',
+	                  	'Loan Start Date',
+	                  	'Loan End Date',
+	                    'Amount Loaned ('.$group_currency.')',
+	                    'Interest Amount ('.$group_currency.')',
+	                    'Amount Paid ('.$group_currency.')',
+	                    'Amount Arrears ('.$group_currency.')',
+	                    'Profit Amount ('.$group_currency.')',
+	                    'Outstanding Profit Amount ('.$group_currency.')',
+	                    'Projected Profit Amount ('.$group_currency.')',
+					)));
+
+					$external_lending_total_loan=0;
+	                $external_lending_total_interest=0;
+	                $external_lending_total_paid=0;
+	                $external_lending_total_balance=0;
+	                $external_lending_total_projected=0;
+	                $external_lending_total_outstanding_profit=0;
+	                $external_lending_total_profits=0;
+
+
+	                $i=1;
+	                foreach ($result->external_lending_post as $key => $post) {
+	                	if(isset($post->id)):
+	                        $total_amount_payable_to_date=$external_lending_amount_payable_to_date[$post->id]->todate_amount_payable?:0;
+	                        $principle_payable_todate = $external_lending_amount_payable_to_date[$post->id]->todate_principle_payable?:0;
+	                        if((round($total_amount_payable_to_date-$external_lending_amount_paid[$post->id])) <= 0){
+	                            $intere = $total_amount_payable_to_date - $principle_payable_todate;
+	                            $overpayments = $external_lending_amount_paid[$post->id] - $total_amount_payable_to_date;
+	                            if($overpayments<0) {
+	                                $overpayments = '';
+	                            }
+	                            $due_inter = '';
+	                            $pen = ($post->total_amount_payable) - ($post->total_interest_payable+$post->total_principle_payable);
+	                            if($pen>0) {
+	                                $penalty = $pen;
+	                            }
+	                            else {
+	                                $penalty = 0;
+	                            }
+	                        }else {
+	                            $intere = '';
+	                            $overpayments = '';
+	                            $penalty = ($post->total_amount_payable) - ($post->total_interest_payable+$post->total_principle_payable);
+	                        }
+	                        $profit = $external_lending_projected_profit[$post->id];
+		                    $outstanding_profit = round(($post->total_interest_payable+$penalty)-$profit);
+		                    $projected_profits = $post->total_interest_payable+$penalty;
+
+							$this->data[] = array(
+								$i,
+								$debtors[$post->debtor_id],
+								$post->repayment_period.' Months',
+		                        timestamp_to_mobile_time($post->disbursement_date),
+		                        timestamp_to_mobile_time($post->loan_end_date),
+		                        number_to_currency($loan = $post->loan_amount),
+		                        number_to_currency($interest = $post->total_interest_payable),
+		                        number_to_currency($paid = $external_lending_amount_paid[$post->id]),
+		                        number_to_currency($balance = $post->total_amount_payable - $paid),
+		                        number_to_currency($profit),
+		                        number_to_currency($outstanding_profit),
+		                        number_to_currency($projected_profits),
+							);
+							$external_lending_total_loan+=$loan; 
+			                $external_lending_total_interest+=$interest;
+			                $external_lending_total_paid+=$paid;
+			                $external_lending_total_balance+=$balance; 
+			                $external_lending_total_profits+=$profit; 
+			                $external_lending_total_projected+=$projected_profits; 
+			                $external_lending_total_outstanding_profit+=$outstanding_profit;
+			                ++$i;
+	                	endif;
+	                }
+
+
+					$totals_2 = array(
+						array(
+							'',
+							'',
+							'',
+		                  	'',
+		                  	'Totals',
+		                    number_to_currency($external_lending_total_loan),
+		                    number_to_currency($external_lending_total_interest),
+							number_to_currency($external_lending_total_paid),
+							number_to_currency($external_lending_total_balance),
+							number_to_currency($external_lending_total_profits),
+							number_to_currency($external_lending_total_outstanding_profit),
+							number_to_currency($external_lending_total_projected),
+						),
+					);
+
+					$this->data = array_merge($this->data,$totals_2);
+
+				endif;
+
+		
+
+				$filter_parameters = array(
+					
+				);
+
+				$response = $this->create_spreadsheet_file($filename,$title,$headers,$this->data,$filter_parameters);
+				/*if($response){
+					$this->excel_generator->download_single_file($filename.'.xlsx');
+					$this->excel_generator->delete_single_file($filename.'.xlsx');
+				}*/
+
+			}else{
+				echo 'Invalid file sent';
+			}
+		}else{
+			echo 'No file Sent';
+		}
+    }
     function generate_expense_summary($loans_summary = ''){
     	if($loans_summary){
 			$result = json_decode($loans_summary);
