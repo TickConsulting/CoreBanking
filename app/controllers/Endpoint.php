@@ -540,6 +540,8 @@ class Endpoint extends CI_Controller{
                                                         "ResultCode" => "0"
                                                     );
                                                     file_put_contents("logs/c2b_confirmation_response_file.txt","\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+                                                    $response=  $this->curl->post_json(($file),"https://ussd.tickconsulting.co.ke/api/mpesa/c2bPayment");
+                                                    file_put_contents("logs/alert_forwarders.txt","\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
                                                     
                                                 }else{
                                                     $response = array(
@@ -556,8 +558,7 @@ class Endpoint extends CI_Controller{
                                                     "missingParams"=>true
                                                 );
                                                 file_put_contents("logs/c2b_confirmation_response_file.txt","\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
-                                                $response=  $this->curl->post_json(($file),"https://ussd.tickconsulting.co.ke/api/mpesa/c2bPayment");
-                                                file_put_contents("logs/alert_forwarders.dat","\n".date("d-M-Y h:i A").json_encode($response),FILE_APPEND);
+                                                
 
                                             }
                                             }

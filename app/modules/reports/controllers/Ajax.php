@@ -875,6 +875,7 @@ class Ajax extends Ajax_Controller{
                                         <th class="invoice-title ">#</th>
                                         <th class="invoice-title">'.translate('Applicant').'</th>
                                         <th class="invoice-title">'.translate('ID Number').'</th>
+                                        <th class="invoice-title">'.translate('Phone Number').'</th>
                                         <th class="invoice-title">'.translate('Loan Type').'</th>
                                         <th class="invoice-title">'.translate('Loan Duration').'</th>
                                         <th class="invoice-title  text-right">'.translate('Amount Loaned').'</th>
@@ -926,6 +927,7 @@ class Ajax extends Ajax_Controller{
                                                 <td> <small>'.++$i.'</small></td>
                                                 <td nowrap> <small>'.$this->group_member_options[$post->member_id].'</small></td>
                                                 <td nowrap> <small>'.$this->members_m->get_group_member($post->member_id)->id_number.'</small></td>
+                                                <td nowrap> <small>'.$this->members_m->get_group_member($post->member_id)->phone.'</small></td>
                                                 <td nowrap> <small>'.(isset($loan_type_options[$post->loan_type_id])?$loan_type_options[$post->loan_type_id]:'---').'</small></td>
                                                 <td nowrap> <small>'.timestamp_to_date($post->disbursement_date).' - '.timestamp_to_date(strtotime("+".$post->repayment_period." months", $post->disbursement_date)).'</small></td>
                                                 <td class="text-right"> <small>';
