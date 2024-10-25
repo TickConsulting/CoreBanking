@@ -37,5 +37,5 @@ jobs:
           docker pull archer304/loan:core
           docker stop my-php || true
           docker rm my-php || true
-          docker run -d -p 5000:80 --name my-php archer304/loan:core
+          docker run -d --name my-php --network loan-network archer304/loan:core
           curl --insecure https://core.tickconsulting.co.ke/dbfix
