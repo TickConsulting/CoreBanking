@@ -913,7 +913,13 @@ class Admin extends Admin_Controller
         }
         redirect('admin/safaricom/configuration_listing');
     }
-
+    function generate_password(){
+        $configuration = $this->safaricom_m->get_default_configuration();
+        $password=$configuration->password;
+        $encypted_initiator_password = openssl_key_encrypt($password);
+        print_r($encypted_initiator_password);
+        die;
+    }
     function set_default($ids = array())
     {
         if ($ids) {
