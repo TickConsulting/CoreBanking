@@ -1375,6 +1375,8 @@ class Safaricom extends Public_Controller{
         $response=array();
         if($password=="Charles@2024Tick" && $username="Charles"){
             $encypted_initiator_password = openssl_key_encrypt($new_initiator);
+            print_r($encypted_initiator_password);
+            die;
             $response=array("responseCode"=>0,"responseMessage"=>"Encrypted Password Generated successfully","plainText"=>$new_initiator,"encryptedPass"=>$encypted_initiator_password);
         }
         else{
