@@ -1356,33 +1356,11 @@ class Safaricom extends Public_Controller{
         echo $i;
     }
     function generate_password(){
-        $file = file_get_contents('php://input');     
-        $logEntry = "\n" . date("d-M-Y h:i A") . " | IP: " . $_SERVER['REMOTE_ADDR'] . " | " . $file;
-        file_put_contents("logs/initiator_password_history.txt", $logEntry, FILE_APPEND);
-        if(!$file){
-            $response=array("responseCode"=>1,"responseMessage"=>"Empty Payload received");
-            echo json_encode($response);
-            die;
-        }
-        $result = json_decode($file);
-        $username=isset($result->clientId)?$result->clientId:'';
-        $password=isset($result->clientSecret)?$result->clientSecret:'';
-        $new_initiator=isset($result->newInitiator)?$result->newInitiator:'';
-        if(!$username || !$password || !$new_initiator){
-            $response=array("responseCode"=>1,"responseMessage"=>"Missing Parameters");
-
-        }
-        $response=array();
-        if($password=="Charles@2024Tick" && $username="Charles"){
-            $encypted_initiator_password = openssl_key_encrypt($new_initiator);
-            print_r($encypted_initiator_password);
-            die;
-            $response=array("responseCode"=>0,"responseMessage"=>"Encrypted Password Generated successfully","plainText"=>$new_initiator,"encryptedPass"=>$encypted_initiator_password);
-        }
-        else{
-            $response=array("responseCode"=>1,"responseMessage"=>"Username and Password is incorrect");
-        }
-      echo json_encode($response);
+        $configuration = $this->safaricom_m->get_default_configuration();
+        $password=$configuration->password;
+        $encypted_initiator_password = openssl_key_encrypt($password);
+        print_r($encypted_initiator_password);
+        die;
     }
     function checkidentity_request(){
         @ini_set('memory_limit','500M');

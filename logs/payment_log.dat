@@ -843,3 +843,19 @@
     "clientSecret": "Charles@2024Tick",
     "newInitiator": "y6z&PLU*2<3"
 }";	 Headers are: 
+
+26-Oct-2024 11:46 AM	http://api.risktick.local/safaricom/generate_password	a:1:{s:28:"/safaricom/generate_password";s:0:"";}	a:0:{}	s:108:"{
+    "clientId": "Charles",
+    "clientSecret": "Charles@2024Tick",
+    "newInitiator": "y6z&PLU*2<3"
+}";	 Headers are: 
+
+26-Oct-2024 11:46 AM	http://api.risktick.local/safaricom/generate_password	a:1:{s:28:"/safaricom/generate_password";s:0:"";}	a:0:{}	s:0:"";	 Headers are: 
+
+26-Oct-2024 11:51 AM	http://api.risktick.local/safaricom/generate_password	a:1:{s:28:"/safaricom/generate_password";s:0:"";}	a:0:{}	s:0:"";	 Headers are: 
+
+26-Oct-2024 11:51 AM	http://api.risktick.local/safaricom/generate_password	a:1:{s:28:"/safaricom/generate_password";s:0:"";}	a:0:{}	s:0:"";	 Headers are: 
+
+26-Oct-2024 11:52 AM	http://api.risktick.local/safaricom/generate_password	a:1:{s:28:"/safaricom/generate_password";s:0:"";}	a:0:{}	s:0:"";	 Headers are: 
+
+26-Oct-2024 11:53 AM	http://api.risktick.local/safaricom/generate_password	a:1:{s:28:"/safaricom/generate_password";s:0:"";}	a:0:{}	s:0:"";	 Headers are: 
