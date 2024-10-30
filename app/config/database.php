@@ -83,10 +83,10 @@ if (preg_match('/(\.local)/', $_SERVER['HTTP_HOST'])) {
 	// $password = '';
 }  else {
 	$active_group = 'live';
-	$host_name='3.120.172.54';
-	$username = 'root';
+	$host_name='mysql-186227-0.cloudclusters.net';
+	$username = 'admin';
 	$database = 'tick';
-	$password = 'GeuwyQ3eSMRewlX';
+	$password = 'vpONYtdd';
 }
 
 
@@ -142,6 +142,7 @@ $db['live'] = array(
 	'password' =>  $password,
 	'database' =>  $database,
 	'dbdriver' => 'mysqli',
+	'port'     => 10016,
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
