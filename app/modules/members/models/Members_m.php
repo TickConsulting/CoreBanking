@@ -510,7 +510,7 @@
 		$arr = array();
 		if($members){
 			foreach ($members as $key => $member) {
-				$member_name = $member->first_name.' '.$member->last_name;
+				$member_name = $member->first_name.' '.$member->last_name .'('.$member->phone.')';
 				if($member->membership_number){
 					$member_name .= " - ".$member->membership_number."";
 				}
