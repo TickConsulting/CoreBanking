@@ -71,19 +71,38 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | the query builder class.
 */
 $active_group = 'local';
+
 $username = 'root';
 $database = 'riskTick';
 $host_name="localhost";
 $password = '';
+$port=3306;
+
 if (preg_match('/(\.local)/', $_SERVER['HTTP_HOST'])) {
 	$active_group = 'local';
 	$password = '';
+	// $password = '';
+} else if(preg_match('/(cbs\.tickconsulting\.co\.ke)/', $_SERVER['HTTP_HOST'])){
+	$active_group = 'live';
+	$host_name='mysql-186227-0.cloudclusters.net';
+	$port="10016";
+	$username = 'admin';
+	$database = 'tick';
+	$password = 'vpONYtdd';
 }
+else {
+	$active_group = 'live';
+	$host_name='3.120.172.54';
+	$username = 'root';
+	$database = 'tick';
+	$password = 'GeuwyQ3eSMRewlX';
+}
+
 
 $query_builder = TRUE;
 $db['local'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
+	'hostname' => $host_name,
 	'username' => 'root',
 	'password' =>  $password,
 	'database' =>  $database,
@@ -103,12 +122,35 @@ $db['local'] = array(
 	'save_queries' => TRUE
 );
 
+$db['new'] = array(
+	'dsn'	=> '',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' =>  $password,
+	'database' =>  'tick',
+	'dbdriver' => 'mysqli',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => (ENVIRONMENT !== 'production'),
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
+	'save_queries' => TRUE
+);
+
 $db['live'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => $username,
+	'hostname' => $host_name,
+	'username' =>  $username,
 	'password' =>  $password,
 	'database' =>  $database,
+	'port' =>  $port,
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
@@ -125,106 +167,5 @@ $db['live'] = array(
 	'save_queries' => TRUE
 );
 
-$db['archive_live'] = array(
-	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'eazzyclub_archi',
-	'password' => 'tNnVr5WI8oq',
-	'database' => 'eazzyclub_archive',
-	'dbdriver' => 'mysqli',
-	'dbprefix' => '',
-	'pconnect' => FALSE,
-	'db_debug' => (ENVIRONMENT !== 'production'),
-	'cache_on' => FALSE,
-	'cachedir' => '',
-	'char_set' => 'utf8',
-	'dbcollat' => 'utf8_general_ci',
-	'swap_pre' => '',
-	'encrypt' => FALSE,
-	'compress' => FALSE,
-	'stricton' => FALSE,
-	'failover' => array(),
-	'save_queries' => TRUE
-);
 
-$db['archive'] = array(
-	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => $username,
-	'password' =>  $password,
-	'database' =>  $database . '_archive',
-	'dbdriver' => 'mysqli',
-	'dbprefix' => '',
-	'pconnect' => FALSE,
-	'db_debug' => (ENVIRONMENT !== 'production'),
-	'cache_on' => FALSE,
-	'cachedir' => '',
-	'char_set' => 'utf8',
-	'dbcollat' => 'utf8_general_ci',
-	'swap_pre' => '',
-	'encrypt' => FALSE,
-	'compress' => FALSE,
-	'stricton' => FALSE,
-	'failover' => array(),
-	'save_queries' => TRUE
-);
 
-if (preg_match('/(cbs\.tickconsulting\.co\.ke)/', $_SERVER['HTTP_HOST'])) {
-    $active_group = 'live';
-    $db['live'] = array(
-        'dsn'      => '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=mysql-186227-0.cloudclusters.net)(PORT=10016))(CONNECT_DATA=(SERVER=DEDICATED)))',
-        'hostname' => 'mysql-186227-0.cloudclusters.net',
-        'port'     => 10016		,
-        'username' => 'admin',
-        'password' => 'vpONYtdd',
-        'database' => 'tick',
-        'dbdriver' => 'mysqli',
-        'dbprefix' => '',
-        'pconnect' => FALSE,
-        'db_debug' => (ENVIRONMENT !== 'production'),
-        'cache_on' => FALSE,
-        'cachedir' => '',
-        'char_set' => 'utf8',
-        'dbcollat' => 'utf8_general_ci',
-        'return_type' => 'array', // Added return type
-        'compress' => FALSE,
-        'failover' => array(),
-        'save_queries' => TRUE,
-        // 'encrypt' => array(
-        //     'ssl_verify' => TRUE,
-        //     'ssl_ca' => './assets/certificates/ca.pem'
-        // ),
-        'encrypt' => FALSE, // Disable SSL encryption if not needed
-        'stricton' => FALSE
-    );
-}
-
-if (preg_match('/(core\.tickconsulting\.co\.ke)/', $_SERVER['HTTP_HOST'])) {
-    $active_group = 'live';
-    $db['live'] = array(
-        'dsn'      => '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=3.120.172.54)(PORT=3306))(CONNECT_DATA=(SERVER=DEDICATED)))',
-        'hostname' => '3.120.172.54',
-        'port'     => 3306,
-        'username' => 'root',
-        'password' => 'GeuwyQ3eSMRewlX',
-        'database' => 'tick',
-        'dbdriver' => 'mysqli',
-        'dbprefix' => '',
-        'pconnect' => FALSE,
-        'db_debug' => (ENVIRONMENT !== 'production'),
-        'cache_on' => FALSE,
-        'cachedir' => '',
-        'char_set' => 'utf8',
-        'dbcollat' => 'utf8_general_ci',
-        'return_type' => 'array', // Added return type
-        'compress' => FALSE,
-        'failover' => array(),
-        'save_queries' => TRUE,
-        // 'encrypt' => array(
-        //     'ssl_verify' => TRUE,
-        //     'ssl_ca' => './assets/certificates/ca.pem'
-        // ),
-        'encrypt' => FALSE, // Disable SSL encryption if not needed
-        'stricton' => FALSE
-    );
-}
