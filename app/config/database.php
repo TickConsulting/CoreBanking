@@ -85,7 +85,7 @@ if (preg_match('/(\.local)/', $_SERVER['HTTP_HOST'])) {
 } else if(preg_match('/(cbs\.tickconsulting\.co\.ke)/', $_SERVER['HTTP_HOST'])){
 	$active_group = 'live';
 	$host_name='mysql-186227-0.cloudclusters.net';
-	$port="10016";
+	$port=10016;
 	$username = 'admin';
 	$database = 'tick';
 	$password = 'vpONYtdd';
@@ -134,8 +134,8 @@ $db['new'] = array(
 	'db_debug' => (ENVIRONMENT !== 'production'),
 	'cache_on' => FALSE,
 	'cachedir' => '',
-	'char_set' => 'utf8mb4',
-	'dbcollat' => 'utf8mb4_general_ci',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
 	'swap_pre' => '',
 	'encrypt' => FALSE,
 	'compress' => FALSE,
@@ -157,8 +157,8 @@ $db['live'] = array(
 	'db_debug' => (ENVIRONMENT !== 'production'),
 	'cache_on' => FALSE,
 	'cachedir' => '',
-	'char_set' => 'utf8mb4',
-	'dbcollat' => 'utf8mb4_general_ci',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
 	'swap_pre' => '',
 	'encrypt' => FALSE,
 	'compress' => FALSE,
