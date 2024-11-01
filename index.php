@@ -71,7 +71,8 @@
 
 	$ip_addresses = array( 
 		"197.248.208.191",
-		"102.0.4.72"
+		"102.0.4.72",
+		"102.135.169.205"
 		// "105.163.0.64"
 	);
 	if(in_array($_SERVER['REMOTE_ADDR'], $ip_addresses) || preg_match('/local/', $_SERVER['HTTP_HOST'])){
