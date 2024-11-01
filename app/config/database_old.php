@@ -76,12 +76,21 @@ $username = 'root';
 $database = 'riskTick';
 $host_name="localhost";
 $password = '';
+$port=3306;
 
 if (preg_match('/(\.local)/', $_SERVER['HTTP_HOST'])) {
 	$active_group = 'local';
 	$password = '';
 	// $password = '';
-}  else {
+} else if(preg_match('/(cbs\.tickconsulting\.co\.ke)/', $_SERVER['HTTP_HOST'])){
+	$active_group = 'live';
+	$host_name='mysql-186227-0.cloudclusters.net';
+	$port=10016;
+	$username = 'admin';
+	$database = 'tick';
+	$password = 'vpONYtdd';
+}
+else {
 	$active_group = 'live';
 	$host_name='3.120.172.54';
 	$username = 'root';
@@ -141,6 +150,7 @@ $db['live'] = array(
 	'username' =>  $username,
 	'password' =>  $password,
 	'database' =>  $database,
+	'port' =>  $port,
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

@@ -171,7 +171,7 @@ $db['archive'] = array(
 
 if (preg_match('/(cbs\.tickconsulting\.co\.ke)/', $_SERVER['HTTP_HOST'])) {
     $active_group = 'live';
-    $db['prod'] = array(
+    $db['live'] = array(
         'dsn'      => '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=mysql-186227-0.cloudclusters.net)(PORT=10016))(CONNECT_DATA=(SERVER=DEDICATED)))',
         'hostname' => 'mysql-186227-0.cloudclusters.net',
         'port'     => 10016		,
@@ -201,7 +201,7 @@ if (preg_match('/(cbs\.tickconsulting\.co\.ke)/', $_SERVER['HTTP_HOST'])) {
 
 if (preg_match('/(core\.tickconsulting\.co\.ke)/', $_SERVER['HTTP_HOST'])) {
     $active_group = 'live';
-    $db['prod'] = array(
+    $db['live'] = array(
         'dsn'      => '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=3.120.172.54)(PORT=3306))(CONNECT_DATA=(SERVER=DEDICATED)))',
         'hostname' => '3.120.172.54',
         'port'     => 3306,
